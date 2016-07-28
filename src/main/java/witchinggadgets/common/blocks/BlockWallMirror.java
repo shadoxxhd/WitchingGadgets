@@ -52,7 +52,7 @@ public class BlockWallMirror extends BlockContainer
 			else
 				tile = (TileEntityWallMirror)world.getTileEntity(x,y-1,z);
 
-			tile.toggleState();
+			//tile.toggleState();
 		}	
 		return true;
 	}

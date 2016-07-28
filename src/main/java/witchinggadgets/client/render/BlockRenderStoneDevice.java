@@ -15,8 +15,7 @@ import org.lwjgl.opengl.GL11;
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityBlastfurnace;
 import witchinggadgets.common.blocks.tiles.TileEntityEtherealWall;
-import witchinggadgets.common.blocks.tiles.TileEntityMagicalTileLock;
-import witchinggadgets.common.blocks.tiles.TileEntitySarcophagus;
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -147,110 +146,9 @@ public class BlockRenderStoneDevice implements ISimpleBlockRenderingHandler
 			default: return false;
 			}
 		}
-		else if(world.getTileEntity(x, y, z) instanceof TileEntityMagicalTileLock)
-		{
-			renderer.setRenderBounds(0,0,0, .25,1,.25);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(0,0,.75, .25,1,1);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(.75,0,0, 1,1,.25);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(.75,0,.75, 1,1,1);
-			renderer.renderStandardBlock(block, x, y, z);
-
-
-			renderer.setRenderBounds(.25,0,0, .75,.25,.25);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(0,0,.25, .25,.25,.75);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(.25,0,.75, .75,.25,1);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(.75,0,.25, 1,.25,.75);
-			renderer.renderStandardBlock(block, x, y, z);
-
-			renderer.setRenderBounds(.25,.75,0, .75,1,.25);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(0,.75,.25, .25,1,.75);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(.25,.75,.75, .75,1,1);
-			renderer.renderStandardBlock(block, x, y, z);
-			renderer.setRenderBounds(.75,.75,.25, 1,1,.75);
-			renderer.renderStandardBlock(block, x, y, z);
-
-
-			renderer.setRenderBounds(.0625,.0625,.0625, .9375,.9375,.9375);
-			return renderer.renderStandardBlock(block, x, y, z);
-
-			//			renderer.setRenderBounds(.0625,.25,.0625,.9375,.75,.9375);
-			//			return renderer.renderStandardBlock(block, x, y, z);
-
-		}
-		else if(world.getTileEntity(x, y, z) instanceof TileEntitySarcophagus)
-		{
-			TileEntitySarcophagus tile = (TileEntitySarcophagus)world.getTileEntity(x, y, z);
-			switch(tile.facing)
-			{
-			case 2:
-			case 3:
-				renderer.setRenderBounds(tile.dummyLeft?.0625:0, 0,.0625,tile.dummyRight?.9375:1,.125,.9375);
-				renderer.renderStandardBlock(block, x, y, z);
-				if(tile.dummyLeft)
-				{
-					renderer.setRenderBounds( 0, 0,.0625,.0625,.75,.9375);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				else if(tile.dummyRight)
-				{
-					renderer.setRenderBounds(.9375, 0,.0625, 1,.75,.9375);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				renderer.setRenderBounds( 0, 0, 0, 1,.75,.0625);
-				renderer.renderStandardBlock(block, x, y, z);
-				renderer.setRenderBounds( 0, 0,.9375, 1,.75, 1);
-				renderer.renderStandardBlock(block, x, y, z);
-				if(!tile.open)
-					renderer.setRenderBounds(tile.dummyLeft?.0625:0,.75,.0625, tile.dummyRight?.9375:1,1,.9375);
-				else
-				{
-					if(tile.facing==2)
-						renderer.setRenderBounds(tile.dummyLeft?.0625:0,0,1, tile.dummyRight?.9375:1,.875,1.25);
-					else
-						renderer.setRenderBounds(tile.dummyLeft?.0625:0,0,-.25, tile.dummyRight?.9375:1,.875,0);
-				}
-				break;
-			case 4:
-			case 5:
-				renderer.setRenderBounds(.0625, 0,tile.dummyLeft?.0625:0,.9375,.125,tile.dummyRight?.9375:1);
-				renderer.renderStandardBlock(block, x, y, z);
-				if(tile.dummyLeft)
-				{
-					renderer.setRenderBounds(.0625, 0, 0,.9375,.75,.0625);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				else if(tile.dummyRight)
-				{
-					renderer.setRenderBounds(.0625, 0,.9375,.9375,.75, 1);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				renderer.setRenderBounds( 0, 0, 0,.0625,.75, 1);
-				renderer.renderStandardBlock(block, x, y, z);
-				renderer.setRenderBounds(.9375, 0, 0, 1,.75, 1);
-				renderer.renderStandardBlock(block, x, y, z);
-				if(!tile.open)
-					renderer.setRenderBounds(.0625,.75,tile.dummyLeft?.0625:0, .9375,1,tile.dummyRight?.9375:1);
-				else
-				{
-					if(tile.facing==4)
-						renderer.setRenderBounds(1,0,tile.dummyLeft?.0625:0, 1.25,.875,tile.dummyRight?.9375:1);
-					else
-						renderer.setRenderBounds(-.25,0,tile.dummyLeft?.0625:0, 0,.875,tile.dummyRight?.9375:1);
-				}
-				break;
-			}
-			return renderer.renderStandardBlock(block, x, y, z);
-		}
+		
 		else 
-			if(world.getBlockMetadata(x, y, z) == 8)
+			if(world.getBlockMetadata(x, y, z) == 2)
 			{
 				byte pos = ((TileEntityBlastfurnace)world.getTileEntity(x, y, z)).position;
 				if(pos==22)

@@ -30,11 +30,13 @@ import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+
 @Optional.Interface(iface = "vazkii.botania.api.item.ICosmeticAttachable", modid = "Botania")
+
 public class ItemMagicalBaubles extends Item implements IBauble, ITravellersGear, vazkii.botania.api.item.ICosmeticAttachable
 {
 	//String[] subNames = {"ringSocketed_gold","ringSocketed_thaumium","ringSocketed_silver"};
-	public static String[] subNames = {"shouldersDoublejump","shouldersKnockback","vambraceStrength","vambraceHaste","titleCrimsonCult","ringLuck","ringSniper"};
+	public static String[] subNames = {"shouldersDoublejump","shouldersKnockback","vambraceStrength","vambraceHaste","ringLuck","ringSniper"};
 	IIcon[] icons = new IIcon[subNames.length];
 	public static HashSet<String> bowSpeedPlayers = new HashSet<String>();
 
@@ -69,8 +71,7 @@ public class ItemMagicalBaubles extends Item implements IBauble, ITravellersGear
 	{
 		String type = getSlot(stack)>0?("tg."+getSlot(stack)):"bauble."+getBaubleType(stack);
 		list.add(StatCollector.translateToLocalFormatted(Lib.DESCRIPTION+"gearSlot."+type));
-		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("title"))
-			list.add(StatCollector.translateToLocalFormatted(stack.getTagCompound().getString("title")));
+
 
 		if(Loader.isModLoaded("Botania"))
 		{
@@ -129,22 +130,10 @@ public class ItemMagicalBaubles extends Item implements IBauble, ITravellersGear
 	public void getSubItems(Item item, CreativeTabs tab, List itemList)
 	{
 		for(int i=0;i<subNames.length;i++)
-			if(i==4)
-			{
-				itemList.add(getItemWithTitle(new ItemStack(this,1,i),Lib.TITLE+"crimsonCultist"));
-				itemList.add(getItemWithTitle(new ItemStack(this,1,i),Lib.TITLE+"crimsonKnight"));
-				itemList.add(getItemWithTitle(new ItemStack(this,1,i),Lib.TITLE+"crimsonPraetor"));
-			}
-			else
+
 				itemList.add(new ItemStack(this,1,i));
 	}
-	public static ItemStack getItemWithTitle(ItemStack stack, String title)
-	{
-		if(!stack.hasTagCompound())
-			stack.setTagCompound(new NBTTagCompound());
-		stack.getTagCompound().setString("title", title);
-		return stack;
-	}
+
 
 	@Override
 	public boolean canEquip(ItemStack stack, EntityLivingBase living)

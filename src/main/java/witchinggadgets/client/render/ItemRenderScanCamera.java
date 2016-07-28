@@ -117,15 +117,20 @@ public class ItemRenderScanCamera implements IItemRenderer
 				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glRotatef(-70.0F, 1.0F, 0.0F, 0.0F);
 				GL11.glScalef(2f,1.5f,-1.5f);
+				//GL11.glTranslatef(-0.5F,-0.875F,-0.1F);
 				GL11.glTranslatef(-0.5F,-0.875F,-0.1F);
 			}
 
 			if(type == ItemRenderType.EQUIPPED_FIRST_PERSON)
 			{
+				//GL11.glRotatef(45.0F, 0.0F, -1.0F, 0.0F);
 				GL11.glRotatef(45.0F, 0.0F, -1.0F, 0.0F);
+				GL11.glRotatef(5.0F, 2.0F, 0.0F, 0.0F);
 				GL11.glScalef(2f,2f,2f);
 				/**GL11.glTranslatef(-0.35F, 0.875F, 1.0F);*/
-				GL11.glTranslatef(-0.35F, 0.5F, 1.0F);
+				
+				//TODO GL11.glTranslatef(-0.35F, 0.5F, 1.0F);
+				GL11.glTranslatef(-0.35F, 0.85F, 1.1F);
 				float timer = UtilsFX.getTimer(mc).renderPartialTicks;
 				//			float f1 = UtilsFX.getPrevEquippedProgress(mc.entityRenderer.itemRenderer) + (UtilsFX.getEquippedProgress(mc.entityRenderer.itemRenderer) - UtilsFX.getPrevEquippedProgress(mc.entityRenderer.itemRenderer)) * timer;
 				//			float f2 = entityclientplayermp.prevRotationPitch + (entityclientplayermp.rotationPitch - entityclientplayermp.prevRotationPitch) * timer;
@@ -154,6 +159,8 @@ public class ItemRenderScanCamera implements IItemRenderer
 				//			f7 = 1.0F - f2 / 45.0F + 0.1F;
 
 				GL11.glTranslatef(0.0F, 0.0F * f12 - (1.0F - 1.0f) * 1.2F + 0.04F, -0.9F * f12);
+				
+				//GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 				ClientUtilities.bindTexture(player.getLocationSkin().getResourceDomain()+":"+player.getLocationSkin().getResourcePath());
@@ -175,15 +182,19 @@ public class ItemRenderScanCamera implements IItemRenderer
 				//				GL11.glPopMatrix();
 				//			}
 
+				//TODO arms
 				for (k = 0; k < 2; ++k)
 				{
 					int l = k * 2 - 1;
 					GL11.glPushMatrix();
 					GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
-					GL11.glTranslatef(-0.4F, -0.5F, 0.4F * l);
-					GL11.glRotatef(-35 * l, 1.0F, 0.0F, 0.0F);
+					//GL11.glTranslatef(-0.4F, -0.5F, 0.4F * l);
+					GL11.glTranslatef(0.0F, 0.65F, 0.3F * l);
+					GL11.glRotatef(25 * l, 1.0F, 0.0F, 0.0F);
+					//GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
 					GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
-					GL11.glRotatef(49.0F, 0.0F, 0.0F, 1.0F);
+					//GL11.glRotatef(49.0F, 0.0F, 0.0F, 1.0F);
+					GL11.glRotatef(-49.0F, 0.0F, 0.0F, 1.0F);
 					GL11.glRotatef(80 * l, 0.0F, 1.0F, 0.0F);
 					render = RenderManager.instance.getEntityRenderObject(mc.thePlayer);
 					renderplayer = (RenderPlayer)render;
@@ -259,13 +270,17 @@ public class ItemRenderScanCamera implements IItemRenderer
 
 			if(type == ItemRenderType.EQUIPPED_FIRST_PERSON)
 			{
+				//TODO text stuff
 				ScanResult scan = doScan(stack, player);
 				if (scan != null)
 				{
 					AspectList aspects = null;
-					GL11.glScalef(0.45f,0.45f,0.45f);
-					GL11.glRotated(-50, 1, 0, 0);
-					GL11.glTranslatef(0.0F,-0.2F,-1.8F);
+					//GL11.glScalef(0.45f,0.45f,0.45f);
+					GL11.glScalef(0.6f,0.6f,0.6f);
+					GL11.glRotated(-50, 0, 0, 0);
+					//GL11.glRotatef(45F, 0F, 0F, 0F);
+					//GL11.glTranslatef(0.0F,-0.2F,-1.8F);
+					GL11.glTranslatef(0.0F,-0.45F,-1.3F);
 					String text = "?";
 					ItemStack scanStack = null;
 					if (scan.id > 0)
@@ -308,9 +323,9 @@ public class ItemRenderScanCamera implements IItemRenderer
 									t = t + ", " + StatCollector.translateToLocal(new StringBuilder().append("nodemod.").append(((INode)tile).getNodeModifier()).append(".name").toString());
 								}
 								int sw = mc.fontRenderer.getStringWidth(t);
-								float scale = 0.004F;
+								float scale = 0.006F;
 								GL11.glScalef(scale, scale, scale);
-								mc.fontRenderer.drawString(t, -sw / 2, -40, 16777215,true);
+								mc.fontRenderer.drawString(t, -sw / 2, -40, 16777215,false);
 								GL11.glDisable(3042);
 								GL11.glPopMatrix();
 							}
@@ -355,14 +370,19 @@ public class ItemRenderScanCamera implements IItemRenderer
 
 						GL11.glEnable(3042);
 						GL11.glBlendFunc(770, 1);
-						GL11.glTranslatef(0.0F, -0.25F, 0.0F);
+						
+						//
+						//GL11.glRotatef(45.0F, 0.5F, 0.0F, 0.0F);
+						//TODO GL11.glTranslatef(0.0F, -0.25F, 0.0F);
+						GL11.glTranslatef(0.0F, -0.35F, 0.0F);
 						int sw = mc.fontRenderer.getStringWidth(text);
-						float scale = 0.005F;
+						//float scale = 0.005F;
+						float scale = 0.008F;
 						if (sw > 90) {
 							scale -= 2.5E-005F * (sw - 90);
 						}
 						GL11.glScalef(scale, scale, scale);
-						mc.fontRenderer.drawString(text, -sw / 2, 0, 16777215,true);
+						mc.fontRenderer.drawString(text, -sw / 2, 0, 16777215,false);
 						GL11.glDisable(3042);
 						GL11.glPopMatrix();
 					}

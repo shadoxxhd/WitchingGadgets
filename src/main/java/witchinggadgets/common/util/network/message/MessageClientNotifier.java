@@ -41,7 +41,7 @@ public class MessageClientNotifier implements IMessage
 			case 0:
 				if(Minecraft.getMinecraft().thePlayer!=null)
 					if(ThaumcraftApiHelper.isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "WGFAKEELDRITCHMINOR"))
-						ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[1];
+						ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
 					else
 						ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
 				break;

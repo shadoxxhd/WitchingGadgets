@@ -30,15 +30,13 @@ import witchinggadgets.client.render.BlockRenderStoneDevice;
 import witchinggadgets.common.blocks.tiles.TileEntityAgeingStone;
 import witchinggadgets.common.blocks.tiles.TileEntityBlastfurnace;
 import witchinggadgets.common.blocks.tiles.TileEntityEtherealWall;
-import witchinggadgets.common.blocks.tiles.TileEntityMagicalTileLock;
-import witchinggadgets.common.blocks.tiles.TileEntitySarcophagus;
 import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockWGStoneDevice extends BlockContainer
 {
-	public static String[] subNames = {"etherealWall","magicTileLock","obsidianPlate","obsidianDecoration0","obsidianDecoration1","obsidianDecoration2","sarcophagus","timeStone","blastFurnace"};
+	public static String[] subNames = {"etherealWall","timeStone","blastFurnace"};
 	IIcon[] icons = new IIcon[subNames.length];
 
 	public BlockWGStoneDevice()
@@ -52,8 +50,9 @@ public class BlockWGStoneDevice extends BlockContainer
 	@Override
 	public int damageDropped(int meta)
 	{
-		return meta==3||meta==4||meta==5?3:meta;
+		return meta;
 	}
+	
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister)
 	{	
@@ -75,8 +74,7 @@ public class BlockWGStoneDevice extends BlockContainer
 	@Override
 	public IIcon getIcon(int side, int meta)
 	{
-		if(meta==6 && (side==0||side==1))
-			return icons[2];
+
 		return icons[Math.min(meta,icons.length-1)];
 	}
 	@Override
@@ -92,8 +90,7 @@ public class BlockWGStoneDevice extends BlockContainer
 					return tile.camoID.getIcon(side, tile.camoMeta);
 			}
 		}
-		if(world.getTileEntity(x, y, z) instanceof TileEntitySarcophagus && (side==0||side==1))
-			return icons[2];
+
 		if(world.getTileEntity(x, y, z) instanceof TileEntityBlastfurnace)
 		{
 			return ((TileEntityBlastfurnace)world.getTileEntity(x, y, z)).getTexture(side);
@@ -201,18 +198,7 @@ public class BlockWGStoneDevice extends BlockContainer
 	@Override
 	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z)
 	{
-		if(world.getTileEntity(x, y, z) instanceof TileEntitySarcophagus && !((TileEntitySarcophagus)world.getTileEntity(x, y, z)).dummyLeft && !((TileEntitySarcophagus)world.getTileEntity(x, y, z)).dummyRight)
-		{
-			switch( ((TileEntitySarcophagus)world.getTileEntity(x, y, z)).facing )
-			{
-			case 2:
-			case 3:
-				return AxisAlignedBB.getBoundingBox(x-1,y+0,z+0,   x+2,y+1,z+1);
-			case 4:
-			case 5:
-				return AxisAlignedBB.getBoundingBox(x+0,y+0,z-1,   x+1,y+1,z+2);
-			}
-		}
+		
 		if(world.getTileEntity(x, y, z) instanceof TileEntityBlastfurnace && ((TileEntityBlastfurnace)world.getTileEntity(x, y, z)).position==22)
 		{
 			return AxisAlignedBB.getBoundingBox(x,y,z, x,y,z);
@@ -260,12 +246,8 @@ public class BlockWGStoneDevice extends BlockContainer
 		case 0:
 			return new TileEntityEtherealWall();
 		case 1:
-			return new TileEntityMagicalTileLock();
-		case 6:
-			return new TileEntitySarcophagus();
-		case 7:
 			return new TileEntityAgeingStone();
-		case 8:
+		case 2:
 			return new TileEntityBlastfurnace();
 		}
 		return null;
@@ -279,98 +261,14 @@ public class BlockWGStoneDevice extends BlockContainer
 		int f = playerViewQuarter==0 ? 2:playerViewQuarter==1 ? 5:playerViewQuarter==2 ? 3: 4;
 		/*if(meta == 0)
 			((TileEntityEtherealWall)world.getTileEntity(x,y,z)).facing = f;
-		else*/ if(meta == 1)
-		{
-			((TileEntityMagicalTileLock)world.getTileEntity(x,y,z)).lockPreset = entityLiving.getRNG().nextInt(16);
-		}
-		else if(meta==3)
-		{
-			world.setBlockMetadataWithNotify(x, y, z, meta+entityLiving.getRNG().nextInt(3), 0x3);
-		}
-		else if(meta == 6)
-		{
-			((TileEntitySarcophagus)world.getTileEntity(x,y,z)).facing = f;
-			if(f==2||f==3)
-			{
-				world.setBlock(x-1,y,z, this,6, 0x3);
-				((TileEntitySarcophagus)world.getTileEntity(x-1,y,z)).facing = f;
-				((TileEntitySarcophagus)world.getTileEntity(x-1,y,z)).dummyLeft = true;
-				world.setBlock(x+1,y,z, this,6, 0x3);
-				((TileEntitySarcophagus)world.getTileEntity(x+1,y,z)).facing = f;
-				((TileEntitySarcophagus)world.getTileEntity(x+1,y,z)).dummyRight = true;
-			}
-			else
-			{
-				world.setBlock(x,y,z-1, this,6, 0x3);
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z-1)).facing = f;
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z-1)).dummyLeft = true;
-				world.setBlock(x,y,z+1, this,6, 0x3);
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z+1)).facing = f;
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z+1)).dummyRight = true;
-			}
-		}
+		else*/ 
+
 	}
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block b, int side)
 	{
-		if(world.getTileEntity(x, y, z) instanceof TileEntitySarcophagus)
-		{
-			if( ((TileEntitySarcophagus)world.getTileEntity(x,y,z)).facing==2||((TileEntitySarcophagus)world.getTileEntity(x,y,z)).facing==3 )
-			{
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyLeft)
-					x+=1;
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyRight)
-					x-=1;
-			}
-			else
-			{
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyLeft)
-					z+=1;
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyRight)
-					z-=1;
-			}
-
-			ItemStack[] inv = ((TileEntitySarcophagus)world.getTileEntity(x,y,z)).inv;
-			if(!((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyLeft && !((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyRight)
-				switch( ((TileEntitySarcophagus)world.getTileEntity(x, y, z)).facing )
-				{
-				case 2:
-				case 3:
-					world.setBlockToAir(x-1,y,z);
-					world.setBlockToAir(x,y,z);
-					world.setBlockToAir(x+1,y,z);
-				case 4:
-				case 5:
-					world.setBlockToAir(x,y,z-1);
-					world.setBlockToAir(x,y,z);
-					world.setBlockToAir(x,y,z+1);
-				}
-			for(ItemStack s : inv)
-			{
-				if (s != null)
-				{
-					float f = world.rand.nextFloat() * 0.8F + 0.1F;
-					float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-					EntityItem entityitem;
-					for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F; s.stackSize > 0; world.spawnEntityInWorld(entityitem))
-					{
-						int k1 = world.rand.nextInt(21) + 10;
-						if (k1 > s.stackSize)
-							k1 = s.stackSize;
-						s.stackSize -= k1;
-						entityitem = new EntityItem(world, x + f, y + f1, z + f2, new ItemStack(s.getItem(), k1, s.getItemDamage()));
-						float f3 = 0.05F;
-						entityitem.motionX = (float)world.rand.nextGaussian() * f3;
-						entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
-						entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
-
-						if (s.hasTagCompound())
-							entityitem.getEntityItem().setTagCompound((NBTTagCompound)s.getTagCompound().copy());
-					}
-				}
-			}
-		}
+		
 		if(world.getTileEntity(x, y, z) instanceof TileEntityBlastfurnace)
 		{
 
@@ -394,7 +292,7 @@ public class BlockWGStoneDevice extends BlockContainer
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
-		if(metadata==6 || metadata==8)
+		if(metadata==2)
 			return new ArrayList();
 		return super.getDrops(world, x, y, z, metadata, fortune);
 	}
@@ -488,71 +386,7 @@ public class BlockWGStoneDevice extends BlockContainer
 			}
 			return changeTexture;
 		}
-		if(world.getTileEntity(x, y, z) instanceof TileEntityMagicalTileLock)
-		{
-			if(((TileEntityMagicalTileLock)world.getTileEntity(x,y,z)).lockPreset<0)
-				((TileEntityMagicalTileLock)world.getTileEntity(x,y,z)).lockPreset = world.rand.nextInt(16);
-
-			player.openGui(WitchingGadgets.instance, 10, world, x, y, z);
-			return true;
-		}
-		if(world.getTileEntity(x, y, z) instanceof TileEntitySarcophagus && !((TileEntitySarcophagus)world.getTileEntity(x,y,z)).open)
-		{
-			if( ((TileEntitySarcophagus)world.getTileEntity(x,y,z)).facing==2||((TileEntitySarcophagus)world.getTileEntity(x,y,z)).facing==3 )
-			{
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyLeft)
-					x+=1;
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyRight)
-					x-=1;
-			}
-			else
-			{
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyLeft)
-					z+=1;
-				if(((TileEntitySarcophagus)world.getTileEntity(x,y,z)).dummyRight)
-					z-=1;
-			}
-
-			if( ((TileEntitySarcophagus)world.getTileEntity(x,y,z)).facing==2||((TileEntitySarcophagus)world.getTileEntity(x,y,z)).facing==3 )
-			{
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z)).open = true;
-				((TileEntitySarcophagus)world.getTileEntity(x+1,y,z)).open = true;
-				((TileEntitySarcophagus)world.getTileEntity(x-1,y,z)).open = true;
-				world.markBlockRangeForRenderUpdate(x-1,y,z, x+1,y,z);
-			}
-			else
-			{
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z)).open = true;
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z+1)).open = true;
-				((TileEntitySarcophagus)world.getTileEntity(x,y,z-1)).open = true;
-				world.markBlockRangeForRenderUpdate(x,y,z-1, x,y,z+1);
-			}
-			if(!world.isRemote)
-				for(ItemStack s : ((TileEntitySarcophagus)world.getTileEntity(x,y,z)).inv)
-				{
-					if (s != null)
-					{
-						float f = world.rand.nextFloat() * 0.8F + 0.1F;
-						float f1 = world.rand.nextFloat() * 0.8F + 0.75F;
-						EntityItem entityitem;
-						for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F; s.stackSize > 0; world.spawnEntityInWorld(entityitem))
-						{
-							int k1 = world.rand.nextInt(21) + 10;
-							if (k1 > s.stackSize)
-								k1 = s.stackSize;
-							s.stackSize -= k1;
-							entityitem = new EntityItem(world, x + f, y + f1, z + f2, new ItemStack(s.getItem(), k1, s.getItemDamage()));
-							float f3 = 0.05F;
-							entityitem.motionX = (float)world.rand.nextGaussian() * f3;
-							entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
-							entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
-
-							if (s.hasTagCompound())
-								entityitem.getEntityItem().setTagCompound((NBTTagCompound)s.getTagCompound().copy());
-						}
-					}
-				}
-		}
+		
 		return false;
 	}
 
@@ -625,20 +459,4 @@ public class BlockWGStoneDevice extends BlockContainer
 		return 0xFFFFFF;
 	}
 
-	@Override
-	public float getBlockHardness(World world, int x, int y, int z)
-	{
-		int md = world.getBlockMetadata(x, y, z);
-		if(md==1 || md==2)
-			return -1f;
-		return super.getBlockHardness(world,x,y,z);
-	}
-	@Override
-	public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
-	{
-		int md = world.getBlockMetadata(x, y, z);
-		if(md==1 || md==2)
-			return 999.0F;
-		return getExplosionResistance(par1Entity);
-	}
 }

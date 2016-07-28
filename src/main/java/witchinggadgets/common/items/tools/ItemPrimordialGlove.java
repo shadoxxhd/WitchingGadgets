@@ -171,7 +171,7 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
 	{
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if(!world.isRemote && tile!=null && tileentity instanceof INode)
+		if(!world.isRemote && tile!=null && tile instanceof INode)
 		{
 			INode node = (INode) tile;
 			AspectList primals = new AspectList();

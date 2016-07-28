@@ -68,6 +68,8 @@ item.WG_MagicFood.nethercake.name=Nethercake
 item.WG_MagicFood.brainjerky.name=Brain Jerky
 item.WG_AdvancedRobeChest.name=Bewitched Robe
 item.WG_AdvancedRobeLegs.name=Bewitched Leggings
+
+//?
 item.WG_AdvancedScribingTools.name=Illuminated Scribing Tools
 
 item.WG_Cloak.standard.name=Cloak
@@ -82,6 +84,7 @@ item.WG_Kama.raven.name=Kama of the Raven
 item.WG_Kama.spectral.name=Spectral Kama
 item.WG_Kama.wolf.name=Wolven Kama
 
+//unused
 item.WG_EliteArmorHelm.ANGELIC_0.name=Ophanic Helm
 item.WG_EliteArmorChest.ANGELIC_1.name=Seraph's Cuirass
 item.WG_EliteArmorLegs.ANGELIC_2.name=Cherub Greaves
@@ -91,6 +94,7 @@ item.WG_EliteArmorHelm.DEMONIC_0.name=Helm of Leviathan
 item.WG_EliteArmorChest.DEMONIC_1.name=Asrael's Cuirass
 item.WG_EliteArmorLegs.DEMONIC_2.name=Lycan's Greaves
 item.WG_EliteArmorBoots.DEMONIC_3.name=Claws of the Behemoth
+//
 
 item.WG_InfusedGem.name=Infused Gem
 item.WG_InfusedGem.innert.name=Inert Gem
@@ -112,9 +116,9 @@ item.WG_Baubles.shouldersKnockback.name=Steadfast Spaulders
 item.WG_Baubles.vambraceStrength.name=Berserker's Bracers
 item.WG_Baubles.vambraceHaste.name=Vambraces of Steady Progression
 item.WG_Baubles.titleCrimsonCult.name=Title: Crimson Cult
-wg.title.crimsonCultist=Crimson Cultist
-wg.title.crimsonKnight=Crimson Knight
-wg.title.crimsonPraetor=Crimson Praetor
+wg.title.crimsonCultist=§4Crimson Cultist
+wg.title.crimsonKnight=§4Crimson Knight
+wg.title.crimsonPraetor=§6Crimson Praetor
 item.WG_Baubles.ringLuck.name=Ring of the Covetous Coin
 item.WG_Baubles.ringSniper.name=Band of the Sniper
 
