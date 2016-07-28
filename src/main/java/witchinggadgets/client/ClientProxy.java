@@ -19,7 +19,7 @@ import witchinggadgets.client.gui.GuiBag;
 import witchinggadgets.client.gui.GuiCloakBag;
 import witchinggadgets.client.gui.GuiCuttingTable;
 import witchinggadgets.client.gui.GuiLabelLibrary;
-import witchinggadgets.client.gui.GuiMagicalTileLock;
+
 import witchinggadgets.client.gui.GuiPrimordialGlove;
 import witchinggadgets.client.gui.GuiSpinningWheel;
 import witchinggadgets.client.gui.GuiVoidBag;
@@ -38,13 +38,11 @@ import witchinggadgets.client.render.TileRenderCobbleGen;
 import witchinggadgets.client.render.TileRenderCuttingTable;
 import witchinggadgets.client.render.TileRenderEssentiaPump;
 import witchinggadgets.client.render.TileRenderLabelLibrary;
-import witchinggadgets.client.render.TileRenderMagicalTileLock;
-import witchinggadgets.client.render.TileRenderSarcophagus;
+
 import witchinggadgets.client.render.TileRenderSaunaStove;
 import witchinggadgets.client.render.TileRenderSnowGen;
 import witchinggadgets.client.render.TileRenderSpinningWheel;
-import witchinggadgets.client.render.TileRenderTerraformFocus;
-import witchinggadgets.client.render.TileRenderTerraformer;
+
 import witchinggadgets.client.render.TileRenderWallMirror;
 import witchinggadgets.common.CommonProxy;
 import witchinggadgets.common.WGContent;
@@ -52,13 +50,11 @@ import witchinggadgets.common.blocks.tiles.TileEntityCobbleGen;
 import witchinggadgets.common.blocks.tiles.TileEntityCuttingTable;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
 import witchinggadgets.common.blocks.tiles.TileEntityLabelLibrary;
-import witchinggadgets.common.blocks.tiles.TileEntityMagicalTileLock;
-import witchinggadgets.common.blocks.tiles.TileEntitySarcophagus;
+
 import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
-import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
-import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
+
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
 import witchinggadgets.common.util.WGKeyHandler;
@@ -87,13 +83,11 @@ public class ClientProxy extends CommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySpinningWheel.class, new TileRenderSpinningWheel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySnowGen.class, new TileRenderSnowGen());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCobbleGen.class, new TileRenderCobbleGen());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMagicalTileLock.class, new TileRenderMagicalTileLock());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySarcophagus.class, new TileRenderSarcophagus());
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCuttingTable.class, new TileRenderCuttingTable());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLabelLibrary.class, new TileRenderLabelLibrary());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySaunaStove.class, new TileRenderSaunaStove());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTerraformer.class, new TileRenderTerraformer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTerraformFocus.class, new TileRenderTerraformFocus());
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssentiaPump.class, new TileRenderEssentiaPump());
 
 		eliteArmorModel = ClientUtilities.bindModel("witchinggadgets","models/EliteRunicArmor.obj");
@@ -141,9 +135,7 @@ public class ClientProxy extends CommonProxy
 
 		if(ID == 9)return new GuiCuttingTable(player.inventory, (TileEntityCuttingTable)tile);
 
-		if(ID == 10)return new GuiMagicalTileLock((TileEntityMagicalTileLock) tile);
-
-		if(ID == 11)return new GuiVoidBag(player.inventory, world);
+		if(ID == 10)return new GuiVoidBag(player.inventory, world);
 
 		return null;
 	}

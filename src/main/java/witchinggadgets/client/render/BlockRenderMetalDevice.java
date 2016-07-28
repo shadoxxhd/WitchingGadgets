@@ -19,8 +19,7 @@ import org.lwjgl.opengl.GL11;
 
 import thaumcraft.client.renderers.block.BlockRenderer;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
-import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
-import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -32,7 +31,7 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
 	{
-		if(metadata==7)
+		if(metadata==1)
 		{
 			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 			renderer.setRenderBoundsFromBlock(block);
@@ -47,19 +46,7 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler
 					GL11.glTranslatef(-.5f, -.5F, -.5f);
 					TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEntityEssentiaPump(), 0.0D, 0.0D, 0.0D, 0.0F);
 				}
-				else if(metadata==1)
-				{
-					GL11.glTranslatef(-.5f, -.5F, -.5f);
-					TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEntityTerraformer(), 0.0D, 0.0D, 0.0D, 0.0F);
-				}
-				else if((metadata>=2&&metadata<=6)||metadata>7)
-				{
-					GL11.glTranslatef(-.5f, -.5F, -.5f);
-					TileEntityTerraformFocus tetf = new TileEntityTerraformFocus();
-					tetf.blockType = block;
-					tetf.blockMetadata = metadata;
-					TileEntityRendererDispatcher.instance.renderTileEntityAt(tetf, 0.0D, 0.0D, 0.0D, 0.0F);
-				}
+
 			}catch(Exception e)
 			{
 				e.printStackTrace();
@@ -72,7 +59,7 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
 	{
-		if(world.getBlockMetadata(x, y, z)==7)
+		if(world.getBlockMetadata(x, y, z)==1)
 		{
 			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 			renderer.setRenderBoundsFromBlock(block);

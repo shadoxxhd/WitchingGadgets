@@ -25,6 +25,10 @@
 /world
 /armourersWorkshop
 /equipmen-database
+
+/src/api
+wg*.*
+
 options.txt
 eula.txt
 server.properties

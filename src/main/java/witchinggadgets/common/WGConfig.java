@@ -11,21 +11,40 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class WGConfig
 {
-	public static int cloakAnimationMode;
 	public static boolean limitBookSearchToCategory;
+	
 	public static boolean allowClusters;
 	public static boolean allowTransmutations;
 	public static String[] tripplingClusterList;
-
+	public static int smelteryResultForClusters;
+	
 	public static boolean coremod_allowBootsRepair;
-	public static boolean coremod_allowFocusPouchActive;
+
 	public static boolean coremod_allowEnchantModifications;
-	public static boolean coremod_allowPotionApplicationMod;
+
 	public static Block[] coremod_worldgenValidBase_HilltopStones;
 	public static Block[] coremod_worldgenValidBase_EldritchRing;
 
-	public static int smelteryResultForClusters;
+	public static int cloakAnimationMode;
 	public static float radialSpeed;
+	public static boolean coremod_allowPotionApplicationMod;
+	public static boolean coremod_allowFocusPouchActive;
+	
+	//new
+	public static boolean modulePrimal;
+	
+	public static boolean moduleBag;
+	public static boolean bagVoid;
+	public static boolean bagEnder;
+	public static boolean bagHungry;
+	
+	public static boolean moduleCloak;
+	public static boolean moduleKama;
+	public static boolean capeSpectral;
+	public static boolean capeStorage;
+	public static boolean capeWolf;
+	public static boolean capeRaven;
+	
 
 	static Configuration config;
 	public static void loadConfig(FMLPreInitializationEvent event)
@@ -34,10 +53,9 @@ public class WGConfig
 		config.load();
 
 		// Random Config Options
-		cloakAnimationMode = config.get("Other Options", "Cloak Animation Mod", 2, "0 = no animation, 1 = rotate cloak when legs move, 2 = stretch cloak when legs move").getInt();
 		smelteryResultForClusters = config.get("Other Options", "Smeltery Result for Clusters", 144*3, "How many milliBuckets of molten Metal a cluster should give. 144mB equal 1 ingot. Set to 0 to disable smeltery recipes.").getInt();
-		allowClusters = config.get("Other Options", "Enable clusters", true, "Set this to false to disable clusters, useful when you are usign AOBD.").getBoolean(true);
-		allowTransmutations = config.get("Other Options", "Enable transmutations", true, "Set this to false to disable nugget transmutations, this should fix the infinite loop glitch").getBoolean(true);
+		allowClusters = config.get("Ore/Crucible", "Enable clusters", true, "Set this to false to disable clusters, useful when you are using AOBD.").getBoolean(true);
+		allowTransmutations = config.get("Ore/Crucible", "Enable transmutations", false, "Set this to false to disable nugget transmutations, this should fix the infinite loop glitch").getBoolean(false);
 		String[] clusters = {
 		//Tinkers
 		"Aluminum","Cobalt","Ardite",
@@ -50,16 +68,60 @@ public class WGConfig
 		"Prometheum","DeepIron","Infuscolium","Oureclase","AstralSilver","Carmot","Mithril","Rubracium","Orichalcum","Adamantine","Atlarus","Eximite","Meutoite",
 		//Others
 		"Uranium"};
-		tripplingClusterList = config.get("Other Options", "Trippling Cluster List", clusters, "A list of ore names for which the clsuters should smelt into three ingots. This is so that custom AOBD clsuters can be thrown into the Blast Furnace").getStringList();
+		tripplingClusterList = config.get("Ore/Crucible", "Trippling Cluster List", clusters, "A list of ore names for which the clsuters should smelt into three ingots. This is so that custom AOBD clusters can be thrown into the Blast Furnace").getStringList();
 		
-		limitBookSearchToCategory = config.get("Other Options", "Limit Book Search", false, "Thaumonomicon Search to currently active category").getBoolean(false);
-		radialSpeed = config.getFloat("Other Options", "Selection Radial Speed", .15f, .15f, 1, "The speed at which the gem-selection for the primordial glove opens. 15% is the minimum.");
-
-		coremod_allowBootsRepair = config.get("Other Options", "Allow Boot repair", true, "Dis-/enable repairing the Boots of the Traveller with leather").getBoolean(true);
+		//search
+		limitBookSearchToCategory = config.get("Other Options", "Limit Thaumonomicon Search to currently active category", false, "Thaumonomicon Search to currently active category").getBoolean(false);
+		
+		//cloak related
+		radialSpeed = config.getFloat("Selection Radial Speed", "Other Options", .15f, .15f, 1, "The speed at which the gem-selection for the primordial glove opens. 15% is the minimum.");
+		cloakAnimationMode = config.get("Other Options", "Cloak Animation Mode", 2, "0 = no animation, 1 = rotate cloak when legs move, 2 = stretch cloak when legs move").getInt();
 		coremod_allowFocusPouchActive = config.get("Other Options", "Allow FocusPouch active ability", true, "Dis-/enable the IActiveAbiltiy on the FocusPouch. With this enabled, TGs active ability menu will allow you to open the pouch.").getBoolean(true);
-		coremod_allowEnchantModifications = config.get("Other Options", "Allow Enchantment modifications", true, "Dis-/enable the modification of looting and fortune modifications with the Ring of the Covetous Coin").getBoolean(true);
+				
+		coremod_allowBootsRepair = config.get("Other Options", "Dis-/enable repairing the Boots of the Traveller with leather", true, "Dis-/enable repairing the Boots of the Traveller with leather").getBoolean(true);
+		
+		//coin
+		coremod_allowEnchantModifications = config.get("Other Options", "Dis-/enable the modification of looting and fortune modifications with the Ring of the Covetous Coin", true, "Dis-/enable the modification of looting and fortune modifications with the Ring of the Covetous Coin").getBoolean(true);
+		
+		//primal
 		coremod_allowPotionApplicationMod = config.get("Other Options", "Allow modifications to newly applied PotionEffects", true, "Dis-/enable the modification of newly applied PotionEffects. (Primordial Armor affects newly applied Warp Effects)").getBoolean(true);
-
+		
+		//new
+		modulePrimal = config.get("Modules", "Enable Primordial gear and weapons", true, 
+				"Dis-/enable the primordial gauntlet, armor and weapons")
+				.getBoolean(true);
+		moduleBag = config.get("Modules", "Enable Bags", true, 
+				"Enable Bags")
+				.getBoolean(true);
+		bagVoid = config.get("Modules", "Enable Voidlinked Bag", true, 
+				"Enable Voidlinked Bag. Requires Bags to be enabled")
+				.getBoolean(true);
+		bagEnder = config.get("Modules", "Enable Enderlinked Bag", true, 
+				"Enable Enderlinked Bag. Requires Bags to be enabled")
+				.getBoolean(true);
+		bagHungry = config.get("Modules", "Enable Hungry Bag", true, 
+				"Enable Hungry Bag. Requires Bags to be enabled")
+				.getBoolean(true);
+		moduleCloak = config.get("Modules", "Enable Cloaks", true, 
+				"Enable Cloaks")
+				.getBoolean(true);
+		moduleKama = config.get("Modules", "Enable Kamas and variants", true, 
+				"Enable Kamas and variants. Requires Cloaks, and respective capes to be enabled")
+				.getBoolean(true);
+		capeSpectral = config.get("Modules", "Enable Spectral Mantle", true, 
+				"Enable Spectral Mantle. Requires Cloaks to be enabled")
+				.getBoolean(true);
+		capeStorage = config.get("Modules", "Enable Cloak of Voluminous Pockets", true,
+				"Enable Cloak of Voluminous Pockets")
+				.getBoolean(true);
+		capeWolf = config.get("Modules", "Enable Wolven Cloak", true,
+				"Enable Wolven Cloak. Requires Cloaks to be enabled")
+				.getBoolean(true);
+		capeRaven = config.get("Modules", "Enable Mantle of the Raven", true,
+				"Enable Mantle of the Raven. Requires Cloaks to be enabled, and Twilight Forest installed")
+				.getBoolean(true);
+		
+		//spawn settings for structures
 		String[] cm_allowedSpawnblocks_HilltopStones = config.getStringList("Valid generation bases: HilltopStones", "Other", new String[]{"minecraft:stone","minecraft:sand","minecraft:packed_ice","minecraft:grass","minecraft:gravel","minecraft:dirt"}, "A list of valid blocks that Thaumcraft's hilltop stones can spawn upon");
 		Set<Block> validBlocks = new HashSet();
 		for(int ss=0; ss<cm_allowedSpawnblocks_HilltopStones.length; ss++)
@@ -94,14 +156,14 @@ public class WGConfig
 	public static int getPotionID(int base, String key)
 	{
 		config.load();
-		int i = config.get("Other Options", "Potion ID: "+key, Utilities.getNextPotionId(base)).getInt();
+		int i = config.get("Potions", "Potion ID: "+key, Utilities.getNextPotionId(base)).getInt();
 		config.save();
 		return i;
 	}
 	public static int getEnchantmentID(int base, String key)
 	{
 		config.load();
-		int i = config.get("Other Options", "Enchantment ID: "+key, Utilities.getNextEnchantmentId(base)).getInt();
+		int i = config.get("Enchantments", "Enchantment ID: "+key, Utilities.getNextEnchantmentId(base)).getInt();
 		config.save();
 		return i;
 	}

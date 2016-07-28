@@ -307,7 +307,9 @@ public class ClientEventHandler
 				event.shouldRender=false;
 	}
 
-	@SideOnly(Side.CLIENT)
+	//Changes the background image once certain research is unlocked
+	//Commenting out because tab layout changed, but it's a neat piece of code
+	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event)
 	{
@@ -318,7 +320,7 @@ public class ClientEventHandler
 			else
 				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
 		}
-	}
+	}*/
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

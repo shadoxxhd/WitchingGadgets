@@ -18,23 +18,22 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import witchinggadgets.WitchingGadgets;
-import witchinggadgets.api.ITerraformFocus;
+
 import witchinggadgets.client.render.BlockRenderMetalDevice;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
-import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
-import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocus
+public class BlockWGMetalDevice extends BlockContainer 
 {
-	public static String[] subNames = {"essentiaPump","terraformer","tfFocusPlains","tfFocusColdTaiga","tfFocusDesert","tfFocusJungle","tfFocusHell","voidmetalBlock","tfFocusTaint","tfFocusMushroom"};
+	public static String[] subNames = {"essentiaPump","voidmetalBlock"};
 	IIcon[] icons = new IIcon[subNames.length];
 
 	public BlockWGMetalDevice()
@@ -48,7 +47,7 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 	@Override
 	public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ)
     {
-        return worldObj.getBlockMetadata(x, y, z)==7;
+        return worldObj.getBlockMetadata(x, y, z)==1;
     }
 	
 	@Override
@@ -61,7 +60,7 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 	{	
 		for(int i=0;i<icons.length;i++)
 		{
-			if(i<7||i>7)
+			if(i<1||i>1)
 				icons[i] = iconRegister.registerIcon("thaumcraft:metalbase");
 			else
 				icons[i] = iconRegister.registerIcon("witchinggadgets:"+subNames[i]);
@@ -127,8 +126,7 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 			ForgeDirection fd = ((TileEntityEssentiaPump)world.getTileEntity(x, y, z)).facing;
 			this.setBlockBounds(fd==ForgeDirection.EAST?.25f:0,fd==ForgeDirection.UP?.25f:0,fd==ForgeDirection.SOUTH?.25f:0, fd==ForgeDirection.WEST?.75f:1,fd==ForgeDirection.DOWN?.75f:1,fd==ForgeDirection.SOUTH?.75f:1);
 		}
-		else if(world.getBlockMetadata(x, y, z)>=2&&world.getBlockMetadata(x, y, z)<=6)
-			this.setBlockBounds(.125f,0,.125f, .875f,.75f,.875f);
+
 		else
 			this.setBlockBounds(0,0,0,1,1,1);
 	}
@@ -141,18 +139,7 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 		case 0:
 			return new TileEntityEssentiaPump();
 		case 1:
-			return new TileEntityTerraformer();
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-			return new TileEntityTerraformFocus();
-		case 7:
 			return null;
-		case 8:
-		case 9:
-			return new TileEntityTerraformFocus();
 		}
 		return null;
 	}
@@ -190,96 +177,5 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 		return BlockRenderMetalDevice.renderID;
 	}
 
-	@Override
-	public Aspect requiredAspect(int meta)
-	{
-		if(meta<subNames.length && subNames[meta].startsWith("tfFocus"))
-		{
-			if(subNames[meta].equalsIgnoreCase("tfFocusPlains"))
-				return Aspect.PLANT;
-			if(subNames[meta].equalsIgnoreCase("tfFocusColdTaiga"))
-				return Aspect.COLD;
-			if(subNames[meta].equalsIgnoreCase("tfFocusDesert"))
-				return Aspect.FIRE;
-			if(subNames[meta].equalsIgnoreCase("tfFocusJungle"))
-				return Aspect.TREE;
-			if(subNames[meta].equalsIgnoreCase("tfFocusHell"))
-				return Aspect.DARKNESS;
-			if(subNames[meta].equalsIgnoreCase("tfFocusTaint"))
-				return Aspect.TAINT;
-			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
-				return Aspect.SLIME;
-		}
-		return null;
-	}
-	@Override
-	public Aspect requiredAspect(World world, int x, int y, int z)
-	{
-		int meta = world.getBlockMetadata(x,y,z);
-		if(meta<subNames.length && subNames[meta].startsWith("tfFocus"))
-		{
-			if(subNames[meta].equalsIgnoreCase("tfFocusPlains"))
-				return Aspect.PLANT;
-			if(subNames[meta].equalsIgnoreCase("tfFocusColdTaiga"))
-				return Aspect.COLD;
-			if(subNames[meta].equalsIgnoreCase("tfFocusDesert"))
-				return Aspect.FIRE;
-			if(subNames[meta].equalsIgnoreCase("tfFocusJungle"))
-				return Aspect.TREE;
-			if(subNames[meta].equalsIgnoreCase("tfFocusHell"))
-				return Aspect.DARKNESS;
-			if(subNames[meta].equalsIgnoreCase("tfFocusTaint"))
-				return Aspect.TAINT;
-			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
-				return Aspect.SLIME;
-		}
-		return null;
-	}
-
-	@Override
-	public BiomeGenBase getCreatedBiome(World world, int x, int y, int z)
-	{
-		int meta = world.getBlockMetadata(x,y,z);
-		if(meta<subNames.length && subNames[meta].startsWith("tfFocus"))
-		{
-			if(subNames[meta].equalsIgnoreCase("tfFocusPlains"))
-				return BiomeGenBase.plains;
-			if(subNames[meta].equalsIgnoreCase("tfFocusColdTaiga"))
-				return BiomeGenBase.coldTaiga;
-			if(subNames[meta].equalsIgnoreCase("tfFocusDesert"))
-				return BiomeGenBase.desert;
-			if(subNames[meta].equalsIgnoreCase("tfFocusJungle"))
-				return BiomeGenBase.jungle;
-			if(subNames[meta].equalsIgnoreCase("tfFocusHell"))
-				return BiomeGenBase.hell;
-			if(subNames[meta].equalsIgnoreCase("tfFocusTaint"))
-				return ThaumcraftWorldGenerator.biomeTaint;
-			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
-				return BiomeGenBase.mushroomIsland;
-		}
-		return null;
-	}
-	@Override
-	public ItemStack getDisplayedBlock(World world, int x, int y, int z)
-	{
-		int meta = world.getBlockMetadata(x,y,z);
-		if(meta<subNames.length && subNames[meta].startsWith("tfFocus"))
-		{
-			if(subNames[meta].equalsIgnoreCase("tfFocusPlains"))
-				return new ItemStack(Blocks.grass);
-			if(subNames[meta].equalsIgnoreCase("tfFocusColdTaiga"))
-				return new ItemStack(Blocks.ice);
-			if(subNames[meta].equalsIgnoreCase("tfFocusDesert"))
-				return new ItemStack(Blocks.sand);
-			if(subNames[meta].equalsIgnoreCase("tfFocusJungle"))
-				return new ItemStack(Blocks.log,1,3);
-			if(subNames[meta].equalsIgnoreCase("tfFocusHell"))
-				return new ItemStack(Blocks.nether_brick);
-			if(subNames[meta].equalsIgnoreCase("tfFocusTaint"))
-				return new ItemStack(ConfigBlocks.blockTaint);
-			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
-				return new ItemStack(Blocks.mycelium);
-		}
-		return null;
-	}
+	
 }

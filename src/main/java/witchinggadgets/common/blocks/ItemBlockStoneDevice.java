@@ -27,10 +27,8 @@ public class ItemBlockStoneDevice extends ItemBlock
 	{
 		itemList.add(new ItemStack(item,1,0));
 		itemList.add(new ItemStack(item,1,1));
-		itemList.add(new ItemStack(item,1,2));
-		itemList.add(new ItemStack(item,1,3));
-		itemList.add(new ItemStack(item,1,6));
-		itemList.add(new ItemStack(item,1,7));
+
+
 	}
 
 	@Override

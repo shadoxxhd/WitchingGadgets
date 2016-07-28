@@ -192,12 +192,16 @@ public class EventHandler
 					event.drops.add(entityitem);
 				}
 		}
+		
+		//here resides the cancer of crimson titles. begone
+		/*
 		if(event.entityLiving instanceof EntityCultistCleric && event.entityLiving.worldObj.rand.nextInt(10)<1+event.lootingLevel)
 			event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonCultist")));
 		if(event.entityLiving instanceof EntityCultistKnight && event.entityLiving.worldObj.rand.nextInt(10)<1+event.lootingLevel)
 			event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonKnight")));
 		if(event.entityLiving instanceof EntityCultistLeader && event.entityLiving.worldObj.rand.nextInt(2)==0)
 			event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonPraetor")));
+		*/
 
 		if(event.recentlyHit && event.source!=null && event.source.getSourceOfDamage() instanceof EntityPlayer)
 		{

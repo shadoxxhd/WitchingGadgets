@@ -7,8 +7,8 @@
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authors": ["BluSunrize"],
-  "credits": "The Forge guys, Azanor for Thaucmraft, SlimeKnights for the packet system, 'The Skype Guys' and #kihira on IRC for inspiration and criticism",
+  "authorList": ["BluSunrize", "KryptonCaptain"],
+  "credits": "",
   "logoFile": "assets/witchinggadgets/logo.png",
   "screenshots": [],
   "dependencies": ["Thaumcraft","TravellersGear"]
