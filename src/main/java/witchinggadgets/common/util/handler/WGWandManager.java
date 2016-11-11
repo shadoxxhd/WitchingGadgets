@@ -86,7 +86,7 @@ public class WGWandManager implements IWandTriggerManager
 				for(int zz=-1;zz<=1;zz++)
 					for(int xx=-1;xx<=1;xx++)
 					{
-						world.setBlock(x+xx,y+yy,z+zz, WGContent.BlockStoneDevice,8, 3);
+						world.setBlock(x+xx,y+yy,z+zz, WGContent.BlockStoneDevice, 2, 3);
 						TileEntityBlastfurnace tile = (TileEntityBlastfurnace)world.getTileEntity(x+xx,y+yy,z+zz);
 						tile.masterPos = new int[]{x,y,z};
 						byte pos = (byte)( (yy*9)+((zz+1)*3)+(xx+1) );
