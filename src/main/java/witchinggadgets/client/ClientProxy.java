@@ -19,7 +19,6 @@ import witchinggadgets.client.gui.GuiBag;
 import witchinggadgets.client.gui.GuiCloakBag;
 import witchinggadgets.client.gui.GuiCuttingTable;
 import witchinggadgets.client.gui.GuiLabelLibrary;
-
 import witchinggadgets.client.gui.GuiPrimordialGlove;
 import witchinggadgets.client.gui.GuiSpinningWheel;
 import witchinggadgets.client.gui.GuiVoidBag;
@@ -38,23 +37,20 @@ import witchinggadgets.client.render.TileRenderCobbleGen;
 import witchinggadgets.client.render.TileRenderCuttingTable;
 import witchinggadgets.client.render.TileRenderEssentiaPump;
 import witchinggadgets.client.render.TileRenderLabelLibrary;
-
 import witchinggadgets.client.render.TileRenderSaunaStove;
 import witchinggadgets.client.render.TileRenderSnowGen;
 import witchinggadgets.client.render.TileRenderSpinningWheel;
-
 import witchinggadgets.client.render.TileRenderWallMirror;
 import witchinggadgets.common.CommonProxy;
+import witchinggadgets.common.WGConfig;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.blocks.tiles.TileEntityCobbleGen;
 import witchinggadgets.common.blocks.tiles.TileEntityCuttingTable;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
 import witchinggadgets.common.blocks.tiles.TileEntityLabelLibrary;
-
 import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
-
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
 import witchinggadgets.common.util.WGKeyHandler;
@@ -115,7 +111,10 @@ public class ClientProxy extends CommonProxy
 		FMLCommonHandler.instance().bus().register(new WGKeyHandler());
 		FMLCommonHandler.instance().bus().register(new ClientTickHandler());
 
-		ThaumonomiconIndexSearcher.init();
+		if (WGConfig.enableSearch) {
+			ThaumonomiconIndexSearcher.init();
+		}
+		
 	}
 
 	@Override

@@ -45,6 +45,8 @@ public class WGConfig
 	public static boolean capeWolf;
 	public static boolean capeRaven;
 	
+	public static boolean enableSearch;
+	
 
 	static Configuration config;
 	public static void loadConfig(FMLPreInitializationEvent event)
@@ -71,7 +73,9 @@ public class WGConfig
 		tripplingClusterList = config.get("Ore/Crucible", "Trippling Cluster List", clusters, "A list of ore names for which the clsuters should smelt into three ingots. This is so that custom AOBD clusters can be thrown into the Blast Furnace").getStringList();
 		
 		//search
-		limitBookSearchToCategory = config.get("Other Options", "Limit Thaumonomicon Search to currently active category", false, "Thaumonomicon Search to currently active category").getBoolean(false);
+		limitBookSearchToCategory = config.get("Search", "Limit Thaumonomicon Search to currently active category", false, "Thaumonomicon Search to currently active category").getBoolean(false);
+		
+		enableSearch = config.get("Search", "Enables the search function in the Thaumonomicon", true, "Thaumonomicon Search enabled").getBoolean(true);
 		
 		//cloak related
 		radialSpeed = config.getFloat("Selection Radial Speed", "Other Options", .15f, .15f, 1, "The speed at which the gem-selection for the primordial glove opens. 15% is the minimum.");
