@@ -60,7 +60,7 @@ public class BlockWGMetalDevice extends BlockContainer
 	{	
 		for(int i=0;i<icons.length;i++)
 		{
-			if(i<1||i>1)
+			if(i<1)
 				icons[i] = iconRegister.registerIcon("thaumcraft:metalbase");
 			else
 				icons[i] = iconRegister.registerIcon("witchinggadgets:"+subNames[i]);

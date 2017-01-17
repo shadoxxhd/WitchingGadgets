@@ -376,7 +376,7 @@ public class EventHandler
 				}
 			}
 		}
-		if(output.getItem() instanceof IPrimordialCrafting && !event.player.worldObj.isRemote && (!output.hasTagCompound()||!output.getTagCompound().getBoolean("wasCrafted")))
+		if(output.getItem() instanceof IPrimordialCrafting && !event.player.worldObj.isRemote && (!output.hasTagCompound()))
 		{
 			if(((IPrimordialCrafting)output.getItem()).getReturnedPearls(output)>0)
 			{
@@ -394,6 +394,7 @@ public class EventHandler
 							}
 				EntitySpecialItem entityitem = new EntitySpecialItem(event.player.worldObj, iX, iY, iZ, new ItemStack(WGContent.ItemMaterial, ((IPrimordialCrafting)output.getItem()).getReturnedPearls(output), 12));
 				entityitem.motionX=entityitem.motionY=entityitem.motionZ=0;
+				//TODO pearl tags
 				if(output.getTagCompound()==null)
 					output.setTagCompound(new NBTTagCompound());
 				output.getTagCompound().setBoolean("wasCrafted", true);

@@ -20,15 +20,9 @@ tile.WG_WoodenDevice.saunaStove.name=Thaumic Sauna Stove
 tile.WG_WoodenDevice.labelLibrary.name=Aspect Library
 
 tile.WG_MetalDevice.essentiaPump.name=Essentia Pump
-tile.WG_MetalDevice.terraformer.name=Arcane Terrestrial Reformer
-tile.WG_MetalDevice.tfFocusPlains.name=Terrestrial Focus: Plains
-tile.WG_MetalDevice.tfFocusColdTaiga.name=Terrestrial Focus: Cold Taiga
-tile.WG_MetalDevice.tfFocusDesert.name=Terrestrial Focus: Desert
-tile.WG_MetalDevice.tfFocusJungle.name=Terrestrial Focus: Jungle
-tile.WG_MetalDevice.tfFocusHell.name=Terrestrial Focus: Hell
+
 tile.WG_MetalDevice.voidmetalBlock.name=Void metal Block
-tile.WG_MetalDevice.tfFocusTaint.name=Terrestrial Focus: Tainted Lands
-tile.WG_MetalDevice.tfFocusMushroom.name=Terrestrial Focus: Mushroom Island
+
 
 tile.WG_RoseVine.name=Rose Vines
 tile.WG_CustomAir.name=Glimmer of Light
