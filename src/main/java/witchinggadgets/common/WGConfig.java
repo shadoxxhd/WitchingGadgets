@@ -47,6 +47,9 @@ public class WGConfig
 	
 	public static boolean enableSearch;
 	
+	public static boolean soulboundBaubles;
+	public static boolean soulboundGalacticraft;
+	
 
 	static Configuration config;
 	public static void loadConfig(FMLPreInitializationEvent event)
@@ -124,6 +127,16 @@ public class WGConfig
 		capeRaven = config.get("Modules", "Enable Mantle of the Raven", true,
 				"Enable Mantle of the Raven. Requires Cloaks to be enabled, and Twilight Forest installed")
 				.getBoolean(true);
+		
+		//enchants
+		soulboundBaubles = config.get("Enchantments", "Soul Tether handles Baubles inventory", true,
+				"Set to false to disable Soul Tether from handling Baubles inventory if handled by another mod's soulbound, such as EnderIO.")
+				.getBoolean(true);
+		
+		soulboundGalacticraft = config.get("Enchantments", "Soul Tether handles Galacticraft inventory", true,
+				"Set to false to disable Soul Tether from handling Galacricraft inventory if handled by another mod's soulbound, such as EnderIO.")
+				.getBoolean(true);
+		
 		
 		//spawn settings for structures
 		String[] cm_allowedSpawnblocks_HilltopStones = config.getStringList("Valid generation bases: HilltopStones", "Other", new String[]{"minecraft:stone","minecraft:sand","minecraft:packed_ice","minecraft:grass","minecraft:gravel","minecraft:dirt"}, "A list of valid blocks that Thaumcraft's hilltop stones can spawn upon");

@@ -133,6 +133,7 @@ enchantment.wg.unveiling=Unveiling
 enchantment.wg.stealth=Stealth
 enchantment.wg.backstab=Backstabbing
 enchantment.wg.rideProtect=Throwoff
+enchantment.wg.soulbound=Soul Tethered
 #
 # -- Random bits of text --
 wg.chat.notyourbag=§7This bag belongs to§r %1$s! §7You are not allowed to open it.§r
@@ -433,12 +434,13 @@ witchinggadgets_research_page.CRYSTALCAPSULE.1=Everyone can use a bucket!...sadl
 
 #
 witchinggadgets_research_name.ENCH_INVISIBLEGEAR=Enchantment: Translucency
-witchinggadgets_research_text.ENCH_INVISIBLEGEAR=[WG] I won't have none of that bling!
+witchinggadgets_research_text.ENCH_INVISIBLEGEAR=[WG] Don't want none of that bling!
 witchinggadgets_research_page.ENCH_INVISIBLEGEAR.1=Armor is incredibly useful, everyone can agree on that. It will save your life in most fights. But it can also be a hinderance when you are trying to be stealthy.<BR>Say you drink a potion of invisiblity. It works perfectly and makes you nigh untraceable, weren't it for that clunky armor. But the skilled Thaumaturge fixes that easily, infusing his armor with magical enchantments that make it invisible to the common viewer!<BR>The first level of this enchantment will make your gear translucent when you are invsible yourself, the second level will make it permanently invisible. 
 #
 witchinggadgets_research_name.ENCH_UNVEILING=Enchantment: Unveiling
-witchinggadgets_research_text.ENCH_UNVEILING=[WG] Xray Specs
+witchinggadgets_research_text.ENCH_UNVEILING=[WG] Goggles of the Ghostbuster
 witchinggadgets_research_page.ENCH_UNVEILING.1=Every Thaumaturge has those moments, when it feels like someone or something is watching them. But they look around, and nothing can be seen. With the right glasses, you can see those creeps, and look right back at them!<BR>This enchantment can be applied to the Goggles of Revealing or other headgear of the same function. While wearing the enchanted item, you will be able to see creatures with the invisibility buff. Furthermore, the Translucency enchantment is rendered ineffective when used by others and users of the spectral mantle are shown more clearly.
+
 #
 witchinggadgets_research_name.ENCH_STEALTH=Enchantment: Stealth
 witchinggadgets_research_text.ENCH_STEALTH=[WG] Sneaky!
@@ -449,8 +451,12 @@ witchinggadgets_research_text.ENCH_BACKSTAB=[WG] Rogues do it from behind
 witchinggadgets_research_page.ENCH_BACKSTAB.1=With your newfound ability to sneak, comes a new option of combat. By attacking enemies from behind you use the element of surpise to avoid the enemy's defenses. Items enchanted with Backstabbing do additional 20% damage per level when attacking from behind, plus another 40% when the target is not aware of you.
 #
 witchinggadgets_research_name.ENCH_RIDEPROTECT=Enchantment: Throwoff
-witchinggadgets_research_text.ENCH_RIDEPROTECT=[WG] Get off meh!
+witchinggadgets_research_text.ENCH_RIDEPROTECT=[WG] Get off me!
 witchinggadgets_research_page.ENCH_RIDEPROTECT.1=Moving around is incredibly difficult when someone is piggyback-riding you. Enchanting your helmet with this repulsion spell should fix that problem. Everyone who tries to jump upon you will get thrown off and damaged.
+
+witchinggadgets_research_name.ENCH_SOULBOUND=Enchantment: Soul Tethered
+witchinggadgets_research_text.ENCH_SOULBOUND=[WG] Til death do us part. Or not.
+witchinggadgets_research_page.ENCH_SOULBOUND.1=Dying is somewhat of an inconvenience. Aside from being dead, you also tend to lose important things like tools, valuable materials, and armor. <BR>By infusing the strange properties of ender artifacts into an object, it seems to bind to your spirit and follows you from one life to the next. No more losing your favorite socks!<BR>Since the Infusion Altar can be a little fussy sometimes, it also comes in book form.
 
 
 #GEMCUTTING

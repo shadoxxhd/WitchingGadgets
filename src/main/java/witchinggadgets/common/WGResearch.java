@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -40,6 +41,7 @@ import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.blocks.tiles.TileEntityBlastfurnace;
 import witchinggadgets.common.items.ItemClusters;
 import witchinggadgets.common.items.baubles.ItemCloak;
+import witchinggadgets.common.magic.WGEnchantSoulbound;
 import witchinggadgets.common.util.Utilities;
 import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
 import witchinggadgets.common.util.recipe.PhotoDevelopingRecipe;
@@ -170,6 +172,7 @@ public class WGResearch
 		
 		craftingAspects = new AspectList().add(Aspect.ENTROPY,5).add(Aspect.ORDER,5);
 		registerShapelessArcaneRecipe("ADVANCEDROBES","_CLOTH",new ItemStack(WGContent.ItemMaterial,1,5), craftingAspects, new ItemStack(WGContent.ItemMaterial,1,0), new ItemStack(WGContent.ItemMaterial,1,2),new ItemStack(WGContent.ItemMaterial,1,2), new ItemStack(WGContent.ItemMaterial,1,1));
+		
 		craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.ENTROPY,10);
 		registerArcaneRecipe("ADVANCEDROBES","_CHEST",new ItemStack(WGContent.ItemAdvancedRobeChest), craftingAspects, " C ", "CRC", 'C', new ItemStack(WGContent.ItemMaterial,1,5), 'R', new ItemStack(ConfigItems.itemChestRobe));
 		craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.ENTROPY,10);
@@ -260,26 +263,42 @@ public class WGResearch
 		/**
 		 * ENCHANTMENT
 		 */
+		//TODO enchant recipes
 		infusionAspects = new AspectList().add(Aspect.DARKNESS, 4).add(Aspect.CRYSTAL, 8).add(Aspect.MAGIC, 8);
-		registerInfusionEnchantmentRecipe("ENCH_INVISIBLEGEAR","",WGContent.enc_invisibleGear,2,infusionAspects,new ItemStack[] {new ItemStack(Items.quartz),new ItemStack(ConfigItems.itemResource,1,14),new ItemStack(WGContent.ItemMaterial,1,13)});
+		registerInfusionEnchantmentRecipe("ENCH_INVISIBLEGEAR", "", WGContent.enc_invisibleGear, 2, infusionAspects, new ItemStack[] {new ItemStack(Items.quartz),new ItemStack(ConfigItems.itemResource,1,14),new ItemStack(WGContent.ItemMaterial,1,13)});
 		WGModCompat.thaumicTinkererRegisterEnchantment(WGContent.enc_invisibleGear, "witchinggadgets:textures/gui/research/icon_ench_invisGear.png", new AspectList().add(Aspect.AIR, 25).add(Aspect.ORDER, 20).add(Aspect.ENTROPY, 15), "ENCH_INVISIBLEGEAR");
 
 		infusionAspects = new AspectList().add(Aspect.LIGHT, 4).add(Aspect.SENSES, 8).add(Aspect.MAGIC, 8);
-		registerInfusionEnchantmentRecipe("ENCH_UNVEILING","",WGContent.enc_unveiling,2,infusionAspects,new ItemStack[] {new ItemStack(Items.golden_carrot),new ItemStack(ConfigItems.itemResource,1,14)});
+		registerInfusionEnchantmentRecipe("ENCH_UNVEILING", "", WGContent.enc_unveiling, 2, infusionAspects, new ItemStack[] {new ItemStack(Items.golden_carrot),new ItemStack(ConfigItems.itemResource,1,14)});
 		WGModCompat.thaumicTinkererRegisterEnchantment(WGContent.enc_unveiling, "witchinggadgets:textures/gui/research/icon_ench_unveiling.png", new AspectList().add(Aspect.AIR, 25).add(Aspect.ORDER, 20).add(Aspect.WATER, 10), "ENCH_UNVEILING");
 
 		infusionAspects = new AspectList().add(Aspect.MOTION, 6).add(Aspect.DARKNESS, 8).add(Aspect.MAGIC, 8);
-		registerInfusionEnchantmentRecipe("ENCH_STEALTH","",WGContent.enc_stealth,2,infusionAspects,new ItemStack[] {new ItemStack(Items.potionitem,1,8206),new ItemStack(ConfigItems.itemResource,1,14)});
+		registerInfusionEnchantmentRecipe("ENCH_STEALTH", "", WGContent.enc_stealth, 2, infusionAspects, new ItemStack[] {new ItemStack(Items.potionitem,1,8206),new ItemStack(ConfigItems.itemResource,1,14)});
 		WGModCompat.thaumicTinkererRegisterEnchantment(WGContent.enc_stealth, "witchinggadgets:textures/gui/research/icon_ench_stealth.png", new AspectList().add(Aspect.AIR, 10).add(Aspect.ORDER, 20).add(Aspect.EARTH, 10), "ENCH_STEALTH");
 
 		infusionAspects = new AspectList().add(Aspect.WEAPON, 12).add(Aspect.DARKNESS, 8).add(Aspect.MAGIC, 4);
-		registerInfusionEnchantmentRecipe("ENCH_BACKSTAB","",WGContent.enc_backstab,3,infusionAspects,new ItemStack[] {new ItemStack(Items.iron_sword),new ItemStack(Items.potionitem,1,8206),new ItemStack(ConfigItems.itemResource,1,14)});
+		registerInfusionEnchantmentRecipe("ENCH_BACKSTAB", "", WGContent.enc_backstab, 3, infusionAspects, new ItemStack[] {new ItemStack(Items.iron_sword),new ItemStack(Items.potionitem,1,8206),new ItemStack(ConfigItems.itemResource,1,14)});
 		WGModCompat.thaumicTinkererRegisterEnchantment(WGContent.enc_backstab, "witchinggadgets:textures/gui/research/icon_ench_backstab.png", new AspectList().add(Aspect.AIR, 20).add(Aspect.ENTROPY, 20).add(Aspect.FIRE, 20), "ENCH_BACKSTAB");
 
 		infusionAspects = new AspectList().add(Aspect.ARMOR, 12).add(Aspect.TRAP, 8).add(Aspect.MAGIC, 4);
-		registerInfusionEnchantmentRecipe("ENCH_RIDEPROTECT","",WGContent.enc_rideProtect,3,infusionAspects,new ItemStack[] {new ItemStack(ConfigItems.itemResource,1,14),new ItemStack(Blocks.piston),new ItemStack(Blocks.piston)});
+		registerInfusionEnchantmentRecipe("ENCH_RIDEPROTECT", "", WGContent.enc_rideProtect, 3, infusionAspects, new ItemStack[] {new ItemStack(ConfigItems.itemResource,1,14),new ItemStack(Blocks.piston),new ItemStack(Blocks.piston)});
 		WGModCompat.thaumicTinkererRegisterEnchantment(WGContent.enc_rideProtect, "witchinggadgets:textures/gui/research/icon_ench_rideProtect.png", new AspectList().add(Aspect.AIR, 20).add(Aspect.ENTROPY, 20).add(Aspect.ORDER, 20), "ENCH_RIDEPROTECT");
 
+		infusionAspects = new AspectList().add(Aspect.SOUL, 8).add(Aspect.MAGIC, 12).add(Aspect.GREED, 4).add(Aspect.ELDRITCH, 8);
+		registerInfusionEnchantmentRecipe("ENCH_SOULBOUND", "", WGContent.enc_soulbound, 1, infusionAspects, new ItemStack[] {new ItemStack(Items.ender_eye), new ItemStack(Items.ender_pearl), new ItemStack(Items.name_tag)});
+		WGModCompat.thaumicTinkererRegisterEnchantment(WGContent.enc_soulbound, "witchinggadgets:textures/gui/research/icon_ench_soulbound.png", new AspectList().add(Aspect.AIR, 10).add(Aspect.ENTROPY, 10).add(Aspect.ORDER, 20), "ENCH_SOULBOUND");
+		
+		//book special
+		ItemStack soulBook = Items.enchanted_book.getEnchantedItemStack(new EnchantmentData(WGContent.enc_soulbound, 1));
+		craftingAspects = new AspectList().add(Aspect.ORDER,30).add(Aspect.AIR, 15).add(Aspect.ENTROPY, 15);
+		registerArcaneRecipe("ENCH_SOULBOUND", "_BOOK", soulBook, craftingAspects, 
+				" E ","GBG"," P ", 
+				'E', new ItemStack(Items.ender_eye), 
+				'B', new ItemStack(Items.enchanted_book),
+				'P', new ItemStack(Items.ender_pearl),
+				'G', new ItemStack(Items.gold_ingot));	
+
+		
 		/**
 		 * ALCHEMY
 		 */
@@ -702,28 +721,35 @@ public class WGResearch
 
 		//TODO enchants
 		//ORIGINAL INFUSIONENCHANTMENT
-		getFakeResearchItem("INFUSIONENCHANTMENT", "ARTIFICE", -3,3, new ResourceLocation("thaumcraft:textures/misc/r_enchant.png")).setSiblings().registerResearchItem();
+		getFakeResearchItem("INFUSIONENCHANTMENT", "ARTIFICE", -4,3, new ResourceLocation("thaumcraft:textures/misc/r_enchant.png")).setSiblings().registerResearchItem();
 		//ENCH_INVISIBLEGEAR
 		researchAspects = new AspectList().add(Aspect.MAGIC, 2).add(Aspect.CRYSTAL, 4).add(Aspect.DARKNESS, 4);
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.ENCH_INVISIBLEGEAR.1"), new ResearchPage((InfusionEnchantmentRecipe) recipeList.get("ENCH_INVISIBLEGEAR"))};
-		getResearchItem("ENCH_INVISIBLEGEAR", "WITCHGADG", researchAspects, -4, 5, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_invisGear.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
+		getResearchItem("ENCH_INVISIBLEGEAR", "WITCHGADG", researchAspects, -5, 5, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_invisGear.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
 		//ENCH_REVEALING
 		researchAspects = new AspectList().add(Aspect.MAGIC, 2).add(Aspect.SENSES, 4).add(Aspect.LIGHT, 4);
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.ENCH_UNVEILING.1"), new ResearchPage((InfusionEnchantmentRecipe) recipeList.get("ENCH_UNVEILING"))};
-		getResearchItem("ENCH_UNVEILING", "WITCHGADG", researchAspects, -5, 3, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_unveiling.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
+		getResearchItem("ENCH_UNVEILING", "WITCHGADG", researchAspects, -6, 3, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_unveiling.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
 		//ENCH_STEALTH
 		researchAspects = new AspectList().add(Aspect.MAGIC, 2).add(Aspect.MOTION, 4).add(Aspect.DARKNESS, 4);
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.ENCH_STEALTH.1"), new ResearchPage((InfusionEnchantmentRecipe) recipeList.get("ENCH_STEALTH"))};
-		getResearchItem("ENCH_STEALTH", "WITCHGADG", researchAspects, -5, 4, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_stealth.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
+		getResearchItem("ENCH_STEALTH", "WITCHGADG", researchAspects, -6, 4, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_stealth.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
 		//ENCH_BACKSTAB
 		researchAspects = new AspectList().add(Aspect.MAGIC, 2).add(Aspect.WEAPON, 4).add(Aspect.DARKNESS, 4);
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.ENCH_BACKSTAB.1"), new ResearchPage((InfusionEnchantmentRecipe) recipeList.get("ENCH_BACKSTAB"))};
-		getResearchItem("ENCH_BACKSTAB", "WITCHGADG", researchAspects, -6, 4, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_backstab.png")).setParents("ENCH_STEALTH").setConcealed().setSecondary().setPages(pages).registerResearchItem();
+		getResearchItem("ENCH_BACKSTAB", "WITCHGADG", researchAspects, -7, 4, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_backstab.png")).setParents("ENCH_STEALTH").setConcealed().setSecondary().setPages(pages).registerResearchItem();
 		//ENCH_RIDEPROTECT
 		researchAspects = new AspectList().add(Aspect.MAGIC, 2).add(Aspect.TRAP, 4).add(Aspect.ARMOR, 4);
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.ENCH_RIDEPROTECT.1"), new ResearchPage((InfusionEnchantmentRecipe) recipeList.get("ENCH_RIDEPROTECT"))};
-		getResearchItem("ENCH_RIDEPROTECT", "WITCHGADG", researchAspects, -3, 5, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_rideProtect.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
+		getResearchItem("ENCH_RIDEPROTECT", "WITCHGADG", researchAspects, -4, 5, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_rideProtect.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
+		
+		//ENCH_SOULBOUND
+		researchAspects = new AspectList().add(Aspect.MAGIC, 4).add(Aspect.ELDRITCH, 2).add(Aspect.SOUL, 2);
+		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.ENCH_SOULBOUND.1"), new ResearchPage((InfusionEnchantmentRecipe) recipeList.get("ENCH_SOULBOUND")), new ResearchPage((ShapedArcaneRecipe)recipeList.get("ENCH_SOULBOUND_BOOK"))};
+		getResearchItem("ENCH_SOULBOUND", "WITCHGADG", researchAspects, -3, 4, 2, new ResourceLocation("witchinggadgets:textures/gui/research/icon_ench_soulbound.png")).setParents("WGFAKEINFUSIONENCHANTMENT").setConcealed().setSecondary().setPages(pages).registerResearchItem();
 
+		
+		
 
 		//TODO primal
 		if (WGConfig.modulePrimal) {

@@ -45,12 +45,10 @@ import witchinggadgets.common.blocks.tiles.TileEntityCuttingTable;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
 import witchinggadgets.common.blocks.tiles.TileEntityEtherealWall;
 import witchinggadgets.common.blocks.tiles.TileEntityLabelLibrary;
-
 import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
 import witchinggadgets.common.blocks.tiles.TileEntityTempLight;
-
 import witchinggadgets.common.blocks.tiles.TileEntityVoidWalkway;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
@@ -76,6 +74,7 @@ import witchinggadgets.common.magic.WGEnchantGemBrittle;
 import witchinggadgets.common.magic.WGEnchantGemPotency;
 import witchinggadgets.common.magic.WGEnchantInvisibleGear;
 import witchinggadgets.common.magic.WGEnchantRideProtect;
+import witchinggadgets.common.magic.WGEnchantSoulbound;
 import witchinggadgets.common.magic.WGEnchantStealth;
 import witchinggadgets.common.magic.WGEnchantUnveiling;
 import witchinggadgets.common.magic.WGPotion;
@@ -143,6 +142,7 @@ public class WGContent
 	public static Enchantment enc_stealth;
 	public static Enchantment enc_backstab;
 	public static Enchantment enc_rideProtect;
+	public static Enchantment enc_soulbound;
 
 	public static ArmorMaterial armorMatSpecialRobe = EnumHelper.addArmorMaterial("WG:ADVANCEDCLOTH", 25, new int[] { 2, 4, 3, 2 }, 25);
 	public static ToolMaterial primordialTool = EnumHelper.addToolMaterial("WG:PRIMORDIALTOOL",4, 1500, 8, 6, 25);
@@ -181,24 +181,36 @@ public class WGContent
 		int enchId = WGConfig.getEnchantmentID(64, "Gemstone Potency");
 		if(enchId>0)
 			enc_gemstonePotency = new WGEnchantGemPotency(enchId, 4);
+		
 		enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Brittle");
 		if(enchId>0)
 			enc_gemstoneBrittle = new WGEnchantGemBrittle(enchId, 1);
-		enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Invisible Gear");
+		
+		enchId = WGConfig.getEnchantmentID(enchId, "Invisible Gear");
 		if(enchId>0)
 			enc_invisibleGear = new WGEnchantInvisibleGear(enchId);
-		enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Unveiling");
+		
+		enchId = WGConfig.getEnchantmentID(enchId, "Unveiling");
 		if(enchId>0)
 			enc_unveiling = new WGEnchantUnveiling(enchId);
-		enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Stealth");
+		
+		enchId = WGConfig.getEnchantmentID(enchId, "Stealth");
 		if(enchId>0)
 			enc_stealth = new WGEnchantStealth(enchId);
-		enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Backstab");
+		
+		enchId = WGConfig.getEnchantmentID(enchId, "Backstab");
 		if(enchId>0)
 			enc_backstab = new WGEnchantBackstab(enchId);
-		enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Ride Protection");
+		
+		enchId = WGConfig.getEnchantmentID(enchId, "Ride Protection");
 		if(enchId>0)
 			enc_rideProtect = new WGEnchantRideProtect(enchId);
+		
+		//TODO attempt soulBound integration
+		enchId = WGConfig.getEnchantmentID(enchId, "Soulbound");
+		if(enchId>0)
+			enc_soulbound = new WGEnchantSoulbound(enchId);
+		
 	}
 	public static void postInit()
 	{

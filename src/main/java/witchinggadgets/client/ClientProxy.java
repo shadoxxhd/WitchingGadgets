@@ -134,7 +134,7 @@ public class ClientProxy extends CommonProxy
 
 		if(ID == 9)return new GuiCuttingTable(player.inventory, (TileEntityCuttingTable)tile);
 
-		if(ID == 10)return new GuiVoidBag(player.inventory, world);
+		if(ID == 11)return new GuiVoidBag(player.inventory, world);
 
 		return null;
 	}

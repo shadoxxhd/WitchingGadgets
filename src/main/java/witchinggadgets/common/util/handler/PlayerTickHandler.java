@@ -73,7 +73,7 @@ public class PlayerTickHandler
 			}
 			
 			IInventory baubles = BaublesApi.getBaubles(player);
-			if(Utilities.isPlayerUsingBow(player) && baubles!=null && (OreDictionary.itemMatches(new ItemStack(WGContent.ItemMagicalBaubles,1,6),baubles.getStackInSlot(1), true)||OreDictionary.itemMatches(new ItemStack(WGContent.ItemMagicalBaubles,1,6),baubles.getStackInSlot(2), true)))
+			if(Utilities.isPlayerUsingBow(player) && baubles!=null && (OreDictionary.itemMatches(new ItemStack(WGContent.ItemMagicalBaubles,1,5),baubles.getStackInSlot(1), true)||OreDictionary.itemMatches(new ItemStack(WGContent.ItemMagicalBaubles,1,5),baubles.getStackInSlot(2), true)))
 				if(!Utilities.livingHasAttributeMod(player, SharedMonsterAttributes.movementSpeed, new UUID(Lib.ATTRIBUTE_MOD_UUID, 6)))
 					Utilities.addAttributeModToLivingUnsaved(player, SharedMonsterAttributes.movementSpeed, new UUID(Lib.ATTRIBUTE_MOD_UUID, 6), "WGBowBonus", 2.75f, 1);
 		}

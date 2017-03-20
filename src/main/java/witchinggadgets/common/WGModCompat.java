@@ -34,6 +34,8 @@ public class WGModCompat
 	public static boolean loaded_TT;
 	
 	public static boolean loadedTG;
+	
+	public static boolean loaded_EnderIO;
 
 	public static void init()
 	{
@@ -41,13 +43,15 @@ public class WGModCompat
 		tfRavensFeather = GameRegistry.findItem("TwilightForest", "item.tfFeather");
 		tfMagicMapFocus = GameRegistry.findItem("TwilightForest", "item.magicMapFocus");
 		tfTowerWood = GameRegistry.findBlock("TwilightForest", "tile.TFTowerStone");
+		
 		tConResource = GameRegistry.findItem("TConstruct", "materials");
-
+		
 		loaded_TCon = Loader.isModLoaded("TConstruct");
 		loaded_Twilight = Loader.isModLoaded("TwilightForest");
 		loaded_Enviromine = Loader.isModLoaded("enviromine");
 		loaded_Railcraft = Loader.isModLoaded("Railcraft");
 		loaded_TT = Loader.isModLoaded("ThaumicTinkerer");
+		loaded_EnderIO = Loader.isModLoaded("EnderIO");
 		
 		loadedTG = Loader.isModLoaded("TravellersGear");
 
