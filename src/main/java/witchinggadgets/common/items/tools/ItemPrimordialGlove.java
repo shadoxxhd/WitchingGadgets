@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -54,6 +55,12 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting
 	public void addInformation(ItemStack item, EntityPlayer par2EntityPlayer, List list, boolean par4)
 	{
 		super.addInformation(item, par2EntityPlayer, list, par4);
+	}
+	
+	@Override
+	public EnumRarity getRarity(ItemStack stack)
+	{
+		return EnumRarity.epic;
 	}
 
 
@@ -135,7 +142,13 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting
 		int sel = stack.hasTagCompound()?stack.getTagCompound().getInteger("selected"):0;
 		ItemStack[] gems = getSetGems(stack);
 		boolean b = false;
-		if(gems!=null && sel>=0 && sel<gems.length && gems[sel]!=null)
+		
+		if(player.isSneaking() && !b)
+		{
+			player.openGui(WitchingGadgets.instance, 7, world, (int)player.posX,(int)player.posY,(int)player.posZ);
+		}
+		
+		if(gems!=null && sel>=0 && sel<gems.length && gems[sel]!=null && !player.isSneaking() )
 		{
 			ItemStack gem = gems[sel];
 			if(gem.getItem() instanceof IInfusedGem && gem.getItemDamage()+((IInfusedGem)gem.getItem()).getConsumedCharge(ItemInfusedGem.getCut(gem).toString(), ItemInfusedGem.getAspect(gem), player)<=gem.getMaxDamage())
@@ -152,10 +165,7 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting
 				}
 			}
 		}
-		if(player.isSneaking() && !b)
-		{
-			player.openGui(WitchingGadgets.instance, 7, world, (int)player.posX,(int)player.posY,(int)player.posZ);
-		}
+		
 		return super.onItemRightClick(stack, world, player);
 	}
 

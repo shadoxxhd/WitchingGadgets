@@ -155,7 +155,7 @@ public class WGContent
 		preInitBlocks();
 
 	}
-	final static String UUIDBASE = "424C5553-5747-1694-4452-";
+	//final static String UUIDBASE = "424C5553-5747-1694-4452-";
 	public static void init()
 	{
 		initializeItems();
@@ -179,12 +179,16 @@ public class WGContent
 
 		//enchants
 		int enchId = WGConfig.getEnchantmentID(64, "Gemstone Potency");
-		if(enchId>0)
-			enc_gemstonePotency = new WGEnchantGemPotency(enchId, 4);
 		
-		enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Brittle");
-		if(enchId>0)
-			enc_gemstoneBrittle = new WGEnchantGemBrittle(enchId, 1);
+		if (WGConfig.moduleGemcutting) {
+			
+			if(enchId>0)
+				enc_gemstonePotency = new WGEnchantGemPotency(enchId, 4);
+			
+			enchId = WGConfig.getEnchantmentID(enchId, "Gemstone Brittle");
+			if(enchId>0)
+				enc_gemstoneBrittle = new WGEnchantGemBrittle(enchId, 1);
+		}
 		
 		enchId = WGConfig.getEnchantmentID(enchId, "Invisible Gear");
 		if(enchId>0)
@@ -309,9 +313,7 @@ public class WGContent
 		ItemMagicFoodstuffs = new ItemMagicFood().setUnlocalizedName("WG_MagicFood");
 		GameRegistry.registerItem(ItemMagicFoodstuffs, ItemMagicFoodstuffs.getUnlocalizedName());
 
-		ItemInfusedGem = new ItemInfusedGem().setUnlocalizedName("WG_InfusedGem");
-		GameRegistry.registerItem(ItemInfusedGem, ItemInfusedGem.getUnlocalizedName());
-
+		
 		ItemMagicalBaubles = new ItemMagicalBaubles().setUnlocalizedName("WG_Baubles");
 		GameRegistry.registerItem(ItemMagicalBaubles, ItemMagicalBaubles.getUnlocalizedName());
 
@@ -334,8 +336,11 @@ public class WGContent
 		}
 		
 		if (WGConfig.modulePrimal) {
-			ItemPrimordialGlove = new ItemPrimordialGlove().setUnlocalizedName("WG_PrimordialGlove");
-			GameRegistry.registerItem(ItemPrimordialGlove, ItemPrimordialGlove.getUnlocalizedName());
+			if (WGConfig.moduleGemcutting) {
+				ItemPrimordialGlove = new ItemPrimordialGlove().setUnlocalizedName("WG_PrimordialGlove");
+				GameRegistry.registerItem(ItemPrimordialGlove, ItemPrimordialGlove.getUnlocalizedName());
+			}
+			
 			ItemPrimordialHammer = new ItemPrimordialHammer(primordialTool).setUnlocalizedName("WG_PrimordialHammer");
 			GameRegistry.registerItem(ItemPrimordialHammer, ItemPrimordialHammer.getUnlocalizedName());
 			ItemPrimordialAxe = new ItemPrimordialAxe(primordialTool).setUnlocalizedName("WG_PrimordialAxe");
@@ -354,13 +359,22 @@ public class WGContent
 
 		}
 
-		ItemCapsule = new ItemCrystalCapsule().setUnlocalizedName("WG_CrystalFlask");
-		GameRegistry.registerItem(ItemCapsule, ItemCapsule.getUnlocalizedName());
+		if (WGConfig.moduleGemcutting) {
+			ItemCapsule = new ItemCrystalCapsule().setUnlocalizedName("WG_CrystalFlask");
+			GameRegistry.registerItem(ItemCapsule, ItemCapsule.getUnlocalizedName());
+			
+			ItemInfusedGem = new ItemInfusedGem().setUnlocalizedName("WG_InfusedGem");
+			GameRegistry.registerItem(ItemInfusedGem, ItemInfusedGem.getUnlocalizedName());
+
+		}
+		
+		
 		if(WGConfig.allowClusters)
 		{
 			ItemCluster = new ItemClusters().setUnlocalizedName("WG_Cluster");
 			GameRegistry.registerItem(ItemCluster, ItemCluster.getUnlocalizedName());
 		}
+		
 		//ItemMagicBed = new ItemMagicBed(WGConfig.ItemMagicBedID).setUnlocalizedName("WG_MagicBed");
 		//GameRegistry.registerItem(ItemMagicBed, ItemMagicBed.getUnlocalizedName());
 		//OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice,1,7));
@@ -453,7 +467,7 @@ public class WGContent
 		ThaumcraftApi.registerObjectTag(new ItemStack(ItemMagicFoodstuffs,1,2),addAspects);
 
 
-
+		//TODO the fuck is this all
 		//		//Biomes o' Plenty
 		//		ThaumcraftApi.registerObjectTag("gemAmber", new AspectList().add(Aspect.TRAP, 2).add(Aspect.CRYSTAL, 2));
 		//		ThaumcraftApi.registerObjectTag("gemPeridot", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));

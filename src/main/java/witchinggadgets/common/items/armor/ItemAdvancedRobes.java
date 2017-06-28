@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -171,5 +172,11 @@ public class ItemAdvancedRobes extends ItemArmor implements IRepairable, IVisDis
 	public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect)
 	{
 		return this.armorType == 2 ? 4 : 5;
+	}
+	
+	@Override
+	public EnumRarity getRarity(ItemStack stack)
+	{
+		return EnumRarity.uncommon;
 	}
 }

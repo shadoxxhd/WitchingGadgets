@@ -75,7 +75,7 @@ public class WGCoreTransformer implements IClassTransformer
 
 	private byte[] patchBoots(String className, byte[] origCode, boolean deobf)
 	{
-		WitchingGadgets.logger.log(Level.INFO, "[CORE] Patching Boots");
+		WitchingGadgets.logger.log(Level.INFO, "[Witching Gadgets] Patching Boots");
 
 		final String methodToPatch = "getIsRepairable";
 		final String methodToPatch_obf = "func_82789_a";//"a";
@@ -106,7 +106,7 @@ public class WGCoreTransformer implements IClassTransformer
 
 	private byte[] patchFocusPouch_Interface(String className, byte[] origCode)
 	{
-		WitchingGadgets.logger.log(Level.INFO, "[CORE] Patching Pouch - Interfaces");
+		WitchingGadgets.logger.log(Level.INFO, "[Witching Gadgets] Patching Pouch - Interfaces");
 		ClassReader cr = new ClassReader(origCode);
 		ClassWriter cw = new ClassWriter(cr, 0);
 		ClassVisitor cv = new ClassVisitor(Opcodes.ASM4, cw)
@@ -126,7 +126,7 @@ public class WGCoreTransformer implements IClassTransformer
 	}
 	private byte[] patchFocusPouch_Methods(String className, byte[] origCode, boolean deobf)
 	{
-		WitchingGadgets.logger.log(Level.INFO, "[CORE] Patching Pouch - Methods");
+		WitchingGadgets.logger.log(Level.INFO, "[Witching Gadgets] Patching Pouch - Methods");
 		final String methodToPatch1 = "canActivate";
 		ClassReader cr = new ClassReader(origCode);
 		ClassWriter cw = new ClassWriter(cr, 0);
@@ -163,7 +163,7 @@ public class WGCoreTransformer implements IClassTransformer
 
 	private byte[] patchGetFortuneModifier(byte[] origCode, boolean deobf)
 	{
-		WitchingGadgets.logger.log(Level.INFO, "[CORE] Patching getFortuneModifier & getLootingModifier");
+		WitchingGadgets.logger.log(Level.INFO, "[Witching Gadgets] Patching getFortuneModifier & getLootingModifier");
 
 		final String methodToPatch1 = "getFortuneModifier";
 		final String methodToPatch_srg1 = "func_77517_e";
@@ -262,7 +262,7 @@ public class WGCoreTransformer implements IClassTransformer
 
 	private byte[] patchOnNewPotionEffect(byte[] origCode, boolean deobf)
 	{
-		WitchingGadgets.logger.log(Level.INFO, "[CORE] Patching onNewPotionEffect");
+		WitchingGadgets.logger.log(Level.INFO, "[Witching Gadgets] Patching onNewPotionEffect");
 
 		final String methodToPatch = "onNewPotionEffect";
 		final String methodToPatch_srg = "func_70670_a";
@@ -356,7 +356,7 @@ public class WGCoreTransformer implements IClassTransformer
 
 	private byte[] patchThaumcraftWorldgen(byte[] origCode, boolean deobf, String ident)
 	{
-		WitchingGadgets.logger.log(Level.INFO, "[CORE] Patching Thaumcraft's Worldgen");
+		WitchingGadgets.logger.log(Level.INFO, "[Witching Gadgets] Patching Thaumcraft's Worldgen");
 
 		final String methodToPatch = "GetValidSpawnBlocks";
 		final String desc = deobf?"()[Lnet/minecraft/block/Block;":"()[Laji;";

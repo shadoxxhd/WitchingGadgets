@@ -50,6 +50,8 @@ public class WGConfig
 	public static boolean soulboundBaubles;
 	public static boolean soulboundGalacticraft;
 	
+	public static boolean moduleGemcutting;
+	
 
 	static Configuration config;
 	public static void loadConfig(FMLPreInitializationEvent event)
@@ -127,6 +129,11 @@ public class WGConfig
 		capeRaven = config.get("Modules", "Enable Mantle of the Raven", true,
 				"Enable Mantle of the Raven. Requires Cloaks to be enabled, and Twilight Forest installed")
 				.getBoolean(true);
+		
+		moduleGemcutting = config.get("Modules", "Enable Gemcutting", true, 
+				"Dis-/enable the gem table, and other crystal things")
+				.getBoolean(true);
+		
 		
 		//enchants
 		soulboundBaubles = config.get("Enchantments", "Soul Tether handles Baubles inventory", true,

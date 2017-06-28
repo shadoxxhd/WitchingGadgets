@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -113,6 +114,12 @@ public class ItemMagicalBaubles extends Item implements IBauble, ITravellersGear
 	public IIcon getIcon(ItemStack stack, int pass)
 	{
 		return getIconFromDamageForRenderPass(stack.getItemDamage(), pass);
+	}
+	
+	@Override
+	public EnumRarity getRarity(ItemStack stack)
+	{
+		return EnumRarity.rare;
 	}
 
 	@Override
