@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import witchinggadgets.common.WGContent;
 import witchinggadgets.common.items.tools.ItemBag;
 
 public class ContainerBag extends Container
@@ -26,7 +27,7 @@ public class ContainerBag extends Container
 		this.blockedSlot = (iinventory.currentItem + 45);
 
 		for (int a = 0; a < pouchSlotAmount; a++) {
-			this.addSlotToContainer(new Slot(this.input, a, 35 + a % 6 * 18, 9 + a/6 * 18));
+			this.addSlotToContainer(new SlotBag(this.input, this, a, 35 + a % 6 * 18, 9 + a/6 * 18));
 		}
 
 		bindPlayerInventory(iinventory);
@@ -107,11 +108,32 @@ public class ContainerBag extends Container
 		if (!this.worldObj.isRemote)
 		{
 			((ItemBag)this.pouch.getItem()).setStoredItems(this.pouch, ((InventoryBag)this.input).stackList);
-
+			/*
 			if (!this.player.getCurrentEquippedItem().equals(this.pouch))
 				this.player.setCurrentItemOrArmor(0, this.pouch);
+			*/
 			this.player.inventory.markDirty();
 		}
 	}
+	
+	
+	private boolean isHoldingPouch() {
+		ItemStack is = this.player.getHeldItem();
+		return (is != null) && (is.getItem() == WGContent.ItemBag);
+	}
+	
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		if ((!this.player.worldObj.isRemote) && (!isHoldingPouch())) {
+			this.player.closeScreen();
+		}
+	}
+	
+	public void saveCharmPouch() {
+        if (!this.player.worldObj.isRemote && this.isHoldingPouch()) {
+        	this.player.setCurrentItemOrArmor(0, this.pouch);
+        	//ItemBag.setStoredItems(this.player.getHeldItem(), new ItemStack[] { this.charmInv.getStackInSlot(0), this.charmInv.getStackInSlot(1), this.charmInv.getStackInSlot(2) });
+        }
+    }
 
 }

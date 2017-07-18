@@ -180,7 +180,7 @@ public class ItemBag extends Item
 		}
 	}
 
-	public ItemStack[] getStoredItems(ItemStack item)	
+	public static ItemStack[] getStoredItems(ItemStack item)	
 	{
 		ItemStack[] stackList = new ItemStack[18];
 
@@ -202,7 +202,7 @@ public class ItemBag extends Item
 		return stackList;
 	}
 
-	public void setStoredItems(ItemStack item, ItemStack[] stackList)
+	public static void setStoredItems(ItemStack item, ItemStack[] stackList)
 	{
 		NBTTagList inv = new NBTTagList();
 
