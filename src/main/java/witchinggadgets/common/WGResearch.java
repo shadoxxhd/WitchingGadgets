@@ -266,7 +266,10 @@ public class WGResearch
 		 */
 		//TODO enchant recipes
 		infusionAspects = new AspectList().add(Aspect.DARKNESS, 4).add(Aspect.CRYSTAL, 8).add(Aspect.MAGIC, 8);
-		registerInfusionEnchantmentRecipe("ENCH_INVISIBLEGEAR", "", WGContent.enc_invisibleGear, 2, infusionAspects, new ItemStack[] {new ItemStack(Items.quartz),new ItemStack(ConfigItems.itemResource,1,14),new ItemStack(WGContent.ItemMaterial,1,13)});
+		if (WGConfig.moduleGemcutting) 
+			registerInfusionEnchantmentRecipe("ENCH_INVISIBLEGEAR", "", WGContent.enc_invisibleGear, 2, infusionAspects, new ItemStack[] {new ItemStack(Items.quartz),new ItemStack(ConfigItems.itemResource,1,14),new ItemStack(WGContent.ItemMaterial,1,13)});
+		else 
+			registerInfusionEnchantmentRecipe("ENCH_INVISIBLEGEAR", "", WGContent.enc_invisibleGear, 2, infusionAspects, new ItemStack[] {new ItemStack(Items.quartz),new ItemStack(ConfigItems.itemResource,1,14),new ItemStack(ConfigItems.itemEldritchObject,1,0)});
 		WGModCompat.thaumicTinkererRegisterEnchantment(WGContent.enc_invisibleGear, "witchinggadgets:textures/gui/research/icon_ench_invisGear.png", new AspectList().add(Aspect.AIR, 25).add(Aspect.ORDER, 20).add(Aspect.ENTROPY, 15), "ENCH_INVISIBLEGEAR");
 
 		infusionAspects = new AspectList().add(Aspect.LIGHT, 4).add(Aspect.SENSES, 8).add(Aspect.MAGIC, 8);

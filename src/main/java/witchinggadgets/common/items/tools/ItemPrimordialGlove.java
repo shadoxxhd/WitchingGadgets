@@ -143,12 +143,7 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting
 		ItemStack[] gems = getSetGems(stack);
 		boolean b = false;
 		
-		if(player.isSneaking() && !b)
-		{
-			player.openGui(WitchingGadgets.instance, 7, world, (int)player.posX,(int)player.posY,(int)player.posZ);
-		}
-		
-		if(gems!=null && sel>=0 && sel<gems.length && gems[sel]!=null && !player.isSneaking() )
+		if(gems!=null && sel>=0 && sel<gems.length && gems[sel]!=null /*&& !player.isSneaking()*/ )
 		{
 			ItemStack gem = gems[sel];
 			if(gem.getItem() instanceof IInfusedGem && gem.getItemDamage()+((IInfusedGem)gem.getItem()).getConsumedCharge(ItemInfusedGem.getCut(gem).toString(), ItemInfusedGem.getAspect(gem), player)<=gem.getMaxDamage())
@@ -165,7 +160,10 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting
 				}
 			}
 		}
-		
+		if(player.isSneaking() && !b)
+		{
+			player.openGui(WitchingGadgets.instance, 7, world, (int)player.posX,(int)player.posY,(int)player.posZ);
+		}
 		return super.onItemRightClick(stack, world, player);
 	}
 
