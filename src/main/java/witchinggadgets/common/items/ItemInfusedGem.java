@@ -46,6 +46,7 @@ import witchinggadgets.common.WGContent;
 import witchinggadgets.common.blocks.tiles.TileEntityTempLight;
 import witchinggadgets.common.util.Lib;
 import witchinggadgets.common.util.Utilities;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -195,13 +196,77 @@ public class ItemInfusedGem extends Item implements IInfusedGem
 						dmg = true;
 					}
 			}
-			if(aspect.equals(Aspect.EARTH) && mop!=null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+			if(aspect.equals(Aspect.EARTH))
 			{
+				if (!Loader.isModLoaded("gregtech")&& mop!=null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 				List<ChunkCoordinates> ores = this.getOres(world, mop.blockX, mop.blockY, mop.blockZ);
 				if(world.isRemote)
 					for(ChunkCoordinates cc : ores)
 						ClientTickHandler.oreHighlightMap.put(cc, 1000);
 				dmg = true;
+				}
+				else { 
+					if(!world.isRemote) {
+						
+					int x = (int) player.posX;
+					int y = (int) player.posY;
+					int z = (int) player.posZ;
+					int dist = 2+potency;
+					if (potency==0) {
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ, Blocks.dirt);
+					
+						if (world.getBlock((int) player.posX+1, (int) player.posY, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY, (int) player.posZ, Blocks.dirt);
+						if (world.getBlock((int) player.posX+1, (int) player.posY+1, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY+1, (int) player.posZ, Blocks.dirt);
+						if (world.getBlock((int) player.posX+1, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY+2, (int) player.posZ, Blocks.dirt);
+					
+						if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY, (int) player.posZ+1, Blocks.dirt);
+						if (world.getBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1, Blocks.dirt);
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1, Blocks.dirt);
+					}else if (potency==1) {
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ, Blocks.cobblestone);
+						
+						if (world.getBlock((int) player.posX+1, (int) player.posY, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY, (int) player.posZ, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX+1, (int) player.posY+1, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY+1, (int) player.posZ, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX+1, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY+2, (int) player.posZ, Blocks.cobblestone);
+						
+						if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY, (int) player.posZ+1, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1, Blocks.cobblestone);
+					}else if (potency==2) {
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ, Blocks.obsidian);
+						
+						if (world.getBlock((int) player.posX+1, (int) player.posY, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY, (int) player.posZ, Blocks.obsidian);
+						if (world.getBlock((int) player.posX+1, (int) player.posY+1, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY+1, (int) player.posZ, Blocks.obsidian);
+						if (world.getBlock((int) player.posX+1, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX+1, (int) player.posY+2, (int) player.posZ, Blocks.obsidian);
+						
+						if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY, (int) player.posZ+1, Blocks.obsidian);
+						if (world.getBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1, Blocks.obsidian);
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1, Blocks.obsidian);
+						}
+					}
+					dmg = true;
+				}	
 			}
 			if(aspect.equals(Aspect.AIR))
 			{
@@ -255,7 +320,7 @@ public class ItemInfusedGem extends Item implements IInfusedGem
 			}
 			if(aspect.equals(Aspect.ENTROPY))
 			{
-				if(Config.allowMirrors)
+				if(Config.allowMirrors && !Loader.isModLoaded("dreamcraft"))
 				{
 					if(mop!=null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 					{
@@ -278,8 +343,7 @@ public class ItemInfusedGem extends Item implements IInfusedGem
 							}
 						}
 					}
-				}else
-				{
+				} else {
 					AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(player.posX-4,player.posY-2,player.posZ-4, player.posX+4,player.posY+2,player.posZ+4);
 					for(EntityLivingBase entT : (List<EntityLivingBase>)world.getEntitiesWithinAABB(EntityLivingBase.class, aabb))
 						if(entT!=null && !entT.equals(player))

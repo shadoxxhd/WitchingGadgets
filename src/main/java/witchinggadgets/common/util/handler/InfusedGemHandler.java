@@ -8,18 +8,24 @@ import witchinggadgets.common.util.Utilities;
 
 public class InfusedGemHandler
 {
-	public static HashMap<String, Aspect[]> naturalAffinities = new HashMap<String, Aspect[]>();
-	public static HashMap<String, Aspect[]> naturalAversions = new HashMap<String, Aspect[]>();
+	public static HashMap<String, Aspect[]> naturalAffinities= new HashMap<String, Aspect[]>(), 
+											naturalAversions = new HashMap<String, Aspect[]>();
 
 	static{
-		registerAffinities("gemDiamond", Aspect.ORDER,Aspect.ENTROPY);
-		registerAffinities("gemEmerald", Aspect.ORDER,Aspect.EARTH);
+		registerAffinities("gemDiamond", Aspect.ORDER);
+		registerAversions("gemDiamond",Aspect.ENTROPY,Aspect.AIR);
+		registerAffinities("gemEmerald", Aspect.EARTH);
 		registerAversions("gemEmerald", Aspect.WATER,Aspect.ENTROPY);
+		
 		registerAffinities("crystalNetherQuartz", Aspect.ENTROPY,Aspect.FIRE);
-		registerAversions("crystalNetherQuartz", Aspect.ORDER,Aspect.WATER);
+		registerAversions("crystalNetherQuartz", Aspect.ORDER,Aspect.WATER,Aspect.AIR);
 		registerAffinities("crystalCertusQuartz", Aspect.ORDER,Aspect.AIR);
-		registerAversions("crystalCertusQuartz", Aspect.ENTROPY,Aspect.FIRE);
-
+		registerAversions("crystalCertusQuartz", Aspect.ENTROPY,Aspect.FIRE,Aspect.EARTH);
+		registerAffinities("crystalFluix", Aspect.ENTROPY,Aspect.WATER,Aspect.AIR);
+		registerAversions("crystalFluix", Aspect.ORDER,Aspect.EARTH,Aspect.FIRE);
+		registerAffinities("crystalQuartzite", Aspect.WATER,Aspect.EARTH);
+		registerAversions("crystalQuartzite", Aspect.FIRE,Aspect.ENTROPY,Aspect.AIR);
+		
 		registerAffinities("gemTopaz", Aspect.AIR,Aspect.FIRE);
 		registerAversions("gemTopaz", Aspect.ENTROPY,Aspect.WATER);
 		registerAffinities("gemAmber", Aspect.AIR,Aspect.EARTH);
@@ -36,6 +42,44 @@ public class InfusedGemHandler
 		registerAversions("gemTanzanite", Aspect.ENTROPY,Aspect.FIRE);
 		
 		registerAffinities("gemPrimordial", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER,Aspect.ORDER,Aspect.ENTROPY);
+		registerAffinities("gemNetherStar", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER,Aspect.ORDER,Aspect.ENTROPY);
+		
+		registerAffinities("gemApatite", Aspect.WATER, Aspect.EARTH);
+		registerAversions("gemApatite", Aspect.AIR,Aspect.ORDER);
+		
+		registerAffinities("gemQuicksilver", Aspect.ORDER, Aspect.EARTH);
+		registerAversions("gemQuicksilver", Aspect.FIRE,Aspect.AIR);
+		registerAffinities("gemJasper",Aspect.FIRE);
+		registerAversions("gemJasper", Aspect.ENTROPY,Aspect.WATER);
+		registerAffinities("gemFirestone", Aspect.FIRE);
+		registerAversions("gemFirestone", Aspect.WATER);
+		registerAffinities("gemJade", Aspect.EARTH);
+		registerAversions("gemJade", Aspect.ENTROPY,Aspect.AIR);
+		registerAffinities("gemGreenSapphire", Aspect.EARTH);
+		registerAversions("gemGreenSapphire", Aspect.ENTROPY,Aspect.AIR);
+		registerAffinities("gemOlivine", Aspect.EARTH);
+		registerAversions("gemOlivine", Aspect.ENTROPY,Aspect.AIR);
+		registerAffinities("gemFoolsRuby", Aspect.FIRE);
+		registerAversions("gemFoolsRuby", Aspect.ENTROPY,Aspect.WATER,Aspect.AIR,Aspect.ORDER);
+		registerAffinities("gemGlas", Aspect.ORDER);
+		registerAversions("gemGlass", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER,Aspect.ENTROPY);
+		registerAffinities("gemDilithium", Aspect.ORDER);
+		registerAversions("gemDilithium", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER,Aspect.ENTROPY);
+		registerAffinities("gemOpal", Aspect.WATER);
+		registerAversions("gemOpal", Aspect.ENTROPY,Aspect.FIRE);
+		registerAffinities("gemAmethyst", Aspect.WATER);
+		registerAversions("gemAmethyst", Aspect.ENTROPY,Aspect.FIRE);
+		registerAffinities("gemBlueTopaz", Aspect.WATER);
+		registerAversions("gemBlueTopaz", Aspect.ENTROPY,Aspect.WATER);
+		registerAffinities("gemForcicium", Aspect.ENTROPY);
+		registerAversions("gemForcicium", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER,Aspect.ORDER);
+		registerAffinities("gemForcilium", Aspect.ENTROPY);
+		registerAversions("gemForcilium", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER,Aspect.ORDER);
+		registerAffinities("gemMonazite", Aspect.ENTROPY);
+		registerAversions("gemMonazite", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER,Aspect.ORDER);
+		registerAffinities("gemVinteum", Aspect.AIR,Aspect.EARTH,Aspect.FIRE,Aspect.WATER);
+		registerAversions("gemVinteum", Aspect.ENTROPY,Aspect.WATER);
+		//TODO: add missing crystals
 	}
 
 

@@ -11,46 +11,17 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class WGConfig
 {
-	public static boolean limitBookSearchToCategory;
+	public static boolean limitBookSearchToCategory,allowClusters,allowTransmutations,coremod_allowBootsRepair,
+	coremod_allowEnchantModifications,coremod_allowPotionApplicationMod,coremod_allowFocusPouchActive,
+	modulePrimal,moduleBag,bagVoid,bagEnder,bagHungry,moduleCloak,moduleKama,capeSpectral,capeStorage,capeWolf,
+	capeRaven,enableSearch,soulboundBaubles,soulboundGalacticraft,moduleGemcutting,allowdropsfrommachinery;
 	
-	public static boolean allowClusters;
-	public static boolean allowTransmutations;
 	public static String[] tripplingClusterList;
-	public static int smelteryResultForClusters;
+	public static int smelteryResultForClusters,cloakAnimationMode;
 	
-	public static boolean coremod_allowBootsRepair;
+	public static Block[] coremod_worldgenValidBase_HilltopStones,coremod_worldgenValidBase_EldritchRing;
 
-	public static boolean coremod_allowEnchantModifications;
-
-	public static Block[] coremod_worldgenValidBase_HilltopStones;
-	public static Block[] coremod_worldgenValidBase_EldritchRing;
-
-	public static int cloakAnimationMode;
 	public static float radialSpeed;
-	public static boolean coremod_allowPotionApplicationMod;
-	public static boolean coremod_allowFocusPouchActive;
-	
-	//new
-	public static boolean modulePrimal;
-	
-	public static boolean moduleBag;
-	public static boolean bagVoid;
-	public static boolean bagEnder;
-	public static boolean bagHungry;
-	
-	public static boolean moduleCloak;
-	public static boolean moduleKama;
-	public static boolean capeSpectral;
-	public static boolean capeStorage;
-	public static boolean capeWolf;
-	public static boolean capeRaven;
-	
-	public static boolean enableSearch;
-	
-	public static boolean soulboundBaubles;
-	public static boolean soulboundGalacticraft;
-	
-	public static boolean moduleGemcutting;
 	
 
 	static Configuration config;
@@ -60,6 +31,7 @@ public class WGConfig
 		config.load();
 
 		// Random Config Options
+		allowdropsfrommachinery = config.getBoolean("Drop Items from Generators", "Other Options", true, "Whether the cobble and snow gen can drop Items or just put out into inventorys, should be disabled on MP servers with chunkloading");
 		smelteryResultForClusters = config.get("Other Options", "Smeltery Result for Clusters", 144*3, "How many milliBuckets of molten Metal a cluster should give. 144mB equal 1 ingot. Set to 0 to disable smeltery recipes.").getInt();
 		allowClusters = config.get("Ore/Crucible", "Enable clusters", true, "Set this to false to disable clusters, useful when you are using AOBD.").getBoolean(true);
 		allowTransmutations = config.get("Ore/Crucible", "Enable transmutations", false, "Set this to false to disable nugget transmutations, this should fix the infinite loop glitch").getBoolean(false);
