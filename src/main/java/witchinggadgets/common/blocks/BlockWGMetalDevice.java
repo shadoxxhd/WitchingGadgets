@@ -128,9 +128,9 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 			this.setBlockBounds(fd==ForgeDirection.EAST?.25f:0,fd==ForgeDirection.UP?.25f:0,fd==ForgeDirection.SOUTH?.25f:0, fd==ForgeDirection.WEST?.75f:1,fd==ForgeDirection.DOWN?.75f:1,fd==ForgeDirection.SOUTH?.75f:1);
 		}
 
-		else if (world.getBlockMetadata(x, y, z) >=2)
+		else if (world.getBlockMetadata(x, y, z) > 2)
 			this.setBlockBounds(.125f,0,.125f, .875f,.75f,.875f);
-		else if (world.getBlockMetadata(x, y, z) > 0 && world.getBlockMetadata(x, y, z) < 2)
+		else if (world.getBlockMetadata(x, y, z) == 1 || world.getBlockMetadata(x, y, z) == 2)
 			this.setBlockBounds(0,0,0,1,1,1);
 	}
 
