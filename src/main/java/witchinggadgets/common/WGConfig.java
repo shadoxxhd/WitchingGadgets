@@ -14,7 +14,7 @@ public class WGConfig
 	public static boolean limitBookSearchToCategory,allowClusters,allowTransmutations,coremod_allowBootsRepair,
 	coremod_allowEnchantModifications,coremod_allowPotionApplicationMod,coremod_allowFocusPouchActive,
 	modulePrimal,moduleBag,bagVoid,bagEnder,bagHungry,moduleCloak,moduleKama,capeSpectral,capeStorage,capeWolf,
-	capeRaven,enableSearch,soulboundBaubles,soulboundGalacticraft,moduleGemcutting,allowdropsfrommachinery;
+	capeRaven,enableSearch,soulboundBaubles,soulboundGalacticraft,moduleGemcutting,allowdropsfrommachinery,terraformer;
 	
 	public static String[] tripplingClusterList;
 	public static int smelteryResultForClusters,cloakAnimationMode;
@@ -35,6 +35,7 @@ public class WGConfig
 		smelteryResultForClusters = config.get("Other Options", "Smeltery Result for Clusters", 144*3, "How many milliBuckets of molten Metal a cluster should give. 144mB equal 1 ingot. Set to 0 to disable smeltery recipes.").getInt();
 		allowClusters = config.get("Ore/Crucible", "Enable clusters", true, "Set this to false to disable clusters, useful when you are using AOBD.").getBoolean(true);
 		allowTransmutations = config.get("Ore/Crucible", "Enable transmutations", false, "Set this to false to disable nugget transmutations, this should fix the infinite loop glitch").getBoolean(false);
+		terraformer = config.getBoolean("Enable Terraformer", "Other Options", true, "If the Terraformer is enabled");
 		String[] clusters = {
 		//Tinkers
 		"Aluminum","Cobalt","Ardite",

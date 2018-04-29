@@ -170,6 +170,27 @@ public class WGResearch
 			
 		}
 		
+		if(WGConfig.terraformer) {
+		craftingAspects = new AspectList().add(Aspect.EARTH,10);
+		registerArcaneRecipe("TERRAFORMER","_PLAINS",new ItemStack(WGContent.BlockMetalDevice,1,3), craftingAspects, " S ","IBI","ITI", 'B',new ItemStack(Blocks.grass), 'I',"ingotIron", 'S',new ItemStack(ConfigItems.itemShard,1,6), 'T',new ItemStack(ConfigBlocks.blockTube));
+ 
+		craftingAspects = new AspectList().add(Aspect.WATER,10).add(Aspect.ORDER, 10);
+		registerArcaneRecipe("TERRAFORMFOCUS_COLDTAIGA","",new ItemStack(WGContent.BlockMetalDevice,1,4), craftingAspects, " S ","IBI","ITI", 'B',new ItemStack(Blocks.ice), 'I',"ingotIron", 'S',new ItemStack(ConfigItems.itemShard,1,6), 'T',new ItemStack(ConfigBlocks.blockTube));
+ 
+		craftingAspects = new AspectList().add(Aspect.FIRE,10).add(Aspect.EARTH, 10);
+		registerArcaneRecipe("TERRAFORMFOCUS_DESERT","",new ItemStack(WGContent.BlockMetalDevice,1,5), craftingAspects, " S ","IBI","ITI", 'B',new ItemStack(Blocks.sand), 'I',"ingotIron", 'S',new ItemStack(ConfigItems.itemShard,1,6), 'T',new ItemStack(ConfigBlocks.blockTube));
+ 
+		craftingAspects = new AspectList().add(Aspect.WATER,10).add(Aspect.EARTH, 10);
+		registerArcaneRecipe("TERRAFORMFOCUS_JUNGLE","",new ItemStack(WGContent.BlockMetalDevice,1,6), craftingAspects, " S ","IBI","ITI", 'B',new ItemStack(Blocks.log,1,3), 'I',"ingotIron", 'S',new ItemStack(ConfigItems.itemShard,1,6), 'T',new ItemStack(ConfigBlocks.blockTube));
+ 
+		craftingAspects = new AspectList().add(Aspect.FIRE,10).add(Aspect.ENTROPY, 10);
+		registerArcaneRecipe("TERRAFORMFOCUS_HELL","",new ItemStack(WGContent.BlockMetalDevice,1,7), craftingAspects, " S ","IBI","ITI", 'B',new ItemStack(Blocks.nether_brick), 'I',"ingotIron", 'S',new ItemStack(ConfigItems.itemShard,1,6), 'T',new ItemStack(ConfigBlocks.blockTube));
+		ThaumcraftApi.addWarpToItem(new ItemStack(WGContent.BlockMetalDevice,1,6), 1);
+ 
+		craftingAspects = new AspectList().add(Aspect.EARTH,10).add(Aspect.WATER, 10);
+		registerArcaneRecipe("TERRAFORMFOCUS_MUSHROOM","",new ItemStack(WGContent.BlockMetalDevice,1,8), craftingAspects, " S ","IBI","ITI", 'B',new ItemStack(Blocks.mycelium), 'I',"ingotIron", 'S',new ItemStack(ConfigItems.itemShard,1,6), 'T',new ItemStack(ConfigBlocks.blockTube));
+		}
+		
 		craftingAspects = new AspectList().add(Aspect.ENTROPY,5).add(Aspect.ORDER,5);
 		registerShapelessArcaneRecipe("ADVANCEDROBES","_CLOTH",new ItemStack(WGContent.ItemMaterial,1,5), craftingAspects, new ItemStack(WGContent.ItemMaterial,1,0), new ItemStack(WGContent.ItemMaterial,1,2),new ItemStack(WGContent.ItemMaterial,1,2), new ItemStack(WGContent.ItemMaterial,1,1));
 		
@@ -210,7 +231,14 @@ public class WGResearch
 		infusionAspects = new AspectList().add(Aspect.TRAVEL,4).add(Aspect.MIND, 6).add(Aspect.TOOL,2);
 		registerInfusionRecipe("LABYRINTHSTRING","",new ItemStack(WGContent.ItemMaterial,1,11),2,infusionAspects,new ItemStack(ConfigBlocks.blockMagicalLog,1,0),new ItemStack[] {new ItemStack(Items.ender_pearl),new ItemStack(WGContent.ItemMaterial,1,0),new ItemStack(WGContent.ItemMaterial,1,0),new ItemStack(WGContent.ItemMaterial,1,0)});
 
-
+		if(WGConfig.terraformer) {
+		infusionAspects = new AspectList().add(Aspect.ORDER, 16).add(Aspect.EXCHANGE, 8).add(Aspect.EARTH, 16);
+		registerInfusionRecipe("TERRAFORMER","",new ItemStack(WGContent.BlockMetalDevice,1,1),3,infusionAspects,new ItemStack(ConfigBlocks.blockMetalDevice,1,9),new ItemStack[] {new ItemStack(ConfigItems.itemShard,1,6), new ItemStack(Items.iron_ingot), new ItemStack(ConfigBlocks.blockTube), new ItemStack(ConfigBlocks.blockCustomPlant,1,1), new ItemStack(ConfigBlocks.blockTube), new ItemStack(Items.iron_ingot) });
+		
+		infusionAspects = new AspectList().add(Aspect.TAINT, 32).add(Aspect.EXCHANGE, 8);
+		registerInfusionRecipe("TERRAFORMFOCUS_TAINT","",new ItemStack(WGContent.BlockMetalDevice,1,8),3,infusionAspects,new ItemStack(ConfigBlocks.blockTaint,1,0),new ItemStack[] {new ItemStack(ConfigItems.itemShard,1,6),new ItemStack(Items.iron_ingot),new ItemStack(Items.iron_ingot),new ItemStack(ConfigBlocks.blockTube,1,0),new ItemStack(Items.iron_ingot),new ItemStack(Items.iron_ingot)});
+		ThaumcraftApi.addWarpToItem(new ItemStack(WGContent.BlockMetalDevice,1,8), 2);
+		}
 		
 		//Primordial Gear
 		if (WGConfig.modulePrimal) {
@@ -600,6 +628,7 @@ public class WGResearch
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.LABELLIB.1"), new ResearchPage((ShapedArcaneRecipe) recipeList.get("LABELLIB")) };
 		getResearchItem("LABELLIB", "WITCHGADG", researchAspects, -3, 1, 2, new ItemStack(WGContent.BlockWoodenDevice,1,5)).setParents("WG.JARLABEL").setPages(pages).setSecondary().registerResearchItem();
 
+		
 		
 		//MIRROR
 		if(Config.allowMirrors)

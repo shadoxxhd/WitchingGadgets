@@ -52,6 +52,8 @@ import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
 import witchinggadgets.common.blocks.tiles.TileEntityTempLight;
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
 import witchinggadgets.common.blocks.tiles.TileEntityVoidWalkway;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
@@ -271,8 +273,8 @@ public class WGContent
 		registerTile(TileEntityLabelLibrary.class);
 		//METAL
 		registerTile(TileEntityEssentiaPump.class);
-
-
+		registerTile(TileEntityTerraformer.class);
+		registerTile(TileEntityTerraformFocus.class);
 		//GameRegistry.registerTileEntity(TileEntityTotem.class, "TileEntityTotem");
 		//GameRegistry.registerTileEntity(TileEntityEssentiaVapourizer.class, "TileEntityEssentiaVapourizer");
 	}

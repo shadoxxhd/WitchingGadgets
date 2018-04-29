@@ -19,7 +19,8 @@ import org.lwjgl.opengl.GL11;
 
 import thaumcraft.client.renderers.block.BlockRenderer;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
-
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
+import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -37,8 +38,18 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler
 			renderer.setRenderBoundsFromBlock(block);
 			BlockRenderer.drawFaces(renderer, block, block.getIcon(0, metadata), true);
 		}
-		else
-		{
+			else if(metadata==2) {
+				GL11.glTranslatef(-.5f, -.5F, -.5f);
+				TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEntityTerraformer(), 0.0D, 0.0D, 0.0D, 0.0F);
+		}
+			else if((metadata>=3&&metadata<=6)||metadata>7) {
+				GL11.glTranslatef(-.5f, -.5F, -.5f);
+				TileEntityTerraformFocus tetf = new TileEntityTerraformFocus();
+				tetf.blockType = block;
+				tetf.blockMetadata = metadata;
+				TileEntityRendererDispatcher.instance.renderTileEntityAt(tetf, 0.0D, 0.0D, 0.0D, 0.0F);
+			}
+			else {
 			GL11.glPushMatrix();
 			try{
 				if(metadata==0)
