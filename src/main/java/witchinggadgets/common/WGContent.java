@@ -62,6 +62,7 @@ import witchinggadgets.common.items.ItemCrystalCapsule;
 import witchinggadgets.common.items.ItemInfusedGem;
 import witchinggadgets.common.items.ItemMagicFood;
 import witchinggadgets.common.items.ItemMaterials;
+import witchinggadgets.common.items.ItemAdvancedScribingTools;
 import witchinggadgets.common.items.ItemThaumiumShears;
 import witchinggadgets.common.items.armor.ItemAdvancedRobes;
 import witchinggadgets.common.items.armor.ItemPrimordialArmor;
@@ -69,6 +70,7 @@ import witchinggadgets.common.items.baubles.ItemCloak;
 import witchinggadgets.common.items.baubles.ItemKama;
 import witchinggadgets.common.items.baubles.ItemMagicalBaubles;
 import witchinggadgets.common.items.tools.ItemBag;
+import witchinggadgets.common.items.tools.ItemVorpalSword;
 import witchinggadgets.common.items.tools.ItemPrimordialAxe;
 import witchinggadgets.common.items.tools.ItemPrimordialGlove;
 import witchinggadgets.common.items.tools.ItemPrimordialHammer;
@@ -114,7 +116,8 @@ public class WGContent
 	public static Item ItemMagicFoodstuffs;
 	public static Item ItemMagicBed;
 
-	//  public static Item ItemAdvancedScribingTools;
+	public static Item ItemVorpalSword;
+	public static Item ItemAdvancedScribingTools;
 	//	public static Item ItemEliteArmorHelm;
 	//	public static Item ItemEliteArmorChest;
 	//	public static Item ItemEliteArmorLegs;
@@ -304,6 +307,9 @@ public class WGContent
 		ItemMaterial = new ItemMaterials().setUnlocalizedName("WG_Material");
 		GameRegistry.registerItem(ItemMaterial, ItemMaterial.getUnlocalizedName());
 
+		ItemVorpalSword = new ItemVorpalSword().setUnlocalizedName("WG_VorpalSword");
+		GameRegistry.registerItem(ItemVorpalSword,ItemVorpalSword.getUnlocalizedName());
+		
 		ItemThaumiumShears = new ItemThaumiumShears().setUnlocalizedName("WG_ThaumiumShears");
 		GameRegistry.registerItem(ItemThaumiumShears, ItemThaumiumShears.getUnlocalizedName());
 
@@ -315,6 +321,8 @@ public class WGContent
 		ItemMagicFoodstuffs = new ItemMagicFood().setUnlocalizedName("WG_MagicFood");
 		GameRegistry.registerItem(ItemMagicFoodstuffs, ItemMagicFoodstuffs.getUnlocalizedName());
 
+		ItemAdvancedScribingTools = new ItemAdvancedScribingTools().setUnlocalizedName("WG_AdvancedScribingTools");
+		GameRegistry.registerItem(ItemAdvancedScribingTools,ItemAdvancedScribingTools.getUnlocalizedName());
 		
 		ItemMagicalBaubles = new ItemMagicalBaubles().setUnlocalizedName("WG_Baubles");
 		GameRegistry.registerItem(ItemMagicalBaubles, ItemMagicalBaubles.getUnlocalizedName());

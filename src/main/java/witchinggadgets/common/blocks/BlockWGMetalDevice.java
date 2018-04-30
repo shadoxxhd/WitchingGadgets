@@ -31,10 +31,23 @@ import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
 import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import fox.spiteful.forbidden.DarkAspects;
 
 public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocus
 {
-	public static String[] subNames = {"essentiaPump","voidmetalBlock","terraformer","tfFocusPlains","tfFocusColdTaiga","tfFocusDesert","tfFocusJungle","tfFocusHell","tfFocusTaint","tfFocusMushroom"};
+	public static String[] subNames = {"essentiaPump","voidmetalBlock",
+			"terraformer",//2
+			"tfFocusPlains",
+			"tfFocusColdTaiga",
+			"tfFocusDesert",//5
+			"tfFocusJungle",
+			"tfFocusHell",
+			"tfFocusTaint",//8
+			"tfFocusMushroom",
+			"tfFocusRiver",//10
+			"tfFocusOcean",
+			"tfFocusEnd"//12
+			};
 	IIcon[] icons = new IIcon[subNames.length];
 
 	public BlockWGMetalDevice()
@@ -183,28 +196,12 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 	{
 		return BlockRenderMetalDevice.renderID;
 	}
+	
 	@Override
 	public Aspect requiredAspect(World world, int x, int y, int z)
 	{
 		int meta = world.getBlockMetadata(x,y,z);
-		if(meta<subNames.length && subNames[meta].startsWith("tfFocus"))
-		{
-			if(subNames[meta].equalsIgnoreCase("tfFocusPlains"))
-				return Aspect.PLANT;
-			if(subNames[meta].equalsIgnoreCase("tfFocusColdTaiga"))
-				return Aspect.COLD;
-			if(subNames[meta].equalsIgnoreCase("tfFocusDesert"))
-				return Aspect.FIRE;
-			if(subNames[meta].equalsIgnoreCase("tfFocusJungle"))
-				return Aspect.TREE;
-			if(subNames[meta].equalsIgnoreCase("tfFocusHell"))
-				return Aspect.DARKNESS;
-			if(subNames[meta].equalsIgnoreCase("tfFocusTaint"))
-				return Aspect.TAINT;
-			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
-				return Aspect.SLIME;
-		}
-		return null;
+		return requiredAspect(meta);
 	}
 
 	@Override
@@ -227,6 +224,12 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return ThaumcraftWorldGenerator.biomeTaint;
 			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
 				return BiomeGenBase.mushroomIsland;
+			if(subNames[meta].equalsIgnoreCase("tfFocusRiver"))
+				return BiomeGenBase.river;
+			if(subNames[meta].equalsIgnoreCase("tfFocusOcean"))
+				return BiomeGenBase.ocean;
+			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
+				return BiomeGenBase.sky;
 		}
 		return null;
 	}
@@ -250,6 +253,10 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return new ItemStack(ConfigBlocks.blockTaint);
 			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
 				return new ItemStack(Blocks.mycelium);
+			if(subNames[meta].equalsIgnoreCase("tfFocusRiver")||subNames[meta].equalsIgnoreCase("tfFocusOcean"))
+				return new ItemStack(Blocks.lapis_block);
+			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
+				return new ItemStack(Blocks.end_stone);
 		}
 		return null;
 }
@@ -267,11 +274,15 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 			if(subNames[meta].equalsIgnoreCase("tfFocusJungle"))
 				return Aspect.TREE;
 			if(subNames[meta].equalsIgnoreCase("tfFocusHell"))
-				return Aspect.DARKNESS;
+				return DarkAspects.NETHER;
 			if(subNames[meta].equalsIgnoreCase("tfFocusTaint"))
 				return Aspect.TAINT;
 			if(subNames[meta].equalsIgnoreCase("tfFocusMushroom"))
 				return Aspect.SLIME;
+			if(subNames[meta].equalsIgnoreCase("tfFocusRiver")||subNames[meta].equalsIgnoreCase("tfFocusOcean"))
+				return Aspect.WATER;
+			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
+				return Aspect.ELDRITCH;
 		}
 		return null;
 	}

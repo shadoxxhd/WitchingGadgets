@@ -31,7 +31,7 @@ public class WGConfig
 		config.load();
 
 		// Random Config Options
-		allowdropsfrommachinery = config.getBoolean("Drop Items from Generators", "Other Options", true, "Whether the cobble and snow gen can drop Items or just put out into inventorys, should be disabled on MP servers with chunkloading");
+		allowdropsfrommachinery = config.getBoolean("Drop Items from Generators", "Other Options", false, "Whether the cobble and snow gen can drop Items or just put out into inventorys, should be disabled on MP servers with chunkloading");
 		smelteryResultForClusters = config.get("Other Options", "Smeltery Result for Clusters", 144*3, "How many milliBuckets of molten Metal a cluster should give. 144mB equal 1 ingot. Set to 0 to disable smeltery recipes.").getInt();
 		allowClusters = config.get("Ore/Crucible", "Enable clusters", true, "Set this to false to disable clusters, useful when you are using AOBD.").getBoolean(true);
 		allowTransmutations = config.get("Ore/Crucible", "Enable transmutations", false, "Set this to false to disable nugget transmutations, this should fix the infinite loop glitch").getBoolean(false);

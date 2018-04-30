@@ -29,7 +29,9 @@ tile.WG_MetalDevice.tfFocusJungle.name=Terrestrial Focus: Jungle
 tile.WG_MetalDevice.tfFocusHell.name=Terrestrial Focus: Hell
 tile.WG_MetalDevice.tfFocusTaint.name=Terrestrial Focus: Tainted Lands
 tile.WG_MetalDevice.tfFocusMushroom.name=Terrestrial Focus: Mushroom Island
-
+tile.WG_MetalDevice.tfFocusRiver.name=Terrestrial Focus: River
+tile.WG_MetalDevice.tfFocusOcean.name=Terrestrial Focus: Ocean
+tile.WG_MetalDevice.tfFocusEnd.name=Terrestrial Focus: End
 
 tile.WG_RoseVine.name=Rose Vines
 tile.WG_CustomAir.name=Glimmer of Light
@@ -70,7 +72,6 @@ item.WG_MagicFood.brainjerky.name=Brain Jerky
 item.WG_AdvancedRobeChest.name=Bewitched Robe
 item.WG_AdvancedRobeLegs.name=Bewitched Leggings
 
-//?
 item.WG_AdvancedScribingTools.name=Illuminated Scribing Tools
 
 item.WG_Cloak.standard.name=Cloak
@@ -144,6 +145,7 @@ enchantment.wg.stealth=Stealth
 enchantment.wg.backstab=Backstabbing
 enchantment.wg.rideProtect=Throwoff
 enchantment.wg.soulbound=Soul Tethered
+enchantment.soulbound=Soul Tethered
 #
 # -- Random bits of text --
 wg.chat.notyourbag=§7This bag belongs to§r %1$s! §7You are not allowed to open it.§r
@@ -551,8 +553,10 @@ witchinggadgets_research_page.EMPOWERPEARL.1=The power that once pulsed through 
 witchinggadgets_research_name.TERRAFORMER=Thaumic Terraforming
 witchinggadgets_research_text.TERRAFORMER=[WG] Slartibartfast!
 witchinggadgets_research_page.TERRAFORMER.1=When simple gardening doesn't cut it anymore, when you would like to turn that depressing rain into beautiful snow, or when your blasted bees refuses to work in the current climate: That's when the Arcane Terrestrial Reformer comes into use.<BR>By placing a focus on the top, it will be attuned to a certain aspect. This construct will consume essentia of the respective aspect as well as §2Terra§0 vis. Per 4 essentia and 4 vis consumed, it will change the biome of a nearby coordinate within a 16 block radius.
-witchinggadgets_research_page.TERRAFORMER.2=The most basic of the Terrestrial Foci represents the Plains biome. For it to work its magic, it will need to be supplied with §2Herba§0 essentia.
 
+witchinggadgets_research_name.TERRAFORMFOCUS_PLAINS=Terrestrial Focus: Plains
+witchinggadgets_research_text.TERRAFORMFOCUS_PLAINS=[WG] Plain Plains
+witchinggadgets_research_page.TERRAFORMFOCUS_PLAINS.1=The most basic of the Terrestrial Foci represents the Plains biome. For it to work its magic, it will need to be supplied with §2Herba§0 essentia.
 witchinggadgets_research_name.TERRAFORMFOCUS_COLDTAIGA=Terrestrial Focus: Cold Taiga
 witchinggadgets_research_text.TERRAFORMFOCUS_COLDTAIGA=[WG] Winter is coming
 witchinggadgets_research_page.TERRAFORMFOCUS_COLDTAIGA.1=In stark (ha, get it?) contrast to the Desert Focus, the Terrestrial Focus: Cold Taiga turns the area around it into a winter-wonderland. Requires §bGelum§0 essentia to work.
@@ -564,14 +568,24 @@ witchinggadgets_research_text.TERRAFORMFOCUS_JUNGLE=[WG] Welcome!
 witchinggadgets_research_page.TERRAFORMFOCUS_JUNGLE.1=The animal friendly thaumaturge does his best to keep his cats happy. Living in a jungle, while severly sweat inducing, should remind them of their past as ferocious predators among the bushes...before they turned into chest-blocking annoyances. In order for this Focus to work, it will require Arbor essentia.
 witchinggadgets_research_name.TERRAFORMFOCUS_HELL=Terrestrial Focus: Hell
 witchinggadgets_research_text.TERRAFORMFOCUS_HELL=[WG] Screw the Nether
-witchinggadgets_research_page.TERRAFORMFOCUS_HELL.1=Let's be honest. Even those driven mad by the warp in their head don't want to live in a place of lava and brimstone.<BR>...<BR>What?! You do?! Well suit yourself. Supply the focus with Tenebrae essentia and enjoy hell on earth.
+witchinggadgets_research_page.TERRAFORMFOCUS_HELL.1=Let's be honest. Even those driven mad by the warp in their head don't want to live in a place of lava and brimstone.<BR>...<BR>What?! You do?! Well suit yourself. Supply the focus with §cInfernus§0 essentia and enjoy hell on earth.
 witchinggadgets_research_name.TERRAFORMFOCUS_MUSHROOM=Terrestrial Focus: Mushroom Island
 witchinggadgets_research_text.TERRAFORMFOCUS_MUSHROOM=[WG] Moooo-shroom!
 witchinggadgets_research_page.TERRAFORMFOCUS_MUSHROOM.1=The colors maybe offputting and the cows look funny, but with it's guaranteed monster-protection, Mushroom Islands make the ideal vacation spot. And now you can bring that feeling to your doorstep, simply by supplying this focus with §aLimus§0 essentia
 witchinggadgets_research_name.TERRAFORMFOCUS_TAINT=Terrestrial Focus: Tainted Lands
 witchinggadgets_research_text.TERRAFORMFOCUS_TAINT=[WG] Take my tears, and that's not nearly all!
 witchinggadgets_research_page.TERRAFORMFOCUS_TAINT.1=That's it. You pretty much qualify as insane by this point. Creating artificially tainted land? And not only with some bottled up taint, but full scale terraforming?<BR>Oh, you're doing it for research purposes? That's fine then. Simply supply this focus with some §5Vitium§0 essentia and go crazy.
+witchinggadgets_research_name.TERRAFORMFOCUS_END=Terrestrial Focus: End
+witchinggadgets_research_text.TERRAFORMFOCUS_END=[WG] Screw the End
+witchinggadgets_research_page.TERRAFORMFOCUS_END.1=Somehow i get the feeling this wont END well, cold Astroids and Enderman.<BR>...<BR>Supply this with §5Alienis§0 essentia and live in a cold and lonely place.
 
+
+
+
+# ADVANCED SCRIBING TOOLS
+witchinggadgets_research_name.ADVANCEDSCRIBINGTOOLS=Advanced Inscription
+witchinggadgets_research_text.ADVANCEDSCRIBINGTOOLS=[WG] Mightier than the sword
+witchinggadgets_research_page.ADVANCEDSCRIBINGTOOLS.1=Every thaumaturge knows the pain of aquiring the ink necessary to further his studies. More often than not, he has to hunt for squids himself! To avoid these troubles in future, you have thought up a much more potent set of scribing tools. They might be expensive in their creation, but their pool of magical ink is ten times the size of normal scribing tools. And to top that, it is not refilled by ink sacks cut out from slimey squids, but from purest light and some small quantities of gold.
 
 
 #-----------------------#
@@ -601,10 +615,7 @@ witchinggadgets_research_page.WALLMIRROR.1=Further delving into the magic of the
 witchinggadgets_research_page.WALLMIRROR.2=§lAccess:§r<BR>Place the mirror wherever you like. When you'd like to open the portal, simply right-click it. The dimension accessed through it is the same from any mirror, but portals out of it are only created where it is entered. This means that you can only leave where another Mirror has been placed in the Overworld.<BR><BR>§lNavigation:§r<BR>An invisible floor will spawn in a 5x5 below you wherever you walk. These blocks can be replaced with normal blocks by right-clicking them, allowing you to build there. Jump to ascend, the floor will follow you. Holding the sneak key will make you descend.
 #
 
-# ADVANCED SCRIBING TOOLS
-witchinggadgets_research_name.ADVANCEDSCRIBINGTOOLS=Advanced Inscription
-witchinggadgets_research_text.ADVANCEDSCRIBINGTOOLS=[WG] Mightier than the sword
-witchinggadgets_research_page.ADVANCEDSCRIBINGTOOLS.1=Every thaumaturge knows the pain of aquiring the ink necessary to further his studies. More often than not, he has to hunt for squids himself! To avoid these troubles in future, you have thought up a much more potent set of scribing tools. They might be expensive in their creation, but their pool of magical ink is ten times the size of normal scribing tools. And to top that, it is not refilled by ink sacks cut out from slimey squids, but from purest light and some small quantities of gold.
+
 # ELITE RUNIC ARMOR
 witchinggadgets_research_name.ELITERUNICARMOR=Elite Runic Armor
 witchinggadgets_research_text.ELITERUNICARMOR=[WG] Overshield!
