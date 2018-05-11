@@ -1,11 +1,17 @@
 package witchinggadgets.common;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import gregtech.api.enums.Materials;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.enchantment.Enchantment;
@@ -85,6 +91,10 @@ import witchinggadgets.common.magic.WGEnchantSoulbound;
 import witchinggadgets.common.magic.WGEnchantStealth;
 import witchinggadgets.common.magic.WGEnchantUnveiling;
 import witchinggadgets.common.magic.WGPotion;
+import witchinggadgets.common.recipes.WG_Infusion;
+import witchinggadgets.common.recipes.WG_alchemic_recipe;
+import witchinggadgets.common.recipes.WG_arcane_recipes;
+import witchinggadgets.common.recipes.WG_others;
 import witchinggadgets.common.util.Utilities;
 import witchinggadgets.common.util.handler.WGMultiPartHandler;
 import witchinggadgets.common.util.recipe.BagColourizationRecipe;
@@ -115,7 +125,7 @@ public class WGContent
 	public static Item ItemAdvancedRobeLegs;
 	public static Item ItemMagicFoodstuffs;
 	public static Item ItemMagicBed;
-
+	
 	public static Item ItemVorpalSword;
 	public static Item ItemAdvancedScribingTools;
 	//	public static Item ItemEliteArmorHelm;
@@ -153,14 +163,54 @@ public class WGContent
 	public static ToolMaterial primordialTool = EnumHelper.addToolMaterial("WG:PRIMORDIALTOOL",4, 1500, 8, 6, 25);
 	public static ArmorMaterial primordialArmor = EnumHelper.addArmorMaterial("WG:PRIMORDIALARMOR", 40, new int[] {3,7,6,3}, 30);
 	//	public static HashMap<String,Cloak> cloakRegistry = new HashMap<String, Cloak>();
-
+	public static HashMap<String,Object> recipeList = new HashMap<String,Object>();
+	public static String[] GT_Cluster= new String[Materials.getMaterialsMap().size()];
+	public static Integer[] GT_Cluster_Color = new Integer[Materials.getMaterialsMap().size()];
+	public static HashMap<String,Boolean> ClusterEBF = new HashMap<String,Boolean>();
+	public static String[] bannedMaterials = {
+		"AnyIron",
+		"Iron",
+		"Gold",
+		"Copper",
+		"Tin",
+		"Silver",
+		"Cinnabar",
+		"AnyCopper"
+	};
+	public static ArrayList b =new ArrayList<String>();
+	
 	public static void preInit()
 	{
+		for (String s : bannedMaterials)
+			b.add(s);
+		for (String s : WGConfig.clusters)
+			b.add(s);
+		initClusters();
 		preInitItems();
 		preInitBlocks();
-
 	}
 	//final static String UUIDBASE = "424C5553-5747-1694-4452-";
+	
+	private static void initClusters(){
+		ArrayList L = new ArrayList<String>(),K =new ArrayList<Integer>();
+		Map <String, Materials> map = Materials.getMaterialsMap();
+		Iterator<Entry<String, Materials>> entries  = Materials.getMaterialsMap().entrySet().iterator();
+	    
+		while (entries.hasNext()) {
+			Map.Entry<String, Materials> entry = entries.next();
+			if (!b.contains(entry.getValue().mLocalizedName)) {
+			Integer rgb = (entry.getValue().getRGBA()[0] << 24) + (entry.getValue().getRGBA()[1] << 16) + (entry.getValue().getRGBA()[2] << 8) + (entry.getValue().getRGBA()[3]);
+			L.add(entry.getValue().mLocalizedName.replaceAll(" ", ""));
+			K.add(rgb);
+			ClusterEBF.put(entry.getValue().mLocalizedName.replaceAll(" ", ""), entry.getValue().mBlastFurnaceRequired);
+			}
+		}	
+	        L.toArray(GT_Cluster);
+	        K.toArray(GT_Cluster_Color);
+	}
+	
+	
+	
 	public static void init()
 	{
 		initializeItems();
@@ -215,7 +265,6 @@ public class WGContent
 		if(enchId>0)
 			enc_rideProtect = new WGEnchantRideProtect(enchId);
 		
-		//TODO attempt soulBound integration
 		enchId = WGConfig.getEnchantmentID(enchId, "Soulbound");
 		if(enchId>0)
 			enc_soulbound = new WGEnchantSoulbound(enchId);
@@ -251,7 +300,7 @@ public class WGContent
 		BlockCustomAiry = new BlockModifiedAiry().setBlockName("WG_CustomAir");
 		GameRegistry.registerBlock(BlockCustomAiry, BlockCustomAiry.getUnlocalizedName().substring("tile.".length()));
 
-		OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice,1,1));
+		
 	}
 	private static void initializeBlocks()
 	{
@@ -300,6 +349,14 @@ public class WGContent
 				}
 
 		TileEntityBlastfurnace.stairBlock = rc? GameRegistry.findBlock("Railcraft", "stair"): Blocks.nether_brick_stairs;
+		
+		OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice,1,1));
+		OreDictionary.registerOre("blockVoidmetal", new ItemStack(BlockMetalDevice,1,1));
+		OreDictionary.registerOre("blockVoidMetal", new ItemStack(BlockMetalDevice,1,1));
+		OreDictionary.registerOre("voidblock", new ItemStack(BlockMetalDevice,1,1));
+		OreDictionary.registerOre("crystalNetherQuartz", new ItemStack(Items.quartz));
+		OreDictionary.registerOre("scribingTools", new ItemStack(ConfigItems.itemInkwell,1,OreDictionary.WILDCARD_VALUE));
+		OreDictionary.registerOre("scribingTools", new ItemStack(ItemAdvancedScribingTools,1,OreDictionary.WILDCARD_VALUE));
 	}
 
 	private static void preInitItems()
@@ -308,7 +365,7 @@ public class WGContent
 		GameRegistry.registerItem(ItemMaterial, ItemMaterial.getUnlocalizedName());
 
 		ItemVorpalSword = new ItemVorpalSword().setUnlocalizedName("WG_VorpalSword");
-		GameRegistry.registerItem(ItemVorpalSword,ItemVorpalSword.getUnlocalizedName());
+		//GameRegistry.registerItem(ItemVorpalSword,ItemVorpalSword.getUnlocalizedName()); TODO
 		
 		ItemThaumiumShears = new ItemThaumiumShears().setUnlocalizedName("WG_ThaumiumShears");
 		GameRegistry.registerItem(ItemThaumiumShears, ItemThaumiumShears.getUnlocalizedName());
@@ -387,16 +444,11 @@ public class WGContent
 		
 		//ItemMagicBed = new ItemMagicBed(WGConfig.ItemMagicBedID).setUnlocalizedName("WG_MagicBed");
 		//GameRegistry.registerItem(ItemMagicBed, ItemMagicBed.getUnlocalizedName());
-		OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice,1,1));
-		OreDictionary.registerOre("blockVoidmetal", new ItemStack(BlockMetalDevice,1,1));
-		OreDictionary.registerOre("blockVoidMetal", new ItemStack(BlockMetalDevice,1,1));
-		OreDictionary.registerOre("voidblock", new ItemStack(BlockMetalDevice,1,1));
-		OreDictionary.registerOre("crystalNetherQuartz", new ItemStack(Items.quartz));
-		OreDictionary.registerOre("scribingTools", new ItemStack(ConfigItems.itemInkwell,1,OreDictionary.WILDCARD_VALUE));
+
 	}
 	private static void initializeItems()
 	{
-		WGResearch.recipeList.put("THAUMIUMSHEARS", GameRegistry.addShapedRecipe(new ItemStack(ItemThaumiumShears), " t", "t ", 't', ItemApi.getItem("itemResource", 2)));
+		recipeList.put("THAUMIUMSHEARS", GameRegistry.addShapedRecipe(new ItemStack(ItemThaumiumShears), " t", "t ", 't', ItemApi.getItem("itemResource", 2)));
 
 		BlockDispenser.dispenseBehaviorRegistry.putObject(ItemCapsule, new ItemCrystalCapsule.CapsuleDispenserBehaviour());	    
 
@@ -418,8 +470,8 @@ public class WGContent
 
 		if(WGConfig.allowClusters)
 		{
-			for(int iOre=0; iOre<ItemClusters.subNames.length; iOre++)
-				OreDictionary.registerOre("cluster"+ItemClusters.subNames[iOre], new ItemStack(ItemCluster,1,iOre));
+			for(int iOre=0; iOre<GT_Cluster.length; iOre++)
+				OreDictionary.registerOre("cluster"+GT_Cluster[iOre], new ItemStack(ItemCluster,1,iOre));
 		}
 
 		//FMLInterModComms.sendMessage("TravellersGear", "registerTravellersGear_0", new ItemStack(ItemCloak));
@@ -586,7 +638,10 @@ public class WGContent
 				addOreAspects("Desichalkos", new AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.VOID, 2), true);
 
 		WGResearch.setupResearchPages();
-		WGResearch.registerRecipes();
+		WG_alchemic_recipe.registeralchemic();
+		WG_others.register_others();
+		WG_Infusion.register_infusion();
+		WG_arcane_recipes.regist_arcane();
 		WGResearch.registerResearch();
 		WGResearch.modifyStandardThaumcraftResearch();
 	}

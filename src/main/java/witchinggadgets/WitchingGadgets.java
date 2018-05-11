@@ -28,6 +28,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
 import cpw.mods.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -38,7 +39,7 @@ import cpw.mods.fml.common.registry.GameRegistry.Type;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = WitchingGadgets.MODID, name = WitchingGadgets.MODNAME, version = WitchingGadgets.VERSION, dependencies="required-after:Thaumcraft;required-after:ForbiddenMagic;required-after:TravellersGear@[1.16.4,);after:TwilightForest;after:Mystcraft;after:TConstruct;after:MagicBees;after:ForgeMultipart")
+@Mod(modid = WitchingGadgets.MODID, name = WitchingGadgets.MODNAME, version = WitchingGadgets.VERSION, dependencies="required-after:Thaumcraft;required-after:ForbiddenMagic;required-after:TravellersGear@[1.16.4,);required-after:gregtech;after:TwilightForest;after:Mystcraft;after:TConstruct;after:dreamcraft;after:ThaumicTinkerer;after:MagicBees;after:ForgeMultipart")
 public class WitchingGadgets
 {
 	public static final String MODID = "WitchingGadgets";
@@ -140,5 +141,10 @@ public class WitchingGadgets
 					e.printStackTrace();
 				}
 			}
+	}
+	
+	@Mod.EventHandler
+	public void onLoadComplete(FMLLoadCompleteEvent event) {
+
 	}
 }

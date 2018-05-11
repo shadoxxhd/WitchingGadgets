@@ -8,6 +8,8 @@ public class MetalFluidData
 	static HashMap<String, Integer> oreFluidTemp = new HashMap();
 
 	static{
+		//TODO: TCON Fluids
+		
 		addOreFluid("Aluminum", "aluminum.molten", 350);
 		addOreFluid("Cobalt", "cobalt.molten", 650);
 		addOreFluid("Ardite", "ardite.molten", 650);

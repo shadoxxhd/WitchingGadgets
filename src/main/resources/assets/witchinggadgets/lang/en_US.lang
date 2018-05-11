@@ -449,7 +449,7 @@ witchinggadgets_research_page.ENCH_BACKSTAB.1=With your newfound ability to snea
 witchinggadgets_research_name.ENCH_RIDEPROTECT=Enchantment: Throwoff
 witchinggadgets_research_text.ENCH_RIDEPROTECT=[WG] Get off me!
 witchinggadgets_research_page.ENCH_RIDEPROTECT.1=Moving around is incredibly difficult when someone is piggyback-riding you. Enchanting your helmet with this repulsion spell should fix that problem. Everyone who tries to jump upon you will get thrown off and damaged.
-
+#
 witchinggadgets_research_name.ENCH_SOULBOUND=Enchantment: Soul Tethered
 witchinggadgets_research_text.ENCH_SOULBOUND=[WG] Til death do us part. Or not.
 witchinggadgets_research_page.ENCH_SOULBOUND.1=Dying is somewhat of an inconvenience. Aside from being dead, you also tend to lose important things like tools, valuable materials, and armor. <BR>By infusing the strange properties of ender artifacts into an object, it seems to bind to your spirit and follows you from one life to the next. No more losing your favorite socks!<BR>Since the Infusion Altar can be a little fussy sometimes, it also comes in book form.
@@ -470,7 +470,7 @@ witchinggadgets_research_page.GEMCUTTING.5=§3§lAqua: §r§0Releases a blast of
 
 witchinggadgets_research_page.GEMCUTTING.6=              §lOval Cut§r<LINE>The oval cut is an advanced form of the infused gems. With the increase in facettes, it can store much more energy and release it in smaller, concentrated bursts. The effects are quite different from those of the point cut gems and these can be recharged with vis of a matching aspect.<BR>Due to its complexety, using a base gem without a natural affinity for the aspect makes the resulting gem very brittle, and in turn, the essentia required to create a brilliant gem has increased.
 witchinggadgets_research_page.GEMCUTTING.7=§e§lAer: §r§0The energies propell you through their air. Consumes 1 charge per use.<BR>§2§lTerra: §r§0Upon using it on a block, it checks connected blocks for ores. Consumes 1 charge per use.<BR>§c§lIgnis: §r§0Starts a fire at the targeted block. Consumes 1 charge per use.<BR>§3§lAqua: §r§0Creates a block of clean water at the targeted block. Consumes 2 charges per use.<BR>§7§lOrdo: §r§0Guides you to the nearest Node. Consumes 2 charges per use.<BR>§8§lPerditio: §r§0When targeted at a Magical Mirror, it will teleport you to the linked mirror. Consumes 16 charges per use. (May require sneak-clicking to operate)
-witchinggadgets_research_page.GEMCUTTING.7.noMirrors=§e§lAer: §r§0The energies propell you through their air. Consumes 1 charge per use.<BR>§2§lTerra: §r§0Upon using it on a block, it checks connected blocks for ores. Consumes 1 charge per use.<BR>§c§lIgnis: §r§0Starts a fire at the targeted block. Consumes 1 charge per use.<BR>§3§lAqua: §r§0Creates a block of clean water at the targeted block. Consumes 2 charges per use.<BR>§f§lOrdo: §r§0Guides you to the nearest Node. Consumes 2 charges per use.<BR>§8§lPerditio: §r§0Releases a wave of energy, pushing back and blinding enemies around you. Consumes 2 charges per use.
+witchinggadgets_research_page.GEMCUTTING.7.noMirrors=§e§lAer: §r§0The energies propell you through their air. Consumes 1 charge per use.<BR>§2§lTerra: §r§0Will create a small safe room around of you. Material depends on strenth. Consumes 1 charge per use.<BR>§c§lIgnis: §r§0Starts a fire at the targeted block. Consumes 1 charge per use.<BR>§3§lAqua: §r§0Creates a block of clean water at the targeted block. Consumes 2 charges per use.<BR>§f§lOrdo: §r§0Guides you to the nearest Node. Consumes 2 charges per use.<BR>§8§lPerditio: §r§0Releases a wave of energy, pushing back and blinding enemies around you. Consumes 2 charges per use.
 #
 witchinggadgets_research_name.GEMCUT_TABLE=Table Cut
 witchinggadgets_research_text.GEMCUT_TABLE=[WG] Bling
@@ -578,6 +578,12 @@ witchinggadgets_research_page.TERRAFORMFOCUS_TAINT.1=That's it. You pretty much 
 witchinggadgets_research_name.TERRAFORMFOCUS_END=Terrestrial Focus: End
 witchinggadgets_research_text.TERRAFORMFOCUS_END=[WG] Screw the End
 witchinggadgets_research_page.TERRAFORMFOCUS_END.1=Somehow i get the feeling this wont END well, cold Astroids and Enderman.<BR>...<BR>Supply this with §5Alienis§0 essentia and live in a cold and lonely place.
+witchinggadgets_research_name.TERRAFORMFOCUS_RIVER=Terrestrial Focus: River
+witchinggadgets_research_text.TERRAFORMFOCUS_RIVER=[WG] Life is a River
+witchinggadgets_research_page.TERRAFORMFOCUS_RIVER.1=Fishing is the thaumaturges most beloved technique. Thats why many of them decide to settle near a river.<BR>...<BR>Supply this with §5Aqua§0 essentia.
+witchinggadgets_research_name.TERRAFORMFOCUS_OCEAN=Terrestrial Focus: Ocean
+witchinggadgets_research_text.TERRAFORMFOCUS_OCEAN=[WG] Living on a Boat
+witchinggadgets_research_page.TERRAFORMFOCUS_OCEAN.1=Why do you want more water as a river has in your house? Emptyness over the water on the ocean is romantic?<BR>...<BR>Well, supply this with §5Aqua§0 essentia and enjoy your romantic view.
 
 
 

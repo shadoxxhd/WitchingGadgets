@@ -1,10 +1,15 @@
 package witchinggadgets.common.items;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.logging.log4j.Level;
 
+import gregtech.api.enums.Materials;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -19,6 +24,7 @@ import witchinggadgets.common.WGContent;
 
 public class ItemClusters extends Item
 {
+	@Deprecated
 	public static String[] subNames = {
 		//TCon
 		"Aluminum", "Cobalt", "Ardite",
@@ -31,10 +37,13 @@ public class ItemClusters extends Item
 		"Zinc","Platinum",
 		"Ignatius","ShadowIron","Lemurite","Midasium","Vyroxeres","Ceruclase","Alduorite","Kalendrite","Vulcanite","Sanguinite",
 		"Prometheum","DeepIron","Infuscolium","Oureclase","AstralSilver","Carmot","Mithril","Rubracium","Orichalcum","Adamantine","Atlarus",
-		"Eximite","Meutoite"
-
-
+		"Eximite","Meutoite",
+		//Gregtech
+		"Beryllium","Cobalt","Iridium","Molybdenum","Naquadah","Neodymium","Nickel","Palladium","Platinum","Thorium","Uranium235","Uranium238","Zinc","Casserite"
 	};
+	
+	
+	public static HashMap<String, String> loccodename = new HashMap();
 	public static HashMap<String, Integer[]> materialMap = new HashMap();
 
 	IIcon iconMetal;
@@ -53,8 +62,8 @@ public class ItemClusters extends Item
 	{
 		if(pass==0)
 		{
-			if(materialMap.get( subNames[stack.getItemDamage()])!=null)
-				return materialMap.get( subNames[stack.getItemDamage()] )[0];
+			if(materialMap.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()])!=null)
+				return materialMap.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()] )[0];
 		}
 		return 0xffffff;
 	}
@@ -62,8 +71,8 @@ public class ItemClusters extends Item
 	public static ItemStack getCluster(String ore)
 	{
 		if(WGConfig.allowClusters)
-			for(int sn=0; sn<subNames.length; sn++)
-				if(subNames[sn].equalsIgnoreCase(ore))
+			for(int sn=0; sn<witchinggadgets.common.WGContent.GT_Cluster.length; sn++)
+				if(witchinggadgets.common.WGContent.GT_Cluster[sn].equalsIgnoreCase(ore))
 					return new ItemStack(WGContent.ItemCluster,1,sn);
 		return null;
 	}
@@ -87,8 +96,8 @@ public class ItemClusters extends Item
 	{
 		if(pass==0)
 			return this.iconMetal;
-		else if(materialMap.get(subNames[damage])!=null)
-			return this.iconOverlay[ materialMap.get(subNames[damage])[1] ];
+		else if(materialMap.get(witchinggadgets.common.WGContent.GT_Cluster[damage])!=null)
+			return this.iconOverlay[ materialMap.get(witchinggadgets.common.WGContent.GT_Cluster[damage])[1] ];
 		else
 			return this.iconOverlay[0];
 	}
@@ -102,9 +111,9 @@ public class ItemClusters extends Item
 	public String getItemStackDisplayName(ItemStack stack)
 	{
 		String ss = "";
-		if(!OreDictionary.getOres("ingot"+subNames[stack.getItemDamage()]).isEmpty())
+		if(!OreDictionary.getOres("ingot"+witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()]).isEmpty())
 		{
-			ItemStack ingot = OreDictionary.getOres("ingot"+subNames[stack.getItemDamage()]).get(0);
+			ItemStack ingot = OreDictionary.getOres("ingot"+witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()]).get(0);
 			int limit = ingot.getDisplayName().lastIndexOf(" ");
 			ss = ingot.getDisplayName().substring(0, Math.max(0, limit));
 		}
@@ -114,20 +123,25 @@ public class ItemClusters extends Item
 	public void getSubItems(Item item, CreativeTabs tab, List itemList)
 	{
 		if(WGConfig.allowClusters)
-			for(int iOre=0; iOre<subNames.length; iOre++)
-				if(!OreDictionary.getOres("ore"+subNames[iOre]).isEmpty() && !OreDictionary.getOres("ingot"+subNames[iOre]).isEmpty())
+			for(int iOre=0; iOre<witchinggadgets.common.WGContent.GT_Cluster.length; iOre++)
+				if(!OreDictionary.getOres("ore"+witchinggadgets.common.WGContent.GT_Cluster[iOre]).isEmpty() && !OreDictionary.getOres("ingot"+witchinggadgets.common.WGContent.GT_Cluster[iOre]).isEmpty())
 					itemList.add( new ItemStack(item,1,iOre) );
 	}
 
 	public static void setupClusters()
 	{
+		int i = 0;
 		if(WGConfig.allowClusters)
-			for(String ore : subNames)
-				if(!OreDictionary.getOres("ore"+ore).isEmpty() && !OreDictionary.getOres("ingot"+ore).isEmpty())
+			for(String ore : witchinggadgets.common.WGContent.GT_Cluster)
+				if(!OreDictionary.getOres("ore"+ore).isEmpty())
 				{
+					materialMap.put(ore, new Integer[]{witchinggadgets.common.WGContent.GT_Cluster_Color[i],0});
+					/*
+					i = i+1;
 					try{
 						List<Integer> colList = ClientUtilities.getItemColours( OreDictionary.getOres("ore"+ore).get(0) );
 						if(!colList.isEmpty())
+						
 						{
 							int oreBlockColour = colList.get(0);
 							int[] rgb = {oreBlockColour>>16&0xff, oreBlockColour>>8&0xff, oreBlockColour&0xff};
@@ -139,10 +153,9 @@ public class ItemClusters extends Item
 
 							materialMap.put(ore, new Integer[]{colour, clustertype} );
 						}
-					}catch(Exception e)
-					{
+					}catch(Exception e){
 						WitchingGadgets.logger.log(Level.ERROR, "Error setting up cluster for "+ore);
-					}
+					}*/
 				}
 	}
 }	

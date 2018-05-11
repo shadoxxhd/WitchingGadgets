@@ -211,7 +211,6 @@ public class ItemInfusedGem extends Item implements IInfusedGem
 					int x = (int) player.posX;
 					int y = (int) player.posY;
 					int z = (int) player.posZ;
-					int dist = 2+potency;
 					if (potency==0) {
 						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
 							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ, Blocks.dirt);
@@ -229,6 +228,21 @@ public class ItemInfusedGem extends Item implements IInfusedGem
 							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1, Blocks.dirt);
 						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1).equals(Blocks.air))
 							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1, Blocks.dirt);
+						
+						if (world.getBlock((int) player.posX-1, (int) player.posY, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY, (int) player.posZ, Blocks.dirt);
+						if (world.getBlock((int) player.posX-1, (int) player.posY+1, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY+1, (int) player.posZ, Blocks.dirt);
+						if (world.getBlock((int) player.posX-1, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY+2, (int) player.posZ, Blocks.dirt);
+					
+						if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY, (int) player.posZ-1, Blocks.dirt);
+						if (world.getBlock((int) player.posX, (int) player.posY+1, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ-1, Blocks.dirt);
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ-1, Blocks.dirt);
+						
 					}else if (potency==1) {
 						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
 							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ, Blocks.cobblestone);
@@ -246,6 +260,21 @@ public class ItemInfusedGem extends Item implements IInfusedGem
 							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1, Blocks.cobblestone);
 						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1).equals(Blocks.air))
 							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1, Blocks.cobblestone);
+						
+						if (world.getBlock((int) player.posX-1, (int) player.posY, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY, (int) player.posZ, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX-1, (int) player.posY+1, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY+1, (int) player.posZ, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX-1, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY+2, (int) player.posZ, Blocks.cobblestone);
+					
+						if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY, (int) player.posZ-1, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX, (int) player.posY+1, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ-1, Blocks.cobblestone);
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ-1, Blocks.cobblestone);
+						
 					}else if (potency==2) {
 						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
 							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ, Blocks.obsidian);
@@ -263,6 +292,21 @@ public class ItemInfusedGem extends Item implements IInfusedGem
 							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ+1, Blocks.obsidian);
 						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1).equals(Blocks.air))
 							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ+1, Blocks.obsidian);
+						
+						if (world.getBlock((int) player.posX-1, (int) player.posY, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY, (int) player.posZ, Blocks.obsidian);
+						if (world.getBlock((int) player.posX-1, (int) player.posY+1, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY+1, (int) player.posZ, Blocks.obsidian);
+						if (world.getBlock((int) player.posX-1, (int) player.posY+2, (int) player.posZ).equals(Blocks.air))
+							world.setBlock((int) player.posX-1, (int) player.posY+2, (int) player.posZ, Blocks.obsidian);
+					
+						if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY, (int) player.posZ-1, Blocks.obsidian);
+						if (world.getBlock((int) player.posX, (int) player.posY+1, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+1, (int) player.posZ-1, Blocks.obsidian);
+						if (world.getBlock((int) player.posX, (int) player.posY+2, (int) player.posZ-1).equals(Blocks.air))
+							world.setBlock((int) player.posX, (int) player.posY+2, (int) player.posZ-1, Blocks.obsidian);
+						
 						}
 					}
 					dmg = true;

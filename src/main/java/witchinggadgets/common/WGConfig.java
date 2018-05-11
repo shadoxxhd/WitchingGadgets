@@ -22,6 +22,11 @@ public class WGConfig
 	public static Block[] coremod_worldgenValidBase_HilltopStones,coremod_worldgenValidBase_EldritchRing;
 
 	public static float radialSpeed;
+	public static String[] clusters={
+		"Infinity",
+		"Infinity Catalyst",
+		"Neutronium"
+	};
 	
 
 	static Configuration config;
@@ -36,19 +41,7 @@ public class WGConfig
 		allowClusters = config.get("Ore/Crucible", "Enable clusters", true, "Set this to false to disable clusters, useful when you are using AOBD.").getBoolean(true);
 		allowTransmutations = config.get("Ore/Crucible", "Enable transmutations", false, "Set this to false to disable nugget transmutations, this should fix the infinite loop glitch").getBoolean(false);
 		terraformer = config.getBoolean("Enable Terraformer", "Other Options", true, "If the Terraformer is enabled");
-		String[] clusters = {
-		//Tinkers
-		"Aluminum","Cobalt","Ardite",
-		//ThermalFoundation
-		"Nickel","Platinum",
-		//Factorization
-		"FZDarkIron",
-		//Metallurgy 
-		"Manganese","Zinc","Platinum","Ignatius","ShadowIron","Lemurite","Midasium","Vyroxeres","Ceruclase","Alduorite","Kalendrite","Vulcanite","Sanguinite",
-		"Prometheum","DeepIron","Infuscolium","Oureclase","AstralSilver","Carmot","Mithril","Rubracium","Orichalcum","Adamantine","Atlarus","Eximite","Meutoite",
-		//Others
-		"Uranium"};
-		tripplingClusterList = config.get("Ore/Crucible", "Trippling Cluster List", clusters, "A list of ore names for which the clsuters should smelt into three ingots. This is so that custom AOBD clusters can be thrown into the Blast Furnace").getStringList();
+		tripplingClusterList = config.get("Ore/Crucible", "Not Trippling Cluster List", clusters, "A list of ore names for which no native Cluster will get generated").getStringList();
 		
 		//search
 		limitBookSearchToCategory = config.get("Search", "Limit Thaumonomicon Search to currently active category", false, "Thaumonomicon Search to currently active category").getBoolean(false);
