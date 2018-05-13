@@ -3,6 +3,7 @@ package witchinggadgets.common.recipes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.GT_Values;
@@ -10,9 +11,14 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
+import gregtech.api.util.GT_Utility;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -118,16 +124,32 @@ public class WG_others {
 	int i=0;
 	
 	for(String name : OreDictionary.getOreNames()) {
-		if(name.startsWith("cluster"))
-			if(WGContent.ClusterEBF.get(name.substring("cluster".length()))==null || !WGContent.ClusterEBF.get(name.substring("cluster".length()))) {
-				addBlastTrippling(name.substring("cluster".length()));
-				if (!OreDictionary.getOres(name).isEmpty()&&!OreDictionary.getOres("dustTiny"+name.substring("cluster".length())).isEmpty())
-				GT_Values.RA.addPulveriserRecipe(OreDictionary.getOres(name).get(0), new ItemStack[]{OreDictionary.getOres("dustTiny"+name.substring("cluster".length())).get(0).copy().splitStack(22)}, new int[] {10000}, 30, 30);
+		if(name.startsWith("cluster")) {
+			String aMaterial = name.substring("cluster".length());
+			if(WGContent.ClusterEBF.get(aMaterial)==null || !WGContent.ClusterEBF.get(aMaterial)) {
+				addBlastTrippling(aMaterial);
+				if (!OreDictionary.getOres(name).isEmpty()&&!OreDictionary.getOres("dustTiny"+aMaterial).isEmpty()) {
+				GT_Values.RA.addPulveriserRecipe(OreDictionary.getOres(name).get(0).copy(), new ItemStack[]{OreDictionary.getOres("dustTiny"+aMaterial).get(0).copy().splitStack(22)}, new int[] {10000}, 30, 30);
+				if (WGContent.ClusterSmeltable.get(aMaterial)!=null)
+				GT_Values.RA.addFluidExtractionRecipe(OreDictionary.getOres(name).get(0).copy(), GT_Values.NI,new FluidStack(WGContent.ClusterSmeltable.get(aMaterial),344), 0, 60, 120);
+				}
 			}
 			else
-				if (!OreDictionary.getOres(name).isEmpty()&&!OreDictionary.getOres("dustTiny"+name.substring("cluster".length())).isEmpty())
-				GT_Values.RA.addPulveriserRecipe(OreDictionary.getOres(name).get(0), new ItemStack[]{OreDictionary.getOres("dustTiny"+name.substring("cluster".length())).get(0).copy().splitStack(22)}, new int[] {10000}, 30, 30);
-	}
+				if (!OreDictionary.getOres(name).isEmpty()&&!OreDictionary.getOres("dustTiny"+aMaterial).isEmpty()) {
+				GT_Values.RA.addPulveriserRecipe(OreDictionary.getOres(name).get(0).copy(), new ItemStack[]{OreDictionary.getOres("dustTiny"+aMaterial).get(0).copy().splitStack(22)}, new int[] {10000}, 30, 30);
+				}
+			
+			if (!OreDictionary.getOres(name).isEmpty()&&!OreDictionary.getOres("gem"+aMaterial).isEmpty()) {
+				switch (aMaterial) {
+				case "Tanzanite": case "Sapphire": case "Olivine": case "GreenSapphire": case "Opal": case "Amethyst": case "Emerald": case "Ruby":
+				case "Amber": case "Diamond": case "FoolsRuby": case "BlueTopaz": case "GarnetRed": case "Topaz": case "Jasper": case "GarnetYellow":
+					GT_Values.RA.addSifterRecipe(OreDictionary.getOres(name).get(0).copy(), new ItemStack[]{GT_OreDictUnificator.get(OrePrefixes.gemExquisite, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L), GT_OreDictUnificator.get(OrePrefixes.gemFlawless, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  GT_OreDictUnificator.get(OrePrefixes.gemFlawed, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L), GT_OreDictUnificator.get(OrePrefixes.gemChipped, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.get(aMaterial),  1L)}, new int[]{600, 2400, 9000, 2400, 5600, 7000}, 1600, 30);
+				default:
+					GT_Values.RA.addSifterRecipe(OreDictionary.getOres(name).get(0).copy(), new ItemStack[]{GT_OreDictUnificator.get(OrePrefixes.gemExquisite, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L), GT_OreDictUnificator.get(OrePrefixes.gemFlawless, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  GT_OreDictUnificator.get(OrePrefixes.gemFlawed, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L), GT_OreDictUnificator.get(OrePrefixes.gemChipped, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  1L),  1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.get(aMaterial),  1L)}, new int[]{200, 400, 3000, 4000, 8000, 10000}, 1600, 30);
+				}
+			}
+		}
+		}
 	
 	
 	if(WGModCompat.loaded_TCon)
@@ -143,6 +165,7 @@ public class WG_others {
 		}
 		WGModCompat.addTConDryingRecipe(new ItemStack(ConfigItems.itemZombieBrain), 20*6*5, new ItemStack(WGContent.ItemMagicFoodstuffs,1,2));
 	}
+	
 	}
 
 	private static boolean registerShapelessOreRecipe(String tag, String tagAddon, ItemStack result, Object... recipe)

@@ -42,6 +42,20 @@ public class SpinningRecipe
 			{
 				input[i] = OreDictionary.getOres((String)in);
 			}
+			else if (in instanceof ItemStack[]) {
+				Object[] temp = input;
+				input = new Object[r_recipe.length+((ItemStack[])in).length];
+				int f =0;
+				for (Object k : temp) {
+					input[f]=k;
+					++f;
+				}
+				f=0;
+				for (ItemStack j : ((ItemStack[])in)) {
+					input[i+f]=j;
+					++f;
+				}
+			}
 			else
 			{
 				String ret = "Invalid SpinningWheel recipe for: "+r_output.getDisplayName()+" input should be ItemStack, Item, Block or String";

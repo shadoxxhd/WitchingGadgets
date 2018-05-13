@@ -2,6 +2,8 @@ package witchinggadgets.common.util.registry;
 
 import java.util.HashMap;
 
+import witchinggadgets.common.WGContent;
+
 public class MetalFluidData
 {
 	static HashMap<String, String> oreFluidName = new HashMap();
@@ -9,7 +11,7 @@ public class MetalFluidData
 
 	static{
 		//TODO: TCON Fluids
-		
+		/*
 		addOreFluid("Aluminum", "aluminum.molten", 350);
 		addOreFluid("Cobalt", "cobalt.molten", 650);
 		addOreFluid("Ardite", "ardite.molten", 650);
@@ -46,6 +48,9 @@ public class MetalFluidData
 
 		addOreFluid("Eximite", "eximite.molten", 600);
 		addOreFluid("Meutoite", "meutoite.molten", 600);
+		*/
+		for (String s : WGContent.ClusterSmeltable.keySet())
+		addOreFluid(s,WGContent.ClusterSmeltable.get(s).getUnlocalizedName(),WGContent.ClusterSmeltable.get(s).getTemperature());
 	}
 
 	public static int getOreFluidTemp(String ore)

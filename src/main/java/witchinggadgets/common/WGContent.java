@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -27,6 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -63,12 +64,12 @@ import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
 import witchinggadgets.common.blocks.tiles.TileEntityVoidWalkway;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
+import witchinggadgets.common.items.ItemAdvancedScribingTools;
 import witchinggadgets.common.items.ItemClusters;
 import witchinggadgets.common.items.ItemCrystalCapsule;
 import witchinggadgets.common.items.ItemInfusedGem;
 import witchinggadgets.common.items.ItemMagicFood;
 import witchinggadgets.common.items.ItemMaterials;
-import witchinggadgets.common.items.ItemAdvancedScribingTools;
 import witchinggadgets.common.items.ItemThaumiumShears;
 import witchinggadgets.common.items.armor.ItemAdvancedRobes;
 import witchinggadgets.common.items.armor.ItemPrimordialArmor;
@@ -76,12 +77,12 @@ import witchinggadgets.common.items.baubles.ItemCloak;
 import witchinggadgets.common.items.baubles.ItemKama;
 import witchinggadgets.common.items.baubles.ItemMagicalBaubles;
 import witchinggadgets.common.items.tools.ItemBag;
-import witchinggadgets.common.items.tools.ItemVorpalSword;
 import witchinggadgets.common.items.tools.ItemPrimordialAxe;
 import witchinggadgets.common.items.tools.ItemPrimordialGlove;
 import witchinggadgets.common.items.tools.ItemPrimordialHammer;
 import witchinggadgets.common.items.tools.ItemPrimordialSword;
 import witchinggadgets.common.items.tools.ItemScanCamera;
+import witchinggadgets.common.items.tools.ItemVorpalSword;
 import witchinggadgets.common.magic.WGEnchantBackstab;
 import witchinggadgets.common.magic.WGEnchantGemBrittle;
 import witchinggadgets.common.magic.WGEnchantGemPotency;
@@ -164,9 +165,10 @@ public class WGContent
 	public static ArmorMaterial primordialArmor = EnumHelper.addArmorMaterial("WG:PRIMORDIALARMOR", 40, new int[] {3,7,6,3}, 30);
 	//	public static HashMap<String,Cloak> cloakRegistry = new HashMap<String, Cloak>();
 	public static HashMap<String,Object> recipeList = new HashMap<String,Object>();
-	public static String[] GT_Cluster= new String[Materials.getMaterialsMap().size()];
-	public static Integer[] GT_Cluster_Color = new Integer[Materials.getMaterialsMap().size()];
+	public static String[] GT_Cluster;
+	public static Integer[] GT_Cluster_Color;
 	public static HashMap<String,Boolean> ClusterEBF = new HashMap<String,Boolean>();
+	public static HashMap<String,Fluid> ClusterSmeltable = new HashMap<String,Fluid>();
 	public static String[] bannedMaterials = {
 		"AnyIron",
 		"Iron",
@@ -175,8 +177,10 @@ public class WGContent
 		"Tin",
 		"Silver",
 		"Cinnabar",
-		"AnyCopper"
+		"AnyCopper",
+		"Lead"
 	};
+	
 	public static ArrayList b =new ArrayList<String>();
 	
 	public static void preInit()
@@ -198,15 +202,23 @@ public class WGContent
 	    
 		while (entries.hasNext()) {
 			Map.Entry<String, Materials> entry = entries.next();
-			if (!b.contains(entry.getValue().mLocalizedName)) {
-			Integer rgb = (entry.getValue().getRGBA()[0] << 24) + (entry.getValue().getRGBA()[1] << 16) + (entry.getValue().getRGBA()[2] << 8) + (entry.getValue().getRGBA()[3]);
+			if (!b.contains(entry.getValue().mLocalizedName) && !OreDictionary.getOres("ore"+entry.getValue().mLocalizedName.replaceAll(" ", "")).isEmpty()) {
+			Integer rgb = ((entry.getValue().getRGBA()[0]&0x0ff) << 16) | ((entry.getValue().getRGBA()[1]&0x0ff) << 8) | (entry.getValue().getRGBA()[2]&0x0ff);
 			L.add(entry.getValue().mLocalizedName.replaceAll(" ", ""));
 			K.add(rgb);
 			ClusterEBF.put(entry.getValue().mLocalizedName.replaceAll(" ", ""), entry.getValue().mBlastFurnaceRequired);
+			if (!entry.getValue().mBlastFurnaceRequired && (entry.getValue().getMolten(144) != null || entry.getValue().getFluid(144) != null) )
+				if (entry.getValue().getMolten(144) != null )
+					ClusterSmeltable.put(entry.getValue().mLocalizedName.replaceAll(" ", ""), entry.getValue().getMolten(288).getFluid());
+				else if (entry.getValue().getMolten(144) == null )
+					ClusterSmeltable.put(entry.getValue().mLocalizedName.replaceAll(" ", ""), entry.getValue().getFluid(288).getFluid());
 			}
 		}	
-	        L.toArray(GT_Cluster);
-	        K.toArray(GT_Cluster_Color);
+		GT_Cluster=new String[L.size()];
+		GT_Cluster_Color= new Integer[K.size()];
+	    L.toArray(GT_Cluster);
+	    K.toArray(GT_Cluster_Color);
+	    
 	}
 	
 	

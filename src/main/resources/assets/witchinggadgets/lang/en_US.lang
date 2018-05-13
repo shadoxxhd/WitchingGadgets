@@ -232,8 +232,7 @@ witchinggadgets_research_name.WGPOTIONS=Status Effects
 witchinggadgets_research_text.WGPOTIONS=[WG] Milk is not always an option! 
 witchinggadgets_research_page.WGPOTIONS.1=When delving into the arcane, you may come about certain afflictions. This is a list of the known ones:<BR><IMG>witchinggadgets:textures/gui/potioneffects.png:18:198:18:18:1</IMG>§nKnockback resistance:§r  Grants the afflicted a chance to resist knockback, with a chance of 33% per level.<IMG>witchinggadgets:textures/gui/potioneffects.png:36:198:18:18:1</IMG>§nDissolving:§r  The afflicted is covered in a fluid akin to 'Liquid Death', damaging them over time. If they succumb to it, they drop crystalized aspects.
 witchinggadgets_research_page.WGPOTIONS.2=<IMG>witchinggadgets:textures/gui/potioneffects.png:54:198:18:18:1</IMG>§nCinder Coat:§r  The afflicted is coated in magical cinder, which heightens the potency of flames. All fire damage is multiplied based on the strength of the effect.
-
-
+#
 witchinggadgets_research_name.ETHEREALWALL=Ethereal Wall
 witchinggadgets_research_text.ETHEREALWALL=[WG] Hidden in plain sight
 witchinggadgets_research_page.ETHEREALWALL.1=Refining the enchantments on arcane stone just a bit more has led to an interesting discovery. Simply applying a redstone signal to this new type of stone will make it §onon-corporeal§r, allowing you to pass through it.<BR>This also affects any other Etheral Wall connected to the powered block.

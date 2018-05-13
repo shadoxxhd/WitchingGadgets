@@ -39,7 +39,7 @@ import cpw.mods.fml.common.registry.GameRegistry.Type;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = WitchingGadgets.MODID, name = WitchingGadgets.MODNAME, version = WitchingGadgets.VERSION, dependencies="required-after:Thaumcraft;required-after:ForbiddenMagic;required-after:TravellersGear@[1.16.4,);required-after:gregtech;after:TwilightForest;after:Mystcraft;after:TConstruct;after:dreamcraft;after:ThaumicTinkerer;after:MagicBees;after:ForgeMultipart")
+@Mod(modid = WitchingGadgets.MODID, name = WitchingGadgets.MODNAME, version = WitchingGadgets.VERSION, dependencies="required-after:Thaumcraft;required-after:ForbiddenMagic;required-after:TravellersGear@[1.16.4,);required-after:gregtech;after:TwilightForest;after:MagicBees;after:Mystcraft;after:TConstruct;after:dreamcraft;after:ThaumicTinkerer;after:MagicBees;after:ForgeMultipart")
 public class WitchingGadgets
 {
 	public static final String MODID = "WitchingGadgets";

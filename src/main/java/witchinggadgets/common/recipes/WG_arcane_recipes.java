@@ -67,15 +67,15 @@ public class WG_arcane_recipes {
 		
 		if (WGConfig.capeStorage) {
 			craftingAspects = new AspectList().add(Aspect.AIR,30).add(Aspect.ENTROPY,20).add(Aspect.ORDER, 15);
-			registerArcaneRecipe("CLOAK_STORAGE","", new ItemStack(WGContent.ItemCloak,1,2)/*ItemCloak.getCloakWithTag("STORAGE")*/, craftingAspects, "SCS"," B ", 'C',"travelgearCloakBase", 'S',new ItemStack(WGContent.ItemMaterial,1,3), 'B',new ItemStack(WGContent.ItemBag));
+			registerArcaneRecipe("CLOAK_STORAGE","", new ItemStack(WGContent.ItemCloak,1,2)/*ItemCloak.getCloakWithTag("STORAGE")*/, craftingAspects, "SCS"," B ", 'C',standardCloak, 'S',new ItemStack(WGContent.ItemMaterial,1,3), 'B',new ItemStack(WGContent.ItemBag));
 		}
 		if (WGConfig.capeWolf) {
 			craftingAspects = new AspectList().add(Aspect.FIRE,20).add(Aspect.ENTROPY,30).add(Aspect.EARTH, 25);
-			registerArcaneRecipe("CLOAK_WOLF","", new ItemStack(WGContent.ItemCloak,1,3)/*ItemCloak.getCloakWithTag("WOLF")*/, craftingAspects, "WWW","WCW","WSW", 'C',"travelgearCloakBase", 'S',new ItemStack(ConfigItems.itemShard,1,3), 'W',new ItemStack(WGContent.ItemMaterial,1,6));
+			registerArcaneRecipe("CLOAK_WOLF","", new ItemStack(WGContent.ItemCloak,1,3)/*ItemCloak.getCloakWithTag("WOLF")*/, craftingAspects, "WWW","WCW","WSW", 'C',standardCloak, 'S',new ItemStack(ConfigItems.itemShard,1,3), 'W',new ItemStack(WGContent.ItemMaterial,1,6));
 		}
 		if(WGConfig.capeRaven)	{
 			craftingAspects = new AspectList().add(Aspect.AIR,30).add(Aspect.ORDER, 25);
-			registerArcaneRecipe("CLOAK_RAVEN","", new ItemStack(WGContent.ItemCloak,1,4)/*ItemCloak.getCloakWithTag("RAVEN")*/, craftingAspects, "FFF","FCF","FSF", 'C',"travelgearCloakBase", 'S',new ItemStack(ConfigItems.itemShard,1), 'F',GT_ModHandler.getModItem("TwilightForest", "item.magicMapFocus",1L));
+			registerArcaneRecipe("CLOAK_RAVEN","", new ItemStack(WGContent.ItemCloak,1,4)/*ItemCloak.getCloakWithTag("RAVEN")*/, craftingAspects, "FFF","FCF","FSF", 'C',standardCloak, 'S',new ItemStack(ConfigItems.itemShard,1), 'F',GT_ModHandler.getModItem("TwilightForest", "item.magicMapFocus",1L));
 		}
 		
 		if (WGConfig.moduleKama) {
