@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
 import gregtech.api.util.GT_ModHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -49,8 +51,10 @@ public class WG_alchemic_recipe {
 		
 
 		if (WGConfig.moduleGemcutting) {
-			alchemyAspects = new AspectList().add(Aspect.VOID,2).add(Aspect.CRYSTAL,4);
-			registerAlchemyRecipe("CRYSTALCAPSULE","", new ItemStack(WGContent.ItemCapsule), new ItemStack(Items.bucket), alchemyAspects);
+			alchemyAspects = new AspectList().add(Aspect.VOID,8).add(Aspect.CRYSTAL,16);
+			registerAlchemyRecipe("CRYSTALCAPSULE","_Wax", new ItemStack(WGContent.ItemCapsule), ItemList.FR_WaxCapsule.get(1L, ItemList.FR_RefractoryCapsule.get(1L, Materials.Empty.getCells(1))), alchemyAspects);
+			registerAlchemyRecipe("CRYSTALCAPSULE","_Refractory", new ItemStack(WGContent.ItemCapsule), ItemList.FR_RefractoryCapsule.get(1L, ItemList.FR_WaxCapsule.get(1L, Materials.Empty.getCells(1))), alchemyAspects);
+			registerAlchemyRecipe("CRYSTALCAPSULE","_Cell", new ItemStack(WGContent.ItemCapsule), ItemList.Cell_Empty.get(1L, ItemList.FR_WaxCapsule.get(1L,ItemList.FR_RefractoryCapsule.get(1L))), alchemyAspects);
 		}
 		
 		for(int iOre=0; iOre<witchinggadgets.common.WGContent.GT_Cluster.length; iOre++)
@@ -106,7 +110,12 @@ public class WG_alchemic_recipe {
 						if(e.getKey()==null||e.getValue()==null)
 							it.remove();
 					}
-					ItemStack nuggets = Utilities.copyStackWithSize(OreDictionary.getOres("nugget"+witchinggadgets.common.WGContent.GT_Cluster[iOre]).get(0), 3);
+					int f = 0;
+						ItemStack rawnuggets = OreDictionary.getOres("nugget"+witchinggadgets.common.WGContent.GT_Cluster[iOre]).get(f).copy();
+					if(rawnuggets.getDisplayName().contains("Oreberry"))
+							++f;
+						rawnuggets = OreDictionary.getOres("nugget"+witchinggadgets.common.WGContent.GT_Cluster[iOre]).get(f).copy();
+					ItemStack nuggets = Utilities.copyStackWithSize(rawnuggets, 3);
 					registerAlchemyRecipe("METALLURGICPERFECTION_TRANSMUTATION","_"+witchinggadgets.common.WGContent.GT_Cluster[iOre], nuggets, "nugget"+witchinggadgets.common.WGContent.GT_Cluster[iOre], alchemyAspects);
 				}
 			}

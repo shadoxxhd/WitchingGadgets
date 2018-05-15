@@ -3,8 +3,11 @@ package witchinggadgets;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
+
+import java.util.ArrayList;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +25,7 @@ import witchinggadgets.common.util.network.message.MessageClientNotifier;
 import witchinggadgets.common.util.network.message.MessagePlaySound;
 import witchinggadgets.common.util.network.message.MessagePrimordialGlove;
 import witchinggadgets.common.util.network.message.MessageTileUpdate;
+import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
 import witchinggadgets.common.world.VillageComponentPhotoshop;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -38,8 +42,25 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry.Type;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
+import gregtech.api.enums.GT_Values;
+import gregtech.api.util.GT_Recipe;
 
-@Mod(modid = WitchingGadgets.MODID, name = WitchingGadgets.MODNAME, version = WitchingGadgets.VERSION, dependencies="required-after:Thaumcraft;required-after:ForbiddenMagic;required-after:TravellersGear@[1.16.4,);required-after:gregtech;after:TwilightForest;after:MagicBees;after:Mystcraft;after:TConstruct;after:dreamcraft;after:ThaumicTinkerer;after:MagicBees;after:ForgeMultipart")
+@Mod(modid = WitchingGadgets.MODID, name = WitchingGadgets.MODNAME, version = WitchingGadgets.VERSION, 
+			dependencies=
+					  "required-after:Thaumcraft;"
+					+ "required-after:ForbiddenMagic;"
+					+ "required-after:TravellersGear@[1.16.4,);"
+					+ "required-after:gregtech;"
+					+ "required-after:TwilightForest;"
+					+ "required-after:MagicBees;"
+					+ "required-after:dreamcraft;"
+					
+					+ "after:Mystcraft;"
+					+ "after:TConstruct;"
+					+ "after:ThaumicTinkerer;"
+					+ "after:ForgeMultipart"
+					)
+
 public class WitchingGadgets
 {
 	public static final String MODID = "WitchingGadgets";
@@ -145,6 +166,5 @@ public class WitchingGadgets
 	
 	@Mod.EventHandler
 	public void onLoadComplete(FMLLoadCompleteEvent event) {
-
 	}
 }

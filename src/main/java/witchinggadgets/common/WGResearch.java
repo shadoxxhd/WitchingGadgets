@@ -118,7 +118,7 @@ public class WGResearch
 			getResearchItem("GEMCUTTING", "WITCHGADG", researchAspects, 4, 3, 5, new ItemStack(WGContent.BlockWoodenDevice,1,3)).setPages(pages).registerResearchItem();
 			//CRYSTALCAPSULE
 			researchAspects = new AspectList().add(Aspect.CRYSTAL, 3).add(Aspect.ORDER, 2).add(Aspect.VOID, 4);
-			pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.CRYSTALCAPSULE.1"), new ResearchPage((CrucibleRecipe) WGContent.recipeList.get("CRYSTALCAPSULE"))};
+			pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.CRYSTALCAPSULE.1"), new ResearchPage((CrucibleRecipe) WGContent.recipeList.get("CRYSTALCAPSULE_Wax")), new ResearchPage((CrucibleRecipe) WGContent.recipeList.get("CRYSTALCAPSULE_Refractory")), new ResearchPage((CrucibleRecipe) WGContent.recipeList.get("CRYSTALCAPSULE_Cell"))};
 			getResearchItem("CRYSTALCAPSULE", "WITCHGADG", researchAspects, 4, 4, 4, new ItemStack(WGContent.ItemCapsule)).setPages(pages).setParents("GEMCUTTING").setConcealed().registerResearchItem();
 		}
 		
@@ -205,7 +205,7 @@ public class WGResearch
 		researchAspects = new AspectList().add(Aspect.LIFE,3).add(Aspect.MECHANISM,3).add((Aspect)MagicBeesAPI.thaumcraftAspectTempus,3).add(Aspect.EARTH,6);
 		if(Aspect.getAspect("tempus")!=null)researchAspects.add(Aspect.getAspect("tempus"), 2);
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.AGEINGSTONE.1"), new ResearchPage((ShapedArcaneRecipe) WGContent.recipeList.get("AGEINGSTONE")) };
-		getResearchItem("AGEINGSTONE", "WITCHGADG", researchAspects, -5, -6, 3, new ItemStack(WGContent.BlockStoneDevice,1,1)).addWarp(1).setParents("WG.ARCANESTONE").setPages(pages).registerResearchItem();
+		getResearchItem("AGEINGSTONE", "WITCHGADG", researchAspects, -5, -6, 3, new ItemStack(WGContent.BlockStoneDevice,1,1)).addWarp(1).setParents(new String[] { "WG.ARCANESTONE","MB_EssenceTime"}).setPages(pages).registerResearchItem();
 		//ETHEREALWALL
 		researchAspects = new AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.MECHANISM, 2).add(Aspect.EARTH, 4).add(Aspect.MOTION,7).add(Aspect.TRAP, 4);
 		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.ETHEREALWALL.1"), new ResearchPage("witchinggadgets_research_page.ETHEREALWALL.2"), new ResearchPage((ShapedArcaneRecipe) WGContent.recipeList.get("ETHEREALWALL")) };
@@ -217,7 +217,7 @@ public class WGResearch
 		new FakeResearchItem("WG.BATHSALTS", "WITCHGADG", "BATHSALTS", "ALCHEMY", -5, -2, ResearchCategories.getResearch("BATHSALTS").icon_item).setParents("WGPOTIONS").setConcealed().registerResearchItem();
 		//SAUNA
 		researchAspects = new AspectList().add(Aspect.WATER, 3).add(Aspect.FIRE, 3).add(Aspect.MECHANISM, 1).add(Aspect.HEAL,25).add(Aspect.ORDER,7).add(Aspect.WEATHER,2);
-		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.SAUNASTOVE.1"), new ResearchPage("witchinggadgets_research_page.SAUNASTOVE.2"), new ResearchPage((ShapedArcaneRecipe) WGContent.recipeList.get("SAUNASTOVE")) };
+		pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.SAUNASTOVE.1"), new ResearchPage("witchinggadgets_research_page.SAUNASTOVE.2"), new ResearchPage((InfusionRecipe) WGContent.recipeList.get("SAUNASTOVE")) };
 		getResearchItem("SAUNASTOVE", "WITCHGADG", researchAspects, -7,-2, 4, new ItemStack(WGContent.BlockWoodenDevice,1,4)).setParents("WG.BATHSALTS").setPages(pages).setConcealed().registerResearchItem();
 
 		//ORIGINAL JAR

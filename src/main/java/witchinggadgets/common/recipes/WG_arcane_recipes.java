@@ -6,6 +6,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
@@ -51,7 +52,7 @@ public class WG_arcane_recipes {
 
 	//SCANCAMERA
 	craftingAspects = new AspectList().add(Aspect.AIR, 20).add(Aspect.EARTH, 20).add(Aspect.ORDER, 10);
-	registerArcaneRecipe("SCANCAMERA", "", new ItemStack(WGContent.ItemScanCamera), craftingAspects, "wl ","pmt","wl ", 't',ConfigItems.itemThaumometer, 'm',new ItemStack(ConfigItems.itemResource, 1, 10), 'p',Blocks.glass_pane, 'w',new ItemStack(ConfigBlocks.blockWoodenDevice,1,6), 'l',Items.leather);
+	registerArcaneRecipe("SCANCAMERA", "", new ItemStack(WGContent.ItemScanCamera), craftingAspects, "wlc","pmt","wlc", 't',ConfigItems.itemThaumometer, 'm',new ItemStack(ConfigItems.itemResource, 1, 10), 'p',Blocks.glass_pane, 'w',new ItemStack(ConfigBlocks.blockWoodenDevice,1,6), 'l',Items.leather, 'c', ItemList.Sensor_MV.get(1L));
 	IArcaneRecipe developingRecipe = new PhotoDevelopingRecipe();
 	ThaumcraftApi.getCraftingRecipes().add(developingRecipe);
 	WGContent.recipeList.put("SCANCAMERA_DEVELOP",developingRecipe);
@@ -86,29 +87,26 @@ public class WG_arcane_recipes {
 	}
 	
 	craftingAspects = new AspectList().add(Aspect.ORDER,15).add(Aspect.EARTH,5);
-	registerArcaneRecipe("ETHEREALWALL","",new ItemStack(WGContent.BlockStoneDevice,6,0), craftingAspects, "SsS", "STS", "S S", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigItems.itemShard, 1, 32767), 'T', new ItemStack(Blocks.redstone_torch));
+	registerArcaneRecipe("ETHEREALWALL","",new ItemStack(WGContent.BlockStoneDevice,6,0), craftingAspects, "SsS", "STS", "SsS", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigItems.itemShard, 1, 32767), 'T', new ItemStack(Blocks.redstone_lamp));
 
 	craftingAspects = new AspectList().add(Aspect.ORDER,15).add(Aspect.ENTROPY,15);
-	registerArcaneRecipe("AGEINGSTONE","",new ItemStack(WGContent.BlockStoneDevice,1,1), craftingAspects, " s ", "SCS", " s ", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigItems.itemShard, 1, 32767), 'C', new ItemStack(Items.clock));
+	registerArcaneRecipe("AGEINGSTONE","",new ItemStack(WGContent.BlockStoneDevice,1,1), craftingAspects, " s ", "SCS", " s ", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigItems.itemShard, 1, 32767), 'C', GT_ModHandler.getModItem("MagicBees", "miscResources",1L,9));
 
 	craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.AIR,10);
 	registerArcaneRecipe("SPINNINGWHEEL","",new ItemStack(WGContent.BlockWoodenDevice), craftingAspects, "I W", "R S", "TTT", 'T',new ItemStack(ConfigBlocks.blockTable), 'I', "gearGtWoodSealed",'R', GT_OreDictUnificator.get(OrePrefixes.stickLong, Materials.WoodSealed, 1L),'S', GT_OreDictUnificator.get(OrePrefixes.stick, Materials.WoodSealed, 1L) ,'W', "gearGtSmallThaumium");
 
-	craftingAspects = new AspectList().add(Aspect.FIRE,20).add(Aspect.WATER,10).add(Aspect.ORDER, 10);
-	registerArcaneRecipe("SAUNASTOVE","",new ItemStack(WGContent.BlockWoodenDevice,1,4), craftingAspects, "SCS", "WBW", "WWW", 'S',new ItemStack(Blocks.stone_slab), 'C', ItemList.Cover_Drain.get(1L), 'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6), 'B',ItemList.Machine_MV_FluidHeater.get(1L));
-
-	craftingAspects = new AspectList().add(Aspect.ORDER, 30);
+	craftingAspects = new AspectList().add(Aspect.ORDER, 30).add(Aspect.EARTH,10).add(Aspect.WATER,10);
 	registerArcaneRecipe("LABELLIB","",new ItemStack(WGContent.BlockWoodenDevice,1,5), craftingAspects, "BLW", " T ", 'B',new ItemStack(Items.book), 'L', new ItemStack(ConfigItems.itemResource,1,13), 'W', "scribingTools", 'T',new ItemStack(ConfigBlocks.blockTable));
 
 	if (WGConfig.moduleBag) {
-		craftingAspects = new AspectList().add(Aspect.ENTROPY,5).add(Aspect.AIR,5);
-		registerShapelessArcaneRecipe("BAGOFTRICKS","_CLOTH",new ItemStack(WGContent.ItemMaterial,2,3), craftingAspects, new ItemStack(WGContent.ItemMaterial,1,0), new ItemStack(WGContent.ItemMaterial,1,0), new ItemStack(WGContent.ItemMaterial,1,0), new ItemStack(WGContent.ItemMaterial,1,2));
+		craftingAspects = new AspectList().add(Aspect.ENTROPY,15).add(Aspect.ORDER,15).add(Aspect.AIR,15).add(Aspect.FIRE,15).add(Aspect.EARTH,15).add(Aspect.WATER,15);
+		registerShapelessArcaneRecipe("BAGOFTRICKS","_CLOTH",new ItemStack(WGContent.ItemMaterial,2,3), craftingAspects, new ItemStack(WGContent.ItemMaterial,1,0), new ItemStack(WGContent.ItemMaterial,1,0),  new ItemStack(WGContent.ItemMaterial,1,2), new ItemStack(WGContent.ItemMaterial,1,2), new ItemStack(WGContent.ItemMaterial,1,2), new ItemStack(WGContent.ItemMaterial,1,2));
 		
-		craftingAspects = new AspectList().add(Aspect.ORDER,20).add(Aspect.AIR,20);
+		craftingAspects = new AspectList().add(Aspect.ORDER,50).add(Aspect.AIR,30);
 		registerArcaneRecipe("BAGOFTRICKS","_BAG",new ItemStack(WGContent.ItemBag), craftingAspects, "C C", "C C", "CCC", 'C', new ItemStack(WGContent.ItemMaterial,1,3));
 
 		if (WGConfig.bagHungry) {
-			craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.AIR,10);
+			craftingAspects = new AspectList().add(Aspect.ORDER,50).add(Aspect.AIR,30).add(Aspect.EARTH,10);
 			registerArcaneRecipe("HUNGERBAG","",new ItemStack(WGContent.ItemBag,1,3), craftingAspects, " H ", "CBC", 'C',new ItemStack(WGContent.ItemMaterial,1,3), 'H',new ItemStack(ConfigBlocks.blockChestHungry), 'B',new ItemStack(WGContent.ItemBag));
 		}
 
@@ -116,19 +114,19 @@ public class WG_arcane_recipes {
 	}
 	
 
-	craftingAspects = new AspectList().add(Aspect.ENTROPY,5).add(Aspect.ORDER,5);
+	craftingAspects = new AspectList().add(Aspect.ENTROPY,15).add(Aspect.ORDER,15).add(Aspect.AIR,15).add(Aspect.FIRE,15).add(Aspect.EARTH,15).add(Aspect.WATER,15);
 	registerShapelessArcaneRecipe("ADVANCEDROBES","_CLOTH",new ItemStack(WGContent.ItemMaterial,1,5), craftingAspects, new ItemStack(WGContent.ItemMaterial,1,0), new ItemStack(WGContent.ItemMaterial,1,2),new ItemStack(WGContent.ItemMaterial,1,2), new ItemStack(WGContent.ItemMaterial,1,1));
 	
-	craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.ENTROPY,10);
+	craftingAspects = new AspectList().add(Aspect.ORDER,25).add(Aspect.ENTROPY,25).add(Aspect.AIR,15);
 	registerArcaneRecipe("ADVANCEDROBES","_CHEST",new ItemStack(WGContent.ItemAdvancedRobeChest), craftingAspects, " C ", "CRC", 'C', new ItemStack(WGContent.ItemMaterial,1,5), 'R', new ItemStack(ConfigItems.itemChestRobe));
-	craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.ENTROPY,10);
+	craftingAspects = new AspectList().add(Aspect.ORDER,25).add(Aspect.ENTROPY,25).add(Aspect.AIR,15);
 	registerArcaneRecipe("ADVANCEDROBES","_LEGS",new ItemStack(WGContent.ItemAdvancedRobeLegs), craftingAspects, " C ","CRC", 'C', new ItemStack(WGContent.ItemMaterial,1,5), 'R', new ItemStack(ConfigItems.itemLegsRobe));
 			
-	craftingAspects = new AspectList().add(Aspect.ENTROPY,10).add(Aspect.FIRE, 10);
-	registerArcaneRecipe("WGBAUBLES","_WOLFVAMBRACES",new ItemStack(WGContent.ItemMagicalBaubles,1,2), craftingAspects, " P ","PVP", 'P', new ItemStack(WGContent.ItemMaterial,1,6), 'V', "travelgearVambraceBase");
+	craftingAspects = new AspectList().add(Aspect.ENTROPY,25).add(Aspect.FIRE, 25).add(Aspect.AIR,15);
+	registerArcaneRecipe("WGBAUBLES","_WOLFVAMBRACES",new ItemStack(WGContent.ItemMagicalBaubles,1,2), craftingAspects, " P ","PVP", " D ", 'D', "ringDamascusSteel", 'P', new ItemStack(WGContent.ItemMaterial,1,6), 'V', "travelgearVambraceBase");
 
-	craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.EARTH, 10);
-	registerArcaneRecipe("WGBAUBLES","_KNOCKBACKSHOULDERS",new ItemStack(WGContent.ItemMagicalBaubles,1,1), craftingAspects, " S ","ETE", 'E', new ItemStack(ConfigItems.itemShard,1,3), 'S', "travelgearShoulderBase", 'T',"ingotThaumium");
+	craftingAspects = new AspectList().add(Aspect.EARTH, 50).add(Aspect.AIR,15);
+	registerArcaneRecipe("WGBAUBLES","_KNOCKBACKSHOULDERS",new ItemStack(WGContent.ItemMagicalBaubles,1,1), craftingAspects, "BSB","ETE","BHB",'H', "craftingToolHardHammer",'E', new ItemStack(ConfigBlocks.blockCrystal,1,3),'B',"boltStainlessSteel", 'S', "travelgearShoulderBase", 'T',"plateDenseLead");
 	
 	ItemStack luckyCoin = new ItemStack(ConfigItems.itemResource,1,18);
 	luckyCoin.addEnchantment(Enchantment.fortune, 1);

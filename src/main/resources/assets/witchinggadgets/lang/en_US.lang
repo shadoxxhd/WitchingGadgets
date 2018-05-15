@@ -145,7 +145,7 @@ enchantment.wg.stealth=Stealth
 enchantment.wg.backstab=Backstabbing
 enchantment.wg.rideProtect=Throwoff
 enchantment.wg.soulbound=Soul Tethered
-enchantment.soulbound=Soul Tethered
+enchantment.wg.soultether=Soul Tethered
 #
 # -- Random bits of text --
 wg.chat.notyourbag=§7This bag belongs to§r %1$s! §7You are not allowed to open it.§r
