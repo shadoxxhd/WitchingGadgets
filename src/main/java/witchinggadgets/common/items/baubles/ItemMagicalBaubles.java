@@ -139,7 +139,7 @@ public class ItemMagicalBaubles extends Item implements IBauble, ITravellersGear
 	public void getSubItems(Item item, CreativeTabs tab, List itemList)
 	{
 		for(int i=0;i<subNames.length;i++)
-			if(i==4)
+			if(i==5)
 			{
 				itemList.add(getItemWithTitle(new ItemStack(this,1,i),Lib.TITLE+"crimsonCultist"));
 				itemList.add(getItemWithTitle(new ItemStack(this,1,i),Lib.TITLE+"crimsonKnight"));

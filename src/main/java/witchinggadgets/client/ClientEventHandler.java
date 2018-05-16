@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -36,6 +37,7 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
 import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.client.gui.GuiResearchBrowser;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import travellersgear.api.RenderTravellersGearEvent;
@@ -306,30 +308,23 @@ public class ClientEventHandler
 
 	//Changes the background image once certain research is unlocked
 	//Commenting out because tab layout changed, but it's a neat piece of code
-	/*@SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event)
 	{
 		if(Minecraft.getMinecraft().thePlayer!=null && event.gui instanceof GuiResearchBrowser)
 		{
-			if(ThaumcraftApiHelper.isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "WGFAKEELDRITCHMINOR"))
+			if(ThaumcraftApiHelper.isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "ELDRITCHMINOR"))
 				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[1];
 			else
 				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
 		}
-	}*/
+	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void initializeIcons(TextureStitchEvent.Post event)
 	{
-		if(Minecraft.getMinecraft().thePlayer != null)
-		{
-			if(ThaumcraftApiHelper.isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "WGELDRITCHBASE"))
-				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[1];
-			else
-				ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
-		}
 		ItemClusters.setupClusters();
 	}
 

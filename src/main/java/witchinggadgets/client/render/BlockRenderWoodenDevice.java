@@ -15,6 +15,7 @@ import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityCobbleGen;
 import witchinggadgets.common.blocks.tiles.TileEntityCuttingTable;
 import witchinggadgets.common.blocks.tiles.TileEntityLabelLibrary;
+import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -37,6 +38,9 @@ public class BlockRenderWoodenDevice implements ISimpleBlockRenderingHandler
 			}
 			if(metadata == 1)
 			{
+				GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+				GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+				TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEntityCobbleGen(), 0.0D, 0.0D, 0.0D, 0.0F);
 			}
 			if(metadata == 2)
 			{

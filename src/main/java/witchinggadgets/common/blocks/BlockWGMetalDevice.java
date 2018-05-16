@@ -46,7 +46,8 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 			"tfFocusMushroom",
 			"tfFocusRiver",//10
 			"tfFocusOcean",
-			"tfFocusEnd"//12
+			"tfFocusEnd",//12
+			"tfFocusMagic"
 			};
 	IIcon[] icons = new IIcon[subNames.length];
 
@@ -230,6 +231,8 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return BiomeGenBase.ocean;
 			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
 				return BiomeGenBase.sky;
+			if(subNames[meta].equalsIgnoreCase("tfFocusMagic"))
+				return ThaumcraftWorldGenerator.biomeMagicalForest;
 		}
 		return null;
 	}
@@ -257,6 +260,8 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return new ItemStack(Blocks.lapis_block);
 			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
 				return new ItemStack(Blocks.end_stone);
+			if(subNames[meta].equalsIgnoreCase("tfFocusMagic"))
+				return new ItemStack(ConfigBlocks.blockMagicalLog,1,1);
 		}
 		return null;
 }
@@ -283,6 +288,8 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
 				return Aspect.WATER;
 			if(subNames[meta].equalsIgnoreCase("tfFocusEnd"))
 				return Aspect.ELDRITCH;
+			if(subNames[meta].equalsIgnoreCase("tfFocusMagic"))
+			    return Aspect.HEAL;
 		}
 		return null;
 	}

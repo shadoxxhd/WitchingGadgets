@@ -13,6 +13,7 @@ tile.WG_StoneDevice.blastFurnace.name=Infernal Blast Furnace
 
 tile.WG_WoodenDevice.spinningWheel.name=Spinning Wheel
 tile.WG_WoodenDevice.loom.name=Loom
+tile.WG_WoodenDevice.snowGen.name=Thaumic Ice Solifier
 tile.WG_WoodenDevice.cobbleGen.name=Thaumic Stone Extruder
 tile.WG_WoodenDevice.armorStand.name=Armor Stand
 tile.WG_WoodenDevice.cuttingTable.name=Cutting Table
@@ -32,6 +33,7 @@ tile.WG_MetalDevice.tfFocusMushroom.name=Terrestrial Focus: Mushroom Island
 tile.WG_MetalDevice.tfFocusRiver.name=Terrestrial Focus: River
 tile.WG_MetalDevice.tfFocusOcean.name=Terrestrial Focus: Ocean
 tile.WG_MetalDevice.tfFocusEnd.name=Terrestrial Focus: End
+tile.WG_MetalDevice.tfFocusMagic.name=Terrestrial Focus: Magical Forest
 
 tile.WG_RoseVine.name=Rose Vines
 tile.WG_CustomAir.name=Glimmer of Light
@@ -240,15 +242,15 @@ witchinggadgets_research_page.ETHEREALWALL.2=Furthermore, you can disguise this 
 #
 witchinggadgets_research_name.STONEEXTRUDER=Thaumic Stone Extruder
 witchinggadgets_research_text.STONEEXTRUDER=[WG] One can never have enough stone
-witchinggadgets_research_page.STONEEXTRUDER.1=Even those that are not skilled in the arts of Thaumaturgy are aware of how flowing lava will solidify into cobblestone when cooled by water. Those skilled in the magical arts don't want to waste their time on the tedious digging of these stones and have therefore created an automated way.<BR>This machine will create cobblestone, break it and place it either on the ground or into a connected inventory. Work will be halted if the inventory is full or a redstone signal is applied. You can use a wand to rotate it.
+witchinggadgets_research_page.STONEEXTRUDER.1=Even those that are not skilled in the arts of Thaumaturgy are aware of how flowing lava will solidify into cobblestone when cooled by water. Those skilled in the magical arts don't want to waste their time on the tedious digging of these stones and have therefore created an automated way.<BR>This machine will create cobblestone, break it and place it either on the ground (if enabled in the config) or into a connected inventory. Work will be halted if the inventory is full or a redstone signal is applied. You can use a wand to rotate it.
+#
+witchinggadgets_research_name.ICESOLIDIFIER=Thaumic Ice Solifier
+witchinggadgets_research_text.ICESOLIDIFIER=[WG] One can never have enough snow
+witchinggadgets_research_page.ICESOLIDIFIER.1=By manipulating and reversing the Thaumic Stone Extruder you have discovered the Thaumic Ice Solifier, which is basically the same divice, but it does produce snow instead of Cobble. Now go build an iglu!
 #
 witchinggadgets_research_name.AGEINGSTONE=Ageing Stone
 witchinggadgets_research_text.AGEINGSTONE=[WG] Time flies when you're having fun!
 witchinggadgets_research_page.AGEINGSTONE.1=Every young Thaumaturge can't wait to grow up! But that would rob you of too many wonderful experiences. So instead you have decided to channel your knowledge of such time dilating arts into another form of Arcane Stone.<BR>The Ageing Stone will accelerate the ageing of most common creatures, making lambs, calves and piglets grow up much faster when exposed to it's magical energies.<BR>The Ageing Stone will apply this effect to all creatures in a 7x7x5 area centered around itself, with more blocks increasing the effect.
-#
-witchinggadgets_research_name.THAUMICAPPLICATOR=
-witchinggadgets_research_text.THAUMICAPPLICATOR=[WG] 
-witchinggadgets_research_page.THAUMICAPPLICATOR.1=
 #
 witchinggadgets_research_name.SPINNINGWHEEL=Spinning
 witchinggadgets_research_text.SPINNINGWHEEL=[WG] Don't prick yourself
@@ -262,7 +264,7 @@ witchinggadgets_research_page.SPINNINGWHEEL.r3=<IMG>witchinggadgets:textures/gui
 witchinggadgets_research_name.CALCULATOR=Arcane Abacus
 witchinggadgets_research_text.CALCULATOR=[WG] 3-4 = Warp?
 witchinggadgets_research_page.CALCULATOR.1=As a skilled thaumaturge, close to achieving eldritch knowledge, you are an expert on chaos. ...It might also stem from your lack of mathematical knowledge. But who would bother themselves with sciences of the common man when there are enchantments that do it for you?<BR>The Arcane Abacus will take some of the mundane mathematics off your hands. Use it on a Node that contains compound aspects and it will calculate it to primal values. Use it on an Infusion Matrix to gain info on stability, positioning of stabilizers, instability of the current infusion or possible increases in essentia cost.
-witchinggadgets_research_page.CALCULATOR.2=§oThe highest infusion instability known to man *cough*Thaumic Tinkerer*cough* is 15. Stabilizing your altar beyond that is pointless.
+witchinggadgets_research_page.CALCULATOR.2=§mThe highest infusion instability known to man *cough*Thaumic Tinkerer*cough* is 15. Stabilizing your altar beyond that is pointless. §r §o The highest infusion instability is unkown, but could be somewhere around 30.
 #
 witchinggadgets_research_name.LABYRINTHSTRING=Guiding Thread
 witchinggadgets_research_text.LABYRINTHSTRING=[WG] Ariadne would be proud
@@ -298,7 +300,7 @@ witchinggadgets_research_page.VOIDBAG.1=Don't you just hate picking up all that 
 
 witchinggadgets_research_name.ADVANCEDROBES=Bewitched Fleece
 witchinggadgets_research_text.ADVANCEDROBES=[WG] Sizzling with Magic
-witchinggadgets_research_page.ADVANCEDROBES.1=The dark side of §mthe force§r Thaumaturgy holds a lot of power. By slightly tapping into that power, you can weave a fabric much more rich of magic. With that, you can now make yourself better garments strengthened in their magic potential.
+witchinggadgets_research_page.ADVANCEDROBES.1=The dark side of Thaumaturgy holds a lot of power. By slightly tapping into that power, you can weave a fabric much more rich of magic. With that, you can now make yourself better garments strengthened in their magic potential.
 witchinggadgets_research_page.ADVANCEDROBES.r1=<IMG>witchinggadgets:textures/gui/research/weavingRecipes4.png:0:0:255:255:0.5</IMG>§lBewitched Fleece§r
 #
 
@@ -359,7 +361,7 @@ witchinggadgets_research_page.PURECINNABAR.1=Native clusters are rare concentrat
 #
 witchinggadgets_research_name.METALLURGICPERFECTION_CLUSTERS=Metallurgic Perfection: Purification
 witchinggadgets_research_text.METALLURGICPERFECTION_CLUSTERS=[WG] Purifying most ores into native clusters
-witchinggadgets_research_page.METALLURGICPERFECTION_CLUSTERS.1=The process of metal purification has proven to be very similar for every metal you have tried it on so far.<BR>Following this logic, you have created a general theory for the process, allowing you to transform the majority of ores you encounter into purified clusters, richer in their metal concentration. 
+witchinggadgets_research_page.METALLURGICPERFECTION_CLUSTERS.1=The process of metal purification has proven to be very similar for every metal you have tried it on so far.<BR>Following this logic, you have created a general theory for the process, allowing you to transform the majority of ores you encounter into purified clusters, richer in their metal concentration.
 #
 witchinggadgets_research_name.METALLURGICPERFECTION_TRANSMUTATION=Metallurgic Perfection: Transmutation
 witchinggadgets_research_text.METALLURGICPERFECTION_TRANSMUTATION=[WG] Transforming most metals into others
@@ -555,37 +557,37 @@ witchinggadgets_research_page.TERRAFORMER.1=When simple gardening doesn't cut it
 
 witchinggadgets_research_name.TERRAFORMFOCUS_PLAINS=Terrestrial Focus: Plains
 witchinggadgets_research_text.TERRAFORMFOCUS_PLAINS=[WG] Plain Plains
-witchinggadgets_research_page.TERRAFORMFOCUS_PLAINS.1=The most basic of the Terrestrial Foci represents the Plains biome. For it to work its magic, it will need to be supplied with §2Herba§0 essentia.
+witchinggadgets_research_page.TERRAFORMFOCUS_PLAINS.1=The most basic of the Terrestrial Foci represents the Plains biome. <BR>...<BR> For it to work its magic, it will need to be supplied with §2Herba§0 essentia.
 witchinggadgets_research_name.TERRAFORMFOCUS_COLDTAIGA=Terrestrial Focus: Cold Taiga
 witchinggadgets_research_text.TERRAFORMFOCUS_COLDTAIGA=[WG] Winter is coming
-witchinggadgets_research_page.TERRAFORMFOCUS_COLDTAIGA.1=In stark (ha, get it?) contrast to the Desert Focus, the Terrestrial Focus: Cold Taiga turns the area around it into a winter-wonderland. Requires §bGelum§0 essentia to work.
+witchinggadgets_research_page.TERRAFORMFOCUS_COLDTAIGA.1=In stark (ha, get it?) contrast to the Desert Focus, the Terrestrial Focus: Cold Taiga turns the area around it into a winter-wonderland. <BR>...<BR> Requires §bGelum§0 essentia to work.
 witchinggadgets_research_name.TERRAFORMFOCUS_DESERT=Terrestrial Focus: Desert
 witchinggadgets_research_text.TERRAFORMFOCUS_DESERT=[WG] Not dessert you glutton!
-witchinggadgets_research_page.TERRAFORMFOCUS_DESERT.1=Hot sun, hot sand, no water and a bunch of spiky cacti. Not even edlritch knowledge can explain why anyone would want that around them. For the crazy ones out there, supplying this Focus with §cIgnis§0 essentia will do the trick.
+witchinggadgets_research_page.TERRAFORMFOCUS_DESERT.1=Hot sun, hot sand, no water and a bunch of spiky cacti. Not even edlritch knowledge can explain why anyone would want that around them. <BR>...<BR> For the crazy ones out there, supplying this Focus with §cIgnis§0 essentia will do the trick.
 witchinggadgets_research_name.TERRAFORMFOCUS_JUNGLE=Terrestrial Focus: Jungle
 witchinggadgets_research_text.TERRAFORMFOCUS_JUNGLE=[WG] Welcome!
-witchinggadgets_research_page.TERRAFORMFOCUS_JUNGLE.1=The animal friendly thaumaturge does his best to keep his cats happy. Living in a jungle, while severly sweat inducing, should remind them of their past as ferocious predators among the bushes...before they turned into chest-blocking annoyances. In order for this Focus to work, it will require Arbor essentia.
+witchinggadgets_research_page.TERRAFORMFOCUS_JUNGLE.1=The animal friendly thaumaturge does his best to keep his cats happy. Living in a jungle, while severly sweat inducing, should remind them of their past as ferocious predators among the bushes...before they turned into chest-blocking annoyances. <BR>...<BR> In order for this Focus to work, it will require §6Arbor§0 essentia.
 witchinggadgets_research_name.TERRAFORMFOCUS_HELL=Terrestrial Focus: Hell
 witchinggadgets_research_text.TERRAFORMFOCUS_HELL=[WG] Screw the Nether
 witchinggadgets_research_page.TERRAFORMFOCUS_HELL.1=Let's be honest. Even those driven mad by the warp in their head don't want to live in a place of lava and brimstone.<BR>...<BR>What?! You do?! Well suit yourself. Supply the focus with §cInfernus§0 essentia and enjoy hell on earth.
 witchinggadgets_research_name.TERRAFORMFOCUS_MUSHROOM=Terrestrial Focus: Mushroom Island
 witchinggadgets_research_text.TERRAFORMFOCUS_MUSHROOM=[WG] Moooo-shroom!
-witchinggadgets_research_page.TERRAFORMFOCUS_MUSHROOM.1=The colors maybe offputting and the cows look funny, but with it's guaranteed monster-protection, Mushroom Islands make the ideal vacation spot. And now you can bring that feeling to your doorstep, simply by supplying this focus with §aLimus§0 essentia
+witchinggadgets_research_page.TERRAFORMFOCUS_MUSHROOM.1=The colors maybe offputting and the cows look funny, but with it's guaranteed monster-protection, Mushroom Islands make the ideal vacation spot. <BR>...<BR> And now you can bring that feeling to your doorstep, simply by supplying this focus with §aLimus§0 essentia
 witchinggadgets_research_name.TERRAFORMFOCUS_TAINT=Terrestrial Focus: Tainted Lands
 witchinggadgets_research_text.TERRAFORMFOCUS_TAINT=[WG] Take my tears, and that's not nearly all!
-witchinggadgets_research_page.TERRAFORMFOCUS_TAINT.1=That's it. You pretty much qualify as insane by this point. Creating artificially tainted land? And not only with some bottled up taint, but full scale terraforming?<BR>Oh, you're doing it for research purposes? That's fine then. Simply supply this focus with some §5Vitium§0 essentia and go crazy.
+witchinggadgets_research_page.TERRAFORMFOCUS_TAINT.1=That's it. You pretty much qualify as insane by this point. Creating artificially tainted land? And not only with some bottled up taint, but full scale terraforming?<BR>...<BR> Oh, you're doing it for research purposes? That's fine then. Simply supply this focus with some §5Vitium§0 essentia and go crazy.
 witchinggadgets_research_name.TERRAFORMFOCUS_END=Terrestrial Focus: End
 witchinggadgets_research_text.TERRAFORMFOCUS_END=[WG] Screw the End
 witchinggadgets_research_page.TERRAFORMFOCUS_END.1=Somehow i get the feeling this wont END well, cold Astroids and Enderman.<BR>...<BR>Supply this with §5Alienis§0 essentia and live in a cold and lonely place.
 witchinggadgets_research_name.TERRAFORMFOCUS_RIVER=Terrestrial Focus: River
 witchinggadgets_research_text.TERRAFORMFOCUS_RIVER=[WG] Life is a River
-witchinggadgets_research_page.TERRAFORMFOCUS_RIVER.1=Fishing is the thaumaturges most beloved technique. Thats why many of them decide to settle near a river.<BR>...<BR>Supply this with §5Aqua§0 essentia.
+witchinggadgets_research_page.TERRAFORMFOCUS_RIVER.1=Fishing is the thaumaturges most beloved technique. Thats why many of them decide to settle near a river.<BR>...<BR>Supply this with §bAqua§0 essentia.
 witchinggadgets_research_name.TERRAFORMFOCUS_OCEAN=Terrestrial Focus: Ocean
 witchinggadgets_research_text.TERRAFORMFOCUS_OCEAN=[WG] Living on a Boat
-witchinggadgets_research_page.TERRAFORMFOCUS_OCEAN.1=Why do you want more water as a river has in your house? Emptyness over the water on the ocean is romantic?<BR>...<BR>Well, supply this with §5Aqua§0 essentia and enjoy your romantic view.
-
-
-
+witchinggadgets_research_page.TERRAFORMFOCUS_OCEAN.1=Why do you want more water as a river has in your house? Emptyness over the water on the ocean is romantic? Upgrade you River focus to Ocean level and enjoy those legendary aqua creepers. <BR>...<BR>Just feed this thing with some §bAqua§0 essentia and have fun with your new creeper friends and enjoy your romantic view. 
+witchinggadgets_research_name.TERRAFORMFOCUS_MAGIC=Terrestrial Focus: Magical Forest
+witchinggadgets_research_text.TERRAFORMFOCUS_MAGIC=[WG] It's a kind of magic
+witchinggadgets_research_page.TERRAFORMFOCUS_MAGIC.1=The world is full of magic, but you've never found much of it at some place, so it's time to create a whole magical biome.<BR>...<BR>Supply this with §cSano§0 feel the magic arround you.
 
 # ADVANCED SCRIBING TOOLS
 witchinggadgets_research_name.ADVANCEDSCRIBINGTOOLS=Advanced Inscription
@@ -660,6 +662,8 @@ witchinggadgets_research_page.ANGELIC_LEGS.1=When you sneak over the fields on w
 witchinggadgets_research_name.ANGELIC_BOOTS=Sabatons of the Valkyrie
 witchinggadgets_research_text.ANGELIC_BOOTS=[WG] Feathered steps
 witchinggadgets_research_page.ANGELIC_BOOTS.1=By the magic of these boots you move at higher speed, and wont take damage on falling.<BR>Furthermore, you are granted the power of walking upon the surface of any liquid. This includes water and lava. Should you crouch you will sink.
-
-
+#
+witchinggadgets_research_name.THAUMICAPPLICATOR=
+witchinggadgets_research_text.THAUMICAPPLICATOR=[WG] 
+witchinggadgets_research_page.THAUMICAPPLICATOR.1=
 #
