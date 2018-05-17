@@ -46,8 +46,8 @@ public class WGCoreTransformer implements IClassTransformer
 	public byte[] transform(String className, String newClassName, byte[] origCode)
 	{
 		isDeobfEnvironment = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
-		if (className.equals("thaumcraft.common.items.armor.ItemBootsTraveller"))
-			return patchBoots(className, origCode, isDeobfEnvironment);
+		//if (className.equals("thaumcraft.common.items.armor.ItemBootsTraveller"))
+			//return patchBoots(className, origCode, isDeobfEnvironment);
 		if (className.equals("thaumcraft.common.items.wands.ItemFocusPouchBauble"))
 		{
 			byte[] newCode = patchFocusPouch_Interface(className, origCode);
@@ -73,8 +73,7 @@ public class WGCoreTransformer implements IClassTransformer
 	}
 
 
-	private byte[] patchBoots(String className, byte[] origCode, boolean deobf)
-	{
+	private byte[] patchBoots(String className, byte[] origCode, boolean deobf){
 		WitchingGadgets.logger.log(Level.INFO, "[Witching Gadgets] Patching Boots");
 
 		final String methodToPatch = "getIsRepairable";
@@ -97,6 +96,7 @@ public class WGCoreTransformer implements IClassTransformer
 		cr.accept(cw, 0);
 		return cw.toByteArray();
 	}
+	
 	public static boolean boots_getIsRepairable(ItemStack stack1, ItemStack stack2)
 	{
 		return WGConfig.coremod_allowBootsRepair && stack2.isItemEqual(new ItemStack(Items.leather));

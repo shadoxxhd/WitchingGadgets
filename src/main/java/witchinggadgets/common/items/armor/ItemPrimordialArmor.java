@@ -27,6 +27,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import taintedmagic.common.items.equipment.ItemShadowFortressArmor;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
@@ -43,7 +44,7 @@ import witchinggadgets.common.util.Utilities;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemPrimordialArmor extends ItemFortressArmor implements IActiveAbility, IPrimordialCrafting, IEventGear, IPrimordialGear
+public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IActiveAbility, IPrimordialCrafting, IEventGear, IPrimordialGear
 {
 	IIcon rune;
 
@@ -158,14 +159,15 @@ public class ItemPrimordialArmor extends ItemFortressArmor implements IActiveAbi
 					player.removePotionEffectClient(c);
 				else
 					player.removePotionEffect(c);
+			Potion.waterBreathing.performEffect(player, 1);
 			break;
 		default:
 			break;
 		}
 	}
+	
 	@Override
-	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
-	{
+	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot){
 		int priority = 0;
 		double ratio = this.damageReduceAmount / 25.0D;
 		if(source.isMagicDamage())
@@ -262,9 +264,21 @@ public class ItemPrimordialArmor extends ItemFortressArmor implements IActiveAbi
 	}
 	
 	@Override
-	public EnumRarity getRarity(ItemStack stack)
+	public int getVisDiscount (ItemStack s, EntityPlayer p, Aspect a)
 	{
-		return EnumRarity.epic;
+		if (getAbility(s)==4)
+			return 10;
+		else
+			return 6;
+	}
+	
+	@Override
+	public int getWarp (ItemStack s, EntityPlayer p)
+	{
+		if (getAbility(s)==4)
+			return 5;
+		else
+			return 10;
 	}
 	
 	@Override
@@ -320,6 +334,7 @@ public class ItemPrimordialArmor extends ItemFortressArmor implements IActiveAbi
 		if(!stack.hasTagCompound())
 			stack.setTagCompound(new NBTTagCompound());
 		int cur = stack.getTagCompound().getInteger("currentMode");
+		// cur 0 = aer,1=terra,2=ignis, 3=aqua, 4=ordo, 5=perdidito,
 		cur++;
 		if(cur>=6)
 			cur=0;
@@ -340,11 +355,20 @@ public class ItemPrimordialArmor extends ItemFortressArmor implements IActiveAbi
 		{
 			switch(getAbility(stack))
 			{
-			case 0:
+			case 0: {
 				if(event.source.isProjectile())
 					event.setCanceled(true);
 				break;
-			case 5:
+			}
+			case 2:{
+				if(event.source.getSourceOfDamage() instanceof EntityLivingBase)
+					if(event.entityLiving.getRNG().nextInt(4)==0)
+					{
+						((EntityLivingBase)event.source.getSourceOfDamage()).setFire(10);
+					}
+				break;
+			}
+			case 5: {
 				if(event.source.getSourceOfDamage() instanceof EntityLivingBase)
 					if(event.entityLiving.getRNG().nextInt(4)==0)
 					{
@@ -352,9 +376,8 @@ public class ItemPrimordialArmor extends ItemFortressArmor implements IActiveAbi
 						((EntityLivingBase)event.source.getSourceOfDamage()).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id,10,3));
 					}
 				break;
-				//			case FIRE:
-				//				//Nova?
-				//				break;
+			}
+			
 				//			case ORDER:
 				//				//Something something Healing?
 				//				break;
@@ -363,25 +386,28 @@ public class ItemPrimordialArmor extends ItemFortressArmor implements IActiveAbi
 			}
 		}
 	}
-
+	
 	@Override
-	public boolean getIsRepairable(ItemStack stack1, ItemStack stack2)
-	{
-		return Utilities.compareToOreName(stack2, "ingotVoid");
-	}
-
-	@Override
-	public void onUserAttacking(AttackEntityEvent event, ItemStack stack)
-	{
+	public void onUserAttacking(AttackEntityEvent event, ItemStack stack){
+		
 	}
 	@Override
-	public void onUserJump(LivingJumpEvent event, ItemStack stack)
-	{
+	public void onUserJump(LivingJumpEvent event, ItemStack stack){
+		
 	}
+	
 	@Override
-	public void onUserFall(LivingFallEvent event, ItemStack stack)
-	{
+	public void onUserFall(LivingFallEvent event, ItemStack stack){
+		if (getAbility(stack)==0) {
+		event.distance=0F;
+		event.setCanceled(true);
+		}
 	}
+	
+	public int getArmorDisplay (EntityPlayer p, ItemStack s, int slot){
+		return this.damageReduceAmount;
+	}
+	
 	@Override
 	public void onUserTargeted(LivingSetAttackTargetEvent event, ItemStack stack)
 	{

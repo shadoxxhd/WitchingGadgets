@@ -54,7 +54,7 @@ import gregtech.api.util.GT_Recipe;
 					+ "required-after:TwilightForest;"
 					+ "required-after:MagicBees;"
 					+ "required-after:dreamcraft;"
-					
+					+ "required-after:TaintedMagic;"
 					+ "after:Mystcraft;"
 					+ "after:TConstruct;"
 					+ "after:ThaumicTinkerer;"

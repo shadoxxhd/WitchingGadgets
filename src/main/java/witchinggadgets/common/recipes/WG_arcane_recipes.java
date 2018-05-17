@@ -41,7 +41,7 @@ public class WG_arcane_recipes {
 	 */
 
 	
-	
+	//ADVANCEDSCRIBINGTOOLS
 	registerShapelessArcaneRecipe("ADVANCEDSCRIBINGTOOLSrefill", "", new ItemStack(WGContent.ItemAdvancedScribingTools), new AspectList().add(Aspect.AIR, 10).add(Aspect.FIRE,10), new Object[] { new ItemStack(WGContent.ItemAdvancedScribingTools, 1, 32767), "dustSmallGold",Items.glowstone_dust});
 	
 	if (WGModCompat.loaded_Twilight)
@@ -57,6 +57,7 @@ public class WG_arcane_recipes {
 	ThaumcraftApi.getCraftingRecipes().add(developingRecipe);
 	WGContent.recipeList.put("SCANCAMERA_DEVELOP",developingRecipe);
 	
+	//CALCULATOR
 	craftingAspects = new AspectList().add(Aspect.ORDER, 50);
 	registerArcaneRecipe("CALCULATOR", "", new ItemStack(WGContent.ItemMaterial,1,7), craftingAspects, "srs","sbs","sgs", 's',"stickThaumium", 'r',ItemList.Sensor_HV.get(1L), 'b',GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Advanced, 1L), 'g',new ItemStack(ConfigBlocks.blockStoneDevice,1,2));
 
@@ -85,18 +86,18 @@ public class WG_arcane_recipes {
 				registerArcaneRecipe("CLOAKKAMA",("_"+cm),new ItemStack(WGContent.ItemKama,1,cm), craftingAspects, "SBS","RCR", 'B',"baubleBeltBase", 'C',new ItemStack(WGContent.ItemCloak,1,cm),'S',GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Thaumium, 1L),'R',"ringThaumium");
 		}
 	}
-	
+	//ETHEREALWALL
 	craftingAspects = new AspectList().add(Aspect.ORDER,15).add(Aspect.EARTH,5);
-	registerArcaneRecipe("ETHEREALWALL","",new ItemStack(WGContent.BlockStoneDevice,6,0), craftingAspects, "SsS", "STS", "SsS", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigItems.itemShard, 1, 32767), 'T', new ItemStack(Blocks.redstone_lamp));
-
+	registerArcaneRecipe("ETHEREALWALL","",new ItemStack(WGContent.BlockStoneDevice,6,0), craftingAspects, "SsS", "STS", "SsS", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigBlocks.blockCrystal, 1, 32767), 'T', new ItemStack(Blocks.redstone_lamp));
+	//AGEINGSTONE
 	craftingAspects = new AspectList().add(Aspect.ORDER,15).add(Aspect.ENTROPY,15);
-	registerArcaneRecipe("AGEINGSTONE","",new ItemStack(WGContent.BlockStoneDevice,1,1), craftingAspects, " s ", "SCS", " s ", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigItems.itemShard, 1, 32767), 'C', GT_ModHandler.getModItem("MagicBees", "miscResources",1L,9));
-
+	registerArcaneRecipe("AGEINGSTONE","",new ItemStack(WGContent.BlockStoneDevice,1,1), craftingAspects, " s ", "SCS", " s ", 'S',new ItemStack(ConfigBlocks.blockCosmeticSolid, 1, 6), 's', new ItemStack(ConfigBlocks.blockCrystal, 1, 32767), 'C', GT_ModHandler.getModItem("MagicBees", "miscResources",1L,9));
+	//SPINNINGWHEEL
 	craftingAspects = new AspectList().add(Aspect.ORDER,10).add(Aspect.AIR,10);
-	registerArcaneRecipe("SPINNINGWHEEL","",new ItemStack(WGContent.BlockWoodenDevice), craftingAspects, "I W", "R S", "TTT", 'T',new ItemStack(ConfigBlocks.blockTable), 'I', "gearGtWoodSealed",'R', GT_OreDictUnificator.get(OrePrefixes.stickLong, Materials.WoodSealed, 1L),'S', GT_OreDictUnificator.get(OrePrefixes.stick, Materials.WoodSealed, 1L) ,'W', "gearGtSmallThaumium");
-
+	registerArcaneRecipe("SPINNINGWHEEL","",new ItemStack(WGContent.BlockWoodenDevice), craftingAspects, "IsW", "RDS", "TTT", 'T',new ItemStack(ConfigBlocks.blockTable),'s',GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Steel, 1L), 'D', "craftingToolScrewdriver", 'I', "gearGtWoodSealed",'R', GT_OreDictUnificator.get(OrePrefixes.stickLong, Materials.WoodSealed, 1L),'S', GT_OreDictUnificator.get(OrePrefixes.stick, Materials.WoodSealed, 1L) ,'W', "gearGtSmallThaumium");
+	//LABELLIB
 	craftingAspects = new AspectList().add(Aspect.ORDER, 30).add(Aspect.EARTH,10).add(Aspect.WATER,10);
-	registerArcaneRecipe("LABELLIB","",new ItemStack(WGContent.BlockWoodenDevice,1,5), craftingAspects, "BLW", " T ", 'B',new ItemStack(Items.book), 'L', new ItemStack(ConfigItems.itemResource,1,13), 'W', "scribingTools", 'T',new ItemStack(ConfigBlocks.blockTable));
+	registerArcaneRecipe("LABELLIB","",new ItemStack(WGContent.BlockWoodenDevice,1,5), craftingAspects, "BLW", "sTs"," D ", 'B',new ItemStack(Items.book),'s',GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Steel, 1L), 'D', "craftingToolScrewdriver", 'L', new ItemStack(ConfigItems.itemResource,1,13), 'W', "scribingTools", 'T',new ItemStack(ConfigBlocks.blockTable));
 
 	if (WGConfig.moduleBag) {
 		craftingAspects = new AspectList().add(Aspect.ENTROPY,15).add(Aspect.ORDER,15).add(Aspect.AIR,15).add(Aspect.FIRE,15).add(Aspect.EARTH,15).add(Aspect.WATER,15);

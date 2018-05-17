@@ -464,12 +464,13 @@ public class WGResearch
 			pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.PRIMORDIALGEARSET.1"),new ResearchPage("witchinggadgets_research_page.PRIMORDIALGEARSET.2")};
 			getResearchItem("PRIMORDIALGEARSET", "WITCHGADG", researchAspects, 0,6,10, new ResourceLocation("witchinggadgets:textures/gui/research/icon_primordialGear.png"))
 				.setParents("VOIDMETAL","WG.PRIMPEARL").setConcealed().setPages(pages).registerResearchItem();
+			
 			//EMPOWERPEARL
 			researchAspects = new AspectList().add(Aspect.MAGIC,8).add(Aspect.CRYSTAL,4).add(Aspect.VOID,4).add(Aspect.ENERGY,4);
-			pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.EMPOWERPEARL.1"), new ResearchPage((InfusionRecipe) WGContent.recipeList.get("REPOWERPEARL"))};
+			pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.EMPOWERPEARL.1"), new ResearchPage((InfusionRecipe) WGContent.recipeList.get("EMPOWERPEARL"))};
 			getResearchItem("EMPOWERPEARL", "WITCHGADG", researchAspects, 0,2,5, new ItemStack(WGContent.ItemMaterial,1,12))
 				.setParents(new String[] {"WG.PRIMPEARL","WGPOTIONS"}).setItemTriggers(new ItemStack(WGContent.ItemMaterial,1,12)).setHidden().setPages(pages).registerResearchItem();
-
+			 
 			if (WGConfig.moduleGemcutting) {
 			//PRIMORDIALGLOVE
 			researchAspects = new AspectList().add(Aspect.CRYSTAL, 1).add(Aspect.MAGIC, 1).add(Aspect.TOOL, 1).add(Aspect.AIR,1).add(Aspect.FIRE,1).add(Aspect.WATER,1).add(Aspect.EARTH,1).add(Aspect.ORDER,1).add(Aspect.ENTROPY,1);
@@ -521,13 +522,14 @@ public class WGResearch
 		
 		//Dreamcraft-Pearl-Dupe Recipe fix
 		researchAspects = new AspectList().add(Aspect.AURA,64).add(Aspect.ORDER,256).add(Aspect.FIRE,256).add(Aspect.EARTH,256).add(Aspect.WATER,256).add(Aspect.AIR,256).add(Aspect.ENTROPY,256).add(Aspect.MAGIC,64).add(Aspect.TAINT,64);
-		InfusionRecipe PearlDupe = new InfusionRecipe("PRIMORDRIALPEARL", GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L,3), 20, researchAspects, GT_ModHandler.getModItem("dreamcraft", "item.PrimordialPearlFragment", 1L), new ItemStack[] {
+		InfusionRecipe PearlDupe = ThaumcraftApi.addInfusionCraftingRecipe("PRIMORDRIALPEARL", GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L,3), 20, researchAspects, GT_ModHandler.getModItem("dreamcraft", "item.PrimordialPearlFragment", 1L), new ItemStack[] {
 				GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L),GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,6),GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,2),
 				GT_ModHandler.getModItem("TwilightForest", "tile.TFAuroraBrick", 1L),GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L),GT_ModHandler.getModItem("TwilightForest", "tile.TFAuroraBrick", 1L),
 				GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,2),GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,7),GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L),
 				GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,7),GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,2),GT_ModHandler.getModItem("TwilightForest", "tile.TFAuroraBrick", 1L),
 				GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L),GT_ModHandler.getModItem("TwilightForest", "tile.TFAuroraBrick", 1L),GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,2),
 				GT_ModHandler.getModItem("ThaumicTinkerer", "kamiResource", 1L,6)});
+		
 		/*
 		 * <Thaumcraft:ItemEldritchObject>, <ThaumicTinkerer:kamiResource:6>, <ThaumicTinkerer:kamiResource:2>,
 		 * <TwilightForest:tile.TFAuroraBrick>, <Thaumcraft:ItemEldritchObject>, <TwilightForest:tile.TFAuroraBrick>,
@@ -538,7 +540,7 @@ public class WGResearch
 		 */
 		
 		ResearchItem PearlDupeResearch = new ResearchItem("PRIMORDRIALPEARL", "WITCHGADG", new AspectList().add(Aspect.AURA,27).add(Aspect.MAGIC,24).add(Aspect.TAINT,21).add(Aspect.ORDER,18).add(Aspect.ENTROPY,15).add(Aspect.AIR,12).add(Aspect.FIRE,9).add(Aspect.EARTH,6).add(Aspect.WATER,3), 4, -2, 4, GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L,3));
-		pages = new ResearchPage[] {new ResearchPage("tc.research_page.PRIMORDRIALPEARL.1"),new ResearchPage(PearlDupe)};
+		pages = new ResearchPage[] {new ResearchPage("tc.research_page.PRIMORDRIALPEARL.1"),new ResearchPage((InfusionRecipe) PearlDupe)};
 		PearlDupeResearch.setPages(pages).setParentsHidden("PRIMPEARL").registerResearchItem();
 		//ThaumcraftApi.addWarpToResearch("PRIMORDRIALPEARL", 20);
 	}

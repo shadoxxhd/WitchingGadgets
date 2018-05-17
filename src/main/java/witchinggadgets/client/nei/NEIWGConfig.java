@@ -20,8 +20,8 @@ public class NEIWGConfig implements IConfigureNEI
 		API.registerRecipeHandler(new NEIInfernalBlastfurnaceHandler());
 		API.registerUsageHandler(new NEIInfernalBlastfurnaceHandler());
 
-		if(WGConfig.allowClusters && ItemClusters.materialMap.isEmpty())
-			API.hideItem(new ItemStack(WGContent.ItemCluster,1,OreDictionary.WILDCARD_VALUE));
+		//if(WGConfig.allowClusters && ItemClusters.materialMap.isEmpty())
+			//API.hideItem(new ItemStack(WGContent.ItemCluster,1,OreDictionary.WILDCARD_VALUE));
 		API.hideItem(new ItemStack(WGContent.BlockWallMirror));
 		API.hideItem(new ItemStack(WGContent.BlockVoidWalkway));
 	}

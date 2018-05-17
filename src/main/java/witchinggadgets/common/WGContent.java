@@ -110,6 +110,7 @@ import witchinggadgets.common.util.recipe.RobeColourizationRecipe;
 
 public class WGContent
 {
+	static boolean devbuild = false;
 	public static Block BlockWallMirror;
 	public static Block BlockVoidWalkway;
 	public static Block BlockPortal;
@@ -156,6 +157,7 @@ public class WGContent
 	public static Potion pot_knockbackRes;
 	public static Potion pot_dissolve;
 	public static Potion pot_cinderCoat;
+	
 	public static Enchantment enc_gemstonePotency;
 	public static Enchantment enc_gemstoneBrittle;
 	public static Enchantment enc_invisibleGear;
@@ -166,8 +168,8 @@ public class WGContent
 	public static Enchantment enc_soulbound;
 
 	public static ArmorMaterial armorMatSpecialRobe = EnumHelper.addArmorMaterial("WG:ADVANCEDCLOTH", 25, new int[] { 2, 4, 3, 2 }, 25);
-	public static ToolMaterial primordialTool = EnumHelper.addToolMaterial("WG:PRIMORDIALTOOL",4, 1500, 8, 6, 25);
-	public static ArmorMaterial primordialArmor = EnumHelper.addArmorMaterial("WG:PRIMORDIALARMOR", 40, new int[] {3,7,6,3}, 30);
+	public static ToolMaterial primordialTool = EnumHelper.addToolMaterial("WG:PRIMORDIALTOOL",10, 1500, 18.0F, 16.5F, 30);
+	public static ArmorMaterial primordialArmor = EnumHelper.addArmorMaterial("WG:PRIMORDIALARMOR", 3000, new int[]{ 6, 12, 8, 6 }, 30);
 	//	public static HashMap<String,Cloak> cloakRegistry = new HashMap<String, Cloak>();
 	public static HashMap<String,Object> recipeList = new HashMap<String,Object>();
 	public static String[] GT_Cluster;
@@ -292,7 +294,7 @@ public class WGContent
 		postInitItems();
 		postInitBlocks();
 		postInitThaumcraft();
-		
+		if (!devbuild)
 		for(Materials aMaterial : gregtech.api.enums.Materials.getMaterialsMap().values()){
 			 if (!aMaterial.contains(SubTag.NO_SMELTING)) {
 				 if ((aMaterial.mBlastFurnaceRequired) || (aMaterial.mDirectSmelting.mBlastFurnaceRequired)) {
@@ -321,6 +323,7 @@ public class WGContent
 				 }
 			}
 		}
+		
 	}
 
 	private static void preInitBlocks()
@@ -683,13 +686,16 @@ public class WGContent
 				addOreAspects("Meutoite", new AspectList().add(Aspect.VOID, 2), true);
 				addOreAspects("Desichalkos", new AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.VOID, 2), true);
 
+		
 		WGResearch.setupResearchPages();
+		if (!devbuild) {	
 		WG_alchemic_recipe.registeralchemic();
 		WG_others.register_others();
 		WG_Infusion.register_infusion();
 		WG_arcane_recipes.regist_arcane();
 		WGResearch.registerResearch();
 		WGResearch.modifyStandardThaumcraftResearch();
+		}
 	}
 
 	static void addOreAspects(String ore, AspectList aspects, boolean isRareOre)
