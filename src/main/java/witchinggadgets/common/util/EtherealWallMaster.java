@@ -82,7 +82,6 @@ public class EtherealWallMaster
 		return result;
 	}
 
-	@SuppressWarnings("unused")
 	private boolean areTilesAdjacent(TileEntity par1, TileEntity par2)
 	{
 		boolean sameX = par1.xCoord == par2.xCoord;

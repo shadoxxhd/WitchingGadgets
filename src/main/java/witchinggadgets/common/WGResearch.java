@@ -539,12 +539,12 @@ public class WGResearch
 		 * <ThaumicTinkerer:kamiResource:6>, 
 		 */
 		
-		ResearchItem PearlDupeResearch = new ResearchItem("PRIMORDRIALPEARL", "WITCHGADG", new AspectList().add(Aspect.AURA,27).add(Aspect.MAGIC,24).add(Aspect.TAINT,21).add(Aspect.ORDER,18).add(Aspect.ENTROPY,15).add(Aspect.AIR,12).add(Aspect.FIRE,9).add(Aspect.EARTH,6).add(Aspect.WATER,3), 4, -2, 4, GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L,3));
+		ResearchItem PearlDupeResearch = new ResearchItem("PRIMORDRIALPEARL", "WITCHGADG", new AspectList().add(Aspect.AURA,27).add(Aspect.MAGIC,24).add(Aspect.TAINT,21).add(Aspect.ORDER,18).add(Aspect.ENTROPY,15).add(Aspect.AIR,12).add(Aspect.FIRE,9).add(Aspect.EARTH,6).add(Aspect.WATER,3), -1, 3, 20, GT_ModHandler.getModItem("Thaumcraft", "ItemEldritchObject", 1L,3));
 		pages = new ResearchPage[] {new ResearchPage("tc.research_page.PRIMORDRIALPEARL.1"),new ResearchPage((InfusionRecipe) PearlDupe)};
-		PearlDupeResearch.setPages(pages).setParentsHidden("PRIMPEARL").registerResearchItem();
-		//ThaumcraftApi.addWarpToResearch("PRIMORDRIALPEARL", 20);
+		PearlDupeResearch.setPages(pages).setRound().setParentsHidden(new String[] {"PRIMPEARL","ICHORIUM"}).setConcealed().registerResearchItem();
+		ThaumcraftApi.addWarpToResearch("PRIMORDRIALPEARL", 20);
 	}
-
+	
 	public static void modifyStandardThaumcraftResearch()
 	{
 		//Add Thaumium Shears

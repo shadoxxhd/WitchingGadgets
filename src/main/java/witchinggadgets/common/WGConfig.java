@@ -16,16 +16,19 @@ public class WGConfig
 	modulePrimal,moduleBag,bagVoid,bagEnder,bagHungry,moduleCloak,moduleKama,capeSpectral,capeStorage,capeWolf,
 	capeRaven,enableSearch,soulboundBaubles,soulboundGalacticraft,moduleGemcutting,allowdropsfrommachinery,terraformer;
 	
-	public static String[] tripplingClusterList;
+	public static String[] tripplingClusterList,blocksforWGBF;
 	public static int smelteryResultForClusters,cloakAnimationMode;
 	
 	public static Block[] coremod_worldgenValidBase_HilltopStones,coremod_worldgenValidBase_EldritchRing;
 
 	public static float radialSpeed;
-	public static String[] clusters={
+	public static final String[] DEFUALTCLUSTERS={
 		"Infinity",
 		"Infinity Catalyst",
 		"Neutronium"
+	},DEFAULTBLOCKS= {
+			"Railcraft:brick.infernal",
+			"Railcraft:stair"
 	};
 	
 
@@ -41,8 +44,9 @@ public class WGConfig
 		allowClusters = config.get("Ore/Crucible", "Enable clusters", true, "Set this to false to disable clusters, useful when you are using AOBD.").getBoolean(true);
 		allowTransmutations = config.get("Ore/Crucible", "Enable transmutations", true, "Set this to false to disable nugget transmutations, this should fix the infinite loop glitch").getBoolean(true);
 		terraformer = config.getBoolean("Enable Terraformer", "Other Options", true, "If the Terraformer is enabled");
-		tripplingClusterList = config.get("Ore/Crucible", "Not Trippling Cluster List", clusters, "A list of ore names for which no native Cluster will get generated").getStringList();
+		tripplingClusterList = config.get("Ore/Crucible", "Not Trippling Cluster List", DEFUALTCLUSTERS, "A list of ore names for which no native Cluster will get generated").getStringList();
 		
+		blocksforWGBF = config.get("Other Options", "Blocks for the WG Blast Furnace", DEFAULTBLOCKS, "Insert the Modname and the blockname for the WG Blast Furnace. The first pair is for the construction of the main ofen, the second pair for the stairs on top. Must be exactly 2 Values!").getStringList();
 		//search
 		limitBookSearchToCategory = config.get("Search", "Limit Thaumonomicon Search to currently active category", false, "Thaumonomicon Search to currently active category").getBoolean(false);
 		

@@ -178,14 +178,7 @@ public class WGContent
 	public static HashMap<String,Fluid> ClusterSmeltable = new HashMap<String,Fluid>();
 	public static String[] bannedMaterials = {
 		"AnyIron",
-		"Iron",
-		"Gold",
-		"Copper",
-		"Tin",
-		"Silver",
-		"Cinnabar",
 		"AnyCopper",
-		"Lead"
 	};
 	
 	public static ArrayList b =new ArrayList<String>();
@@ -194,7 +187,7 @@ public class WGContent
 	{
 		for (String s : bannedMaterials)
 			b.add(s);
-		for (String s : WGConfig.clusters)
+		for (String s : WGConfig.DEFUALTCLUSTERS)
 			b.add(s);
 		initClusters();
 		preInitItems();
@@ -385,19 +378,15 @@ public class WGContent
 	}
 	private static void postInitBlocks()
 	{
-		boolean rc = WGModCompat.railcraftAllowBlastFurnace();
 		for(int yy=0;yy<=1;yy++)
 			for(int zz=0;zz<=2;zz++)
 				for(int xx=0;xx<=2;xx++)
 				{
 					int pos = yy*9 + zz*3 + xx;
-					if(rc)
-						TileEntityBlastfurnace.brickBlock[pos] = GameRegistry.findBlock("Railcraft","brick.infernal");
-					else			
-						TileEntityBlastfurnace.brickBlock[pos] = pos<9&&pos!=4?Blocks.nether_brick: pos==10||pos==12||pos==13||pos==14||pos==16?Blocks.soul_sand: Blocks.obsidian;
+						TileEntityBlastfurnace.brickBlock[pos] = GameRegistry.findBlock(WGConfig.blocksforWGBF[0].split(":")[0],WGConfig.blocksforWGBF[0].split(":")[1]);
 				}
 
-		TileEntityBlastfurnace.stairBlock = rc? GameRegistry.findBlock("Railcraft", "stair"): Blocks.nether_brick_stairs;
+		TileEntityBlastfurnace.stairBlock = GameRegistry.findBlock(WGConfig.blocksforWGBF[1].split(":")[0],WGConfig.blocksforWGBF[1].split(":")[1]);
 		
 		OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice,1,1));
 		OreDictionary.registerOre("blockVoidmetal", new ItemStack(BlockMetalDevice,1,1));
