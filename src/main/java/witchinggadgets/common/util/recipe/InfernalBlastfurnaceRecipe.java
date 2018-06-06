@@ -71,14 +71,14 @@ public class InfernalBlastfurnaceRecipe
 		return false;
 	}
 
-	public static InfernalBlastfurnaceRecipe getRecipeForInput(ItemStack stack)
+	public static  InfernalBlastfurnaceRecipe getRecipeForInput(ItemStack stack)
 	{
 		for(InfernalBlastfurnaceRecipe ir: recipes)
 			if(ir.matches(stack))
 				return ir;
 		return null;
 	}
-	public static InfernalBlastfurnaceRecipe getRecipeForOutput(ItemStack stack)
+	public static  InfernalBlastfurnaceRecipe getRecipeForOutput(ItemStack stack)
 	{
 		for(InfernalBlastfurnaceRecipe ir: recipes)
 			if(OreDictionary.itemMatches(ir.getOutput(), stack, true))
@@ -88,25 +88,25 @@ public class InfernalBlastfurnaceRecipe
 		return null;
 	}
 
-	public static InfernalBlastfurnaceRecipe addRecipe(ItemStack output, String input, int inputSize, int time, boolean isSpecial)
+	public static  InfernalBlastfurnaceRecipe addRecipe(ItemStack output, String input, int inputSize, int time, boolean isSpecial)
 	{
 		return addRecipe(output, input, time, isSpecial);
 	}
-	public static InfernalBlastfurnaceRecipe addRecipe(ItemStack output, Object input, int time, boolean isSpecial)
+	public static  InfernalBlastfurnaceRecipe addRecipe(ItemStack output, Object input, int time, boolean isSpecial)
 	{
 		InfernalBlastfurnaceRecipe recipe = new InfernalBlastfurnaceRecipe(output,input, time, isSpecial);
 		return addRecipe(recipe);
 	}
-	public static InfernalBlastfurnaceRecipe addRecipe(InfernalBlastfurnaceRecipe recipe)
+	public static  InfernalBlastfurnaceRecipe addRecipe(InfernalBlastfurnaceRecipe recipe)
 	{
 		recipes.add(recipe);
 		return recipe;
 	}
-	public static void removeRecipe(InfernalBlastfurnaceRecipe recipe)
+	public static  void removeRecipe(InfernalBlastfurnaceRecipe recipe)
 	{
 		recipes.remove(recipe);
 	}
-	public static List<InfernalBlastfurnaceRecipe> removeRecipes(ItemStack stack)
+	public  static List<InfernalBlastfurnaceRecipe> removeRecipes(ItemStack stack)
 	{
 		List<InfernalBlastfurnaceRecipe> list = new ArrayList();
 		Iterator<InfernalBlastfurnaceRecipe> it = recipes.iterator();
@@ -122,14 +122,14 @@ public class InfernalBlastfurnaceRecipe
 		return list;
 	}
 
-	public static void tryAddSpecialOreMelting(String ore, String ingot, boolean isSpecial)
+	public static  void tryAddSpecialOreMelting(String ore, String ingot, boolean isSpecial)
 	{
 		if(OreDictionary.getOres("ore"+ore).isEmpty()||OreDictionary.getOres("ingot"+ingot).isEmpty())
 			return;
 		InfernalBlastfurnaceRecipe.addRecipe(Utilities.copyStackWithSize(OreDictionary.getOres("ingot"+ingot).get(0), 1), "ore"+ore,1, 1200, isSpecial);
 	}
 
-	public static void tryAddIngotImprovement(String base, String result, boolean isSpecial)
+	public static  void tryAddIngotImprovement(String base, String result, boolean isSpecial)
 	{
 		if(OreDictionary.getOres("ingot"+base).isEmpty()||OreDictionary.getOres("ingot"+result).isEmpty())
 			return;

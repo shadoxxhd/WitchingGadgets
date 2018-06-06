@@ -68,7 +68,7 @@ public class NEIInfernalBlastfurnaceHandler extends TemplateRecipeHandler
 		transferRects.add(new RecipeTransferRect(new Rectangle(59, 8, 48,48), "wgInfernalBlastfurnace"));
 	}
 	@Override
-	public void loadCraftingRecipes(String outputId, Object... results)
+	public synchronized void loadCraftingRecipes(String outputId, Object... results)
 	{
 		if(outputId == getOverlayIdentifier())
 		{
@@ -105,14 +105,14 @@ public class NEIInfernalBlastfurnaceHandler extends TemplateRecipeHandler
 	public void loadCraftingRecipes(ItemStack result)
 	{
 		InfernalBlastfurnaceRecipe recipe = InfernalBlastfurnaceRecipe.getRecipeForOutput(result);
-		if(recipe != null)
+		if(recipe != null && recipe.getInput()!=null && recipe.getOutput()!= null)
 			this.arecipes.add(new CachedInfernalBlastfurnaceRecipe(recipe));
 	}
 	@Override
-	public void loadUsageRecipes(ItemStack ingredient)
+	public synchronized void loadUsageRecipes(ItemStack ingredient)
 	{
 		for(InfernalBlastfurnaceRecipe recipe: InfernalBlastfurnaceRecipe.recipes)
-			if(recipe != null && ( (recipe.getInput() instanceof OreDictStack)? Utilities.compareToOreName(ingredient, ((OreDictStack)recipe.getInput()).key) : OreDictionary.itemMatches(ingredient, (ItemStack)recipe.getInput(), true)) )
+			if(recipe != null && recipe.getInput()!=null && recipe.getOutput()!= null && ( (recipe.getInput() instanceof OreDictStack)? Utilities.compareToOreName(ingredient, ((OreDictStack)recipe.getInput()).key) : OreDictionary.itemMatches(ingredient, (ItemStack)recipe.getInput(), true)) )
 				this.arecipes.add(new CachedInfernalBlastfurnaceRecipe(recipe));
 	}
 	@Override

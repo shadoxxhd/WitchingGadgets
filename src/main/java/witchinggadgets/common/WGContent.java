@@ -110,7 +110,7 @@ import witchinggadgets.common.util.recipe.RobeColourizationRecipe;
 
 public class WGContent
 {
-	static boolean devbuild = false;
+	public static final boolean devbuild = false;
 	public static Block BlockWallMirror;
 	public static Block BlockVoidWalkway;
 	public static Block BlockPortal;
@@ -287,38 +287,70 @@ public class WGContent
 		postInitItems();
 		postInitBlocks();
 		postInitThaumcraft();
-		if (!devbuild)
-		for(Materials aMaterial : gregtech.api.enums.Materials.getMaterialsMap().values()){
-			 if (!aMaterial.contains(SubTag.NO_SMELTING)) {
-				 if ((aMaterial.mBlastFurnaceRequired) || (aMaterial.mDirectSmelting.mBlastFurnaceRequired)) {
-					 if(aMaterial.mBlastFurnaceTemp <= 1000 && aMaterial.mDirectSmelting.mBlastFurnaceTemp <= 1000) {
-						 InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.getIngots(1), aMaterial.getDust(1),aMaterial.mBlastFurnaceTemp * 2, false);
-						 InfernalBlastfurnaceRecipe.addRecipe(temp);	
-						 if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
-								WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
-					 }
-				 } else {
-					 int outputAmount = GT_Mod.gregtechproxy.mMixedOreOnlyYieldsTwoThirdsOfPureOre ? 2 : 3;
-					 if (aMaterial.mDirectSmelting != aMaterial) {
-            			if (!aMaterial.contains(SubTag.DONT_ADD_DEFAULT_BBF_RECIPE)) {
-            				InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 2400, false);
-            				InfernalBlastfurnaceRecipe.addRecipe(temp);
-            				if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
-    							WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
-            			} else if (aMaterial == Materials.Tetrahedrite) {
-            	    		InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 2400, false);
-            	    		temp.addBonus(Materials.Antimony.getNuggets(3 * outputAmount));
-            	    		InfernalBlastfurnaceRecipe.addRecipe(temp);
-            	    		if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
-            	    			WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
-            			}
-					 }
-				 }
-			}
-		}
 		
+		if (!add_infernal_recipes())
+			new RuntimeException("Something went wrong while processing GT infernal recipes!");
+
 	}
 
+	private static boolean add_infernal_recipes() {
+		if (!devbuild)
+			try {
+			for(Materials aMaterial : gregtech.api.enums.Materials.getMaterialsMap().values()){
+				 if (!aMaterial.contains(SubTag.NO_SMELTING)) {
+					 if ((aMaterial.mBlastFurnaceRequired) || (aMaterial.mDirectSmelting.mBlastFurnaceRequired)) {
+						 if(aMaterial.mBlastFurnaceTemp <= 1000 && aMaterial.mDirectSmelting.mBlastFurnaceTemp <= 1000) {
+							 InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.getIngots(1), aMaterial.getDust(1),aMaterial.mBlastFurnaceTemp * 2, false);
+							 InfernalBlastfurnaceRecipe.addRecipe(temp);	
+							 if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
+									WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
+						 }
+					 } else {
+						 int outputAmount = GT_Mod.gregtechproxy.mMixedOreOnlyYieldsTwoThirdsOfPureOre ? 2 : 3;
+						 if (aMaterial.mDirectSmelting != aMaterial) {
+	            			if (!aMaterial.contains(SubTag.DONT_ADD_DEFAULT_BBF_RECIPE)) {
+	            				InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 2400, false);
+	            				InfernalBlastfurnaceRecipe.addRecipe(temp);
+	            				if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
+	    							WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
+	            			} else if (aMaterial == Materials.Tetrahedrite) {
+	            	    		InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 2400, false);
+	            	    		temp.addBonus(Materials.Antimony.getNuggets(3 * outputAmount));
+	            	    		InfernalBlastfurnaceRecipe.addRecipe(temp);
+	            	    		if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
+	            	    			WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
+	            			}
+						 }
+					 }
+				}
+			}
+			}catch(java.util.ConcurrentModificationException e) {
+				e.printStackTrace();
+				return false;
+			}
+		if (remove_broken_recipes())
+			return true;
+		else 
+			return false;
+	}
+	
+	private static boolean remove_broken_recipes() {
+		try {
+		ArrayList<InfernalBlastfurnaceRecipe> rem = new ArrayList<InfernalBlastfurnaceRecipe>();
+		//remove defective InfernalBlastfurnaceRecipes
+		if (!devbuild)
+			for(InfernalBlastfurnaceRecipe r : InfernalBlastfurnaceRecipe.recipes)
+				if (r.getInput()== null || r.getOutput()==null)
+					rem.add(r);
+		InfernalBlastfurnaceRecipe.recipes.removeAll(rem);
+		rem = null;
+		}catch(java.util.ConcurrentModificationException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 	private static void preInitBlocks()
 	{
 		BlockWallMirror = new BlockWallMirror().setBlockName("WG_WallMirror");

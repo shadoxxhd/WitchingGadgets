@@ -135,6 +135,7 @@ public class WitchingGadgets
 		WGModCompat.init();
 		WGContent.postInit();
 		//		WGPacketPipeline.INSTANCE.postInitialise();
+		
 	}
 
 	@Mod.EventHandler
