@@ -63,7 +63,7 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 		if(position!=4)
 			return;
 		
-		if (tick <= 40)
+		if (tick <= 80)
 			++tick;
 		else
 			tick = 0;

@@ -3,6 +3,8 @@ package witchinggadgets.common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -43,6 +45,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.config.ConfigItems;
 import witchinggadgets.WitchingGadgets;
+import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.BlockModifiedAiry;
 import witchinggadgets.common.blocks.BlockRoseVines;
 import witchinggadgets.common.blocks.BlockVoidWalkway;
@@ -173,12 +176,12 @@ public class WGContent
 	//	public static HashMap<String,Cloak> cloakRegistry = new HashMap<String, Cloak>();
 	public static HashMap<String,Object> recipeList = new HashMap<String,Object>();
 	public static String[] GT_Cluster;
-	public static Integer[] GT_Cluster_Color;
+	public static HashMap<String,Integer[]> GT_Cluster_Color= new HashMap<String,Integer[]>();
 	public static HashMap<String,Boolean> ClusterEBF = new HashMap<String,Boolean>();
 	public static HashMap<String,Fluid> ClusterSmeltable = new HashMap<String,Fluid>();
 	public static String[] bannedMaterials = {
 		"AnyIron",
-		"AnyCopper",
+		"AnyCopper"
 	};
 	
 	public static ArrayList b =new ArrayList<String>();
@@ -187,7 +190,7 @@ public class WGContent
 	{
 		for (String s : bannedMaterials)
 			b.add(s);
-		for (String s : WGConfig.DEFUALTCLUSTERS)
+		for (String s : WGConfig.tripplingClusterList)
 			b.add(s);
 		initClusters();
 		preInitItems();
@@ -196,7 +199,7 @@ public class WGContent
 	//final static String UUIDBASE = "424C5553-5747-1694-4452-";
 	
 	private static void initClusters(){
-		ArrayList L = new ArrayList<String>(),K =new ArrayList<Integer>();
+		HashSet L = new HashSet<String>();
 		Map <String, Materials> map = Materials.getMaterialsMap();
 		Iterator<Entry<String, Materials>> entries  = Materials.getMaterialsMap().entrySet().iterator();
 	    
@@ -205,7 +208,7 @@ public class WGContent
 			if (!b.contains(entry.getValue().mLocalizedName) && !OreDictionary.getOres("ore"+entry.getValue().mLocalizedName.replaceAll(" ", "")).isEmpty()) {
 			Integer rgb = ((entry.getValue().getRGBA()[0]&0x0ff) << 16) | ((entry.getValue().getRGBA()[1]&0x0ff) << 8) | (entry.getValue().getRGBA()[2]&0x0ff);
 			L.add(entry.getValue().mLocalizedName.replaceAll(" ", ""));
-			K.add(rgb);
+			GT_Cluster_Color.put(entry.getValue().mLocalizedName.replaceAll(" ", ""), new Integer[]{ClientUtilities.getVibrantColourToInt(rgb), entry.getValue().getRGBA()[0]>entry.getValue().getRGBA()[2]&&entry.getValue().getRGBA()[1]>entry.getValue().getRGBA()[2]?2 :entry.getValue().getRGBA()[0]>entry.getValue().getRGBA()[1]&&entry.getValue().getRGBA()[0]>entry.getValue().getRGBA()[2]?1 : 0});
 			ClusterEBF.put(entry.getValue().mLocalizedName.replaceAll(" ", ""), entry.getValue().mBlastFurnaceRequired);
 			if (!entry.getValue().mBlastFurnaceRequired && (entry.getValue().getMolten(144) != null || entry.getValue().getFluid(144) != null) )
 				if (entry.getValue().getMolten(144) != null )
@@ -215,10 +218,7 @@ public class WGContent
 			}
 		}	
 		GT_Cluster=new String[L.size()];
-		GT_Cluster_Color= new Integer[K.size()];
 	    L.toArray(GT_Cluster);
-	    K.toArray(GT_Cluster_Color);
-	    
 	}
 	
 	
@@ -287,20 +287,16 @@ public class WGContent
 		postInitItems();
 		postInitBlocks();
 		postInitThaumcraft();
-		
-		if (!add_infernal_recipes())
-			new RuntimeException("Something went wrong while processing GT infernal recipes!");
-
+		add_infernal_recipes();
 	}
 
-	private static boolean add_infernal_recipes() {
+	private static void add_infernal_recipes() {
 		if (!devbuild)
-			try {
 			for(Materials aMaterial : gregtech.api.enums.Materials.getMaterialsMap().values()){
 				 if (!aMaterial.contains(SubTag.NO_SMELTING)) {
 					 if ((aMaterial.mBlastFurnaceRequired) || (aMaterial.mDirectSmelting.mBlastFurnaceRequired)) {
 						 if(aMaterial.mBlastFurnaceTemp <= 1000 && aMaterial.mDirectSmelting.mBlastFurnaceTemp <= 1000) {
-							 InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.getIngots(1), aMaterial.getDust(1),aMaterial.mBlastFurnaceTemp * 2, false);
+							 InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.getIngots(1), aMaterial.getDust(1),240, false);
 							 InfernalBlastfurnaceRecipe.addRecipe(temp);	
 							 if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
 									WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
@@ -309,12 +305,12 @@ public class WGContent
 						 int outputAmount = GT_Mod.gregtechproxy.mMixedOreOnlyYieldsTwoThirdsOfPureOre ? 2 : 3;
 						 if (aMaterial.mDirectSmelting != aMaterial) {
 	            			if (!aMaterial.contains(SubTag.DONT_ADD_DEFAULT_BBF_RECIPE)) {
-	            				InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 2400, false);
+	            				InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 240, false);
 	            				InfernalBlastfurnaceRecipe.addRecipe(temp);
 	            				if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
 	    							WitchingGadgets.logger.warn("Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
 	            			} else if (aMaterial == Materials.Tetrahedrite) {
-	            	    		InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 2400, false);
+	            	    		InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(aMaterial.mDirectSmelting.getIngots(outputAmount), aMaterial.getDust(2), 240, false);
 	            	    		temp.addBonus(Materials.Antimony.getNuggets(3 * outputAmount));
 	            	    		InfernalBlastfurnaceRecipe.addRecipe(temp);
 	            	    		if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
@@ -324,18 +320,10 @@ public class WGContent
 					 }
 				}
 			}
-			}catch(java.util.ConcurrentModificationException e) {
-				e.printStackTrace();
-				return false;
-			}
-		if (remove_broken_recipes())
-			return true;
-		else 
-			return false;
+		remove_broken_recipes();
 	}
 	
-	private static boolean remove_broken_recipes() {
-		try {
+	private static void remove_broken_recipes() {
 		ArrayList<InfernalBlastfurnaceRecipe> rem = new ArrayList<InfernalBlastfurnaceRecipe>();
 		//remove defective InfernalBlastfurnaceRecipes
 		if (!devbuild)
@@ -344,11 +332,6 @@ public class WGContent
 					rem.add(r);
 		InfernalBlastfurnaceRecipe.recipes.removeAll(rem);
 		rem = null;
-		}catch(java.util.ConcurrentModificationException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
 	}
 	
 	private static void preInitBlocks()
@@ -529,9 +512,9 @@ public class WGContent
 		RecipeSorter.register("WitchingGadgets:cloakdye", CloakColourizationRecipe.class, RecipeSorter.Category.SHAPELESS, "after:forge:shapelessore");
 		RecipeSorter.register("WitchingGadgets:bagdye", BagColourizationRecipe.class, RecipeSorter.Category.SHAPELESS, "after:forge:shapelessore");
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockMetalDevice,1,1), "vvv","vvv","vvv", 'v',"ingotVoid"));
-		ItemStack voidIngot = OreDictionary.getOres("ingotVoid").get(0);
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(voidIngot.getItem(),9,voidIngot.getItemDamage()), "blockVoid"));
+		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockMetalDevice,1,1), "vvv","vvv","vvv", 'v',"ingotVoid"));
+		//ItemStack voidIngot = OreDictionary.getOres("ingotVoid").get(0);
+		//GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(voidIngot.getItem(),9,voidIngot.getItemDamage()), "blockVoid"));
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemMagicFoodstuffs,1,0), Items.nether_wart,Items.sugar);
 		GameRegistry.addShapedRecipe(new ItemStack(ItemMagicFoodstuffs,1,1), "nnn","www", 'n',new ItemStack(ItemMagicFoodstuffs,1,0), 'w', Items.wheat);

@@ -320,7 +320,7 @@ public class WGCoreTransformer implements IClassTransformer
 				for(int i=1; i<=4; i++)
 				{
 					ItemStack armor = living.getEquipmentInSlot(i);
-					if(armor!=null && armor.getItem()!=null && armor.getItem() instanceof ItemPrimordialArmor && ((ItemPrimordialArmor)armor.getItem()).getAbility(armor)==4)
+					if(armor!=null && armor.getItem()!=null && armor.getItem() instanceof ItemPrimordialArmor && ((ItemPrimordialArmor)armor.getItem()).getAbility(armor)==5)
 						ordo++;
 				}
 

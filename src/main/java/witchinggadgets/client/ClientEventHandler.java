@@ -321,12 +321,12 @@ public class ClientEventHandler
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
+	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void initializeIcons(TextureStitchEvent.Post event)
 	{
 		ItemClusters.setupClusters();
-	}
+	}*/
 
 	static float spectralAlpha = .5f;
 	@SideOnly(Side.CLIENT)
