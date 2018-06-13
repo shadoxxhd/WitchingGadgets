@@ -271,7 +271,7 @@ public class EventHandler
 		{
 			EntityPlayer player = (EntityPlayer)event.source.getSourceOfDamage();
 
-			if(player.getCurrentEquippedItem()!=null && player.getCurrentEquippedItem().getItem() instanceof IPrimordialGear && ((IPrimordialGear)player.getCurrentEquippedItem().getItem()).getAbility(player.getCurrentEquippedItem())==4)
+			if(player.getCurrentEquippedItem()!=null && player.getCurrentEquippedItem().getItem() instanceof IPrimordialGear && ((IPrimordialGear)player.getCurrentEquippedItem().getItem()).getAbility(player.getCurrentEquippedItem())==5)
 			{
 				boolean deobf = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
 				String name = deobf?"experienceValue":"field_70728_aV";

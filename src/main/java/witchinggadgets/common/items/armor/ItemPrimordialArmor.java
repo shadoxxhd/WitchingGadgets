@@ -2,6 +2,10 @@ package witchinggadgets.common.items.armor;
 
 import java.util.List;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -10,7 +14,6 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -23,37 +26,40 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import taintedmagic.common.items.equipment.ItemShadowFortressArmor;
+import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.items.armor.Hover;
-import thaumcraft.common.items.armor.ItemFortressArmor;
 import travellersgear.api.IActiveAbility;
 import travellersgear.api.IEventGear;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.api.IPrimordialCrafting;
 import witchinggadgets.client.render.ModelPrimordialArmor;
+import witchinggadgets.common.WGContent;
 import witchinggadgets.common.items.tools.IPrimordialGear;
-import witchinggadgets.common.util.Lib;
-import witchinggadgets.common.util.Utilities;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IActiveAbility, IPrimordialCrafting, IEventGear, IPrimordialGear
+public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IActiveAbility, IPrimordialCrafting, IEventGear, IPrimordialGear, IRunicArmor 
 {
 	IIcon rune;
-
+	byte tickcounter = 0;
 	public ItemPrimordialArmor(ArmorMaterial mat, int idx, int type)
 	{
 		super(mat, idx, type);
 		this.setCreativeTab(WitchingGadgets.tabWG);
 	}
-
+	
+	@Override
+	public int getRunicCharge(ItemStack stack) {
+		return 0;
+	}
+	
 	@Override
 	public boolean showNodes(ItemStack stack, EntityLivingBase living)
 	{
@@ -72,10 +78,107 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 		if ((!world.isRemote) && (stack.isItemDamaged()) && (entity.ticksExisted % 40 == 0) && ((entity instanceof EntityLivingBase)))
 			stack.damageItem(-1, (EntityLivingBase)entity);
 	}
+	
+	 @SubscribeEvent
+	 public void onLivingUpdateEvent(LivingUpdateEvent event) {
+	     if (event.entityLiving instanceof EntityPlayer) {
+	          EntityPlayer player = (EntityPlayer) event.entityLiving;
+	          
+			int amorcounter = 0;
+			int modescounter = 0;
+			
+			boolean helmet = player.getCurrentArmor(0) != null ? isThis(player.getCurrentArmor(0)) : false;
+			boolean chestplate = player.getCurrentArmor(1) != null ? isThis(player.getCurrentArmor(1)) : false;
+			boolean leggings = player.getCurrentArmor(2) != null ? isThis(player.getCurrentArmor(2)) : false;
+			boolean boots = player.getCurrentArmor(3) != null ? isThis(player.getCurrentArmor(3)) : false;
+			
+			int[] modes = new int[] {
+				helmet ? getAbility(player.getCurrentArmor(0)) : 0,
+				chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
+				leggings ? getAbility(player.getCurrentArmor(2)) : 0,
+				boots ? getAbility(player.getCurrentArmor(3)) : 0,
+			};
+			
+			if (helmet)
+				++amorcounter;
+			if (chestplate)
+				++amorcounter;
+			if (leggings)
+				++amorcounter;
+			if (boots)
+				++amorcounter;
+			
+			for (int i : modes)
+				if (i == 1)
+					++modescounter;
+			
+			if (amorcounter >= 2 && modescounter >=2)
+				player.capabilities.allowFlying=true;
+			else
+				player.capabilities.allowFlying=false;
+			
+			/*if(leggings && getAbility(player.getCurrentArmor(2))==3)
+				player.capabilities.setPlayerWalkSpeed(0.75F);
+			else
+				player.capabilities.setPlayerWalkSpeed(0.1F);
+			
+			if(boots && player.capabilities.isFlying && getAbility(player.getCurrentArmor(3)) == 6)
+				player.noClip=true;
+			else
+				player.noClip=false;*/
+
+	     }
+	 }
+	
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
 	{
-		if ((!world.isRemote) && (stack.getItemDamage() > 0) && (player.ticksExisted % 20 == 0))
+		++tickcounter;
+		
+		if (tickcounter >= 100)
+			tickcounter = 0;
+			
+		
+		byte amorcounter = 0;
+		byte[] modescounter= {0,0,0,0,0,0};
+		
+		boolean helmet = player.getCurrentArmor(0) != null ? isThis(player.getCurrentArmor(0)) : false;
+		boolean chestplate = player.getCurrentArmor(1) != null ? isThis(player.getCurrentArmor(1)) : false;
+		boolean leggings = player.getCurrentArmor(2) != null ? isThis(player.getCurrentArmor(2)) : false;
+		boolean boots = player.getCurrentArmor(3) != null ? isThis(player.getCurrentArmor(3)) : false;
+		
+		int[] modes = new int[] {
+			helmet ? getAbility(player.getCurrentArmor(0)) : 0,
+			chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
+			leggings ? getAbility(player.getCurrentArmor(2)) : 0,
+			boots ? getAbility(player.getCurrentArmor(3)) : 0,
+		};
+		
+		if (helmet)
+			++amorcounter;
+		if (chestplate)
+			++amorcounter;
+		if (leggings)
+			++amorcounter;
+		if (boots)
+			++amorcounter;
+		
+		for (int i : modes) {
+			if (i == 1)
+				++modescounter[0];
+			if (i == 2)
+				++modescounter[1];
+			if (i == 3)
+				++modescounter[2];
+			if (i == 4)
+				++modescounter[3];
+			if (i == 5)
+				++modescounter[4];
+			if (i == 6)
+				++modescounter[5];
+		}
+		
+		if ((!world.isRemote) && (stack.getItemDamage() > 0) && (tickcounter == 1))
 			stack.damageItem(-1, player);
 
 		if(this.armorType==3)
@@ -100,13 +203,35 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 				else
 					player.jumpMovementFactor = 0.05F;
 			}
-			if (player.fallDistance > 0.0F)
-				player.fallDistance -= 0.25F;
 		}
-
+		
+		if ( amorcounter>=2 && modescounter[2]>=2 && player.isInsideOfMaterial(Material.lava)) {
+			player.setAir(300);
+			player.addPotionEffect(new PotionEffect(Potion.blindness.id, 202, 0, true));
+			player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 202, 0, true));
+		}
+	
+		if (amorcounter>=2 && modescounter[0]>=2)
+			player.capabilities.allowFlying = true;
+		else
+			player.capabilities.allowFlying = false;
+		
+		/*if (modes[2]==3) {
+			player.capabilities.setPlayerWalkSpeed(0.75F);
+		} else if (modes[2]!=3) {
+			player.capabilities.setPlayerWalkSpeed(0.1F);
+		}
+		
+		if(player.capabilities.isFlying && modes[3]==6)
+			player.noClip=true;
+		else if(!player.capabilities.isFlying || modes[3]!=6)
+			player.noClip=false;*/
+		
+		
 		switch(getAbility(stack))
+		// cur 1 = aer,2=terra,3=ignis, 4=aqua, 5=ordo, 6=perdidito,
 		{
-		case 0:
+		case 1:
 			//Thanks WayOfFlowingTime =P
 			AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(player.posX-.5,player.posY-.5,player.posZ-.5, player.posX+.5,player.posY+.5,player.posZ+.5).expand(4,4,4);
 			for(Entity projectile : (List<Entity>)world.getEntitiesWithinAABB(Entity.class, aabb))
@@ -152,14 +277,36 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 				projectile.motionZ = newVel * delZ;
 			}
 			break;
+		case 2:
+			if (this.armorType==3) {
+				player.addPotionEffect(new PotionEffect(WGContent.pot_knockbackRes.id, 202, 0, true));
+			}
+			break;
 		case 3:
-			int[] curedPotions = {Potion.blindness.id,Potion.poison.id,Potion.wither.id,Potion.confusion.id,Config.potionTaintPoisonID};
+			if(this.armorType==0){
+				if (!world.isDaytime() || player.getBrightness(0) < 4)
+				player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 202, 0, true));
+			}
+			break;
+		case 4: //water|aqua
+			if(this.armorType==0){
+				player.setAir(300);
+				player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 202, 0, true));
+				if (player.isInsideOfMaterial(Material.water))
+					player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 202, 0, true));
+			}
+			
+			int[] curedPotions = {Potion.blindness.id,Potion.poison.id,Potion.wither.id,Potion.confusion.id,Config.potionTaintPoisonID,Potion.digSlowdown.id,Potion.hunger.id,Potion.weakness.id};
 			for(int c : curedPotions)
 				if(world.isRemote)
 					player.removePotionEffectClient(c);
 				else
 					player.removePotionEffect(c);
-			Potion.waterBreathing.performEffect(player, 1);
+			break;
+		case 5:
+			player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 202, 0, true));
+			break;
+		case 6:
 			break;
 		default:
 			break;
@@ -167,29 +314,34 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 	}
 	
 	@Override
+	public boolean getIsRepairable (ItemStack s, ItemStack s2) {
+		return false;
+	}
+	
+	@Override
 	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot){
 		int priority = 0;
-		double ratio = this.damageReduceAmount / 25.0D;
+		double ratio = this.damageReduceAmount / 12.0D;
 		if(source.isMagicDamage())
 		{
 			priority = 1;
-			ratio = this.damageReduceAmount / 35.0D;
+			ratio = this.damageReduceAmount / 15.0D;
 		}
 		else if(source.isFireDamage() || source.isExplosion())
 		{
-			if(source.isFireDamage() && getAbility(armor)==2)
+			if(source.isFireDamage() && getAbility(armor)==3)
 			{
 				if(player.isBurning())
 					player.extinguish();
 			}
 			priority = 1;
-			ratio = getAbility(armor)==2? .75f : (this.damageReduceAmount / 20.0D);
+			ratio = getAbility(armor)==3? .75f : (this.damageReduceAmount / 10.0D);
 		}
 		else if (source.isUnblockable())
 		{
-			int ab = getAbility(armor);
-			priority = ab==1?1:0;
-			ratio = ab==1?this.damageReduceAmount/50.0D :0.0D;
+			int ab = (getAbility(armor)-1);
+			priority = ab==1 ? 1:0;
+			ratio = ab==1 ? this.damageReduceAmount/25.0D :0.0D;
 		}
 		if ((player instanceof EntityPlayer))
 		{
@@ -206,7 +358,7 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 			}
 			ratio *= set;
 		}
-		return new ISpecialArmor.ArmorProperties(priority, ratio, armor.getMaxDamage() + 1 - armor.getItemDamage());
+		return new ISpecialArmor.ArmorProperties(priority, ratio, Integer.MAX_VALUE);
 	}
 
 	@Override
@@ -256,7 +408,7 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 	
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		int ab = getAbility(stack);
+		int ab = (getAbility(stack)-1);
 		String add = ab>=0&&ab<6? " "+EnumChatFormatting.DARK_GRAY+"- \u00a7"+Aspect.getPrimalAspects().get(ab).getChatcolor()+Aspect.getPrimalAspects().get(ab).getName()+EnumChatFormatting.RESET : "";
 		
 		list.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wg.desc.primal") + add);
@@ -266,7 +418,7 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 	@Override
 	public int getVisDiscount (ItemStack s, EntityPlayer p, Aspect a)
 	{
-		if (getAbility(s)==4)
+		if (getAbility(s)==5)
 			return 10;
 		else
 			return 6;
@@ -275,7 +427,7 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 	@Override
 	public int getWarp (ItemStack s, EntityPlayer p)
 	{
-		if (getAbility(s)==4)
+		if (getAbility(s)==5)
 			return 5;
 		else
 			return 10;
@@ -316,9 +468,9 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 	{
 		if(pass==0)
 		{
-			int ab = getAbility(stack);
+			int ab = (getAbility(stack)-1);
 			if(ab>=0&&ab<6)
-				return Aspect.getPrimalAspects().get(getAbility(stack)).getColor();
+				return Aspect.getPrimalAspects().get(getAbility(stack)-1).getColor();
 		}
 		return 0xffffff;
 	}
@@ -330,14 +482,14 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 
 	@Override
 	public void cycleAbilities(ItemStack stack)
-	{
+	{	
 		if(!stack.hasTagCompound())
 			stack.setTagCompound(new NBTTagCompound());
 		int cur = stack.getTagCompound().getInteger("currentMode");
-		// cur 0 = aer,1=terra,2=ignis, 3=aqua, 4=ordo, 5=perdidito,
+		// cur 1 = aer,2=terra,3=ignis, 4=aqua, 5=ordo, 6=perdidito,
 		cur++;
-		if(cur>=6)
-			cur=0;
+		if(cur>=7)
+			cur=1;
 		stack.getTagCompound().setInteger("currentMode",cur);
 	}
 	@Override
@@ -348,39 +500,92 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 		return stack.getTagCompound().getInteger("currentMode");
 	}
 
+	private boolean isThis(ItemStack stack) {
+		if(!stack.hasTagCompound())
+			return false;
+		else
+			return stack.getTagCompound().getInteger("currentMode") != 0;
+	}
+	
 	@Override
 	public void onUserDamaged(LivingHurtEvent event, ItemStack stack)
 	{
 		if(event.entityLiving instanceof EntityPlayer)
 		{
+			EntityPlayer player = (EntityPlayer) event.entityLiving;
+		
+			int amorcounter = 0;
+			int[] modescounter= {0,0,0,0,0,0};
+			
+			boolean helmet = player.getCurrentArmor(0) != null ? isThis(player.getCurrentArmor(0)) : false;
+			boolean chestplate = player.getCurrentArmor(1) != null ? isThis(player.getCurrentArmor(1)) : false;
+			boolean leggings = player.getCurrentArmor(2) != null ? isThis(player.getCurrentArmor(2)) : false;
+			boolean boots = player.getCurrentArmor(3) != null ? isThis(player.getCurrentArmor(3)) : false;
+			
+			int[] modes = new int[] {
+				helmet ? getAbility(player.getCurrentArmor(0)) : 0,
+				chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
+				leggings ? getAbility(player.getCurrentArmor(2)) : 0,
+				boots ? getAbility(player.getCurrentArmor(3)) : 0,
+			};
+			
+			if (helmet)
+				++amorcounter;
+			if (chestplate)
+				++amorcounter;
+			if (leggings)
+				++amorcounter;
+			if (boots)
+				++amorcounter;
+			
+			for (int i : modes) {
+				if (i == 1)
+					++modescounter[0];
+				if (i == 2)
+					++modescounter[1];
+				if (i == 3)
+					++modescounter[2];
+				if (i == 4)
+					++modescounter[3];
+				if (i == 5)
+					++modescounter[4];
+				if (i == 6)
+					++modescounter[5];
+				if (i == 7)
+					++modescounter[6];
+			}
+			
 			switch(getAbility(stack))
 			{
-			case 0: {
+			case 1: {
 				if(event.source.isProjectile())
 					event.setCanceled(true);
 				break;
 			}
-			case 2:{
-				if(event.source.getSourceOfDamage() instanceof EntityLivingBase)
-					if(event.entityLiving.getRNG().nextInt(4)==0)
-					{
-						((EntityLivingBase)event.source.getSourceOfDamage()).setFire(10);
+			case 2: 
+				player.addPotionEffect(new PotionEffect(Potion.heal.id, 202, modescounter[1], true));
+				break;
+			case 3:{
+				if(event.source.getSourceOfDamage() instanceof EntityLivingBase){
+						((EntityLivingBase)event.source.getSourceOfDamage()).setFire(5*modescounter[2]);
 					}
 				break;
 			}
-			case 5: {
-				if(event.source.getSourceOfDamage() instanceof EntityLivingBase)
-					if(event.entityLiving.getRNG().nextInt(4)==0)
-					{
-						((EntityLivingBase)event.source.getSourceOfDamage()).addPotionEffect(new PotionEffect(Potion.blindness.id,10,0));
-						((EntityLivingBase)event.source.getSourceOfDamage()).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id,10,3));
-					}
+			case 4:
+			
+				break;
+			case 5:
+				
+				break;
+				
+			case 6: {
+				if(event.source.getSourceOfDamage() instanceof EntityLivingBase) {
+						((EntityLivingBase)event.source.getSourceOfDamage()).addPotionEffect(new PotionEffect(Potion.blindness.id,200*modescounter[5],0));
+						((EntityLivingBase)event.source.getSourceOfDamage()).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id,200*modescounter[5],3));
+				}
 				break;
 			}
 			
-				//			case ORDER:
-				//				//Something something Healing?
-				//				break;
 			default:
 				break;
 			}
@@ -391,6 +596,7 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 	public void onUserAttacking(AttackEntityEvent event, ItemStack stack){
 		
 	}
+	
 	@Override
 	public void onUserJump(LivingJumpEvent event, ItemStack stack){
 		
@@ -398,15 +604,14 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor implements IAct
 	
 	@Override
 	public void onUserFall(LivingFallEvent event, ItemStack stack){
-		if (getAbility(stack)==0) {
 		event.distance=0F;
 		event.setCanceled(true);
-		}
 	}
 	
 	public int getArmorDisplay (EntityPlayer p, ItemStack s, int slot){
 		return this.damageReduceAmount;
 	}
+	
 	
 	@Override
 	public void onUserTargeted(LivingSetAttackTargetEvent event, ItemStack stack)

@@ -44,6 +44,7 @@ public class ItemClusters extends Item
 	
 	
 	public static HashMap<String, String> loccodename = new HashMap();
+	@Deprecated
 	public static HashMap<String, Integer[]> materialMap = new HashMap();
 
 	IIcon iconMetal;
@@ -62,8 +63,8 @@ public class ItemClusters extends Item
 	{
 		if(pass==0)
 		{
-			if(materialMap.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()])!=null)
-				return materialMap.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()] )[0];
+			if(WGContent.GT_Cluster_Color.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()])!=null)
+				return WGContent.GT_Cluster_Color.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()] )[0];
 		}
 		return 0xffffff;
 	}
@@ -96,8 +97,8 @@ public class ItemClusters extends Item
 	{
 		if(pass==0)
 			return this.iconMetal;
-		else if(materialMap.get(witchinggadgets.common.WGContent.GT_Cluster[damage])!=null)
-			return this.iconOverlay[ materialMap.get(witchinggadgets.common.WGContent.GT_Cluster[damage])[1] ];
+		else if(WGContent.GT_Cluster_Color.get(witchinggadgets.common.WGContent.GT_Cluster[damage])!=null)
+			return this.iconOverlay[ WGContent.GT_Cluster_Color.get(witchinggadgets.common.WGContent.GT_Cluster[damage])[1] ];
 		else
 			return this.iconOverlay[0];
 	}
@@ -143,14 +144,12 @@ public class ItemClusters extends Item
 					itemList.add( new ItemStack(item,1,iOre) );
 	}
 
-	public static void setupClusters()
+	/*public static void setupClusters()
 	{
-		int i = 0;
 		if(WGConfig.allowClusters)
 			for(String ore : witchinggadgets.common.WGContent.GT_Cluster) {
-					materialMap.put(ore, new Integer[]{ClientUtilities.getVibrantColourToInt(witchinggadgets.common.WGContent.GT_Cluster_Color[i]),0});
-					++i;
-					/*
+					materialMap.put(ore, new Integer[]{ClientUtilities.getVibrantColourToInt(witchinggadgets.common.WGContent.GT_Cluster_Color.get(ore)),0});
+					
 					try{
 						List<Integer> colList = ClientUtilities.getItemColours( OreDictionary.getOres("ore"+ore).get(0) );
 						if(!colList.isEmpty())
@@ -168,7 +167,7 @@ public class ItemClusters extends Item
 						}
 					}catch(Exception e){
 						WitchingGadgets.logger.log(Level.ERROR, "Error setting up cluster for "+ore);
-					}*/
+					}
 				}
-	}
+	}*/
 }	
