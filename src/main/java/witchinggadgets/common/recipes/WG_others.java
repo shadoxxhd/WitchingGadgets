@@ -156,13 +156,16 @@ public class WG_others {
 					}
 						
 				}
-				GT_Values.RA.addPulveriserRecipe(OreDictionary.getOres(name).get(0).copy(), outputs, new int[] {10000,10000}, 30, 30);
-				if (WGContent.ClusterSmeltable.get(aMaterial)!=null) {
+				if (!aMaterial.equalsIgnoreCase("Oilsands"))
+					GT_Values.RA.addPulveriserRecipe(OreDictionary.getOres(name).get(0).copy(), outputs, new int[] {10000,10000}, 30, 30);
+				if (WGContent.ClusterSmeltable.get(aMaterial)!=null||aMaterial.equalsIgnoreCase("Oilsands")) {
 					if (aMaterial.equals("Redstone") || aMaterial.equals("Electrotine"))
 						GT_Values.RA.addFluidExtractionRecipe(OreDictionary.getOres(name).get(0).copy(), GT_Values.NI,new FluidStack(WGContent.ClusterSmeltable.get(aMaterial),1720), 0, 60, 120);
-					else
+					else if (!aMaterial.equalsIgnoreCase("Oilsands"))
 						GT_Values.RA.addFluidExtractionRecipe(OreDictionary.getOres(name).get(0).copy(), GT_Values.NI,new FluidStack(WGContent.ClusterSmeltable.get(aMaterial),344), 0, 60, 120);
-					}
+					else
+						GT_Values.RA.addCentrifugeRecipe(OreDictionary.getOres(name).get(0).copy(), GT_Values.NI, GT_Values.NF, Materials.Oil.getFluid(4000L), GT_Values.NI, GT_Values.NI, GT_Values.NI, GT_Values.NI, GT_Values.NI, GT_Values.NI, null, 60, 120, false);
+				}
 				}
 			}
 			else
@@ -234,6 +237,10 @@ public class WG_others {
 				}
 				case "Monazite":{
 					GT_Values.RA.addSifterRecipe(OreDictionary.getOres(name).get(0).copy(), new ItemStack[]{GT_OreDictUnificator.get(OrePrefixes.gemExquisite, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  8L),  8L), GT_OreDictUnificator.get(OrePrefixes.gemFlawless, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  8L),  8L),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  8L),  GT_OreDictUnificator.get(OrePrefixes.gemFlawed, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  8L),  8L), GT_OreDictUnificator.get(OrePrefixes.gemChipped, Materials.get(aMaterial),GT_OreDictUnificator.get(OrePrefixes.gem, Materials.get(aMaterial),  8L),  8L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.get(aMaterial),  8L)}, chanche, 12800, 30);
+					break;
+				}
+				case "Coal":{
+					GT_Values.RA.addSifterRecipe(OreDictionary.getOres(name).get(0).copy(),new ItemStack[]{new ItemStack(Items.coal, 2, 0), new ItemStack(Items.coal, 2, 0), new ItemStack(Items.coal, 2, 0), new ItemStack(Items.coal, 2, 0), new ItemStack(Items.coal, 2, 0), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 2L)}, new int[]{10000, 9000, 8000, 7000, 6000, 5000}, 1200, 32);
 					break;
 				}
 				default:{
