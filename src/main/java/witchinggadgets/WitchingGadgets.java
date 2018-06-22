@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.apache.logging.log4j.Level;
@@ -52,8 +53,8 @@ import gregtech.api.util.GT_Recipe;
 					+ "required-after:TravellersGear@[1.16.4,);"
 					+ "required-after:gregtech;"
 					+ "required-after:TwilightForest;"
-					//+ "required-after:MagicBees;"
-					//+ "required-after:dreamcraft;"
+					+ "required-after:MagicBees;"
+					+ "required-after:dreamcraft;"
 					+ "required-after:TaintedMagic;"
 					+ "after:Mystcraft;"
 					+ "after:TConstruct;"
