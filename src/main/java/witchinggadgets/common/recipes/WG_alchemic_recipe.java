@@ -19,6 +19,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.utils.Utils;
+import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.WGConfig;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.WGModCompat;
@@ -62,7 +63,20 @@ public class WG_alchemic_recipe {
 			if(WGConfig.allowClusters)
 			{
 				ItemStack ingot = OreDictionary.getOres("ore"+witchinggadgets.common.WGContent.GT_Cluster[iOre]).get(0);
-				alchemyAspects = ThaumcraftApi.objectTags.get( Arrays.asList(new Object[] { ingot.getItem(), Integer.valueOf(ingot.getItemDamage()) }) ).add(Aspect.ORDER,1);
+				
+				if (ingot == null) {
+					WitchingGadgets.logger.error(witchinggadgets.common.WGContent.GT_Cluster[iOre]+" == null! This should not happen!");
+					continue;
+				}
+					
+				
+				try {
+					alchemyAspects = ThaumcraftApi.objectTags.get( Arrays.asList(new Object[] { ingot.getItem(), Integer.valueOf(ingot.getItemDamage()) }) ).add(Aspect.ORDER,1);
+				} catch (NullPointerException e) {
+					WitchingGadgets.logger.error("Could not get the objectTags for"+witchinggadgets.common.WGContent.GT_Cluster[iOre]);
+					alchemyAspects = new AspectList().add(Aspect.METAL,2).add(Aspect.ORDER,1).add((Aspect)gregtech.api.enums.TC_Aspects.NEBRISUM.mAspect,2);
+				}
+				
 				if (alchemyAspects == null || alchemyAspects.equals(new AspectList()) || alchemyAspects.size()<3)
 					alchemyAspects = new AspectList().add(Aspect.METAL,2).add(Aspect.ORDER,1).add((Aspect)gregtech.api.enums.TC_Aspects.NEBRISUM.mAspect,2);
 				else if (alchemyAspects.size()>6)
