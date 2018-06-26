@@ -56,6 +56,7 @@ import gregtech.api.util.GT_Recipe;
 					+ "required-after:MagicBees;"
 					+ "required-after:dreamcraft;"
 					+ "required-after:TaintedMagic;"
+					+ "required-after:miscutils;"
 					+ "after:Mystcraft;"
 					+ "after:TConstruct;"
 					+ "after:ThaumicTinkerer;"
