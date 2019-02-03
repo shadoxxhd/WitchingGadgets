@@ -25,3 +25,8 @@
 /world
 /armourersWorkshop
 /equipmen-database
+out/
+*.bat
+WG.iws
+WG.ipr
+WG.iml
