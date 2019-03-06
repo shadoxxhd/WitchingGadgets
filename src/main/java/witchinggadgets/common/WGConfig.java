@@ -55,7 +55,7 @@ public class WGConfig
 		"Californium",
 		"Flerovium",
 		"Desh",
-		"Gallium",
+		"Ichorium",
 		"InfusedGold",
 		"Palladium",
 		"Quantium"
