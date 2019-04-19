@@ -96,7 +96,7 @@ public class ItemClusters extends Item
 	{
 		if(pass==0)
 			return this.iconMetal;
-		else if(WGContent.GT_Cluster_Color.get(witchinggadgets.common.WGContent.GT_Cluster[damage])!=null)
+		else if(damage < witchinggadgets.common.WGContent.GT_Cluster.length && WGContent.GT_Cluster_Color.get(witchinggadgets.common.WGContent.GT_Cluster[damage])!=null)
 			return this.iconOverlay[ WGContent.GT_Cluster_Color.get(witchinggadgets.common.WGContent.GT_Cluster[damage])[1] ];
 		else
 			return this.iconOverlay[0];
