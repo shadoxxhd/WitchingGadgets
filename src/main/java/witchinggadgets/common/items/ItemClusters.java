@@ -61,8 +61,7 @@ public class ItemClusters extends Item
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int pass)
 	{
-		if(pass==0)
-		{
+		if(pass==0 && stack.getItemDamage() < witchinggadgets.common.WGContent.GT_Cluster.length){
 			if(WGContent.GT_Cluster_Color.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()])!=null)
 				return WGContent.GT_Cluster_Color.get( witchinggadgets.common.WGContent.GT_Cluster[stack.getItemDamage()] )[0];
 		}
