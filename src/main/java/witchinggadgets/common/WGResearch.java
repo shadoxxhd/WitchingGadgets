@@ -159,7 +159,7 @@ public class WGResearch
 			ItemStack standardCloak = new ItemStack(WGContent.ItemCloak,1,0);//ItemCloak.getCloakWithTag("STANDARD");
 			researchAspects = new AspectList().add(Aspect.CLOTH, 1).add(Aspect.AIR,1).add(Aspect.ARMOR,1).add(Aspect.MAGIC, 1);
 			pages = new ResearchPage[]{ new ResearchPage("witchinggadgets_research_page.CLOAK.1"), new ResearchPage((IArcaneRecipe)WGContent.recipeList.get("CLOAK"))};
-			getResearchItem("CLOAK", "WITCHGADG", researchAspects, 4, -3, 3, standardCloak).setParents(new String[] { "ADVANCEDROBES" }).setConcealed().setPages(pages).registerResearchItem();
+			getResearchItem("CLOAK", "WITCHGADG", researchAspects, 4, -3, 3, standardCloak).setParents(new String[] { "ADVANCEDROBES" }).setParentsHidden("BAGOFTRICKS").setConcealed().setPages(pages).registerResearchItem();
 
 			if (WGConfig.capeSpectral) {
 				researchAspects = new AspectList().add(Aspect.CLOTH, 4).add(Aspect.TRAVEL, 2).add(Aspect.SOUL,2).add(Aspect.DARKNESS, 4);
