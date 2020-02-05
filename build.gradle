@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.2.9n-GTNH"
+version = "1.2.10-GTNH"
 group= "blusunrize"
 archivesBaseName = "WitchingGadgets-1.7.10"
 
