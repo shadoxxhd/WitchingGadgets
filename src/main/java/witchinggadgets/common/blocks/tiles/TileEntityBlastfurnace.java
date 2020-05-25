@@ -166,10 +166,9 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 	        }
 	    }
 	}
-	
-	int calculateTime()
-	{
-		return (this.recipeTime/(this.speedupTick>0?2:1)) - (getBellows()*40);
+
+	int calculateTime() {
+		return Math.max(1, recipeTime / (speedupTick > 0 ? 2 : 1) - getBellows() * 40);
 	}
 	
 	/*boolean drawEssentia()
@@ -186,7 +185,7 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 		}
 		return false;
 	}*/
-	
+
 	void outputItem(ItemStack item)
 	{
 		TileEntity inventory = this.worldObj.getTileEntity(this.xCoord+facing.offsetX*2, this.yCoord+1, this.zCoord+facing.offsetZ*2);
@@ -203,7 +202,7 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 		}
 		worldObj.addBlockEvent(xCoord,yCoord,zCoord, getBlockType(), 3,0);
 	}
-	
+
 	int getBellows()
 	{
 		int bellows = 0;
@@ -238,7 +237,7 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 		for(int i=0;i<invList.tagCount();i++)
 			inputs.add( ItemStack.loadItemStackFromNBT(invList.getCompoundTagAt(i)));
 	}
-	
+
 	@Override
 	public void writeCustomNBT(NBTTagCompound tags)
 	{
@@ -277,13 +276,13 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 		//return (position==1&&fd==ForgeDirection.NORTH)||(position==3&&fd==ForgeDirection.WEST)||(position==5&&fd==ForgeDirection.EAST)||(position==7&&fd==ForgeDirection.SOUTH);
 		return false;
 	}
-	
+
 	@Override
 	public boolean canInputFrom(ForgeDirection fd)
 	{
 		return position==1||position==3||position==4||position==5||position==7;
 	}
-	
+
 	@Override
 	public int getSuctionAmount(ForgeDirection fd)
 	{
@@ -291,13 +290,13 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 			return 128;
 		return 0;
 	}
-	
+
 	@Override
 	public Aspect getSuctionType(ForgeDirection fd)
 	{
 		return Aspect.FIRE;
 	}
-	
+
 	@Override
 	public int getMinimumSuction()
 	{
@@ -309,7 +308,7 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 	{
 		return false;
 	}
-	
+
 	@Override
 	public int getEssentiaAmount(ForgeDirection fd)
 	{
@@ -318,7 +317,7 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 			return ((TileEntityBlastfurnace)worldObj.getTileEntity(masterPos[0],masterPos[1],masterPos[2])).fuel;
 		return 0;
 	}
-	
+
 	@Override
 	public Aspect getEssentiaType(ForgeDirection fd)
 	{
@@ -333,17 +332,17 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 
 	@Override
 	public void setSuction(Aspect aspect, int amount){
-		
+
 	}
-	
+
 	@Override
 	public int addEssentia(Aspect arg0, int arg1, ForgeDirection arg2)
 	{
 		return 0;
 	}
-	
+
 	@Override
-	public int takeEssentia(Aspect aspect, int amount, ForgeDirection fd) 
+	public int takeEssentia(Aspect aspect, int amount, ForgeDirection fd)
 	{
 		return 0;
 	}
@@ -414,7 +413,7 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 	public static IIcon[] icon_bottomTBLR;
 	public static IIcon icon_internal;
 	public static IIcon icon_lava;
-	
+
 	public IIcon getTexture(int side)
 	{
 
