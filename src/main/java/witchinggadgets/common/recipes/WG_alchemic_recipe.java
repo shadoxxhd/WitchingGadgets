@@ -112,7 +112,18 @@ public class WG_alchemic_recipe {
 				if(bb)
 				{
 					ItemStack ingot = OreDictionary.getOres("ingot"+witchinggadgets.common.WGContent.GT_Cluster[iOre]).get(0);
-					alchemyAspects = ThaumcraftApi.objectTags.get( Arrays.asList(new Object[] { ingot.getItem(), Integer.valueOf(ingot.getItemDamage()) }) ).add(Aspect.EXCHANGE,1);
+					
+					if (ingot == null) {
+						WitchingGadgets.logger.error(witchinggadgets.common.WGContent.GT_Cluster[iOre]+" == null! This should not happen!");
+						continue;
+					}
+					try {
+						alchemyAspects = ThaumcraftApi.objectTags.get( Arrays.asList(new Object[] { ingot.getItem(), Integer.valueOf(ingot.getItemDamage()) }) ).add(Aspect.EXCHANGE,1);
+					} catch (NullPointerException e) {
+						WitchingGadgets.logger.error("Could not get the objectTags for"+witchinggadgets.common.WGContent.GT_Cluster[iOre]);
+						alchemyAspects = new AspectList().add(Aspect.METAL,2).add(Aspect.ORDER,1).add((Aspect)gregtech.api.enums.TC_Aspects.NEBRISUM.mAspect,2);
+					}
+					
 					if (alchemyAspects == null || alchemyAspects.equals(new AspectList()) || alchemyAspects.size()<3)
 						alchemyAspects = new AspectList().add(Aspect.METAL,2).add(Aspect.ORDER,1).add((Aspect)gregtech.api.enums.TC_Aspects.NEBRISUM.mAspect,2);
 					alchemyAspects.remove(Aspect.METAL);
