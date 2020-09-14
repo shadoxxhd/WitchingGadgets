@@ -59,7 +59,7 @@ public class WG_arcane_recipes {
 	
 	//CALCULATOR
 	craftingAspects = new AspectList().add(Aspect.ORDER, 50);
-	registerArcaneRecipe("CALCULATOR", "", new ItemStack(WGContent.ItemMaterial,1,7), craftingAspects, "srs","sbs","sgs", 's',"stickThaumium", 'r',ItemList.Sensor_HV.get(1L), 'b',GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Advanced, 1L), 'g',new ItemStack(ConfigBlocks.blockStoneDevice,1,2));
+	registerArcaneRecipe("CALCULATOR", "", new ItemStack(WGContent.ItemMaterial,1,7), craftingAspects, "srs","sbs","sgs", 's',"stickThaumium", 'r',ItemList.Sensor_HV.get(1L), 'b', "circuitAdvanced", 'g',new ItemStack(ConfigBlocks.blockStoneDevice,1,2));
 
 	
 	//CLOAKS
