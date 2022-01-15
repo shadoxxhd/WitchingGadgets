@@ -59,17 +59,18 @@ public class TileRenderSnowGen extends TileEntitySpecialRenderer
 
 		
 		// TODO INDICATE ACTIVE STATUS
+		GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(3042);
 		GL11.glBlendFunc(770, 771);
-		ClientUtilities.bindTexture("textures/blocks/ice.png");
+		ClientUtilities.bindTexture("textures/blocks/snow.png");
 		TileRenderCobbleGen.renderPixelBlock(tes, 0.1875, 0.25, 0.1875, 0.375, 0.5, 0.375, 0,0,1,1);
 		TileRenderCobbleGen.renderPixelBlock(tes, 0.375, 0.25, 0.1875, 0.625, 0.5625, 0.4375, 0,0,1,1);
 		TileRenderCobbleGen.renderPixelBlock(tes, 0.15625, 0.25, 0.5, 0.4375, 0.5625, 0.8125, 0,0,1,1);
 		TileRenderCobbleGen.renderPixelBlock(tes, 0.5, 0.25, 0.5625, 0.75, 0.375, 0.875, 0,0,1,1);
 		TileRenderCobbleGen.renderPixelBlock(tes, 0.65625, 0.25, 0.3125, 0.8125, 0.75, 0.5, 0,0,1,1);
 		GL11.glDisable(3042);
-		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glPopAttrib();
 
 		GL11.glPopMatrix();
 	}
