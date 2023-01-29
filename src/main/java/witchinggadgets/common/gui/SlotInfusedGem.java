@@ -4,10 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
 import thaumcraft.common.container.SlotLimitedByClass;
 import witchinggadgets.api.IInfusedGem;
 
 public class SlotInfusedGem extends SlotLimitedByClass {
+
     public SlotInfusedGem(IInventory par2iInventory, int id, int x, int y) {
         super(IInfusedGem.class, 1, par2iInventory, id, x, y);
     }
@@ -31,12 +33,10 @@ public class SlotInfusedGem extends SlotLimitedByClass {
         super.putStack(stack);
         if (stack != null) {
             if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
-            stack.getTagCompound()
-                    .setInteger(
-                            "BraceletSlot",
-                            this.inventory instanceof InventoryPrimordialRing && this.slotNumber != 0
-                                    ? this.slotNumber + 2
-                                    : this.slotNumber);
+            stack.getTagCompound().setInteger(
+                    "BraceletSlot",
+                    this.inventory instanceof InventoryPrimordialRing && this.slotNumber != 0 ? this.slotNumber + 2
+                            : this.slotNumber);
         }
     }
 }

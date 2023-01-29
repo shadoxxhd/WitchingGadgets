@@ -5,10 +5,13 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.common.WGConfig;
 
 public class ModelCloak extends ModelBiped {
+
     private double[] circPos = new double[32]; // Circle Position
 
     public boolean doAnimation = true;
@@ -101,7 +104,7 @@ public class ModelCloak extends ModelBiped {
                 int jt1 = jt0 + 1;
                 double h0 = (circPos[jt0] * circPos[jt0]) * 7;
                 double h1 = (circPos[jt1] * circPos[jt1]) * 7;
-                double dividerA[] = {0.3, 0.725, 0.75, 0.8, 0.825, 0.9, 1.0, 1.1};
+                double dividerA[] = { 0.3, 0.725, 0.75, 0.8, 0.825, 0.9, 1.0, 1.1 };
                 // double dividerA[] = {1.1,1.0,0.9,0.825,0.8,0.75,0.725,0.3};
                 double divider = dividerA[j];
 
@@ -198,7 +201,7 @@ public class ModelCloak extends ModelBiped {
                     int jt1 = jt0 + 1;
                     double h0 = (circPos[jt0] * circPos[jt0]) * 2.75;
                     double h1 = (circPos[jt1] * circPos[jt1]) * 2.75;
-                    double dividerA[] = {0, 0.65, 0.675, 0.7, 0.725, 0.775, 0.825, 0.9};
+                    double dividerA[] = { 0, 0.65, 0.675, 0.7, 0.725, 0.775, 0.825, 0.9 };
                     double divider = dividerA[j];
 
                     double d0 = circPos[it0] * 0.9 * divider;

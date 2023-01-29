@@ -1,16 +1,11 @@
 package witchinggadgets.common.recipes;
 
-import cpw.mods.fml.common.Loader;
-import gregtech.api.enums.ItemList;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.OrePrefixes;
-import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_OreDictUnificator;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -24,8 +19,15 @@ import witchinggadgets.common.WGContent;
 import witchinggadgets.common.WGModCompat;
 import witchinggadgets.common.items.baubles.ItemCloak;
 import witchinggadgets.common.util.recipe.PhotoDevelopingRecipe;
+import cpw.mods.fml.common.Loader;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.util.GT_ModHandler;
+import gregtech.api.util.GT_OreDictUnificator;
 
 public class WG_arcane_recipes {
+
     static AspectList infusionAspects;
     static AspectList craftingAspects;
     static AspectList alchemyAspects;
@@ -33,8 +35,12 @@ public class WG_arcane_recipes {
     public static void regist_arcane() {
         ItemStack standardCloak = new ItemStack(WGContent.ItemCloak, 1, 0);
         /**
-         * infusionAspects = new AspectList().add(Aspect.DEATH, 40).add(Aspect.METAL, 40).add(Aspect.WEAPON, 75).add(Aspect.ENTROPY, 50).add(Aspect.HUNGER, 25);
-         * InfusionRecipe infR_vorp = ThaumcraftApi.addInfusionCraftingRecipe("VORPALBLADE",new ItemStack(Item.swordIron),4,infusionAspects,new ItemStack(ConfigItems.itemFocusPortableHole", 0),new ItemStack[] {new ItemStack(ConfigItems.itemShard", 5),new ItemStack(ConfigItems.itemShard", 5),new ItemStack(Item.enderPearl),new ItemStack(Item.enderPearl),new ItemStack(Item.ghastTear)});
+         * infusionAspects = new AspectList().add(Aspect.DEATH, 40).add(Aspect.METAL, 40).add(Aspect.WEAPON,
+         * 75).add(Aspect.ENTROPY, 50).add(Aspect.HUNGER, 25); InfusionRecipe infR_vorp =
+         * ThaumcraftApi.addInfusionCraftingRecipe("VORPALBLADE",new ItemStack(Item.swordIron),4,infusionAspects,new
+         * ItemStack(ConfigItems.itemFocusPortableHole", 0),new ItemStack[] {new ItemStack(ConfigItems.itemShard",
+         * 5),new ItemStack(ConfigItems.itemShard", 5),new ItemStack(Item.enderPearl),new ItemStack(Item.enderPearl),new
+         * ItemStack(Item.ghastTear)});
          */
 
         // ADVANCEDSCRIBINGTOOLS
@@ -43,52 +49,29 @@ public class WG_arcane_recipes {
                 "refill",
                 new ItemStack(WGContent.ItemAdvancedScribingTools),
                 new AspectList().add(Aspect.AIR, 10).add(Aspect.FIRE, 10),
-                new Object[] {
-                    new ItemStack(WGContent.ItemAdvancedScribingTools, 1, 32767), "dustSmallGold", Items.glowstone_dust
-                });
+                new Object[] { new ItemStack(WGContent.ItemAdvancedScribingTools, 1, 32767), "dustSmallGold",
+                        Items.glowstone_dust });
 
-        if (WGModCompat.loaded_Twilight)
-            registerShapelessArcaneRecipe(
-                    "ADVANCEDSCRIBINGTOOLS",
-                    "",
-                    new ItemStack(WGContent.ItemAdvancedScribingTools),
-                    new AspectList()
-                            .add(Aspect.AIR, 50)
-                            .add(Aspect.FIRE, 50)
-                            .add(Aspect.ORDER, 50)
-                            .add(Aspect.ENTROPY, 50)
-                            .add(Aspect.EARTH, 50)
-                            .add(Aspect.WATER, 50),
-                    new Object[] {
-                        "dustGold",
-                        "dustGold",
-                        "dustGold",
-                        Items.glowstone_dust,
-                        Items.glowstone_dust,
-                        Items.glowstone_dust,
-                        Items.glowstone_dust,
-                        new ItemStack(WGModCompat.tfMagicMapFocus),
-                        thaumcraft.api.ItemApi.getItem("itemEssence", 0)
-                    });
-        else
-            registerShapelessArcaneRecipe(
-                    "ADVANCEDSCRIBINGTOOLS",
-                    "",
-                    new ItemStack(WGContent.ItemAdvancedScribingTools),
-                    new AspectList()
-                            .add(Aspect.AIR, 50)
-                            .add(Aspect.FIRE, 50)
-                            .add(Aspect.ORDER, 50)
-                            .add(Aspect.ENTROPY, 50)
-                            .add(Aspect.EARTH, 50)
-                            .add(Aspect.WATER, 50),
-                    new Object[] {
-                        "dustGold", new ItemStack(Items.feather), thaumcraft.api.ItemApi.getItem("itemEssence", 0)
-                    });
+        if (WGModCompat.loaded_Twilight) registerShapelessArcaneRecipe(
+                "ADVANCEDSCRIBINGTOOLS",
+                "",
+                new ItemStack(WGContent.ItemAdvancedScribingTools),
+                new AspectList().add(Aspect.AIR, 50).add(Aspect.FIRE, 50).add(Aspect.ORDER, 50).add(Aspect.ENTROPY, 50)
+                        .add(Aspect.EARTH, 50).add(Aspect.WATER, 50),
+                new Object[] { "dustGold", "dustGold", "dustGold", Items.glowstone_dust, Items.glowstone_dust,
+                        Items.glowstone_dust, Items.glowstone_dust, new ItemStack(WGModCompat.tfMagicMapFocus),
+                        thaumcraft.api.ItemApi.getItem("itemEssence", 0) });
+        else registerShapelessArcaneRecipe(
+                "ADVANCEDSCRIBINGTOOLS",
+                "",
+                new ItemStack(WGContent.ItemAdvancedScribingTools),
+                new AspectList().add(Aspect.AIR, 50).add(Aspect.FIRE, 50).add(Aspect.ORDER, 50).add(Aspect.ENTROPY, 50)
+                        .add(Aspect.EARTH, 50).add(Aspect.WATER, 50),
+                new Object[] { "dustGold", new ItemStack(Items.feather),
+                        thaumcraft.api.ItemApi.getItem("itemEssence", 0) });
 
         // SCANCAMERA
-        craftingAspects =
-                new AspectList().add(Aspect.AIR, 20).add(Aspect.EARTH, 20).add(Aspect.ORDER, 10);
+        craftingAspects = new AspectList().add(Aspect.AIR, 20).add(Aspect.EARTH, 20).add(Aspect.ORDER, 10);
         registerArcaneRecipe(
                 "SCANCAMERA",
                 "",
@@ -153,14 +136,11 @@ public class WG_arcane_recipes {
                     new ItemStack(WGContent.ItemMaterial, 1, 3));
 
             if (WGConfig.capeStorage) {
-                craftingAspects = new AspectList()
-                        .add(Aspect.AIR, 30)
-                        .add(Aspect.ENTROPY, 20)
-                        .add(Aspect.ORDER, 15);
+                craftingAspects = new AspectList().add(Aspect.AIR, 30).add(Aspect.ENTROPY, 20).add(Aspect.ORDER, 15);
                 registerArcaneRecipe(
                         "CLOAK_STORAGE",
                         "",
-                        new ItemStack(WGContent.ItemCloak, 1, 2) /*ItemCloak.getCloakWithTag("STORAGE")*/,
+                        new ItemStack(WGContent.ItemCloak, 1, 2) /* ItemCloak.getCloakWithTag("STORAGE") */,
                         craftingAspects,
                         "SCS",
                         " B ",
@@ -172,14 +152,11 @@ public class WG_arcane_recipes {
                         new ItemStack(WGContent.ItemBag));
             }
             if (WGConfig.capeWolf) {
-                craftingAspects = new AspectList()
-                        .add(Aspect.FIRE, 20)
-                        .add(Aspect.ENTROPY, 30)
-                        .add(Aspect.EARTH, 25);
+                craftingAspects = new AspectList().add(Aspect.FIRE, 20).add(Aspect.ENTROPY, 30).add(Aspect.EARTH, 25);
                 registerArcaneRecipe(
                         "CLOAK_WOLF",
                         "",
-                        new ItemStack(WGContent.ItemCloak, 1, 3) /*ItemCloak.getCloakWithTag("WOLF")*/,
+                        new ItemStack(WGContent.ItemCloak, 1, 3) /* ItemCloak.getCloakWithTag("WOLF") */,
                         craftingAspects,
                         "WWW",
                         "WCW",
@@ -196,7 +173,7 @@ public class WG_arcane_recipes {
                 registerArcaneRecipe(
                         "CLOAK_RAVEN",
                         "",
-                        new ItemStack(WGContent.ItemCloak, 1, 4) /*ItemCloak.getCloakWithTag("RAVEN")*/,
+                        new ItemStack(WGContent.ItemCloak, 1, 4) /* ItemCloak.getCloakWithTag("RAVEN") */,
                         craftingAspects,
                         "FFF",
                         "FCF",
@@ -211,22 +188,21 @@ public class WG_arcane_recipes {
 
             if (WGConfig.moduleKama) {
                 craftingAspects = new AspectList().add(Aspect.AIR, 45).add(Aspect.ORDER, 45);
-                for (int cm = 0; cm < ItemCloak.subNames.length; cm++)
-                    registerArcaneRecipe(
-                            "CLOAKKAMA",
-                            ("_" + cm),
-                            new ItemStack(WGContent.ItemKama, 1, cm),
-                            craftingAspects,
-                            "SBS",
-                            "RCR",
-                            'B',
-                            "baubleBeltBase",
-                            'C',
-                            new ItemStack(WGContent.ItemCloak, 1, cm),
-                            'S',
-                            GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Thaumium, 1L),
-                            'R',
-                            "ringThaumium");
+                for (int cm = 0; cm < ItemCloak.subNames.length; cm++) registerArcaneRecipe(
+                        "CLOAKKAMA",
+                        ("_" + cm),
+                        new ItemStack(WGContent.ItemKama, 1, cm),
+                        craftingAspects,
+                        "SBS",
+                        "RCR",
+                        'B',
+                        "baubleBeltBase",
+                        'C',
+                        new ItemStack(WGContent.ItemCloak, 1, cm),
+                        'S',
+                        GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Thaumium, 1L),
+                        'R',
+                        "ringThaumium");
             }
         }
         // ETHEREALWALL
@@ -290,8 +266,7 @@ public class WG_arcane_recipes {
                 'W',
                 "gearGtSmallThaumium");
         // LABELLIB
-        craftingAspects =
-                new AspectList().add(Aspect.ORDER, 30).add(Aspect.EARTH, 10).add(Aspect.WATER, 10);
+        craftingAspects = new AspectList().add(Aspect.ORDER, 30).add(Aspect.EARTH, 10).add(Aspect.WATER, 10);
         registerArcaneRecipe(
                 "LABELLIB",
                 "",
@@ -314,13 +289,8 @@ public class WG_arcane_recipes {
                 new ItemStack(ConfigBlocks.blockTable));
 
         if (WGConfig.moduleBag) {
-            craftingAspects = new AspectList()
-                    .add(Aspect.ENTROPY, 15)
-                    .add(Aspect.ORDER, 15)
-                    .add(Aspect.AIR, 15)
-                    .add(Aspect.FIRE, 15)
-                    .add(Aspect.EARTH, 15)
-                    .add(Aspect.WATER, 15);
+            craftingAspects = new AspectList().add(Aspect.ENTROPY, 15).add(Aspect.ORDER, 15).add(Aspect.AIR, 15)
+                    .add(Aspect.FIRE, 15).add(Aspect.EARTH, 15).add(Aspect.WATER, 15);
             registerShapelessArcaneRecipe(
                     "BAGOFTRICKS",
                     "_CLOTH",
@@ -346,10 +316,7 @@ public class WG_arcane_recipes {
                     new ItemStack(WGContent.ItemMaterial, 1, 3));
 
             if (WGConfig.bagHungry) {
-                craftingAspects = new AspectList()
-                        .add(Aspect.ORDER, 50)
-                        .add(Aspect.AIR, 30)
-                        .add(Aspect.EARTH, 10);
+                craftingAspects = new AspectList().add(Aspect.ORDER, 50).add(Aspect.AIR, 30).add(Aspect.EARTH, 10);
                 registerArcaneRecipe(
                         "HUNGERBAG",
                         "",
@@ -366,13 +333,8 @@ public class WG_arcane_recipes {
             }
         }
 
-        craftingAspects = new AspectList()
-                .add(Aspect.ENTROPY, 15)
-                .add(Aspect.ORDER, 15)
-                .add(Aspect.AIR, 15)
-                .add(Aspect.FIRE, 15)
-                .add(Aspect.EARTH, 15)
-                .add(Aspect.WATER, 15);
+        craftingAspects = new AspectList().add(Aspect.ENTROPY, 15).add(Aspect.ORDER, 15).add(Aspect.AIR, 15)
+                .add(Aspect.FIRE, 15).add(Aspect.EARTH, 15).add(Aspect.WATER, 15);
         registerShapelessArcaneRecipe(
                 "ADVANCEDROBES",
                 "_CLOTH",
@@ -383,8 +345,7 @@ public class WG_arcane_recipes {
                 new ItemStack(WGContent.ItemMaterial, 1, 2),
                 new ItemStack(WGContent.ItemMaterial, 1, 1));
 
-        craftingAspects =
-                new AspectList().add(Aspect.ORDER, 25).add(Aspect.ENTROPY, 25).add(Aspect.AIR, 15);
+        craftingAspects = new AspectList().add(Aspect.ORDER, 25).add(Aspect.ENTROPY, 25).add(Aspect.AIR, 15);
         registerArcaneRecipe(
                 "ADVANCEDROBES",
                 "_CHEST",
@@ -396,8 +357,7 @@ public class WG_arcane_recipes {
                 new ItemStack(WGContent.ItemMaterial, 1, 5),
                 'R',
                 new ItemStack(ConfigItems.itemChestRobe));
-        craftingAspects =
-                new AspectList().add(Aspect.ORDER, 25).add(Aspect.ENTROPY, 25).add(Aspect.AIR, 15);
+        craftingAspects = new AspectList().add(Aspect.ORDER, 25).add(Aspect.ENTROPY, 25).add(Aspect.AIR, 15);
         registerArcaneRecipe(
                 "ADVANCEDROBES",
                 "_LEGS",
@@ -410,8 +370,7 @@ public class WG_arcane_recipes {
                 'R',
                 new ItemStack(ConfigItems.itemLegsRobe));
 
-        craftingAspects =
-                new AspectList().add(Aspect.ENTROPY, 25).add(Aspect.FIRE, 25).add(Aspect.AIR, 15);
+        craftingAspects = new AspectList().add(Aspect.ENTROPY, 25).add(Aspect.FIRE, 25).add(Aspect.AIR, 15);
         registerArcaneRecipe(
                 "WGBAUBLES",
                 "_WOLFVAMBRACES",
@@ -465,10 +424,9 @@ public class WG_arcane_recipes {
                 Items.enchanted_book);
 
         // book special
-        ItemStack soulBook =
-                Items.enchanted_book.getEnchantedItemStack(new EnchantmentData(WGContent.enc_soulbound, 1));
-        craftingAspects =
-                new AspectList().add(Aspect.ORDER, 30).add(Aspect.AIR, 15).add(Aspect.ENTROPY, 15);
+        ItemStack soulBook = Items.enchanted_book
+                .getEnchantedItemStack(new EnchantmentData(WGContent.enc_soulbound, 1));
+        craftingAspects = new AspectList().add(Aspect.ORDER, 30).add(Aspect.AIR, 15).add(Aspect.ENTROPY, 15);
         registerArcaneRecipe(
                 "ENCH_SOULBOUND",
                 "_BOOK",
@@ -487,17 +445,17 @@ public class WG_arcane_recipes {
                 new ItemStack(Items.gold_ingot));
     }
 
-    private static void registerArcaneRecipe(
-            String research, String tagAddon, ItemStack result, AspectList craftingAspects, Object... recipe) {
-        ShapedArcaneRecipe arcaneRecipe =
-                ThaumcraftApi.addArcaneCraftingRecipe(research, result, craftingAspects, recipe);
+    private static void registerArcaneRecipe(String research, String tagAddon, ItemStack result,
+            AspectList craftingAspects, Object... recipe) {
+        ShapedArcaneRecipe arcaneRecipe = ThaumcraftApi
+                .addArcaneCraftingRecipe(research, result, craftingAspects, recipe);
         WGContent.recipeList.put(research + tagAddon, arcaneRecipe);
     }
 
-    private static void registerShapelessArcaneRecipe(
-            String research, String tagAddon, ItemStack result, AspectList craftingAspects, Object... recipe) {
-        ShapelessArcaneRecipe arcaneRecipe =
-                ThaumcraftApi.addShapelessArcaneCraftingRecipe(research, result, craftingAspects, recipe);
+    private static void registerShapelessArcaneRecipe(String research, String tagAddon, ItemStack result,
+            AspectList craftingAspects, Object... recipe) {
+        ShapelessArcaneRecipe arcaneRecipe = ThaumcraftApi
+                .addShapelessArcaneCraftingRecipe(research, result, craftingAspects, recipe);
         WGContent.recipeList.put(research + tagAddon, arcaneRecipe);
     }
 }

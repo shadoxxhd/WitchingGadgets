@@ -1,7 +1,5 @@
 package witchinggadgets.client.render;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockPane;
@@ -11,12 +9,17 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.IBlockAccess;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityBlastfurnace;
 import witchinggadgets.common.blocks.tiles.TileEntityEtherealWall;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class BlockRenderStoneDevice implements ISimpleBlockRenderingHandler {
+
     public static int renderPass = 0;
     public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
@@ -31,7 +34,7 @@ public class BlockRenderStoneDevice implements ISimpleBlockRenderingHandler {
 
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
         } catch (Exception e) {
-            //			e.printStackTrace();
+            // e.printStackTrace();
             Tessellator.instance.draw();
         }
         GL11.glEnable(32826);
@@ -39,8 +42,8 @@ public class BlockRenderStoneDevice implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public boolean renderWorldBlock(
-            IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
+            RenderBlocks renderer) {
         if (world.getTileEntity(x, y, z) instanceof TileEntityEtherealWall) {
             TileEntityEtherealWall tile = (TileEntityEtherealWall) world.getTileEntity(x, y, z);
             Block blockToRender = tile.camoID != null ? tile.camoID : block;
@@ -60,7 +63,7 @@ public class BlockRenderStoneDevice implements ISimpleBlockRenderingHandler {
             renderer.setRenderBoundsFromBlock(blockToRender);
 
             int l = block.colorMultiplier(world, x, y, z);
-            float[] rgb = {(l >> 16 & 255) / 255f, (l >> 8 & 255) / 255f, (l & 255) / 255f};
+            float[] rgb = { (l >> 16 & 255) / 255f, (l >> 8 & 255) / 255f, (l & 255) / 255f };
 
             if (EntityRenderer.anaglyphEnable) {
                 float f3 = (rgb[0] * 30.0F + rgb[1] * 59.0F + rgb[2] * 11.0F) / 100.0F;
@@ -137,7 +140,12 @@ public class BlockRenderStoneDevice implements ISimpleBlockRenderingHandler {
                 renderer.setRenderBounds(0, 0, 0, 1, .5, 1);
                 renderer.renderStandardBlock(block, x, y, z);
                 renderer.setRenderBounds(
-                        pos % 3 == 0 ? .5 : 0, .5, pos < 3 ? .5 : 0, (pos + 1) % 3 == 0 ? .5 : 1, 1, pos > 5 ? .5 : 1);
+                        pos % 3 == 0 ? .5 : 0,
+                        .5,
+                        pos < 3 ? .5 : 0,
+                        (pos + 1) % 3 == 0 ? .5 : 1,
+                        1,
+                        pos > 5 ? .5 : 1);
             } else renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
             renderer.renderStandardBlock(block, x, y, z);
         } else {

@@ -1,7 +1,5 @@
 package witchinggadgets.common.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,10 +10,13 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import thaumcraft.api.aspects.Aspect;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.api.ITerraformFocus;
 import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBiomeFocusEmpty extends BlockContainer implements ITerraformFocus {
 

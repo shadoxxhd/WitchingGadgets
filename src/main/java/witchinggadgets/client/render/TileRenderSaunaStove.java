@@ -4,11 +4,14 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 
 public class TileRenderSaunaStove extends TileEntitySpecialRenderer {
+
     static final boolean DEBUG = false;
 
     @Override

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 
 public class WGEnchantBackstab extends Enchantment {
+
     public WGEnchantBackstab(int id) {
         super(id, 0, EnumEnchantmentType.weapon);
         this.setName("wg.backstab");

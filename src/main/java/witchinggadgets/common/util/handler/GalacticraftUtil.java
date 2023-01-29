@@ -2,14 +2,14 @@ package witchinggadgets.common.util.handler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 
 /**
  * This is a near-verbatim copy of Galacticraft's API class 'AccessInventoryGC'.
  *
- * We don't need the extended functionality and already have more APIs included
- * than is good for our sanity.
+ * We don't need the extended functionality and already have more APIs included than is good for our sanity.
  *
  */
 public class GalacticraftUtil {

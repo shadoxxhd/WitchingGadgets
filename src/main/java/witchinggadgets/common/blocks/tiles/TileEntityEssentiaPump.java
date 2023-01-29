@@ -1,19 +1,22 @@
 package witchinggadgets.common.blocks.tiles;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import java.util.ArrayList;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
 import thaumcraft.common.tiles.TileMirrorEssentia;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class TileEntityEssentiaPump extends TileEntityWGBase implements IEssentiaTransport {
+
     int tick;
     public ForgeDirection facing = ForgeDirection.NORTH;
     Aspect aspect = null;
@@ -28,31 +31,36 @@ public class TileEntityEssentiaPump extends TileEntityWGBase implements IEssenti
     public void updateEntity() {
         if (!worldObj.isRemote) {
             Aspect a = null;
-            if (worldObj.getTileEntity(xCoord + facing.offsetX, yCoord + facing.offsetY, zCoord + facing.offsetZ)
-                    instanceof IEssentiaTransport)
-                a = ((IEssentiaTransport) worldObj.getTileEntity(
-                                xCoord + facing.offsetX, yCoord + facing.offsetY, zCoord + facing.offsetZ))
-                        .getSuctionType(facing.getOpposite());
+            if (worldObj.getTileEntity(
+                    xCoord + facing.offsetX,
+                    yCoord + facing.offsetY,
+                    zCoord + facing.offsetZ) instanceof IEssentiaTransport)
+                a = ((IEssentiaTransport) worldObj
+                        .getTileEntity(xCoord + facing.offsetX, yCoord + facing.offsetY, zCoord + facing.offsetZ))
+                                .getSuctionType(facing.getOpposite());
             if (a != null && (aspect == null || aspect == a) && amount < 1) {
-                for (TileMirrorEssentia mirror : getMirrors())
-                    if (mirror.takeFromContainer(a, 1)) {
-                        if (aspect == null) aspect = a;
-                        amount++;
-                        this.markDirty();
-                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                        PacketHandler.INSTANCE.sendToAllAround(
-                                new PacketFXEssentiaSource(
-                                        xCoord,
-                                        yCoord,
-                                        zCoord,
-                                        (byte) (xCoord - mirror.xCoord),
-                                        (byte) (yCoord - mirror.yCoord),
-                                        (byte) (zCoord - mirror.zCoord),
-                                        aspect.getColor()),
-                                new NetworkRegistry.TargetPoint(
-                                        worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32.0D));
-                        return;
-                    }
+                for (TileMirrorEssentia mirror : getMirrors()) if (mirror.takeFromContainer(a, 1)) {
+                    if (aspect == null) aspect = a;
+                    amount++;
+                    this.markDirty();
+                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                    PacketHandler.INSTANCE.sendToAllAround(
+                            new PacketFXEssentiaSource(
+                                    xCoord,
+                                    yCoord,
+                                    zCoord,
+                                    (byte) (xCoord - mirror.xCoord),
+                                    (byte) (yCoord - mirror.yCoord),
+                                    (byte) (zCoord - mirror.zCoord),
+                                    aspect.getColor()),
+                            new NetworkRegistry.TargetPoint(
+                                    worldObj.provider.dimensionId,
+                                    xCoord,
+                                    yCoord,
+                                    zCoord,
+                                    32.0D));
+                    return;
+                }
             }
         }
     }
@@ -61,29 +69,27 @@ public class TileEntityEssentiaPump extends TileEntityWGBase implements IEssenti
         ArrayList<TileMirrorEssentia> list = new ArrayList<TileMirrorEssentia>();
         int range = 8;
         ForgeDirection fd = facing.getOpposite();
-        for (int h = -range; h <= range; h++)
-            for (int w = -range; w <= range; w++)
-                for (int l = 1; l < range; l++) {
-                    int xx = xCoord;
-                    int yy = yCoord;
-                    int zz = zCoord;
-                    if (fd.offsetY != 0) {
-                        xx += w;
-                        yy += l * fd.offsetY;
-                        zz += h;
-                    } else if (fd.offsetX != 0) {
-                        xx += l * fd.offsetX;
-                        yy += h;
-                        zz += w;
-                    } else {
-                        xx += w;
-                        yy += h;
-                        zz += l * fd.offsetZ;
-                    }
-                    TileEntity te = worldObj.getTileEntity(xx, yy, zz);
-                    if (te != null && te instanceof TileMirrorEssentia && canSeeMirror((TileMirrorEssentia) te))
-                        list.add((TileMirrorEssentia) te);
-                }
+        for (int h = -range; h <= range; h++) for (int w = -range; w <= range; w++) for (int l = 1; l < range; l++) {
+            int xx = xCoord;
+            int yy = yCoord;
+            int zz = zCoord;
+            if (fd.offsetY != 0) {
+                xx += w;
+                yy += l * fd.offsetY;
+                zz += h;
+            } else if (fd.offsetX != 0) {
+                xx += l * fd.offsetX;
+                yy += h;
+                zz += w;
+            } else {
+                xx += w;
+                yy += h;
+                zz += l * fd.offsetZ;
+            }
+            TileEntity te = worldObj.getTileEntity(xx, yy, zz);
+            if (te != null && te instanceof TileMirrorEssentia && canSeeMirror((TileMirrorEssentia) te))
+                list.add((TileMirrorEssentia) te);
+        }
         return list;
     }
 
@@ -92,13 +98,12 @@ public class TileEntityEssentiaPump extends TileEntityWGBase implements IEssenti
                 xCoord + .5 + facing.getOpposite().offsetX,
                 yCoord + .5 + facing.getOpposite().offsetY,
                 zCoord + .5 + facing.getOpposite().offsetZ);
-        ForgeDirection fd =
-                ForgeDirection.getOrientation(worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) % 6);
-        Vec3 mPos = Vec3.createVectorHelper(
-                tile.xCoord + .5 + fd.offsetX, yCoord + .5 + fd.offsetY, zCoord + .5 + fd.offsetZ);
+        ForgeDirection fd = ForgeDirection
+                .getOrientation(worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) % 6);
+        Vec3 mPos = Vec3
+                .createVectorHelper(tile.xCoord + .5 + fd.offsetX, yCoord + .5 + fd.offsetY, zCoord + .5 + fd.offsetZ);
         MovingObjectPosition mop = worldObj.rayTraceBlocks(tPos, mPos);
-        return mop == null
-                || (mop.blockX == xCoord && mop.blockY == yCoord && mop.blockZ == zCoord)
+        return mop == null || (mop.blockX == xCoord && mop.blockY == yCoord && mop.blockZ == zCoord)
                 || (mop.blockX == tile.xCoord && mop.blockY == tile.yCoord && mop.blockZ == tile.zCoord);
     }
 

@@ -1,11 +1,14 @@
 package witchinggadgets.common.minetweaker;
 
 import java.util.List;
+
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
+
 import net.minecraft.item.ItemStack;
+
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import witchinggadgets.common.util.Utilities.OreDictStack;
@@ -13,20 +16,25 @@ import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
 
 @ZenClass("mods.witchinggadgets.InfernalBlastfurnace")
 public class InfernalBlastfurnace {
+
     @ZenMethod
     public static void addRecipe(IItemStack output, IIngredient input, int time, IItemStack bonus, boolean isSpecial) {
         Object oInput = WGMinetweaker.toObject(input);
         if (oInput == null) return;
-        Object inputStack =
-                (oInput instanceof String) ? new OreDictStack((String) oInput, input.getAmount()) : (ItemStack) oInput;
+        Object inputStack = (oInput instanceof String) ? new OreDictStack((String) oInput, input.getAmount())
+                : (ItemStack) oInput;
 
-        InfernalBlastfurnaceRecipe r =
-                new InfernalBlastfurnaceRecipe(WGMinetweaker.toStack(output), inputStack, time, isSpecial);
+        InfernalBlastfurnaceRecipe r = new InfernalBlastfurnaceRecipe(
+                WGMinetweaker.toStack(output),
+                inputStack,
+                time,
+                isSpecial);
         if (bonus != null) r.addBonus(WGMinetweaker.toStack(bonus));
         MineTweakerAPI.apply(new Add(r));
     }
 
     private static class Add implements IUndoableAction {
+
         private final InfernalBlastfurnaceRecipe recipe;
 
         public Add(InfernalBlastfurnaceRecipe recipe) {
@@ -50,14 +58,12 @@ public class InfernalBlastfurnace {
 
         @Override
         public String describe() {
-            return "Adding Infernal Blastfurnace Recipe for "
-                    + recipe.getOutput().getDisplayName();
+            return "Adding Infernal Blastfurnace Recipe for " + recipe.getOutput().getDisplayName();
         }
 
         @Override
         public String describeUndo() {
-            return "Removing Infernal Blastfurnace Recipe for "
-                    + recipe.getOutput().getDisplayName();
+            return "Removing Infernal Blastfurnace Recipe for " + recipe.getOutput().getDisplayName();
         }
 
         @Override
@@ -72,6 +78,7 @@ public class InfernalBlastfurnace {
     }
 
     private static class Remove implements IUndoableAction {
+
         private final ItemStack output;
         List<InfernalBlastfurnaceRecipe> removedRecipes;
 
@@ -86,9 +93,8 @@ public class InfernalBlastfurnace {
 
         @Override
         public void undo() {
-            if (removedRecipes != null)
-                for (InfernalBlastfurnaceRecipe recipe : removedRecipes)
-                    if (recipe != null) InfernalBlastfurnaceRecipe.addRecipe(recipe);
+            if (removedRecipes != null) for (InfernalBlastfurnaceRecipe recipe : removedRecipes)
+                if (recipe != null) InfernalBlastfurnaceRecipe.addRecipe(recipe);
         }
 
         @Override

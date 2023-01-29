@@ -5,6 +5,7 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemStack;
 
 public class WGEnchantInvisibleGear extends Enchantment {
+
     public WGEnchantInvisibleGear(int id) {
         super(id, 0, EnumEnchantmentType.all);
         this.setName("wg.invisibleGear");

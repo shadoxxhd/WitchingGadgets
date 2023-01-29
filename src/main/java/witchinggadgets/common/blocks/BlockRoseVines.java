@@ -2,6 +2,7 @@ package witchinggadgets.common.blocks;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,11 +16,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.api.wands.IWandable;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.client.render.BlockRenderRoseVine;
 
 public class BlockRoseVines extends Block implements IWandable, IShearable {
+
     public BlockRoseVines() {
         super(Material.plants);
         this.setTickRandomly(true);
@@ -70,47 +73,46 @@ public class BlockRoseVines extends Block implements IWandable, IShearable {
         return null;
     }
 
-    //	@SuppressWarnings("unused")
-    //	private boolean canBePlacedOn(int id)
-    //	{
-    //		if (id == 0)
-    //		{
-    //			return false;
-    //		}
-    //		Block block = Block.blocksList[id];
-    //		return block.renderAsNormalBlock() && block.blockMaterial.blocksMovement();
-    //	}
+    // @SuppressWarnings("unused")
+    // private boolean canBePlacedOn(int id)
+    // {
+    // if (id == 0)
+    // {
+    // return false;
+    // }
+    // Block block = Block.blocksList[id];
+    // return block.renderAsNormalBlock() && block.blockMaterial.blocksMovement();
+    // }
 
     public void spreadVines(World world, int x, int y, int z, Random random, boolean ignoreRandom) {
         int growthStage = world.getBlockMetadata(x, y, z);
         if (growthStage >= 5) {
-            //			if(isRoseVinePlaceable(world, x, y, z+1))
-            //				if(random.nextInt(4)==0 || ignoreRandom)
-            //					world.setBlock(x, y, z+1, this.blockID);
+            // if(isRoseVinePlaceable(world, x, y, z+1))
+            // if(random.nextInt(4)==0 || ignoreRandom)
+            // world.setBlock(x, y, z+1, this.blockID);
             //
-            //			if(isRoseVinePlaceable(world, x, y, z-1))
-            //				if(random.nextInt(4)==0 || ignoreRandom)
-            //					world.setBlock(x, y, z-1, this.blockID);
+            // if(isRoseVinePlaceable(world, x, y, z-1))
+            // if(random.nextInt(4)==0 || ignoreRandom)
+            // world.setBlock(x, y, z-1, this.blockID);
             //
-            //			if(isRoseVinePlaceable(world, x+1, y, z))
-            //				if(random.nextInt(4)==0 || ignoreRandom)
-            //					world.setBlock(x+1, y, z, this.blockID);
+            // if(isRoseVinePlaceable(world, x+1, y, z))
+            // if(random.nextInt(4)==0 || ignoreRandom)
+            // world.setBlock(x+1, y, z, this.blockID);
             //
-            //			if(isRoseVinePlaceable(world, x-1, y, z))
-            //				if(random.nextInt(4)==0 || ignoreRandom)
-            //					world.setBlock(x-1, y, z, this.blockID);
+            // if(isRoseVinePlaceable(world, x-1, y, z))
+            // if(random.nextInt(4)==0 || ignoreRandom)
+            // world.setBlock(x-1, y, z, this.blockID);
 
-            if (isRoseVinePlaceable(world, x, y + 1, z))
-                if (random.nextInt(4) == 0 || ignoreRandom)
-                    if (world.isSideSolid(x, y + 1, z - 1, ForgeDirection.SOUTH, false)
-                            || world.isSideSolid(x, y + 1, z + 1, ForgeDirection.NORTH, false)
-                            || world.isSideSolid(x - 1, y + 1, z, ForgeDirection.WEST, false)
-                            || world.isSideSolid(x + 1, y + 1, z, ForgeDirection.EAST, false))
-                        world.setBlock(x, y + 1, z, this);
+            if (isRoseVinePlaceable(world, x, y + 1, z)) if (random.nextInt(4) == 0 || ignoreRandom)
+                if (world.isSideSolid(x, y + 1, z - 1, ForgeDirection.SOUTH, false)
+                        || world.isSideSolid(x, y + 1, z + 1, ForgeDirection.NORTH, false)
+                        || world.isSideSolid(x - 1, y + 1, z, ForgeDirection.WEST, false)
+                        || world.isSideSolid(x + 1, y + 1, z, ForgeDirection.EAST, false))
+                    world.setBlock(x, y + 1, z, this);
 
-            //			if(isRoseVinePlaceable(world, x, y-1, z))
-            //				if(random.nextInt(4)==0 || ignoreRandom)
-            //					world.setBlock(x, y-1, z, this.blockID);
+            // if(isRoseVinePlaceable(world, x, y-1, z))
+            // if(random.nextInt(4)==0 || ignoreRandom)
+            // world.setBlock(x, y-1, z, this.blockID);
         } else {
             world.setBlockMetadataWithNotify(x, y, z, growthStage + 1, 2);
         }
@@ -178,8 +180,8 @@ public class BlockRoseVines extends Block implements IWandable, IShearable {
     }
 
     @Override
-    public int onWandRightClick(
-            World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
+    public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side,
+            int md) {
         Random random = new Random();
         if (player.capabilities.isCreativeMode) spreadVines(world, x, y, z, random, true);
         return 1;

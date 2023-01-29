@@ -1,6 +1,7 @@
 package witchinggadgets.client.render;
 
 import java.util.List;
+
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -8,12 +9,15 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.client.renderers.models.ModelArcaneWorkbench;
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityLabelLibrary;
 
 public class TileRenderLabelLibrary extends TileEntitySpecialRenderer {
+
     static ModelArcaneWorkbench model = new ModelArcaneWorkbench();
 
     static {
@@ -89,21 +93,20 @@ public class TileRenderLabelLibrary extends TileEntitySpecialRenderer {
     }
 
     void render2DItem(ItemStack stack) {
-        if (stack != null)
-            for (int pass = 0; pass < stack.getItem().getRenderPasses(stack.getItemDamage()); pass++) {
-                int c = stack.getItem().getColorFromItemStack(stack, pass);
-                GL11.glColor3f((c >> 16 & 255) / 255f, (c >> 8 & 255) / 255f, (c & 255) / 255f);
-                IIcon iicon = stack.getItem().getIcon(stack, pass);
-                ItemRenderer.renderItemIn2D(
-                        Tessellator.instance,
-                        iicon.getMaxU(),
-                        iicon.getMinV(),
-                        iicon.getMinU(),
-                        iicon.getMaxV(),
-                        iicon.getIconWidth(),
-                        iicon.getIconHeight(),
-                        0.0625F);
-                GL11.glColor3f(1, 1, 1);
-            }
+        if (stack != null) for (int pass = 0; pass < stack.getItem().getRenderPasses(stack.getItemDamage()); pass++) {
+            int c = stack.getItem().getColorFromItemStack(stack, pass);
+            GL11.glColor3f((c >> 16 & 255) / 255f, (c >> 8 & 255) / 255f, (c & 255) / 255f);
+            IIcon iicon = stack.getItem().getIcon(stack, pass);
+            ItemRenderer.renderItemIn2D(
+                    Tessellator.instance,
+                    iicon.getMaxU(),
+                    iicon.getMinV(),
+                    iicon.getMinU(),
+                    iicon.getMaxV(),
+                    iicon.getIconWidth(),
+                    iicon.getIconHeight(),
+                    0.0625F);
+            GL11.glColor3f(1, 1, 1);
+        }
     }
 }

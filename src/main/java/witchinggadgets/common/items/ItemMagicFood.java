@@ -1,8 +1,7 @@
 package witchinggadgets.common.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +11,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.lib.network.PacketHandler;
@@ -19,12 +19,15 @@ import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
 import thaumcraft.common.lib.research.ResearchManager;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.WGModCompat;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemMagicFood extends ItemFood {
-    private int[] hungerHealed = {2, 6, 6};
-    private float[] saturation = {0.4f, 1.5f, 1.0f};
 
-    private static final String[] subNames = {"sweetwart", "nethercake", "brainjerky"};
+    private int[] hungerHealed = { 2, 6, 6 };
+    private float[] saturation = { 0.4f, 1.5f, 1.0f };
+
+    private static final String[] subNames = { "sweetwart", "nethercake", "brainjerky" };
     private IIcon[] icon = new IIcon[subNames.length];
 
     public ItemMagicFood() {
@@ -57,8 +60,7 @@ public class ItemMagicFood extends ItemFood {
         if (stack.getItemDamage() == 2 && !world.isRemote) {
             int luck = world.rand.nextInt(3);
             for (int pass = 0; pass <= luck; pass++) {
-                Aspect a = Aspect.getPrimalAspects()
-                        .get(world.rand.nextInt(Aspect.getPrimalAspects().size()));
+                Aspect a = Aspect.getPrimalAspects().get(world.rand.nextInt(Aspect.getPrimalAspects().size()));
                 short q = (short) (world.rand.nextInt(2) + 1);
                 Thaumcraft.proxy.playerKnowledge.addAspectPool(player.getCommandSenderName(), a, q);
                 Thaumcraft.proxy.getResearchManager();
@@ -67,8 +69,9 @@ public class ItemMagicFood extends ItemFood {
                         new PacketAspectPool(
                                 a.getTag(),
                                 Short.valueOf(q),
-                                Short.valueOf(Thaumcraft.proxy.playerKnowledge.getAspectPoolFor(
-                                        player.getCommandSenderName(), a))),
+                                Short.valueOf(
+                                        Thaumcraft.proxy.playerKnowledge
+                                                .getAspectPoolFor(player.getCommandSenderName(), a))),
                         (EntityPlayerMP) player);
             }
         }

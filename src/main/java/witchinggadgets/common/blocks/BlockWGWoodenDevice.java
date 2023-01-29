@@ -1,10 +1,9 @@
 package witchinggadgets.common.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -25,6 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.Thaumcraft;
 import witchinggadgets.WitchingGadgets;
@@ -36,11 +36,13 @@ import witchinggadgets.common.blocks.tiles.TileEntityLabelLibrary;
 import witchinggadgets.common.blocks.tiles.TileEntitySaunaStove;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
-    public static String[] subNames = {
-        "spinningWheel", "snowGen", "cobbleGen", "cuttingTable", "saunaStove", "labelLibrary", "iceGen",
-    };
+
+    public static String[] subNames = { "spinningWheel", "snowGen", "cobbleGen", "cuttingTable", "saunaStove",
+            "labelLibrary", "iceGen", };
     IIcon[] icons = new IIcon[subNames.length];
     IIcon saunaTop;
 
@@ -103,8 +105,8 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         int meta = world.getBlockMetadata(x, y, z);
         if (meta == 0) {
             TileEntitySpinningWheel tile = (TileEntitySpinningWheel) world.getTileEntity(x, y, z);
@@ -129,8 +131,8 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
                             FluidContainerRegistry.getFluidForFilledItem(player.inventory.getCurrentItem()),
                             true);
                     ItemStack emptyContainer = null;
-                    FluidContainerRegistry.FluidContainerData[] fcs =
-                            FluidContainerRegistry.getRegisteredFluidContainerData();
+                    FluidContainerRegistry.FluidContainerData[] fcs = FluidContainerRegistry
+                            .getRegisteredFluidContainerData();
                     for (FluidContainerRegistry.FluidContainerData fcd : fcs)
                         if (fcd.filledContainer.isItemEqual(player.inventory.getCurrentItem()))
                             emptyContainer = fcd.emptyContainer.copy();
@@ -225,19 +227,18 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         if (world.getTileEntity(x, y, z) instanceof TileEntitySaunaStove
                 && ((TileEntitySaunaStove) world.getTileEntity(x, y, z)).tick > 0)
-            if (world.rand.nextInt(9 - Thaumcraft.proxy.particleCount(2)) == 0)
-                Thaumcraft.proxy.wispFX3(
-                        world,
-                        x + .5F,
-                        y + .875F,
-                        z + .5F,
-                        x + .3F + world.rand.nextFloat() * 0.4F,
-                        y + .5F,
-                        z + .3F + world.rand.nextFloat() * 0.4F,
-                        0.5F,
-                        4,
-                        true,
-                        -0.025F);
+            if (world.rand.nextInt(9 - Thaumcraft.proxy.particleCount(2)) == 0) Thaumcraft.proxy.wispFX3(
+                    world,
+                    x + .5F,
+                    y + .875F,
+                    z + .5F,
+                    x + .3F + world.rand.nextFloat() * 0.4F,
+                    y + .5F,
+                    z + .3F + world.rand.nextFloat() * 0.4F,
+                    0.5F,
+                    4,
+                    true,
+                    -0.025F);
     }
 
     @Override
@@ -282,9 +283,8 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
                     float f = world.rand.nextFloat() * 0.8F + 0.1F;
                     float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
                     EntityItem entityitem;
-                    for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
-                            stack.stackSize > 0;
-                            world.spawnEntityInWorld(entityitem)) {
+                    for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F; stack.stackSize > 0; world
+                            .spawnEntityInWorld(entityitem)) {
                         int k1 = world.rand.nextInt(21) + 10;
                         if (k1 > stack.stackSize) k1 = stack.stackSize;
                         stack.stackSize -= k1;
@@ -300,8 +300,7 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
                         entityitem.motionZ = (float) world.rand.nextGaussian() * f3;
 
                         if (stack.hasTagCompound()) {
-                            entityitem.getEntityItem().setTagCompound((NBTTagCompound)
-                                    stack.getTagCompound().copy());
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
                         }
                     }
                 }
@@ -316,9 +315,8 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
                     float f = world.rand.nextFloat() * 0.8F + 0.1F;
                     float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
                     EntityItem entityitem;
-                    for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
-                            stack.stackSize > 0;
-                            world.spawnEntityInWorld(entityitem)) {
+                    for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F; stack.stackSize > 0; world
+                            .spawnEntityInWorld(entityitem)) {
                         int k1 = world.rand.nextInt(21) + 10;
                         if (k1 > stack.stackSize) k1 = stack.stackSize;
                         stack.stackSize -= k1;
@@ -334,8 +332,7 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
                         entityitem.motionZ = (float) world.rand.nextGaussian() * f3;
 
                         if (stack.hasTagCompound()) {
-                            entityitem.getEntityItem().setTagCompound((NBTTagCompound)
-                                    stack.getTagCompound().copy());
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
                         }
                     }
                 }
@@ -350,9 +347,8 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
                     float f = world.rand.nextFloat() * 0.8F + 0.1F;
                     float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
                     EntityItem entityitem;
-                    for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
-                            stack.stackSize > 0;
-                            world.spawnEntityInWorld(entityitem)) {
+                    for (float f2 = world.rand.nextFloat() * 0.8F + 0.1F; stack.stackSize > 0; world
+                            .spawnEntityInWorld(entityitem)) {
                         int k1 = world.rand.nextInt(21) + 10;
                         if (k1 > stack.stackSize) k1 = stack.stackSize;
                         stack.stackSize -= k1;
@@ -368,8 +364,7 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
                         entityitem.motionZ = (float) world.rand.nextGaussian() * f3;
 
                         if (stack.hasTagCompound()) {
-                            entityitem.getEntityItem().setTagCompound((NBTTagCompound)
-                                    stack.getTagCompound().copy());
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
                         }
                     }
                 }
@@ -379,8 +374,8 @@ public class BlockWGWoodenDevice extends BlockContainer implements IWandable {
     }
 
     @Override
-    public int onWandRightClick(
-            World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
+    public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side,
+            int md) {
         if (md == 1) {
             ((TileEntitySnowGen) world.getTileEntity(x, y, z)).facing = player.isSneaking()
                     ? ForgeDirection.getOrientation(side).getOpposite()

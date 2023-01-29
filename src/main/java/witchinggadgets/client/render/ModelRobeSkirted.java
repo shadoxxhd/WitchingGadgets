@@ -2,6 +2,7 @@ package witchinggadgets.client.render;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -10,9 +11,11 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
+
 import org.lwjgl.opengl.GL11;
 
 public class ModelRobeSkirted extends ModelBiped {
+
     List<ModelRenderer> parts = new ArrayList();
 
     static ModelRobeSkirted model;
@@ -150,19 +153,11 @@ public class ModelRobeSkirted extends ModelBiped {
             this.isChild = ((EntityLivingBase) entity).isChild();
             this.heldItemRight = (((EntityLivingBase) entity).getHeldItem() != null ? 1 : 0);
             if ((entity instanceof EntityPlayer)) this.aimedBow = (((EntityPlayer) entity).getItemInUseDuration() > 0);
-            if (((EntityLivingBase) entity).getEquipmentInSlot(4) != null
-                    && !(((EntityLivingBase) entity)
-                                    .getEquipmentInSlot(4)
-                                    .getUnlocalizedName()
-                                    .contains("goggles")
-                            || ((EntityLivingBase) entity)
-                                    .getEquipmentInSlot(4)
-                                    .getUnlocalizedName()
-                                    .contains("Goggles")
-                            || ((EntityLivingBase) entity)
-                                    .getEquipmentInSlot(4)
-                                    .getUnlocalizedName()
-                                    .contains("glasses"))) this.bipedHead.showModel = false;
+            if (((EntityLivingBase) entity).getEquipmentInSlot(4) != null && !(((EntityLivingBase) entity)
+                    .getEquipmentInSlot(4).getUnlocalizedName().contains("goggles")
+                    || ((EntityLivingBase) entity).getEquipmentInSlot(4).getUnlocalizedName().contains("Goggles")
+                    || ((EntityLivingBase) entity).getEquipmentInSlot(4).getUnlocalizedName().contains("glasses")))
+                this.bipedHead.showModel = false;
         }
 
         if (this.isChild) {

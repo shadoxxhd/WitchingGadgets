@@ -5,9 +5,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
 
 public class ContainerSpinningWheel extends Container {
+
     protected TileEntitySpinningWheel tileEntity;
     private int slotCount;
 

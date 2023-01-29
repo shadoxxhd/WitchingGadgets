@@ -1,9 +1,8 @@
 package witchinggadgets.common.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -17,10 +16,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockWallMirror extends BlockContainer {
+
     public BlockWallMirror() {
         super(Material.glass);
         setCreativeTab(WitchingGadgets.tabWG);
@@ -36,8 +39,8 @@ public class BlockWallMirror extends BlockContainer {
     public void getSubBlocks(Item item, CreativeTabs tab, List list) {}
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+            float hitY, float hitZ) {
         if (!player.isSneaking()) {
             TileEntityWallMirror tile;
             if (!((TileEntityWallMirror) world.getTileEntity(x, y, z)).isDummy)
@@ -122,8 +125,8 @@ public class BlockWallMirror extends BlockContainer {
     }
 
     @Override
-    public void onBlockPlacedBy(
-            World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLiving,
+            ItemStack par6ItemStack) {
         int l = MathHelper.floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         if (l == 0) {
             ((TileEntityWallMirror) par1World.getTileEntity(par2, par3, par4)).facing = 2;

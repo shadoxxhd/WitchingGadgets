@@ -4,10 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+
 import thaumcraft.api.damagesource.DamageSourceThaumcraft;
 import witchinggadgets.common.WGContent;
 
 public class WGPotion extends Potion {
+
     static ResourceLocation tex = new ResourceLocation("witchinggadgets", "textures/gui/potioneffects.png");
     final int tickrate;
     final boolean halfTickRateWIthAmplifier;

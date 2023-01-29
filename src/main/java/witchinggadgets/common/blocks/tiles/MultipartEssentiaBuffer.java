@@ -1,17 +1,8 @@
 package witchinggadgets.common.blocks.tiles;
 
-import codechicken.lib.data.MCDataInput;
-import codechicken.lib.data.MCDataOutput;
-import codechicken.lib.raytracer.IndexedCuboid6;
-import codechicken.lib.raytracer.RayTracer;
-import codechicken.lib.vec.Cuboid6;
-import codechicken.lib.vec.Vector3;
-import codechicken.multipart.TMultiPart;
-import codechicken.multipart.TileMultipart;
-import codechicken.multipart.minecraft.McMetaPart;
-import codechicken.multipart.minecraft.PartMetaAccess;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -24,7 +15,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -39,12 +32,23 @@ import thaumcraft.common.tiles.TileBellows;
 import thaumcraft.common.tiles.TileTube;
 import thaumcraft.common.tiles.TileTubeBuffer;
 import witchinggadgets.client.ClientUtilities;
+import codechicken.lib.data.MCDataInput;
+import codechicken.lib.data.MCDataOutput;
+import codechicken.lib.raytracer.IndexedCuboid6;
+import codechicken.lib.raytracer.RayTracer;
+import codechicken.lib.vec.Cuboid6;
+import codechicken.lib.vec.Vector3;
+import codechicken.multipart.TMultiPart;
+import codechicken.multipart.TileMultipart;
+import codechicken.multipart.minecraft.McMetaPart;
+import codechicken.multipart.minecraft.PartMetaAccess;
 
 public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContainer, IEssentiaTransport, IWandable {
+
     public AspectList aspects = new AspectList();
     public final int MAXAMOUNT = 8;
-    public boolean[] openSides = {true, true, true, true, true, true};
-    public byte[] chokedSides = {0, 0, 0, 0, 0, 0};
+    public boolean[] openSides = { true, true, true, true, true, true };
+    public byte[] chokedSides = { 0, 0, 0, 0, 0, 0 };
 
     int count = 0;
     int bellows = -1;
@@ -93,23 +97,19 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
     @Override
     public Iterable<IndexedCuboid6> getSubParts() {
         ArrayList<IndexedCuboid6> t = new ArrayList();
-        if (world().isRemote
-                && (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() == null
-                        || !(Minecraft.getMinecraft()
-                                                .thePlayer
-                                                .getCurrentEquippedItem()
-                                                .getItem()
-                                        instanceof ItemWandCasting
-                                || Minecraft.getMinecraft()
-                                                .thePlayer
-                                                .getCurrentEquippedItem()
-                                                .getItem()
-                                        instanceof ItemResonator))) t.add(new IndexedCuboid6(null, getBounds()));
+        if (world().isRemote && (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() == null
+                || !(Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemWandCasting
+                        || Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem()
+                                .getItem() instanceof ItemResonator)))
+            t.add(new IndexedCuboid6(null, getBounds()));
         else {
             for (int i = 0; i < 6; i++) {
                 ForgeDirection fd = ForgeDirection.getOrientation(i);
-                if (world().getTileEntity(x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ)
-                        instanceof IEssentiaTransport) t.add(getConnectionPipe(ForgeDirection.getOrientation(i)));
+                if (world().getTileEntity(
+                        x() + fd.offsetX,
+                        y() + fd.offsetY,
+                        z() + fd.offsetZ) instanceof IEssentiaTransport)
+                    t.add(getConnectionPipe(ForgeDirection.getOrientation(i)));
             }
             t.add(new IndexedCuboid6(null, new Cuboid6(.25, .25, .25, .75, .75, .75)));
         }
@@ -154,10 +154,9 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
         if (this.bellows < 0 || count % 20 == 0) {
             getBellows();
         }
-        if (!world().isRemote)
-            if (count % 5 == 0) {
-                if (aspects.visSize() < 8) fillBuffer();
-            }
+        if (!world().isRemote) if (count % 5 == 0) {
+            if (aspects.visSize() < 8) fillBuffer();
+        }
     }
 
     void fillBuffer() {
@@ -237,27 +236,30 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
     public void renderDynamic(Vector3 pos, float partialTickTime, int pass) {
         ClientUtilities.bindTexture("thaumcraft:textures/models/valve.png");
         for (ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS)
-            if (chokedSides[fd.ordinal()] != 0
-                    && openSides[fd.ordinal()]
+            if (chokedSides[fd.ordinal()] != 0 && openSides[fd.ordinal()]
                     && ThaumcraftApiHelper.getConnectableTile(world(), x(), y(), z(), fd) != null) {
-                GL11.glPushMatrix();
-                GL11.glTranslated(pos.x + .5, pos.y + .5, pos.z + .5);
-                if (fd.getOpposite().offsetY == 0) GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
-                else {
-                    GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
-                    GL11.glRotatef(90.0F, fd.getOpposite().offsetY, 0.0F, 0.0F);
-                }
-                GL11.glRotatef(90.0F, fd.getOpposite().offsetX, fd.getOpposite().offsetY, fd.getOpposite().offsetZ);
+                        GL11.glPushMatrix();
+                        GL11.glTranslated(pos.x + .5, pos.y + .5, pos.z + .5);
+                        if (fd.getOpposite().offsetY == 0) GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+                        else {
+                            GL11.glRotatef(90.0F, -1.0F, 0.0F, 0.0F);
+                            GL11.glRotatef(90.0F, fd.getOpposite().offsetY, 0.0F, 0.0F);
+                        }
+                        GL11.glRotatef(
+                                90.0F,
+                                fd.getOpposite().offsetX,
+                                fd.getOpposite().offsetY,
+                                fd.getOpposite().offsetZ);
 
-                GL11.glPushMatrix();
-                if (chokedSides[fd.ordinal()] == 2) GL11.glColor3f(1.0F, 0.3F, 0.3F);
-                else GL11.glColor3f(0.3F, 0.3F, 1.0F);
-                GL11.glScaled(1.2D, 1.0D, 1.2D);
-                GL11.glTranslated(0.0D, -0.5D, 0.0D);
-                MultipartEssentiaTube_Valve.valveModel.render();
-                GL11.glPopMatrix();
-                GL11.glPopMatrix();
-            }
+                        GL11.glPushMatrix();
+                        if (chokedSides[fd.ordinal()] == 2) GL11.glColor3f(1.0F, 0.3F, 0.3F);
+                        else GL11.glColor3f(0.3F, 0.3F, 1.0F);
+                        GL11.glScaled(1.2D, 1.0D, 1.2D);
+                        GL11.glTranslated(0.0D, -0.5D, 0.0D);
+                        MultipartEssentiaTube_Valve.valveModel.render();
+                        GL11.glPopMatrix();
+                        GL11.glPopMatrix();
+                    }
     }
 
     public TileEntity getConnectableTile(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
@@ -265,8 +267,7 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
         if (((te instanceof IEssentiaTransport)) && (((IEssentiaTransport) te).isConnectable(face.getOpposite()))) {
             return te;
         }
-        if (((te instanceof TileBellows))
-                && (((TileBellows) te).orientation == face.getOpposite().ordinal())) {
+        if (((te instanceof TileBellows)) && (((TileBellows) te).orientation == face.getOpposite().ordinal())) {
             return te;
         }
         return null;
@@ -292,7 +293,7 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
 
         this.chokedSides = tag.getByteArray("choke");
         if ((this.chokedSides == null) || (this.chokedSides.length < 6))
-            this.chokedSides = new byte[] {0, 0, 0, 0, 0, 0};
+            this.chokedSides = new byte[] { 0, 0, 0, 0, 0, 0 };
     }
 
     @Override
@@ -330,7 +331,7 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
         return "witchingGadgets:essentia_buffer";
     }
 
-    //	@Override
+    // @Override
     public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, MovingObjectPosition mop) {
         Vec3 localHit = mop.hitVec.addVector(-x(), -y(), -z());
         for (IndexedCuboid6 ibox : getSubParts()) {
@@ -366,37 +367,37 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
                                 this.openSides[fd.ordinal()] = !this.openSides[fd.ordinal()];
                                 world.markBlockForUpdate(x(), y(), z());
 
-                                TileEntity tile =
-                                        world().getTileEntity(x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ);
+                                TileEntity tile = world()
+                                        .getTileEntity(x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ);
                                 if (tile != null) {
                                     if (tile instanceof TileTube) {
-                                        ((TileTube) tile)
-                                                .openSides[fd.getOpposite().ordinal()] = openSides[fd.ordinal()];
+                                        ((TileTube) tile).openSides[fd.getOpposite().ordinal()] = openSides[fd
+                                                .ordinal()];
                                         world.markBlockForUpdate(x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ);
                                         tile.markDirty();
                                     }
                                     if (tile instanceof TileTubeBuffer) {
-                                        ((TileTubeBuffer) tile)
-                                                .openSides[fd.getOpposite().ordinal()] = openSides[fd.ordinal()];
+                                        ((TileTubeBuffer) tile).openSides[fd.getOpposite().ordinal()] = openSides[fd
+                                                .ordinal()];
                                         world.markBlockForUpdate(x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ);
                                         tile.markDirty();
                                     }
                                     if (tile instanceof TileMultipart) {
                                         for (TMultiPart part : ((TileMultipart) tile).jPartList())
                                             if (part instanceof MultipartEssentiaTube) {
-                                                ((MultipartEssentiaTube) part)
-                                                                .openSides[
-                                                                fd.getOpposite().ordinal()] =
-                                                        openSides[fd.ordinal()];
+                                                ((MultipartEssentiaTube) part).openSides[fd.getOpposite()
+                                                        .ordinal()] = openSides[fd.ordinal()];
                                                 world.markBlockForUpdate(
-                                                        x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ);
+                                                        x() + fd.offsetX,
+                                                        y() + fd.offsetY,
+                                                        z() + fd.offsetZ);
                                             } else if (part instanceof MultipartEssentiaBuffer) {
-                                                ((MultipartEssentiaBuffer) part)
-                                                                .openSides[
-                                                                fd.getOpposite().ordinal()] =
-                                                        openSides[fd.ordinal()];
+                                                ((MultipartEssentiaBuffer) part).openSides[fd.getOpposite()
+                                                        .ordinal()] = openSides[fd.ordinal()];
                                                 world.markBlockForUpdate(
-                                                        x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ);
+                                                        x() + fd.offsetX,
+                                                        y() + fd.offsetY,
+                                                        z() + fd.offsetZ);
                                             }
                                     }
                                 }
@@ -428,9 +429,8 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
         if (fd == ForgeDirection.UNKNOWN) return false;
         boolean wall = false;
         Cuboid6 pipe = getConnectionPipe(fd);
-        for (TMultiPart otherPart : tile().jPartList())
-            if (otherPart != this)
-                for (Cuboid6 box : otherPart.getCollisionBoxes()) if (box.intersects(pipe)) wall = true;
+        for (TMultiPart otherPart : tile().jPartList()) if (otherPart != this)
+            for (Cuboid6 box : otherPart.getCollisionBoxes()) if (box.intersects(pipe)) wall = true;
         return this.openSides[fd.ordinal()] && !wall;
     }
 
@@ -456,8 +456,7 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
 
     @Override
     public int getSuctionAmount(ForgeDirection fd) {
-        return this.chokedSides[fd.ordinal()] == (byte) 2
-                ? 0
+        return this.chokedSides[fd.ordinal()] == (byte) 2 ? 0
                 : (this.bellows <= 0 || this.chokedSides[fd.ordinal()] == 1) ? 1 : this.bellows * 32;
     }
 
@@ -484,16 +483,15 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
             ic = (IEssentiaTransport) te;
             suction = ic.getSuctionAmount(fd.getOpposite());
         }
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
-            if (canOutputTo(dir) && dir != fd) {
-                te = ThaumcraftApiHelper.getConnectableTile(world(), x(), y(), z(), dir);
-                if (te != null) {
-                    ic = (IEssentiaTransport) te;
-                    int sa = ic.getSuctionAmount(dir.getOpposite());
-                    Aspect su = ic.getSuctionType(dir.getOpposite());
-                    if ((su == aspect || su == null) && suction < sa && getSuctionAmount(dir) < sa) return 0;
-                }
+        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) if (canOutputTo(dir) && dir != fd) {
+            te = ThaumcraftApiHelper.getConnectableTile(world(), x(), y(), z(), dir);
+            if (te != null) {
+                ic = (IEssentiaTransport) te;
+                int sa = ic.getSuctionAmount(dir.getOpposite());
+                Aspect su = ic.getSuctionType(dir.getOpposite());
+                if ((su == aspect || su == null) && suction < sa && getSuctionAmount(dir) < sa) return 0;
             }
+        }
         return takeFromContainer(aspect, amount) ? amount : 0;
     }
 
@@ -581,8 +579,8 @@ public class MultipartEssentiaBuffer extends McMetaPart implements IAspectContai
     }
 
     @Override
-    public int onWandRightClick(
-            World world, ItemStack wand, EntityPlayer player, int x, int y, int z, int side, int meta) {
+    public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int x, int y, int z, int side,
+            int meta) {
         return onWandRightClick(world, wand, player, RayTracer.retraceBlock(world(), player, x(), y(), z()));
     }
 

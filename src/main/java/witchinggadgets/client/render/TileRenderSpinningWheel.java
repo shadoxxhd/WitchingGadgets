@@ -2,12 +2,15 @@ package witchinggadgets.client.render;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
 
@@ -50,6 +53,7 @@ public class TileRenderSpinningWheel extends TileEntitySpecialRenderer {
     }
 
     static class ModelSpinningWheel extends ModelBase {
+
         List<ModelRenderer> parts = new ArrayList();
 
         public ModelSpinningWheel() {

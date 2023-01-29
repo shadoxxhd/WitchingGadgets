@@ -1,9 +1,9 @@
 package witchinggadgets.common.world;
 
-import cpw.mods.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.item.EntityPainting;
@@ -32,28 +32,29 @@ import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.PieceWeight;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraftforge.common.ChestGenHooks;
+
 import thaumcraft.api.research.ScanResult;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.entities.monster.EntityBrainyZombie;
 import thaumcraft.common.entities.monster.EntityFireBat;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.util.Utilities;
+import cpw.mods.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
 
 public class VillageComponentPhotoshop extends StructureVillagePieces.Village {
+
     static ChestGenHooks chestContents = new ChestGenHooks(
             "WG:PHOTOWORKSHOP",
-            new WeightedRandomChestContent[] {
-                new WeightedRandomChestContent(Items.paper, 0, 2, 7, 10),
-                new WeightedRandomChestContent(Items.dye, 0, 2, 7, 10),
-                new WeightedRandomChestContent(ConfigItems.itemResource, 10, 1, 1, 1)
-            },
+            new WeightedRandomChestContent[] { new WeightedRandomChestContent(Items.paper, 0, 2, 7, 10),
+                    new WeightedRandomChestContent(Items.dye, 0, 2, 7, 10),
+                    new WeightedRandomChestContent(ConfigItems.itemResource, 10, 1, 1, 1) },
             3,
             9);
 
     public VillageComponentPhotoshop() {}
 
-    public VillageComponentPhotoshop(
-            Start villagePiece, int par2, Random par3Random, StructureBoundingBox par4StructureBoundingBox, int par5) {
+    public VillageComponentPhotoshop(Start villagePiece, int par2, Random par3Random,
+            StructureBoundingBox par4StructureBoundingBox, int par5) {
         super();
         this.coordBaseMode = par5;
         this.boundingBox = par4StructureBoundingBox;
@@ -119,7 +120,13 @@ public class VillageComponentPhotoshop extends StructureVillagePieces.Village {
 
         // Counter
         this.placeBlockAtCurrentPosition(
-                world, Blocks.oak_stairs, getMetadataWithOffset(Blocks.oak_stairs, 6), 1, 1, 3, box);
+                world,
+                Blocks.oak_stairs,
+                getMetadataWithOffset(Blocks.oak_stairs, 6),
+                1,
+                1,
+                3,
+                box);
         this.placeBlockAtCurrentPosition(world, Blocks.wooden_slab, 8, 2, 1, 3, box);
         this.placeBlockAtCurrentPosition(world, Blocks.wooden_slab, 8, 3, 1, 3, box);
         // Light
@@ -147,7 +154,14 @@ public class VillageComponentPhotoshop extends StructureVillagePieces.Village {
         // Details
         try {
             this.generateStructureChestContents(
-                    world, box, rand, 1, 1, 5, chestContents.getItems(rand), chestContents.getCount(rand));
+                    world,
+                    box,
+                    rand,
+                    1,
+                    1,
+                    5,
+                    chestContents.getItems(rand),
+                    chestContents.getCount(rand));
 
             int px = this.getXWithOffset(0, 3);
             int pz = this.getZWithOffset(0, 3);
@@ -180,11 +194,9 @@ public class VillageComponentPhotoshop extends StructureVillagePieces.Village {
         int i1 = Direction.facingToDirection[side];
         EntityPainting e = new EntityPainting(world, x, y, z, i1);
         e.art = EntityPainting.EnumArt.values()[art];
-        if (e.onValidSurface()
-                && world.getEntitiesWithinAABB(
-                                EntityHanging.class,
-                                AxisAlignedBB.getBoundingBox(x - .5, y, z - .5, x + 1.5, y + 1, z + 1.5))
-                        .isEmpty()) {
+        if (e.onValidSurface() && world.getEntitiesWithinAABB(
+                EntityHanging.class,
+                AxisAlignedBB.getBoundingBox(x - .5, y, z - .5, x + 1.5, y + 1, z + 1.5)).isEmpty()) {
             if (!world.isRemote) world.spawnEntityInWorld(e);
         }
     }
@@ -193,11 +205,9 @@ public class VillageComponentPhotoshop extends StructureVillagePieces.Village {
         int i1 = Direction.facingToDirection[side];
         EntityItemFrame e = new EntityItemFrame(world, x, y, z, i1);
         e.setDisplayedItem(stack);
-        if (e.onValidSurface()
-                && world.getEntitiesWithinAABB(
-                                EntityHanging.class,
-                                AxisAlignedBB.getBoundingBox(x - .125, y, z - .125, x + 1.125, y + 1, z + 1.125))
-                        .isEmpty()) {
+        if (e.onValidSurface() && world.getEntitiesWithinAABB(
+                EntityHanging.class,
+                AxisAlignedBB.getBoundingBox(x - .125, y, z - .125, x + 1.125, y + 1, z + 1.125)).isEmpty()) {
             if (!world.isRemote) world.spawnEntityInWorld(e);
         }
     }
@@ -258,28 +268,23 @@ public class VillageComponentPhotoshop extends StructureVillagePieces.Village {
     }
 
     public static class VillageManager implements IVillageCreationHandler {
+
         @Override
-        public Object buildComponent(
-                StructureVillagePieces.PieceWeight villagePiece,
-                StructureVillagePieces.Start startPiece,
-                List pieces,
-                Random random,
-                int p1,
-                int p2,
-                int p3,
-                int p4,
+        public Object buildComponent(StructureVillagePieces.PieceWeight villagePiece,
+                StructureVillagePieces.Start startPiece, List pieces, Random random, int p1, int p2, int p3, int p4,
                 int p5) {
-            StructureBoundingBox box =
-                    StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, 7, 9, 7, p4);
-            return (!canVillageGoDeeper(box)) || (StructureComponent.findIntersecting(pieces, box) != null)
-                    ? null
+            StructureBoundingBox box = StructureBoundingBox
+                    .getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, 7, 9, 7, p4);
+            return (!canVillageGoDeeper(box)) || (StructureComponent.findIntersecting(pieces, box) != null) ? null
                     : new VillageComponentPhotoshop(startPiece, p5, random, box, p4);
         }
 
         @Override
         public PieceWeight getVillagePieceWeight(Random random, int i) {
             return new StructureVillagePieces.PieceWeight(
-                    VillageComponentPhotoshop.class, 15, MathHelper.getRandomIntegerInRange(random, 0 + i, 1 + i));
+                    VillageComponentPhotoshop.class,
+                    15,
+                    MathHelper.getRandomIntegerInRange(random, 0 + i, 1 + i));
         }
 
         @Override

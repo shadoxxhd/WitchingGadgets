@@ -5,6 +5,7 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemStack;
 
 public class WGEnchantGemPotency extends Enchantment {
+
     public WGEnchantGemPotency(int id, int weight) {
         super(id, weight, EnumEnchantmentType.all);
         this.setName("wg.gemstonePotency");

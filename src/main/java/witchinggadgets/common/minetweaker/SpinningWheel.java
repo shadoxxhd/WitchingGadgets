@@ -1,11 +1,14 @@
 package witchinggadgets.common.minetweaker;
 
 import java.util.List;
+
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
+
 import net.minecraft.item.ItemStack;
+
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import witchinggadgets.common.util.recipe.SpinningRecipe;
@@ -22,6 +25,7 @@ public class SpinningWheel {
     }
 
     private static class Add implements IUndoableAction {
+
         private final SpinningRecipe recipe;
 
         public Add(SpinningRecipe recipe) {
@@ -65,6 +69,7 @@ public class SpinningWheel {
     }
 
     private static class Remove implements IUndoableAction {
+
         private final ItemStack output;
         List<SpinningRecipe> removedRecipes;
 

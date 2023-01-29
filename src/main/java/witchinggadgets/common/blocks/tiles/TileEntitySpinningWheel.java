@@ -6,9 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import witchinggadgets.common.util.recipe.SpinningRecipe;
 
 public class TileEntitySpinningWheel extends TileEntityWGBase implements ISidedInventory {
+
     public int facing = 0;
     public int animation = 0;
     public int progress = 0;
@@ -63,7 +65,7 @@ public class TileEntitySpinningWheel extends TileEntityWGBase implements ISidedI
     }
 
     private SpinningRecipe getRecipe() {
-        ItemStack[] inputs = {inv[0], inv[1], inv[2], inv[3], inv[4]};
+        ItemStack[] inputs = { inv[0], inv[1], inv[2], inv[3], inv[4] };
         return SpinningRecipe.getSpinningRecipe(inputs);
     }
 
@@ -76,7 +78,8 @@ public class TileEntitySpinningWheel extends TileEntityWGBase implements ISidedI
         if (par1 == null) return true;
         if (!(par1.isItemEqual(par2))) return false;
         if (((par1.stackSize + par2.stackSize) <= par1.getMaxStackSize())
-                && ((par1.stackSize + par2.stackSize) <= par2.getMaxStackSize())) return true;
+                && ((par1.stackSize + par2.stackSize) <= par2.getMaxStackSize()))
+            return true;
         return false;
     }
 
@@ -191,8 +194,8 @@ public class TileEntitySpinningWheel extends TileEntityWGBase implements ISidedI
         return true;
     }
 
-    public static int[] InSlots = {0, 1, 2, 3, 4};
-    public static int[] OutSlots = {5};
+    public static int[] InSlots = { 0, 1, 2, 3, 4 };
+    public static int[] OutSlots = { 5 };
 
     @Override
     public int[] getAccessibleSlotsFromSide(int p_94128_1_) {

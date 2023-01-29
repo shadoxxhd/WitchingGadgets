@@ -1,6 +1,7 @@
 package witchinggadgets.client.gui;
 
 import java.util.ArrayList;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,8 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.NodeModifier;
@@ -51,19 +54,19 @@ public class GuiPrimordialGlove extends GuiContainer {
         if ((par1 >= k + 75 && par1 < k + 75 + 26) && (par2 >= l + 26 && par2 < l + 26 + 26)) {
             AspectList aspects = new AspectList();
             ItemStack bracelet = player.getCurrentEquippedItem();
-            if (bracelet != null
-                    && bracelet.hasTagCompound()
-                    && bracelet.getTagCompound().hasKey("storedNode")) {
+            if (bracelet != null && bracelet.hasTagCompound() && bracelet.getTagCompound().hasKey("storedNode")) {
                 NBTTagCompound nodeTag = bracelet.getTagCompound().getCompoundTag("storedNode");
                 NodeType type = NodeType.values()[nodeTag.getInteger("type")];
                 NodeModifier modifier = NodeModifier.values()[nodeTag.getInteger("modifier")];
                 aspects.readFromNBT(nodeTag);
                 ArrayList<String> nodeInfo = new ArrayList<String>();
                 String s = "\u00A7" + ClientUtilities.nodeTypeChatColour[type.ordinal()]
-                        + StatCollector.translateToLocal("nodetype." + type + ".name") + "\u00A77";
-                if (modifier != null)
-                    s = s + ", \u00A7" + ClientUtilities.nodeModifierChatColour[modifier.ordinal()]
-                            + StatCollector.translateToLocal("nodemod." + modifier + ".name") + "\u00A7r";
+                        + StatCollector.translateToLocal("nodetype." + type + ".name")
+                        + "\u00A77";
+                if (modifier != null) s = s + ", \u00A7"
+                        + ClientUtilities.nodeModifierChatColour[modifier.ordinal()]
+                        + StatCollector.translateToLocal("nodemod." + modifier + ".name")
+                        + "\u00A7r";
                 nodeInfo.add(s);
                 nodeInfo.add("  \u00A75" + StatCollector.translateToLocal("wg.gui.visSize") + ": " + aspects.visSize());
 
@@ -101,7 +104,7 @@ public class GuiPrimordialGlove extends GuiContainer {
                 int count = 0;
                 float average = aspects.visSize() / (aspects.size() > 0 ? aspects.size() : 1);
                 for (Aspect a : aspects.aspects.keySet()) {
-                    // float radius = 16* (aspects.getAmount(a)/average)  *
+                    // float radius = 16* (aspects.getAmount(a)/average) *
                     // ((.5f-1)+((System.currentTimeMillis()%64)/64f));
                     float mod = 2f * (((System.currentTimeMillis() + count * 512) % 4096) / 4096f);
                     if (mod > 1) mod = 2 - mod;
@@ -130,19 +133,34 @@ public class GuiPrimordialGlove extends GuiContainer {
 
                 float radius = 10;
                 int perm = (int) ((System.currentTimeMillis() / 64) % 32);
-                int overl = nodeType == 2
-                        ? 6
+                int overl = nodeType == 2 ? 6
                         : nodeType == 3 ? 2 : nodeType == 4 ? 5 : nodeType == 5 ? 4 : nodeType == 6 ? 3 : 1;
 
                 tes.startDrawingQuads();
                 tes.addVertexWithUV(
-                        k + 88 - radius, l + 39 + radius, zLevel + 100, (perm + 0) * .03125, (overl + 1) * .03125);
+                        k + 88 - radius,
+                        l + 39 + radius,
+                        zLevel + 100,
+                        (perm + 0) * .03125,
+                        (overl + 1) * .03125);
                 tes.addVertexWithUV(
-                        k + 88 + radius, l + 39 + radius, zLevel + 100, (perm + 1) * .03125, (overl + 1) * .03125);
+                        k + 88 + radius,
+                        l + 39 + radius,
+                        zLevel + 100,
+                        (perm + 1) * .03125,
+                        (overl + 1) * .03125);
                 tes.addVertexWithUV(
-                        k + 88 + radius, l + 39 - radius, zLevel + 100, (perm + 1) * .03125, (overl + 0) * .03125);
+                        k + 88 + radius,
+                        l + 39 - radius,
+                        zLevel + 100,
+                        (perm + 1) * .03125,
+                        (overl + 0) * .03125);
                 tes.addVertexWithUV(
-                        k + 88 - radius, l + 39 - radius, zLevel + 100, (perm + 0) * .03125, (overl + 0) * .03125);
+                        k + 88 - radius,
+                        l + 39 - radius,
+                        zLevel + 100,
+                        (perm + 0) * .03125,
+                        (overl + 0) * .03125);
                 tes.draw();
 
                 GL11.glDisable(3042);

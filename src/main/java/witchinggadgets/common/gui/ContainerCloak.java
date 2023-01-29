@@ -7,10 +7,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import witchinggadgets.common.items.baubles.ItemCloak;
 import witchinggadgets.common.util.Utilities;
 
 public class ContainerCloak extends Container {
+
     private World worldObj;
     public IInventory input = new InventoryCloak(this);
     ItemStack cloak = null;
@@ -27,19 +29,17 @@ public class ContainerCloak extends Container {
 
         bindPlayerInventory(iinventory);
 
-        if (!world.isRemote)
-            try {
-                ((InventoryCloak) this.input).stackList = ((ItemCloak) this.cloak.getItem()).getStoredItems(this.cloak);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (!world.isRemote) try {
+            ((InventoryCloak) this.input).stackList = ((ItemCloak) this.cloak.getItem()).getStoredItems(this.cloak);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.onCraftMatrixChanged(this.input);
     }
 
     protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 9; j++)
-                this.addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 82 + i * 18));
+        for (int i = 0; i < 3; i++) for (int j = 0; j < 9; j++)
+            this.addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 82 + i * 18));
 
         for (int i = 0; i < 9; i++) this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 140));
     }

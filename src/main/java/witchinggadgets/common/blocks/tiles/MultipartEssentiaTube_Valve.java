@@ -1,9 +1,7 @@
 package witchinggadgets.common.blocks.tiles;
 
-import codechicken.lib.raytracer.IndexedCuboid6;
-import codechicken.lib.vec.Cuboid6;
-import codechicken.lib.vec.Vector3;
 import java.util.ArrayList;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -14,7 +12,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaTransport;
@@ -25,8 +25,12 @@ import thaumcraft.common.items.relics.ItemResonator;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import thaumcraft.common.tiles.TileTubeValve;
 import witchinggadgets.client.ClientUtilities;
+import codechicken.lib.raytracer.IndexedCuboid6;
+import codechicken.lib.vec.Cuboid6;
+import codechicken.lib.vec.Vector3;
 
 public class MultipartEssentiaTube_Valve extends MultipartEssentiaTube {
+
     public boolean allowFlow = true;
     boolean wasPoweredLastTick = false;
     public float rotation = 0.0F;
@@ -49,17 +53,16 @@ public class MultipartEssentiaTube_Valve extends MultipartEssentiaTube {
     public void update() {
         super.update();
         if (!world().isRemote && count % 5 == 0) {
-            boolean gettingPower = world().isBlockIndirectlyGettingPowered(x(), y(), z());
-            ;
+            boolean gettingPower = world().isBlockIndirectlyGettingPowered(x(), y(), z());;
             if (wasPoweredLastTick && !gettingPower && allowFlow != true) {
                 allowFlow = true;
                 world().playSoundEffect(
-                                x() + .5,
-                                y() + .5,
-                                z() + .5,
-                                "thaumcraft:squeek",
-                                .7f,
-                                .9f + world().rand.nextFloat() * .2f);
+                        x() + .5,
+                        y() + .5,
+                        z() + .5,
+                        "thaumcraft:squeek",
+                        .7f,
+                        .9f + world().rand.nextFloat() * .2f);
                 world().markBlockForUpdate(x(), y(), z());
                 markDirty();
                 sendDescUpdate();
@@ -67,12 +70,12 @@ public class MultipartEssentiaTube_Valve extends MultipartEssentiaTube {
             if (!wasPoweredLastTick && gettingPower && allowFlow) {
                 allowFlow = false;
                 world().playSoundEffect(
-                                x() + .5,
-                                y() + .5,
-                                z() + .5,
-                                "thaumcraft:squeek",
-                                .7f,
-                                .9f + world().rand.nextFloat() * .2f);
+                        x() + .5,
+                        y() + .5,
+                        z() + .5,
+                        "thaumcraft:squeek",
+                        .7f,
+                        .9f + world().rand.nextFloat() * .2f);
                 world().markBlockForUpdate(x(), y(), z());
                 markDirty();
                 sendDescUpdate();
@@ -89,7 +92,16 @@ public class MultipartEssentiaTube_Valve extends MultipartEssentiaTube {
     public boolean renderStatic(Vector3 pos, int pass) {
         super.renderStatic(pos, pass);
         ClientUtilities.addBoxToBlockrender(
-                .375, .375, .375, .625, .625, .625, ((BlockTube) ConfigBlocks.blockTube).icon[1], x(), y(), z());
+                .375,
+                .375,
+                .375,
+                .625,
+                .625,
+                .625,
+                ((BlockTube) ConfigBlocks.blockTube).icon[1],
+                x(),
+                y(),
+                z());
         return true;
     }
 
@@ -133,67 +145,61 @@ public class MultipartEssentiaTube_Valve extends MultipartEssentiaTube {
         float maxy = .625F;
         float minz = .375F;
         float maxz = .625F;
-        for (ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS)
-            if (fd != facing) {
-                TileEntity te = ThaumcraftApiHelper.getConnectableTile(world(), x(), y(), z(), fd);
-                if (te != null) {
-                    switch (fd) {
-                        case DOWN:
-                            miny = 0.0F;
-                            break;
-                        case UP:
-                            maxy = 1.0F;
-                            break;
-                        case NORTH:
-                            minz = 0.0F;
-                            break;
-                        case SOUTH:
-                            maxz = 1.0F;
-                            break;
-                        case WEST:
-                            minx = 0.0F;
-                            break;
-                        case EAST:
-                            maxx = 1.0F;
-                        default:
-                            break;
-                    }
+        for (ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS) if (fd != facing) {
+            TileEntity te = ThaumcraftApiHelper.getConnectableTile(world(), x(), y(), z(), fd);
+            if (te != null) {
+                switch (fd) {
+                    case DOWN:
+                        miny = 0.0F;
+                        break;
+                    case UP:
+                        maxy = 1.0F;
+                        break;
+                    case NORTH:
+                        minz = 0.0F;
+                        break;
+                    case SOUTH:
+                        maxz = 1.0F;
+                        break;
+                    case WEST:
+                        minx = 0.0F;
+                        break;
+                    case EAST:
+                        maxx = 1.0F;
+                    default:
+                        break;
                 }
             }
+        }
         return new Cuboid6(minx, miny, minz, maxx, maxy, maxz);
     }
 
     @Override
     public Iterable<IndexedCuboid6> getSubParts() {
         ArrayList<IndexedCuboid6> t = new ArrayList();
-        if (world().isRemote
-                && (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() == null
-                        || !(Minecraft.getMinecraft()
-                                                .thePlayer
-                                                .getCurrentEquippedItem()
-                                                .getItem()
-                                        instanceof ItemWandCasting
-                                || Minecraft.getMinecraft()
-                                                .thePlayer
-                                                .getCurrentEquippedItem()
-                                                .getItem()
-                                        instanceof ItemResonator))) {
+        if (world().isRemote && (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() == null
+                || !(Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem() instanceof ItemWandCasting
+                        || Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem()
+                                .getItem() instanceof ItemResonator))) {
             t.add(new IndexedCuboid6(null, getBounds()));
-            t.add(new IndexedCuboid6(
-                    null,
-                    new Cuboid6(
-                            .375 + facing.offsetX * .375,
-                            .375 + facing.offsetY * .375,
-                            .375 + facing.offsetZ * .375,
-                            .625 + facing.offsetX * .375,
-                            .625 + facing.offsetY * .375,
-                            .625 + facing.offsetZ * .375)));
+            t.add(
+                    new IndexedCuboid6(
+                            null,
+                            new Cuboid6(
+                                    .375 + facing.offsetX * .375,
+                                    .375 + facing.offsetY * .375,
+                                    .375 + facing.offsetZ * .375,
+                                    .625 + facing.offsetX * .375,
+                                    .625 + facing.offsetY * .375,
+                                    .625 + facing.offsetZ * .375)));
         } else {
             for (int i = 0; i < 6; i++) {
                 ForgeDirection fd = ForgeDirection.getOrientation(i);
-                if (world().getTileEntity(x() + fd.offsetX, y() + fd.offsetY, z() + fd.offsetZ)
-                        instanceof IEssentiaTransport)
-                    //			if(getConnectableTile(world(), x(), y(), z(), ForgeDirection.getOrientation(i))!=null)
+                if (world().getTileEntity(
+                        x() + fd.offsetX,
+                        y() + fd.offsetY,
+                        z() + fd.offsetZ) instanceof IEssentiaTransport)
+                    // if(getConnectableTile(world(), x(), y(), z(), ForgeDirection.getOrientation(i))!=null)
                     t.add(getConnectionPipe(ForgeDirection.getOrientation(i)));
             }
             t.add(new IndexedCuboid6(null, new Cuboid6(.375, .375, .375, .625, .625, .625)));
@@ -215,15 +221,15 @@ public class MultipartEssentiaTube_Valve extends MultipartEssentiaTube {
     public void save(NBTTagCompound tag) {
         super.save(tag);
         tag.setBoolean("allowFlow", allowFlow);
-        //		boolean wasPoweredLastTick = false;
-        //		tag.setInteger("facing", facing);
+        // boolean wasPoweredLastTick = false;
+        // tag.setInteger("facing", facing);
     }
 
     @Override
     public void load(NBTTagCompound tag) {
         super.load(tag);
         allowFlow = tag.getBoolean("allowFlow");
-        //		facing = tag.getInteger("facing");
+        // facing = tag.getInteger("facing");
     }
 
     @Override
@@ -231,12 +237,12 @@ public class MultipartEssentiaTube_Valve extends MultipartEssentiaTube {
         allowFlow = !allowFlow;
         if (!world().isRemote) {
             world().playSoundEffect(
-                            x() + .5,
-                            y() + .5,
-                            z() + .5,
-                            "thaumcraft:squeek",
-                            0.7f,
-                            0.9f + world().rand.nextFloat() * 0.2f);
+                    x() + .5,
+                    y() + .5,
+                    z() + .5,
+                    "thaumcraft:squeek",
+                    0.7f,
+                    0.9f + world().rand.nextFloat() * 0.2f);
             sendDescUpdate();
         }
         return true;

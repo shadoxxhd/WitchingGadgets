@@ -5,6 +5,7 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemStack;
 
 public class WGEnchantGemBrittle extends Enchantment {
+
     public WGEnchantGemBrittle(int id, int weight) {
         super(id, weight, EnumEnchantmentType.all);
         this.setName("wg.gemstoneBrittle");

@@ -6,6 +6,7 @@ import net.minecraftforge.fluids.BlockFluidFinite;
 import net.minecraftforge.fluids.Fluid;
 
 public class BlockFluidDarkIron extends BlockFluidFinite {
+
     public BlockFluidDarkIron(Fluid fluid) {
         super(fluid, Material.lava);
     }

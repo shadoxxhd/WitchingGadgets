@@ -3,21 +3,26 @@ package witchinggadgets.client.nei;
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
 
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.common.util.Utilities;
 import witchinggadgets.common.util.Utilities.OreDictStack;
 import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.TemplateRecipeHandler;
 
 public class NEIInfernalBlastfurnaceHandler extends TemplateRecipeHandler {
+
     public class CachedInfernalBlastfurnaceRecipe extends CachedRecipe {
+
         PositionedStack input;
         PositionedStack output;
         PositionedStack bonus;
@@ -38,8 +43,8 @@ public class NEIInfernalBlastfurnaceHandler extends TemplateRecipeHandler {
 
         @Override
         public List<PositionedStack> getIngredients() {
-            return this.getCycledIngredients(
-                    NEIInfernalBlastfurnaceHandler.this.cycleticks / 20, super.getIngredients());
+            return this
+                    .getCycledIngredients(NEIInfernalBlastfurnaceHandler.this.cycleticks / 20, super.getIngredients());
         }
 
         @Override
@@ -104,8 +109,7 @@ public class NEIInfernalBlastfurnaceHandler extends TemplateRecipeHandler {
     @Override
     public synchronized void loadUsageRecipes(ItemStack ingredient) {
         for (InfernalBlastfurnaceRecipe recipe : InfernalBlastfurnaceRecipe.recipes)
-            if (recipe != null
-                    && recipe.getInput() != null
+            if (recipe != null && recipe.getInput() != null
                     && recipe.getOutput() != null
                     && ((recipe.getInput() instanceof OreDictStack)
                             ? Utilities.compareToOreName(ingredient, ((OreDictStack) recipe.getInput()).key)

@@ -2,6 +2,7 @@ package witchinggadgets.common.items;
 
 import java.util.List;
 import java.util.Map;
+
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.BlockStaticLiquid;
@@ -27,11 +28,13 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
+
 import thaumcraft.common.lib.utils.InventoryUtils;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.util.Utilities;
 
 public class ItemCrystalCapsule extends Item implements IFluidContainerItem {
+
     public ItemCrystalCapsule() {
         super();
         this.setCreativeTab(WitchingGadgets.tabWG);
@@ -46,7 +49,8 @@ public class ItemCrystalCapsule extends Item implements IFluidContainerItem {
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         MovingObjectPosition localMovingObjectPosition = getMovingObjectPositionFromPlayer(world, player, false);
         if ((localMovingObjectPosition == null)
-                || (localMovingObjectPosition.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK)) return stack;
+                || (localMovingObjectPosition.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK))
+            return stack;
 
         if (!world.isRemote) {
             int x = localMovingObjectPosition.blockX;
@@ -74,8 +78,8 @@ public class ItemCrystalCapsule extends Item implements IFluidContainerItem {
                     x++;
             }
             if (!player.canPlayerEdit(x, y, z, localMovingObjectPosition.sideHit, stack)
-                    || (!world.isAirBlock(x, y, z)
-                            && world.getBlock(x, y, z).getMaterial().isSolid())) return stack;
+                    || (!world.isAirBlock(x, y, z) && world.getBlock(x, y, z).getMaterial().isSolid()))
+                return stack;
 
             ItemStack used = useCapsule(world, x, y, z, stack);
             if (stack.equals(used)) return stack;
@@ -122,13 +126,13 @@ public class ItemCrystalCapsule extends Item implements IFluidContainerItem {
             return this.getContainerItem(stack);
         } else {
             Fluid f = FluidRegistry.lookupFluidForBlock(world.getBlock(x, y, z));
-            if (f == null
-                    && world.getBlock(x, y, z) instanceof BlockDynamicLiquid
+            if (f == null && world.getBlock(x, y, z) instanceof BlockDynamicLiquid
                     && world.getBlockMetadata(x, y, z) == 0)
                 if (world.getBlock(x, y, z).getMaterial().equals(Material.water)) f = FluidRegistry.WATER;
                 else if (world.getBlock(x, y, z).getMaterial().equals(Material.lava)) f = FluidRegistry.LAVA;
             if (world.getBlock(x, y, z) instanceof IFluidBlock
-                    && !((IFluidBlock) world.getBlock(x, y, z)).canDrain(world, x, y, z)) return stack;
+                    && !((IFluidBlock) world.getBlock(x, y, z)).canDrain(world, x, y, z))
+                return stack;
             if (world.getBlock(x, y, z) instanceof BlockStaticLiquid && world.getBlockMetadata(x, y, z) != 0)
                 return stack;
             if (f == null) return stack;
@@ -225,6 +229,7 @@ public class ItemCrystalCapsule extends Item implements IFluidContainerItem {
     }
 
     public static class CapsuleDispenserBehaviour extends BehaviorDefaultDispenseItem {
+
         private final BehaviorDefaultDispenseItem deafultBehaviour = new BehaviorDefaultDispenseItem();
 
         @Override
@@ -242,13 +247,13 @@ public class ItemCrystalCapsule extends Item implements IFluidContainerItem {
                     stack);
             s = InventoryUtils.insertStack((IInventory) dispenser.getBlockTileEntity(), s, enumfacing.ordinal(), true);
             if (s != null) this.deafultBehaviour.dispense(dispenser, s);
-            //			if(!dispenser.getWorld().isRemote)
-            //			dispenser.getWorld().spawnEntityInWorld(new EntityFireworkRocket(dispenser.getWorld(),
+            // if(!dispenser.getWorld().isRemote)
+            // dispenser.getWorld().spawnEntityInWorld(new EntityFireworkRocket(dispenser.getWorld(),
             // x+enumfacing.getFrontOffsetX(), y+enumfacing.getFrontOffsetY(), z+enumfacing.getFrontOffsetZ(), null));
-            //			if(s == stack)
+            // if(s == stack)
             return stack;
-            //			else
-            //				return this.deafultBehaviour.dispense(dispenser, capsule.useCapsule(dispenser.getWorld(),
+            // else
+            // return this.deafultBehaviour.dispense(dispenser, capsule.useCapsule(dispenser.getWorld(),
             // x+enumfacing.getFrontOffsetX(), y+enumfacing.getFrontOffsetY(), z+enumfacing.getFrontOffsetZ(), stack));
         }
     }

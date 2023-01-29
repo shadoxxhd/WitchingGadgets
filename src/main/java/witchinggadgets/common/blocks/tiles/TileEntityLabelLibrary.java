@@ -5,12 +5,14 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.common.config.ConfigItems;
 
 public class TileEntityLabelLibrary extends TileEntityWGBase implements IInventory {
+
     ItemStack[] inventory = new ItemStack[2];
     public Aspect aspect;
     public int facing = 2;

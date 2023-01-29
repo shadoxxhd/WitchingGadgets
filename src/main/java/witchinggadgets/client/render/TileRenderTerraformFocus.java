@@ -6,13 +6,16 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.aspects.Aspect;
 import witchinggadgets.api.ITerraformFocus;
 import witchinggadgets.client.ClientProxy;
 import witchinggadgets.client.ClientUtilities;
 
 public class TileRenderTerraformFocus extends TileEntitySpecialRenderer {
+
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
         GL11.glPushMatrix();
 
@@ -24,19 +27,17 @@ public class TileRenderTerraformFocus extends TileEntitySpecialRenderer {
             if (tile != null && tile.getWorldObj() != null && tile.getBlockType() instanceof ITerraformFocus) {
                 Aspect a = ((ITerraformFocus) tile.getBlockType())
                         .requiredAspect(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
-                if (a != null)
-                    GL11.glColor3f(
-                            (a.getColor() >> 16 & 255) / 255f,
-                            (a.getColor() >> 8 & 255) / 255f,
-                            (a.getColor() & 255) / 255f);
+                if (a != null) GL11.glColor3f(
+                        (a.getColor() >> 16 & 255) / 255f,
+                        (a.getColor() >> 8 & 255) / 255f,
+                        (a.getColor() & 255) / 255f);
             } else if (tile != null && tile.blockMetadata > (-1) && tile.blockType instanceof ITerraformFocus) {
                 Aspect a = ((ITerraformFocus) tile.blockType).requiredAspect(tile.blockMetadata);
                 GL11.glDisable(GL11.GL_LIGHTING);
-                if (a != null)
-                    GL11.glColor3f(
-                            (a.getColor() >> 16 & 255) / 255f,
-                            (a.getColor() >> 8 & 255) / 255f,
-                            (a.getColor() & 255) / 255f);
+                if (a != null) GL11.glColor3f(
+                        (a.getColor() >> 16 & 255) / 255f,
+                        (a.getColor() >> 8 & 255) / 255f,
+                        (a.getColor() & 255) / 255f);
             }
 
             ClientProxy.terraformerModel.renderPart("focus_crystal_04");

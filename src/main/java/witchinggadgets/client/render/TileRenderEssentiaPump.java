@@ -4,12 +4,15 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.common.tiles.TileBellows;
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
 
 public class TileRenderEssentiaPump extends TileEntitySpecialRenderer {
+
     static TileBellows bellow = new TileBellows();
 
     @Override
@@ -187,23 +190,23 @@ public class TileRenderEssentiaPump extends TileEntitySpecialRenderer {
             e.printStackTrace();
         }
 
-        //		ModelBellows bellow = new ModelBellows();
+        // ModelBellows bellow = new ModelBellows();
 
-        //	    GL11.glScalef(0.5F, inflation/2, 0.5F);
-        //		GL11.glScalef(.5f,.5f,.5f);
-        //	    bellow.Bag.render(0.0625F);
-        //		GL11.glScalef(2,2,2);
-        ////	    GL11.glScalef(2F, 1/(inflation/2), 2F);
+        // GL11.glScalef(0.5F, inflation/2, 0.5F);
+        // GL11.glScalef(.5f,.5f,.5f);
+        // bellow.Bag.render(0.0625F);
+        // GL11.glScalef(2,2,2);
+        //// GL11.glScalef(2F, 1/(inflation/2), 2F);
         //
-        ////	    GL11.glTranslated(0, inflation/2, 0);
-        //		bellow.TopPlank.render(0.0625F);
-        ////	    GL11.glTranslated(0,-inflation/2, 0);
+        //// GL11.glTranslated(0, inflation/2, 0);
+        // bellow.TopPlank.render(0.0625F);
+        //// GL11.glTranslated(0,-inflation/2, 0);
         //
-        //		bellow.MiddlePlank.render(0.0625F);
+        // bellow.MiddlePlank.render(0.0625F);
         //
-        ////	    GL11.glTranslated(0,-inflation/2, 0);
-        //		bellow.BottomPlank.render(0.0625F);
-        ////	    GL11.glTranslated(0, inflation/2, 0);
+        //// GL11.glTranslated(0,-inflation/2, 0);
+        // bellow.BottomPlank.render(0.0625F);
+        //// GL11.glTranslated(0, inflation/2, 0);
 
         GL11.glPopMatrix();
     }

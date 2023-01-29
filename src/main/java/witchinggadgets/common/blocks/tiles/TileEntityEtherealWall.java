@@ -2,6 +2,7 @@ package witchinggadgets.common.blocks.tiles;
 
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
+
 import thaumcraft.common.config.ConfigBlocks;
 import witchinggadgets.common.util.EtherealWallMaster;
 

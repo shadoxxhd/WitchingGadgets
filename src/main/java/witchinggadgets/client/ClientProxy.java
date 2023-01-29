@@ -1,10 +1,5 @@
 package witchinggadgets.client;
 
-import baubles.api.BaublesApi;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.particle.EntityLavaFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,6 +9,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.client.fx.particles.FXEssentiaTrail;
 import thaumcraft.client.fx.particles.FXWisp;
@@ -65,6 +61,11 @@ import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 import witchinggadgets.common.items.EntityItemReforming;
 import witchinggadgets.common.util.WGKeyHandler;
+import baubles.api.BaublesApi;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ClientProxy extends CommonProxy {
 
@@ -98,8 +99,8 @@ public class ClientProxy extends CommonProxy {
         gemModel = ClientUtilities.bindModel("witchinggadgets", "models/gems.obj");
         terraformerModel = ClientUtilities.bindModel("witchinggadgets", "models/terraformer.obj");
 
-        MinecraftForgeClient.registerItemRenderer(
-                Item.getItemFromBlock(WGContent.BlockWallMirror), new ItemRenderWallMirror());
+        MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(WGContent.BlockWallMirror), new ItemRenderWallMirror());
         MinecraftForgeClient.registerItemRenderer(WGContent.ItemMaterial, new ItemRenderMaterial());
         MinecraftForgeClient.registerItemRenderer(WGContent.ItemScanCamera, new ItemRenderScanCamera());
         MinecraftForgeClient.registerItemRenderer(WGContent.ItemPrimordialGlove, new ItemRenderPrimordialGauntlet());
@@ -128,13 +129,11 @@ public class ClientProxy extends CommonProxy {
         if (ID == 0) return new GuiSpinningWheel(player.inventory, (TileEntitySpinningWheel) tile);
 
         if (ID == 3) return new GuiBag(player.inventory, world);
-        if (ID == 4 || ID == 5)
-            return new GuiCloakBag(
-                    player.inventory,
-                    world,
-                    ID == 4
-                            ? TravellersGearAPI.getExtendedInventory(player)[0]
-                            : BaublesApi.getBaubles(player).getStackInSlot(3));
+        if (ID == 4 || ID == 5) return new GuiCloakBag(
+                player.inventory,
+                world,
+                ID == 4 ? TravellersGearAPI.getExtendedInventory(player)[0]
+                        : BaublesApi.getBaubles(player).getStackInSlot(3));
 
         if (ID == 6) return new GuiPatchedFocusPouch(player.inventory, world, x, y, z);
 
@@ -150,27 +149,25 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void createEssentiaTrailFx(
-            World worldObj, int x, int y, int z, int tx, int ty, int tz, int count, int colour, float scale) {
+    public void createEssentiaTrailFx(World worldObj, int x, int y, int z, int tx, int ty, int tz, int count,
+            int colour, float scale) {
         FXEssentiaTrail fx = new FXEssentiaTrail(
-                worldObj, x + 0.5D, y + 1, z + 0.5D, tx + 0.5D, ty + 0.5D, tz + 0.5D, count, colour, scale);
+                worldObj,
+                x + 0.5D,
+                y + 1,
+                z + 0.5D,
+                tx + 0.5D,
+                ty + 0.5D,
+                tz + 0.5D,
+                count,
+                colour,
+                scale);
         ParticleEngine.instance.addEffect(worldObj, fx);
     }
 
     @Override
-    public void createTargetedWispFx(
-            World worldObj,
-            double x,
-            double y,
-            double z,
-            double tx,
-            double ty,
-            double tz,
-            int colour,
-            float scale,
-            float gravity,
-            boolean tinkle,
-            boolean noClip) {
+    public void createTargetedWispFx(World worldObj, double x, double y, double z, double tx, double ty, double tz,
+            int colour, float scale, float gravity, boolean tinkle, boolean noClip) {
         FXWisp fx = new FXWisp(worldObj, x, y, z, tx, ty, tz, scale, 0);
         fx.setAlphaF(1);
         fx.tinkle = tinkle;
@@ -193,11 +190,9 @@ public class ClientProxy extends CommonProxy {
 
         EntityLavaFX fb = new EntityLavaFX(worldObj, xx, y + 1.3f, zz);
         fb.motionY = .2f * worldObj.rand.nextFloat();
-        float mx = facing.offsetX != 0
-                ? (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * .5f
+        float mx = facing.offsetX != 0 ? (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * .5f
                 : facing.offsetX * worldObj.rand.nextFloat();
-        float mz = facing.offsetZ != 0
-                ? (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * .5f
+        float mz = facing.offsetZ != 0 ? (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * .5f
                 : facing.offsetZ * worldObj.rand.nextFloat();
         fb.motionX = (0.15f * mx);
         fb.motionZ = (0.15f * mz);

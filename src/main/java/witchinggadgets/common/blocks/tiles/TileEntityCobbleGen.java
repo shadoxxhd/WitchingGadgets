@@ -7,10 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.common.lib.utils.InventoryUtils;
 import witchinggadgets.common.WGConfig;
 
 public class TileEntityCobbleGen extends TileEntityWGBase {
+
     public ForgeDirection facing = ForgeDirection.getOrientation(2);
     public int tick = 0;
     int tickGoal = 40;
@@ -19,24 +21,22 @@ public class TileEntityCobbleGen extends TileEntityWGBase {
         super.updateEntity();
         if (canWork()) {
             tick++;
-            if (tick == 32 && worldObj.isRemote)
-                worldObj.playSoundEffect(
+            if (tick == 32 && worldObj.isRemote) worldObj.playSoundEffect(
+                    xCoord + 0.5F,
+                    yCoord + 0.5F,
+                    zCoord + 0.5F,
+                    "random.fizz",
+                    0.5F,
+                    2.6F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.8F);
+            if (tick >= tickGoal) {
+                if (!worldObj.isRemote) createCobble();
+                else worldObj.playSoundEffect(
                         xCoord + 0.5F,
                         yCoord + 0.5F,
                         zCoord + 0.5F,
-                        "random.fizz",
+                        "dig.stone",
                         0.5F,
                         2.6F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.8F);
-            if (tick >= tickGoal) {
-                if (!worldObj.isRemote) createCobble();
-                else
-                    worldObj.playSoundEffect(
-                            xCoord + 0.5F,
-                            yCoord + 0.5F,
-                            zCoord + 0.5F,
-                            "dig.stone",
-                            0.5F,
-                            2.6F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.8F);
                 tick = 0;
             }
         } else if (tick > 0) tick = 0;
@@ -48,9 +48,8 @@ public class TileEntityCobbleGen extends TileEntityWGBase {
                 this.xCoord + this.facing.offsetX,
                 this.yCoord + this.facing.offsetY,
                 this.zCoord + this.facing.offsetZ);
-        if (inventory instanceof IInventory)
-            cobble = InventoryUtils.placeItemStackIntoInventory(
-                    cobble, (IInventory) inventory, this.facing.getOpposite().ordinal(), true);
+        if (inventory instanceof IInventory) cobble = InventoryUtils
+                .placeItemStackIntoInventory(cobble, (IInventory) inventory, this.facing.getOpposite().ordinal(), true);
 
         if (cobble != null && WGConfig.allowdropsfrommachinery)
             if (facing.equals(ForgeDirection.UP) || facing.equals(ForgeDirection.DOWN)) {
@@ -83,19 +82,16 @@ public class TileEntityCobbleGen extends TileEntityWGBase {
                 this.xCoord + this.facing.offsetX,
                 this.yCoord + this.facing.offsetY,
                 this.zCoord + this.facing.offsetZ);
-        if (inventory instanceof IInventory)
-            return InventoryUtils.insertStack(
-                            (IInventory) inventory,
-                            new ItemStack(Blocks.cobblestone),
-                            this.facing.getOpposite().ordinal(),
-                            false)
-                    == null;
+        if (inventory instanceof IInventory) return InventoryUtils.insertStack(
+                (IInventory) inventory,
+                new ItemStack(Blocks.cobblestone),
+                this.facing.getOpposite().ordinal(),
+                false) == null;
         return true;
     }
 
     public boolean canWork() {
-        return canOutput()
-                && worldObj.getBlockPowerInput(xCoord, yCoord, zCoord) <= 0
+        return canOutput() && worldObj.getBlockPowerInput(xCoord, yCoord, zCoord) <= 0
                 && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
     }
 

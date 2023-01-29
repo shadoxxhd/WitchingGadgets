@@ -7,10 +7,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.items.tools.ItemBag;
 
 public class ContainerBag extends Container {
+
     private World worldObj;
     private int blockedSlot;
     public IInventory input = new InventoryBag(this);
@@ -30,12 +32,11 @@ public class ContainerBag extends Container {
 
         bindPlayerInventory(iinventory);
 
-        if (!world.isRemote)
-            try {
-                ((InventoryBag) this.input).stackList = ((ItemBag) this.pouch.getItem()).getStoredItems(this.pouch);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (!world.isRemote) try {
+            ((InventoryBag) this.input).stackList = ((ItemBag) this.pouch.getItem()).getStoredItems(this.pouch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.onCraftMatrixChanged(this.input);
     }
 
@@ -94,9 +95,9 @@ public class ContainerBag extends Container {
         if (!this.worldObj.isRemote) {
             ((ItemBag) this.pouch.getItem()).setStoredItems(this.pouch, ((InventoryBag) this.input).stackList);
             /*
-            if (!this.player.getCurrentEquippedItem().equals(this.pouch))
-            	this.player.setCurrentItemOrArmor(0, this.pouch);
-            */
+             * if (!this.player.getCurrentEquippedItem().equals(this.pouch)) this.player.setCurrentItemOrArmor(0,
+             * this.pouch);
+             */
             this.player.inventory.markDirty();
         }
     }

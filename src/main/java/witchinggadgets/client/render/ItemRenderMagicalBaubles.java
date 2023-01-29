@@ -1,6 +1,7 @@
 package witchinggadgets.client.render;
 
 import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -10,11 +11,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
 import witchinggadgets.common.WGContent;
 
 public class ItemRenderMagicalBaubles implements IItemRenderer {
+
     @Override
     public boolean handleRenderType(ItemStack stack, ItemRenderType type) {
         if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) return true;
@@ -57,8 +61,8 @@ public class ItemRenderMagicalBaubles implements IItemRenderer {
             int colour = WGContent.ItemMagicalBaubles.getColorFromItemStack(stack, l);
             Color col = new Color(colour);
             if (l > 0) GL11.glColor3d(col.getRed() / 255.0, col.getGreen() / 255.0, col.getBlue() / 255.0);
-            ItemRenderer.renderItemIn2D(
-                    tessellator, f1, f2, f, f3, iicon.getIconWidth(), iicon.getIconHeight(), 0.0625F);
+            ItemRenderer
+                    .renderItemIn2D(tessellator, f1, f2, f, f3, iicon.getIconWidth(), iicon.getIconHeight(), 0.0625F);
         }
 
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);

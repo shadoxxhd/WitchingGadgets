@@ -4,11 +4,14 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntitySnowGen;
 
 public class TileRenderSnowGen extends TileEntitySpecialRenderer {
+
     public void renderTileEntityAt(TileEntitySnowGen tile, double x, double y, double z, float f) {
         GL11.glPushMatrix();
 
@@ -36,22 +39,82 @@ public class TileRenderSnowGen extends TileEntitySpecialRenderer {
 
         ClientUtilities.bindTexture("thaumcraft:textures/models/Bore.png");
         if (tile.facing.equals(ForgeDirection.UP)) {
+            TileRenderCobbleGen
+                    .renderPixelBlock(tes, 0.375, 1, 0.375, 0.625, 1.125, 0.625, 0.859375, 0.65625, 0.8984375, 0.71875);
             TileRenderCobbleGen.renderPixelBlock(
-                    tes, 0.375, 1, 0.375, 0.625, 1.125, 0.625, 0.859375, 0.65625, 0.8984375, 0.71875);
-            TileRenderCobbleGen.renderPixelBlock(
-                    tes, 0.375, 1.125, 0.375, 0.625, 1.125, 0.625, 0.828125, 0.875, 0.8671875, 0.953125);
+                    tes,
+                    0.375,
+                    1.125,
+                    0.375,
+                    0.625,
+                    1.125,
+                    0.625,
+                    0.828125,
+                    0.875,
+                    0.8671875,
+                    0.953125);
         } else if (tile.facing.equals(ForgeDirection.DOWN)) {
             TileRenderCobbleGen.renderPixelBlock(
-                    tes, 0.375, -0.125, 0.375, 0.625, 0, 0.625, 0.859375, 0.65625, 0.8984375, 0.71875);
+                    tes,
+                    0.375,
+                    -0.125,
+                    0.375,
+                    0.625,
+                    0,
+                    0.625,
+                    0.859375,
+                    0.65625,
+                    0.8984375,
+                    0.71875);
             TileRenderCobbleGen.renderPixelBlock(
-                    tes, 0.375, -0.125, 0.375, 0.625, -0.125, 0.625, 0.828125, 0.875, 0.8671875, 0.953125);
+                    tes,
+                    0.375,
+                    -0.125,
+                    0.375,
+                    0.625,
+                    -0.125,
+                    0.625,
+                    0.828125,
+                    0.875,
+                    0.8671875,
+                    0.953125);
         } else {
             TileRenderCobbleGen.renderPixelBlock(
-                    tes, 0.4075, 0.4075, 0, 0.5925, 0.5925, 0.0624, 0.859375, 0.65625, 0.8984375, 0.71875);
+                    tes,
+                    0.4075,
+                    0.4075,
+                    0,
+                    0.5925,
+                    0.5925,
+                    0.0624,
+                    0.859375,
+                    0.65625,
+                    0.8984375,
+                    0.71875);
             TileRenderCobbleGen.renderPixelBlock(
-                    tes, 0.375, 0.375, -0.125, 0.625, 0.625, 0, 0.859375, 0.65625, 0.8984375, 0.71875);
+                    tes,
+                    0.375,
+                    0.375,
+                    -0.125,
+                    0.625,
+                    0.625,
+                    0,
+                    0.859375,
+                    0.65625,
+                    0.8984375,
+                    0.71875);
             TileRenderCobbleGen.renderPixelBlock(
-                    tes, 0.375, 0.375, -0.125, 0.625, 0.625, -0.125, 0.828125, 0.875, 0.8671875, 0.953125);
+                    tes,
+                    0.375,
+                    0.375,
+                    -0.125,
+                    0.625,
+                    0.625,
+                    -0.125,
+                    0.828125,
+                    0.875,
+                    0.8671875,
+                    0.953125);
         }
 
         // TODO INDICATE ACTIVE STATUS

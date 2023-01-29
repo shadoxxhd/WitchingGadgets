@@ -1,6 +1,7 @@
 package witchinggadgets.common.blocks;
 
 import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import witchinggadgets.common.blocks.tiles.TileEntityVoidWalkway;
 
 public class BlockVoidWalkway extends BlockContainer {
@@ -23,10 +25,9 @@ public class BlockVoidWalkway extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        if (!player.isSneaking()
-                && player.getCurrentEquippedItem() != null
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+            float hitY, float hitZ) {
+        if (!player.isSneaking() && player.getCurrentEquippedItem() != null
                 && player.getCurrentEquippedItem().getItem() instanceof ItemBlock) {
             ItemBlock ib = (ItemBlock) player.getCurrentEquippedItem().getItem();
             if (ib.placeBlockAt(
@@ -60,8 +61,7 @@ public class BlockVoidWalkway extends BlockContainer {
 
     @Override
     public boolean shouldSideBeRendered(IBlockAccess iBlockAccess, int x, int y, int z, int side) {
-        return super.shouldSideBeRendered(iBlockAccess, x, y, z, side)
-                && !iBlockAccess.getBlock(x, y, z).equals(this);
+        return super.shouldSideBeRendered(iBlockAccess, x, y, z, side) && !iBlockAccess.getBlock(x, y, z).equals(this);
     }
 
     @Override

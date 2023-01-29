@@ -1,9 +1,7 @@
 package witchinggadgets.common.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import fox.spiteful.forbidden.DarkAspects;
 import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,6 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
@@ -31,24 +30,18 @@ import witchinggadgets.client.render.BlockRenderMetalDevice;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
 import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
 import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import fox.spiteful.forbidden.DarkAspects;
 
 public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocus {
-    public static String[] subNames = {
-        "essentiaPump",
-        "voidmetalBlock",
-        "terraformer", // 2
-        "tfFocusPlains",
-        "tfFocusColdTaiga",
-        "tfFocusDesert", // 5
-        "tfFocusJungle",
-        "tfFocusHell",
-        "tfFocusTaint", // 8
-        "tfFocusMushroom",
-        "tfFocusRiver", // 10
-        "tfFocusOcean",
-        "tfFocusEnd", // 12
-        "tfFocusMagic"
-    };
+
+    public static String[] subNames = { "essentiaPump", "voidmetalBlock", "terraformer", // 2
+            "tfFocusPlains", "tfFocusColdTaiga", "tfFocusDesert", // 5
+            "tfFocusJungle", "tfFocusHell", "tfFocusTaint", // 8
+            "tfFocusMushroom", "tfFocusRiver", // 10
+            "tfFocusOcean", "tfFocusEnd", // 12
+            "tfFocusMagic" };
     IIcon[] icons = new IIcon[subNames.length];
 
     public BlockWGMetalDevice() {
@@ -160,14 +153,13 @@ public class BlockWGMetalDevice extends BlockContainer implements ITerraformFocu
         int playerViewQuarter = MathHelper.floor_double(entityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         int meta = world.getBlockMetadata(x, y, z);
         int f = playerViewQuarter == 0 ? 2 : playerViewQuarter == 1 ? 5 : playerViewQuarter == 2 ? 3 : 4;
-        if (meta == 0)
-            ((TileEntityEssentiaPump) world.getTileEntity(x, y, z)).facing =
-                    ForgeDirection.getOrientation(f).getOpposite();
+        if (meta == 0) ((TileEntityEssentiaPump) world.getTileEntity(x, y, z)).facing = ForgeDirection.getOrientation(f)
+                .getOpposite();
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+            float hitY, float hitZ) {
         return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
     }
 

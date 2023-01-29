@@ -10,7 +10,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.imageio.ImageIO;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -27,8 +29,10 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
+
 import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.aspects.Aspect;
 import witchinggadgets.WitchingGadgets;
 
@@ -38,28 +42,21 @@ import witchinggadgets.WitchingGadgets;
  * @author BluSunrize
  */
 public class ClientUtilities {
+
     public static int colour_CloakBlue = 2041173;
     public static int colour_CloakNil = 14737632;
     public static int colour_CloakRaven = 3487288;
     public static int colour_CloakStorage = Aspect.VOID.getColor();
 
-    public static String[] nodeTypeChatColour = {"7", "2", "8", "5", "4", "f"};
-    public static String[] nodeModifierChatColour = {"f", "7", "8"};
+    public static String[] nodeTypeChatColour = { "7", "2", "8", "5", "4", "f" };
+    public static String[] nodeModifierChatColour = { "f", "7", "8" };
 
     private static Minecraft mc() {
         return Minecraft.getMinecraft();
     }
 
-    public static void renderPixelBlock(
-            Tessellator tes,
-            double x,
-            double y,
-            double z,
-            double pixelLength,
-            double uMin,
-            double vMin,
-            double uMax,
-            double vMax) {
+    public static void renderPixelBlock(Tessellator tes, double x, double y, double z, double pixelLength, double uMin,
+            double vMin, double uMax, double vMax) {
         double dXMin = x * pixelLength;
         double dXMax = (x + 1) * pixelLength;
         double dYMin = y * pixelLength;
@@ -110,16 +107,8 @@ public class ClientUtilities {
         tes.draw();
     }
 
-    public static void renderPixelBlockOnlyVertex(
-            Tessellator tes,
-            double x,
-            double y,
-            double z,
-            double pixelLength,
-            double uMin,
-            double vMin,
-            double uMax,
-            double vMax) {
+    public static void renderPixelBlockOnlyVertex(Tessellator tes, double x, double y, double z, double pixelLength,
+            double uMin, double vMin, double uMax, double vMax) {
         double dXMin = x * pixelLength;
         double dXMax = (x + 1) * pixelLength;
         double dYMin = y * pixelLength;
@@ -158,20 +147,8 @@ public class ClientUtilities {
         tes.addVertexWithUV(dXMax, dYMin, dZMax, uMax, vMin);
     }
 
-    public static void drawSubBlock(
-            double minX,
-            double minY,
-            double minZ,
-            double maxX,
-            double maxY,
-            double maxZ,
-            boolean inverseXZ,
-            boolean mirror,
-            int x,
-            int y,
-            int z,
-            Block block,
-            RenderBlocks renderer) {
+    public static void drawSubBlock(double minX, double minY, double minZ, double maxX, double maxY, double maxZ,
+            boolean inverseXZ, boolean mirror, int x, int y, int z, Block block, RenderBlocks renderer) {
         if (mirror) {
             minX = 1 - minX;
             minZ = 1 - minZ;
@@ -185,17 +162,8 @@ public class ClientUtilities {
         renderer.renderStandardBlock(block, x, y, z);
     }
 
-    public static void drawSubBlockInInventory(
-            double minX,
-            double minY,
-            double minZ,
-            double maxX,
-            double maxY,
-            double maxZ,
-            boolean inverseXZ,
-            boolean mirror,
-            Block block,
-            RenderBlocks renderer) {
+    public static void drawSubBlockInInventory(double minX, double minY, double minZ, double maxX, double maxY,
+            double maxZ, boolean inverseXZ, boolean mirror, Block block, RenderBlocks renderer) {
         if (mirror) {
             minX = 1 - minX;
             minZ = 1 - minZ;
@@ -239,18 +207,17 @@ public class ClientUtilities {
         // GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 
-    public static void renderIconWithMask(
-            IIcon icon, IIcon mask, Color colour, IItemRenderer.ItemRenderType paramItemRenderType) {
+    public static void renderIconWithMask(IIcon icon, IIcon mask, Color colour,
+            IItemRenderer.ItemRenderType paramItemRenderType) {
 
         if ((mask == null) || (icon == null)) {
             return;
         }
-        if (colour != null)
-            GL11.glColor4f(
-                    colour.getRed() / 255f,
-                    colour.getGreen() / 255f,
-                    colour.getBlue() / 255f,
-                    colour.getAlpha() / 255f);
+        if (colour != null) GL11.glColor4f(
+                colour.getRed() / 255f,
+                colour.getGreen() / 255f,
+                colour.getBlue() / 255f,
+                colour.getAlpha() / 255f);
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
 
@@ -265,14 +232,14 @@ public class ClientUtilities {
             Tessellator.instance.addVertexWithUV(16.0D, 0.0D, 10.0D, mask.getMaxU(), mask.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, 10.0D, mask.getMinU(), mask.getMinV());
 
-            //		    preRenderIconInv(mask, 10.0D);
+            // preRenderIconInv(mask, 10.0D);
         } else {
 
             Tessellator.instance.addVertexWithUV(0.0D, 1.0D, 0.001D, mask.getMinU(), mask.getMaxV());
             Tessellator.instance.addVertexWithUV(1.0D, 1.0D, 0.001D, mask.getMaxU(), mask.getMaxV());
             Tessellator.instance.addVertexWithUV(1.0D, 0.0D, 0.001D, mask.getMaxU(), mask.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, 0.001D, mask.getMinU(), mask.getMinV());
-            //			preRenderIconWorld(mask, 0.001D);
+            // preRenderIconWorld(mask, 0.001D);
         }
         localTessellator.draw();
 
@@ -284,7 +251,7 @@ public class ClientUtilities {
             Tessellator.instance.addVertexWithUV(16.0D, 16.0D, -0.0635D, mask.getMaxU(), mask.getMaxV());
             Tessellator.instance.addVertexWithUV(16.0D, 0.0D, -0.0635D, mask.getMaxU(), mask.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, -0.0635D, mask.getMinU(), mask.getMinV());
-            //			preRenderIconInv(mask, -0.0635D);
+            // preRenderIconInv(mask, -0.0635D);
         } else {
 
             Tessellator.instance.addVertexWithUV(0.0D, 1.0D, -0.0635D, mask.getMinU(), mask.getMaxV());
@@ -292,11 +259,11 @@ public class ClientUtilities {
             Tessellator.instance.addVertexWithUV(1.0D, 0.0D, -0.0635D, mask.getMaxU(), mask.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, -0.0635D, mask.getMinU(), mask.getMinV());
 
-            //			preRenderIconWorld(mask, -0.0635D);
+            // preRenderIconWorld(mask, -0.0635D);
         }
         localTessellator.draw();
 
-        //		RenderHelper.setBlockTextureSheet();
+        // RenderHelper.setBlockTextureSheet();
         bindTexture("textures/atlas/blocks.png");
 
         GL11.glDepthFunc(514);
@@ -311,14 +278,14 @@ public class ClientUtilities {
             Tessellator.instance.addVertexWithUV(16.0D, 0.0D, 10.0D, icon.getMaxU(), icon.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, 10.0D, icon.getMinU(), icon.getMinV());
 
-            //			preRenderIconInv(icon, 10.0D);
+            // preRenderIconInv(icon, 10.0D);
         } else {
 
             Tessellator.instance.addVertexWithUV(0.0D, 1.0D, 0.001D, icon.getMinU(), icon.getMaxV());
             Tessellator.instance.addVertexWithUV(1.0D, 1.0D, 0.001D, icon.getMaxU(), icon.getMaxV());
             Tessellator.instance.addVertexWithUV(1.0D, 0.0D, 0.001D, icon.getMaxU(), icon.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, 0.001D, icon.getMinU(), icon.getMinV());
-            //			preRenderIconWorld(icon, 0.001D);
+            // preRenderIconWorld(icon, 0.001D);
         }
         localTessellator.draw();
 
@@ -331,14 +298,14 @@ public class ClientUtilities {
             Tessellator.instance.addVertexWithUV(16.0D, 0.0D, -0.0635D, icon.getMaxU(), icon.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, -0.0635D, icon.getMinU(), icon.getMinV());
 
-            //			preRenderIconInv(icon, -0.0635D);
+            // preRenderIconInv(icon, -0.0635D);
         } else {
 
             Tessellator.instance.addVertexWithUV(0.0D, 1.0D, -0.0635D, icon.getMinU(), icon.getMaxV());
             Tessellator.instance.addVertexWithUV(1.0D, 1.0D, -0.0635D, icon.getMaxU(), icon.getMaxV());
             Tessellator.instance.addVertexWithUV(1.0D, 0.0D, -0.0635D, icon.getMaxU(), icon.getMinV());
             Tessellator.instance.addVertexWithUV(0.0D, 0.0D, -0.0635D, icon.getMinU(), icon.getMinV());
-            //		  preRenderIconWorld(icon, -0.0635D);
+            // preRenderIconWorld(icon, -0.0635D);
         }
         localTessellator.draw();
 
@@ -349,8 +316,8 @@ public class ClientUtilities {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public static void drawTooltipHoveringText(
-            GuiScreen gui, List<String> list, int x, int y, FontRenderer font, int minimalWidth, int minimalHeight) {
+    public static void drawTooltipHoveringText(GuiScreen gui, List<String> list, int x, int y, FontRenderer font,
+            int minimalWidth, int minimalHeight) {
         if ((list == null) || (list.isEmpty())) {
             return;
         }
@@ -395,18 +362,18 @@ public class ClientUtilities {
         drawGradientRect(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
 
         drawHoveringText(list, i1, j1, font);
-        //		for (int k2 = 0; k2 < list.size(); k2++)
-        //		{
-        //			String s1 = (String)list.get(k2);
-        //			font.drawStringWithShadow(s1, i1, j1, -1);
-        //			if (k2 == 0) {
-        //				j1 += 2;
-        //			}
-        //			j1 += 10;
-        //		}
+        // for (int k2 = 0; k2 < list.size(); k2++)
+        // {
+        // String s1 = (String)list.get(k2);
+        // font.drawStringWithShadow(s1, i1, j1, -1);
+        // if (k2 == 0) {
+        // j1 += 2;
+        // }
+        // j1 += 10;
+        // }
         // gui.zLevel = 0.0F;
         // GuiContainer.itemRenderer.zLevel = 0.0F;
-        //		GL11.glEnable(2896);
+        // GL11.glEnable(2896);
         GL11.glEnable(2929);
         GL11.glEnable(32826);
     }
@@ -451,24 +418,21 @@ public class ClientUtilities {
     }
 
     public static double[] getPlayerHandPos(EntityPlayer player, boolean targetItem) {
-        boolean flag =
-                player.getEntityId() == Minecraft.getMinecraft().thePlayer.getEntityId()
-                        && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0;
+        boolean flag = player.getEntityId() == Minecraft.getMinecraft().thePlayer.getEntityId()
+                && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0;
         double x = player.posX;
         double y = player.posY - (targetItem ? .75 : .875);
         double z = player.posZ;
         float radius = targetItem ? .5f : .375f;
-        double rotation =
-                ((player.renderYawOffset % 360) + (player.getHeldItem() != null ? -25 : 0) + (targetItem ? -30 : 0))
-                        / 180
-                        * Math.PI;
+        double rotation = ((player.renderYawOffset % 360) + (player.getHeldItem() != null ? -25 : 0)
+                + (targetItem ? -30 : 0)) / 180 * Math.PI;
         if (!flag) {
             y += .25;
             rotation = ((player.rotationYaw % 360) + (player.getHeldItem() != null ? -25 : 0)) / 180 * Math.PI;
         }
         double xOff = Math.cos(rotation);
         double zOff = Math.sin(rotation);
-        return new double[] {x - xOff * radius, y, z - zOff * radius};
+        return new double[] { x - xOff * radius, y, z - zOff * radius };
     }
 
     static HashMap<String, IModelCustom> modelMap = new HashMap<String, IModelCustom>();
@@ -499,21 +463,13 @@ public class ClientUtilities {
         }
     }
 
-    public static void addBoxToBlockrender(
-            double xMin, double yMin, double zMin, double xMax, double yMax, double zMax, IIcon icon, int... coords) {
+    public static void addBoxToBlockrender(double xMin, double yMin, double zMin, double xMax, double yMax, double zMax,
+            IIcon icon, int... coords) {
         addBoxToBlockrender(null, xMin, yMin, zMin, xMax, yMax, zMax, icon, coords);
     }
 
-    public static void addBoxToBlockrender(
-            Vec3 offset,
-            double xMin,
-            double yMin,
-            double zMin,
-            double xMax,
-            double yMax,
-            double zMax,
-            IIcon icon,
-            int... coords) {
+    public static void addBoxToBlockrender(Vec3 offset, double xMin, double yMin, double zMin, double xMax, double yMax,
+            double zMax, IIcon icon, int... coords) {
         Tessellator tes = Tessellator.instance;
 
         double w = icon.getMaxU() - icon.getMinU();
@@ -677,69 +633,66 @@ public class ClientUtilities {
                 icon.getInterpolatedV(16 - yMax * 16));
     }
 
-    //	public static Framebuffer stackBuffer;
-    //	/** Thanks TTFTCUTS! :P */
-    //	public static BufferedImage getItemStackImage(ItemStack stack)
-    //	{
-    //		if (stackBuffer == null)
-    //			stackBuffer = new Framebuffer(16,16,true);
-    //		Minecraft mc = Minecraft.getMinecraft();
-    //		// bind the buffer and such
-    //		GL11.glPushMatrix();
-    //		GL11.glLoadIdentity();
-    //		stackBuffer.bindFramebuffer(true);
-    //		GL11.glClearColor(0, 0, 0, 0);
-    //		GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-    //		GL11.glMatrixMode(GL11.GL_PROJECTION);
-    //		GL11.glLoadIdentity();
-    //		GL11.glOrtho(0.0D, 16, 16, 0.0D, 1000.0D, 3000.0D);
-    //		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-    //		GL11.glLoadIdentity();
-    //		GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
-    //		//GL11.glTranslatef(0, 0, -5);
-    //		GL11.glColor3f(1, 0, 0);
-    //		// draw image
-    //		RenderItem render = new RenderItem();
-    //		GL11.glPushMatrix();
-    //		GL11.glEnable(GL11.GL_BLEND);
-    //		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    //		RenderHelper.enableGUIStandardItemLighting();
-    //		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-    //		GL11.glEnable(GL11.GL_DEPTH_TEST);
-    //		render.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
-    //		RenderHelper.disableStandardItemLighting();
-    //		GL11.glDisable(GL11.GL_BLEND);
-    //		GL11.glPopMatrix();
-    //		// set back to normal
-    //		stackBuffer.unbindFramebuffer();
-    //		GL11.glPopMatrix();
-    //		// dump to image
-    //		int width = 16;
-    //		int height = 16;
-    //		int length = width * height;
-    //		IntBuffer data = BufferUtils.createIntBuffer(length);
-    //		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    //		GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1);
-    //		GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
-    //		GL11.glBindTexture(GL11.GL_TEXTURE_2D, stackBuffer.framebufferTexture);
-    //		GL11.glGetTexImage(GL11.GL_TEXTURE_2D, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, data);
-    //		int[] dataarray = new int[length];
-    //		data.get(dataarray);
-    //		TextureUtil.func_147953_a(dataarray, 16, 16);
-    //		int l = stackBuffer.framebufferTextureHeight - stackBuffer.framebufferHeight;
-    //		image.setRGB(0, 0, 16, 16, dataarray, 0, 16);
-    //		for (int i1 = l; i1 < stackBuffer.framebufferTextureHeight; ++i1)
-    //			for (int j1 = 0; j1 < stackBuffer.framebufferWidth; ++j1)
-    //				image.setRGB(j1, i1 - l, dataarray[i1 * stackBuffer.framebufferTextureWidth + j1]);
-    //		// send out the image
-    //		return image;
-    //	}
+    // public static Framebuffer stackBuffer;
+    // /** Thanks TTFTCUTS! :P */
+    // public static BufferedImage getItemStackImage(ItemStack stack)
+    // {
+    // if (stackBuffer == null)
+    // stackBuffer = new Framebuffer(16,16,true);
+    // Minecraft mc = Minecraft.getMinecraft();
+    // // bind the buffer and such
+    // GL11.glPushMatrix();
+    // GL11.glLoadIdentity();
+    // stackBuffer.bindFramebuffer(true);
+    // GL11.glClearColor(0, 0, 0, 0);
+    // GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+    // GL11.glMatrixMode(GL11.GL_PROJECTION);
+    // GL11.glLoadIdentity();
+    // GL11.glOrtho(0.0D, 16, 16, 0.0D, 1000.0D, 3000.0D);
+    // GL11.glMatrixMode(GL11.GL_MODELVIEW);
+    // GL11.glLoadIdentity();
+    // GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
+    // //GL11.glTranslatef(0, 0, -5);
+    // GL11.glColor3f(1, 0, 0);
+    // // draw image
+    // RenderItem render = new RenderItem();
+    // GL11.glPushMatrix();
+    // GL11.glEnable(GL11.GL_BLEND);
+    // GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    // RenderHelper.enableGUIStandardItemLighting();
+    // GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+    // GL11.glEnable(GL11.GL_DEPTH_TEST);
+    // render.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, 0, 0);
+    // RenderHelper.disableStandardItemLighting();
+    // GL11.glDisable(GL11.GL_BLEND);
+    // GL11.glPopMatrix();
+    // // set back to normal
+    // stackBuffer.unbindFramebuffer();
+    // GL11.glPopMatrix();
+    // // dump to image
+    // int width = 16;
+    // int height = 16;
+    // int length = width * height;
+    // IntBuffer data = BufferUtils.createIntBuffer(length);
+    // BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    // GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1);
+    // GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
+    // GL11.glBindTexture(GL11.GL_TEXTURE_2D, stackBuffer.framebufferTexture);
+    // GL11.glGetTexImage(GL11.GL_TEXTURE_2D, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, data);
+    // int[] dataarray = new int[length];
+    // data.get(dataarray);
+    // TextureUtil.func_147953_a(dataarray, 16, 16);
+    // int l = stackBuffer.framebufferTextureHeight - stackBuffer.framebufferHeight;
+    // image.setRGB(0, 0, 16, 16, dataarray, 0, 16);
+    // for (int i1 = l; i1 < stackBuffer.framebufferTextureHeight; ++i1)
+    // for (int j1 = 0; j1 < stackBuffer.framebufferWidth; ++j1)
+    // image.setRGB(j1, i1 - l, dataarray[i1 * stackBuffer.framebufferTextureWidth + j1]);
+    // // send out the image
+    // return image;
+    // }
 
     public static BufferedImage getImageForResource(ResourceLocation resource) throws IOException {
-        InputStream layer = Minecraft.getMinecraft()
-                .getResourceManager()
-                .getResource(resource)
-                .getInputStream();
+        InputStream layer = Minecraft.getMinecraft().getResourceManager().getResource(resource).getInputStream();
         return ImageIO.read(layer);
     }
 
@@ -760,7 +713,8 @@ public class ClientUtilities {
                     String iconName = tas.getIconName();
                     iconName = iconName.substring(0, Math.max(0, iconName.indexOf(":") + 1))
                             + (item.getSpriteNumber() == 0 ? "textures/blocks/" : "textures/items/")
-                            + iconName.substring(Math.max(0, iconName.indexOf(":") + 1)) + ".png";
+                            + iconName.substring(Math.max(0, iconName.indexOf(":") + 1))
+                            + ".png";
                     resource = getResource(iconName);
                     buffered = getImageForResource(resource);
                     int passColour = item.getColorFromItemStack(stack, pass);
@@ -769,11 +723,10 @@ public class ClientUtilities {
                     buffered.getRGB(0, 0, buffered.getWidth(), buffered.getHeight(), data, 0, tas.getIconWidth());
                     // buffered.getRGB(tas.getOriginX(),tas.getOriginY(), tas.getIconWidth(),tas.getIconHeight(), data,
                     // 0,tas.getIconWidth());
-                    for (int rgb : data)
-                        if (rgb != 0) {
-                            int coloured = blendColoursToInt(rgb, passColour) & 0xffffff;
-                            if (coloured > 0 /*&& !colourSet.contains(coloured)*/) colourSet.add(coloured);
-                        }
+                    for (int rgb : data) if (rgb != 0) {
+                        int coloured = blendColoursToInt(rgb, passColour) & 0xffffff;
+                        if (coloured > 0 /* && !colourSet.contains(coloured) */) colourSet.add(coloured);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -831,14 +784,11 @@ public class ClientUtilities {
         assert (o0 instanceof Color || o0 instanceof Integer);
         Color c = o0 instanceof Color ? (Color) o0 : new Color((Integer) o0);
 
-        int modifierR = c.getRed() > c.getGreen() && c.getRed() > c.getBlue()
-                ? 0xff
+        int modifierR = c.getRed() > c.getGreen() && c.getRed() > c.getBlue() ? 0xff
                 : c.getRed() < c.getGreen() && c.getRed() < c.getBlue() ? 0x88 : 0xbb;
-        int modifierG = c.getGreen() > c.getRed() && c.getGreen() > c.getBlue()
-                ? 0xff
+        int modifierG = c.getGreen() > c.getRed() && c.getGreen() > c.getBlue() ? 0xff
                 : c.getGreen() < c.getRed() && c.getGreen() < c.getBlue() ? 0x88 : 0xbb;
-        int modifierB = c.getBlue() > c.getGreen() && c.getBlue() > c.getRed()
-                ? 0xff
+        int modifierB = c.getBlue() > c.getGreen() && c.getBlue() > c.getRed() ? 0xff
                 : c.getBlue() < c.getGreen() && c.getBlue() < c.getRed() ? 0x88 : 0xbb;
         int modifier = (modifierR << 16) + (modifierG << 8) + (modifierB);
         Color cV = ClientUtilities.blendColours(c, modifier);
@@ -854,6 +804,7 @@ public class ClientUtilities {
     }
 
     public static class ColourBrightnessComparator implements Comparator<Integer> {
+
         @Override
         public int compare(Integer i0, Integer i1) {
             Integer b1 = getPerceptualBrightness(i0);

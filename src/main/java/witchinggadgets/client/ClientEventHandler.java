@@ -1,10 +1,5 @@
 package witchinggadgets.client;
 
-import baubles.api.BaublesApi;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -28,8 +23,10 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
@@ -49,8 +46,14 @@ import witchinggadgets.common.util.Utilities;
 import witchinggadgets.common.util.WGKeyHandler;
 import witchinggadgets.common.util.handler.InfusedGemHandler;
 import witchinggadgets.common.util.network.message.MessagePrimordialGlove;
+import baubles.api.BaublesApi;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClientEventHandler {
+
     boolean headgearDisabled = true;
     boolean armDisabled = true;
     boolean capeDisabled = true;
@@ -63,21 +66,17 @@ public class ClientEventHandler {
             if (!event.entityPlayer.equals(Minecraft.getMinecraft().thePlayer)
                     && event.entityPlayer.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)
                     && EnchantmentHelper.getEnchantmentLevel(
-                                    WGContent.enc_unveiling.effectId,
-                                    Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4))
-                            > 0) {
-                float x = (float) event.entityPlayer.posX
-                        + event.entityPlayer.getRNG().nextFloat()
-                        - .5f;
-                float y = (float) event.entityPlayer.posY
-                        + 1
-                        + event.entityPlayer.getRNG().nextFloat()
-                        - .5f;
-                float z = (float) event.entityPlayer.posZ
-                        + event.entityPlayer.getRNG().nextFloat()
-                        - .5f;
-                Thaumcraft.proxy.sparkle(x, y, z, 1, 0, 0);
-            }
+                            WGContent.enc_unveiling.effectId,
+                            Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4)) > 0) {
+                                float x = (float) event.entityPlayer.posX + event.entityPlayer.getRNG().nextFloat()
+                                        - .5f;
+                                float y = (float) event.entityPlayer.posY + 1
+                                        + event.entityPlayer.getRNG().nextFloat()
+                                        - .5f;
+                                float z = (float) event.entityPlayer.posZ + event.entityPlayer.getRNG().nextFloat()
+                                        - .5f;
+                                Thaumcraft.proxy.sparkle(x, y, z, 1, 0, 0);
+                            }
     }
 
     @SideOnly(Side.CLIENT)
@@ -91,31 +90,29 @@ public class ClientEventHandler {
         if (event.itemStack.getItem().equals(Items.skull))
             event.toolTip.add(StatCollector.translateToLocal("wg.desc.infusionStabilizer"));
         else if (Block.getBlockFromItem(event.itemStack.getItem()) != null)
-            for (Class intf :
-                    Block.getBlockFromItem(event.itemStack.getItem()).getClass().getInterfaces())
+            for (Class intf : Block.getBlockFromItem(event.itemStack.getItem()).getClass().getInterfaces())
                 if (intf.getCanonicalName().endsWith("IInfusionStabiliser"))
                     event.toolTip.add(StatCollector.translateToLocal("wg.desc.infusionStabilizer"));
 
-        if (event.entityPlayer != null)
-            if (InfusedGemHandler.isGem(event.itemStack)
-                    && GuiScreen.isShiftKeyDown()
-                    && ThaumcraftApiHelper.isResearchComplete(
-                            event.entityPlayer.getCommandSenderName(), "GEMCUTTING")) {
-                if (InfusedGemHandler.getNaturalAffinities(event.itemStack) != null
-                        && InfusedGemHandler.getNaturalAffinities(event.itemStack).length > 0) {
-                    event.toolTip.add(EnumChatFormatting.DARK_GREEN
-                            + StatCollector.translateToLocal(Lib.DESCRIPTION + "gemaffinity"));
-                    for (Aspect a : InfusedGemHandler.getNaturalAffinities(event.itemStack))
-                        if (a != null) event.toolTip.add(" " + EnumChatFormatting.DARK_GREEN + a.getName());
+        if (event.entityPlayer != null) if (InfusedGemHandler.isGem(event.itemStack) && GuiScreen.isShiftKeyDown()
+                && ThaumcraftApiHelper.isResearchComplete(event.entityPlayer.getCommandSenderName(), "GEMCUTTING")) {
+                    if (InfusedGemHandler.getNaturalAffinities(event.itemStack) != null
+                            && InfusedGemHandler.getNaturalAffinities(event.itemStack).length > 0) {
+                        event.toolTip.add(
+                                EnumChatFormatting.DARK_GREEN
+                                        + StatCollector.translateToLocal(Lib.DESCRIPTION + "gemaffinity"));
+                        for (Aspect a : InfusedGemHandler.getNaturalAffinities(event.itemStack))
+                            if (a != null) event.toolTip.add(" " + EnumChatFormatting.DARK_GREEN + a.getName());
+                    }
+                    if (InfusedGemHandler.getNaturalAversions(event.itemStack) != null
+                            && InfusedGemHandler.getNaturalAversions(event.itemStack).length > 0) {
+                        event.toolTip.add(
+                                EnumChatFormatting.RED
+                                        + StatCollector.translateToLocal(Lib.DESCRIPTION + "gemaversion"));
+                        for (Aspect a : InfusedGemHandler.getNaturalAversions(event.itemStack))
+                            if (a != null) event.toolTip.add(" " + EnumChatFormatting.RED + a.getName());
+                    }
                 }
-                if (InfusedGemHandler.getNaturalAversions(event.itemStack) != null
-                        && InfusedGemHandler.getNaturalAversions(event.itemStack).length > 0) {
-                    event.toolTip.add(
-                            EnumChatFormatting.RED + StatCollector.translateToLocal(Lib.DESCRIPTION + "gemaversion"));
-                    for (Aspect a : InfusedGemHandler.getNaturalAversions(event.itemStack))
-                        if (a != null) event.toolTip.add(" " + EnumChatFormatting.RED + a.getName());
-                }
-            }
     }
 
     @SideOnly(Side.CLIENT)
@@ -133,9 +130,8 @@ public class ClientEventHandler {
             double radius = Math.sqrt(mx * mx + my * my);
 
             double cx = mx / radius; // Math.cos(Math.toRadians(angle));
-            double angle = (mx < 0 ? 180 : 0)
-                    + Math.abs((mx < 0 ? -180 : 0)
-                            + (my < 0 ? 90 : 0)
+            double angle = (mx < 0 ? 180 : 0) + Math.abs(
+                    (mx < 0 ? -180 : 0) + (my < 0 ? 90 : 0)
                             + Math.abs((my < 0 ? -90 : 0) + Math.abs(Math.toDegrees(Math.acos(cx)) - 90)));
             int sel = angle > 288 ? 0 : angle < 72 ? 1 : 2 + (int) ((288 - angle) / 72);
             WitchingGadgets.packetHandler.sendToServer(new MessagePrimordialGlove(player, (byte) 0, sel));
@@ -146,8 +142,7 @@ public class ClientEventHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void renderGameOverlay(RenderGameOverlayEvent.Pre event) {
-        if (TileEntitySaunaStove.targetedPlayers.containsKey(
-                        Minecraft.getMinecraft().thePlayer.getEntityId())
+        if (TileEntitySaunaStove.targetedPlayers.containsKey(Minecraft.getMinecraft().thePlayer.getEntityId())
                 && event.type == RenderGameOverlayEvent.ElementType.HELMET) {
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             GL11.glDepthMask(false);
@@ -176,9 +171,8 @@ public class ClientEventHandler {
             Minecraft mc = Minecraft.getMinecraft();
             RenderItem ri = RenderItem.getInstance();
 
-            if (WGKeyHandler.gemLock
-                    && (mc.thePlayer.getCurrentEquippedItem() == null
-                            || !(mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemPrimordialGlove)))
+            if (WGKeyHandler.gemLock && (mc.thePlayer.getCurrentEquippedItem() == null
+                    || !(mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemPrimordialGlove)))
                 WGKeyHandler.gemLock = false;
 
             GL11.glEnable(3042);
@@ -217,63 +211,52 @@ public class ClientEventHandler {
                 int mx = Mouse.getX() - mc.displayWidth / 2;
                 int my = Mouse.getY() - mc.displayHeight / 2;
                 double reverseRadius = Math.sqrt(mx * mx + my * my);
-                double reverseAngle = (mx < 0 ? 180 : 0)
-                        + Math.abs((mx < 0 ? -180 : 0)
-                                + (my < 0 ? 90 : 0)
-                                + Math.abs((my < 0 ? -90 : 0)
-                                        + Math.abs(Math.toDegrees(Math.acos(mx / reverseRadius)) - 90)));
+                double reverseAngle = (mx < 0 ? 180 : 0) + Math.abs(
+                        (mx < 0 ? -180 : 0) + (my < 0 ? 90 : 0)
+                                + Math.abs(
+                                        (my < 0 ? -90 : 0)
+                                                + Math.abs(Math.toDegrees(Math.acos(mx / reverseRadius)) - 90)));
                 int sel = reverseAngle > 288 ? 0 : reverseAngle < 72 ? 1 : 2 + (int) ((288 - reverseAngle) / 72);
                 //
-                //				mc.fontRenderer.drawString("mPos: "+mx+", "+my+", sel: "+sel, x, y, 0xffffff);
+                // mc.fontRenderer.drawString("mPos: "+mx+", "+my+", sel: "+sel, x, y, 0xffffff);
                 GL11.glPushMatrix();
-                for (int g = 0; g < gems.length; g++)
-                    if (gems[g] != null) {
-                        int ix = (int)
-                                (((g == 0 ? -54 : g == 1 ? 13 : g == 3 ? -22 : g == 2 ? -76 : 35) / 256f) * rad * 2);
-                        int iy = (int) (((g == 0 || g == 1 ? -64 : g == 3 ? 36 : -6) / 256f) * rad * 2);
-                        ri.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), gems[g], ix, iy);
-                        if (sel != g) {
-                            GL11.glDepthFunc(GL11.GL_EQUAL);
-                            GL11.glDisable(GL11.GL_LIGHTING);
-                            GL11.glDepthMask(false);
-                            ClientUtilities.bindTexture("witchinggadgets:textures/models/white.png");
-                            GL11.glEnable(3042);
-                            GL11.glEnable(GL11.GL_BLEND);
-                            GL11.glBlendFunc(770, 771);
+                for (int g = 0; g < gems.length; g++) if (gems[g] != null) {
+                    int ix = (int) (((g == 0 ? -54 : g == 1 ? 13 : g == 3 ? -22 : g == 2 ? -76 : 35) / 256f) * rad * 2);
+                    int iy = (int) (((g == 0 || g == 1 ? -64 : g == 3 ? 36 : -6) / 256f) * rad * 2);
+                    ri.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), gems[g], ix, iy);
+                    if (sel != g) {
+                        GL11.glDepthFunc(GL11.GL_EQUAL);
+                        GL11.glDisable(GL11.GL_LIGHTING);
+                        GL11.glDepthMask(false);
+                        ClientUtilities.bindTexture("witchinggadgets:textures/models/white.png");
+                        GL11.glEnable(3042);
+                        GL11.glEnable(GL11.GL_BLEND);
+                        GL11.glBlendFunc(770, 771);
 
-                            for (int j1 = 0; j1 < 2; ++j1) {
-                                tessellator.startDrawingQuads();
-                                tessellator.setColorRGBA_I(0, 64);
-                                tessellator.addVertexWithUV(
-                                        ix - 2 + 00,
-                                        iy - 2 + 20,
-                                        50,
-                                        0,
-                                        1); // ((f2 + (float)p5 * f4) * f), )((f3 + (float)p5) * f1));
-                                tessellator.addVertexWithUV(
-                                        ix - 2 + 20,
-                                        iy - 2 + 20,
-                                        50,
-                                        1,
-                                        1); // ((f2 + (float)p4 + (float)p5 * f4) * f), ((f3 + (float)p5) * f1));
-                                tessellator.addVertexWithUV(
-                                        ix - 2 + 20,
-                                        iy - 2 + 00,
-                                        50,
-                                        1,
-                                        0); // ((f2 + (float)p4) * f), ((f3 + 0.0F) * f1));
-                                tessellator.addVertexWithUV(
-                                        ix - 2 + 00, iy - 2 + 00, 50, 0, 0); // ((f2 + 0.0F) * f), ((f3 + 0.0F) * f1));
-                                tessellator.draw();
-                            }
-
-                            GL11.glDepthMask(true);
-                            GL11.glDisable(GL11.GL_BLEND);
-                            GL11.glDisable(GL11.GL_ALPHA_TEST);
-                            GL11.glEnable(GL11.GL_LIGHTING);
-                            GL11.glDepthFunc(GL11.GL_LEQUAL);
+                        for (int j1 = 0; j1 < 2; ++j1) {
+                            tessellator.startDrawingQuads();
+                            tessellator.setColorRGBA_I(0, 64);
+                            tessellator.addVertexWithUV(ix - 2 + 00, iy - 2 + 20, 50, 0, 1); // ((f2 + (float)p5 * f4) *
+                                                                                             // f), )((f3 + (float)p5) *
+                                                                                             // f1));
+                            tessellator.addVertexWithUV(ix - 2 + 20, iy - 2 + 20, 50, 1, 1); // ((f2 + (float)p4 +
+                                                                                             // (float)p5 * f4) * f),
+                                                                                             // ((f3 + (float)p5) *
+                                                                                             // f1));
+                            tessellator.addVertexWithUV(ix - 2 + 20, iy - 2 + 00, 50, 1, 0); // ((f2 + (float)p4) * f),
+                                                                                             // ((f3 + 0.0F) * f1));
+                            tessellator.addVertexWithUV(ix - 2 + 00, iy - 2 + 00, 50, 0, 0); // ((f2 + 0.0F) * f), ((f3
+                                                                                             // + 0.0F) * f1));
+                            tessellator.draw();
                         }
+
+                        GL11.glDepthMask(true);
+                        GL11.glDisable(GL11.GL_BLEND);
+                        GL11.glDisable(GL11.GL_ALPHA_TEST);
+                        GL11.glEnable(GL11.GL_LIGHTING);
+                        GL11.glDepthFunc(GL11.GL_LEQUAL);
                     }
+                }
                 GL11.glPopMatrix();
             }
 
@@ -302,9 +285,8 @@ public class ClientEventHandler {
         int translucency = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_invisibleGear.effectId, event.stack);
         if (event.stack != null && (translucency > 1 || (translucency > 0 && event.entityPlayer.isInvisible()))) {
             boolean unveiling = EnchantmentHelper.getEnchantmentLevel(
-                            WGContent.enc_unveiling.effectId,
-                            Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4))
-                    > 0;
+                    WGContent.enc_unveiling.effectId,
+                    Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4)) > 0;
             if (event.entityPlayer.equals(Minecraft.getMinecraft().thePlayer) || !unveiling) event.result = -2;
         }
     }
@@ -315,15 +297,13 @@ public class ClientEventHandler {
         int translucency = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_invisibleGear.effectId, event.stack);
         if (event.stack != null && (translucency > 1 || (translucency > 0 && event.entityPlayer.isInvisible()))) {
             boolean unveiling = EnchantmentHelper.getEnchantmentLevel(
-                            WGContent.enc_unveiling.effectId,
-                            Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4))
-                    > 0;
+                    WGContent.enc_unveiling.effectId,
+                    Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4)) > 0;
             if (event.entityPlayer.equals(Minecraft.getMinecraft().thePlayer) || !unveiling) event.shouldRender = false;
         }
         for (ItemStack cloak : Utilities.getActiveMagicalCloak(event.entityPlayer))
-            if (cloak != null
-                    && cloak.hasTagCompound()
-                    && cloak.getTagCompound().getBoolean("isSpectral")) event.shouldRender = false;
+            if (cloak != null && cloak.hasTagCompound() && cloak.getTagCompound().getBoolean("isSpectral"))
+                event.shouldRender = false;
     }
 
     // Changes the background image once certain research is unlocked
@@ -332,8 +312,8 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if (Minecraft.getMinecraft().thePlayer != null && event.gui instanceof GuiResearchBrowser) {
-            if (ThaumcraftApiHelper.isResearchComplete(
-                    Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "ELDRITCHMINOR"))
+            if (ThaumcraftApiHelper
+                    .isResearchComplete(Minecraft.getMinecraft().thePlayer.getCommandSenderName(), "ELDRITCHMINOR"))
                 ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[1];
             else ResearchCategories.researchCategories.get("WITCHGADG").background = WGResearch.wgbackgrounds[0];
         }
@@ -345,38 +325,25 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void setSpecialRendersLiving(RenderLivingEvent.Pre event) {
         if (event.entity instanceof EntityPlayer) {
-            EntityPlayer pl = Minecraft.getMinecraft()
-                    .thePlayer
-                    .worldObj
+            EntityPlayer pl = Minecraft.getMinecraft().thePlayer.worldObj
                     .getPlayerEntityByName(event.entity.getCommandSenderName());
-            if (pl != null)
-                for (ItemStack cloak : Utilities.getActiveMagicalCloak(pl))
-                    if (cloak != null
-                            && cloak.hasTagCompound()
-                            && cloak.getTagCompound().getBoolean("isSpectral")) {
-                        GL11.glEnable(3042);
-                        boolean goggles = Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4) != null
-                                && (Minecraft.getMinecraft()
-                                                        .thePlayer
-                                                        .getEquipmentInSlot(4)
-                                                        .getItem()
-                                                instanceof IRevealer
-                                        || Minecraft.getMinecraft()
-                                                        .thePlayer
-                                                        .getEquipmentInSlot(4)
-                                                        .getItem()
-                                                instanceof IGoggles);
-                        boolean unveiling = EnchantmentHelper.getEnchantmentLevel(
-                                        WGContent.enc_unveiling.effectId,
-                                        Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4))
-                                > 0;
+            if (pl != null) for (ItemStack cloak : Utilities.getActiveMagicalCloak(pl))
+                if (cloak != null && cloak.hasTagCompound() && cloak.getTagCompound().getBoolean("isSpectral")) {
+                    GL11.glEnable(3042);
+                    boolean goggles = Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4) != null
+                            && (Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4).getItem() instanceof IRevealer
+                                    || Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4)
+                                            .getItem() instanceof IGoggles);
+                    boolean unveiling = EnchantmentHelper.getEnchantmentLevel(
+                            WGContent.enc_unveiling.effectId,
+                            Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4)) > 0;
 
-                        if (event.entity.equals(Minecraft.getMinecraft().thePlayer))
-                            GL11.glColor4f(.5f, .5f, .5f, spectralAlpha);
-                        else if (unveiling) GL11.glColor4f(1, 1, 1, .75f);
-                        else if (goggles) GL11.glColor4f(.25f, .25f, .25f, spectralAlpha);
-                        else GL11.glColor4f(1, 1, 1, 0);
-                    }
+                    if (event.entity.equals(Minecraft.getMinecraft().thePlayer))
+                        GL11.glColor4f(.5f, .5f, .5f, spectralAlpha);
+                    else if (unveiling) GL11.glColor4f(1, 1, 1, .75f);
+                    else if (goggles) GL11.glColor4f(.25f, .25f, .25f, spectralAlpha);
+                    else GL11.glColor4f(1, 1, 1, 0);
+                }
         }
     }
 
@@ -384,18 +351,13 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void resetResetSpecialLiving(RenderLivingEvent.Post event) {
         if (event.entity instanceof EntityPlayer) {
-            EntityPlayer pl = Minecraft.getMinecraft()
-                    .thePlayer
-                    .worldObj
+            EntityPlayer pl = Minecraft.getMinecraft().thePlayer.worldObj
                     .getPlayerEntityByName(event.entity.getCommandSenderName());
-            if (pl != null)
-                for (ItemStack cloak : Utilities.getActiveMagicalCloak(pl))
-                    if (cloak != null
-                            && cloak.hasTagCompound()
-                            && cloak.getTagCompound().getBoolean("isSpectral")) {
-                        GL11.glDisable(3042);
-                        GL11.glColor4f(1, 1, 1, 1);
-                    }
+            if (pl != null) for (ItemStack cloak : Utilities.getActiveMagicalCloak(pl))
+                if (cloak != null && cloak.hasTagCompound() && cloak.getTagCompound().getBoolean("isSpectral")) {
+                    GL11.glDisable(3042);
+                    GL11.glColor4f(1, 1, 1, 1);
+                }
         }
     }
 
@@ -403,24 +365,18 @@ public class ClientEventHandler {
     @SubscribeEvent()
     public void renderPlayerSpecials(RenderLivingEvent.Specials.Pre event) {
         if (event.entity instanceof EntityPlayer) {
-            EntityPlayer pl = Minecraft.getMinecraft()
-                    .thePlayer
-                    .worldObj
+            EntityPlayer pl = Minecraft.getMinecraft().thePlayer.worldObj
                     .getPlayerEntityByName(event.entity.getCommandSenderName());
-            if (pl != null)
-                for (ItemStack cloak : Utilities.getActiveMagicalCloak(pl))
-                    if (cloak != null
-                            && cloak.hasTagCompound()
-                            && cloak.getTagCompound().getBoolean("isSpectral")) {
-                        boolean unveiling = EnchantmentHelper.getEnchantmentLevel(
-                                        WGContent.enc_unveiling.effectId,
-                                        Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4))
-                                > 0;
-                        if (!unveiling) {
+            if (pl != null) for (ItemStack cloak : Utilities.getActiveMagicalCloak(pl))
+                if (cloak != null && cloak.hasTagCompound() && cloak.getTagCompound().getBoolean("isSpectral")) {
+                    boolean unveiling = EnchantmentHelper.getEnchantmentLevel(
+                            WGContent.enc_unveiling.effectId,
+                            Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4)) > 0;
+                    if (!unveiling) {
 
-                            event.setCanceled(true);
-                        }
+                        event.setCanceled(true);
                     }
+                }
         }
     }
 
@@ -428,12 +384,13 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void onFOVUpdate(FOVUpdateEvent event) {
         IInventory baubles = BaublesApi.getBaubles(event.entity);
-        if (Utilities.isPlayerUsingBow(event.entity)
-                && baubles != null
-                && (OreDictionary.itemMatches(
-                                new ItemStack(WGContent.ItemMagicalBaubles, 1, 6), baubles.getStackInSlot(1), true)
+        if (Utilities.isPlayerUsingBow(event.entity) && baubles != null
+                && (OreDictionary
+                        .itemMatches(new ItemStack(WGContent.ItemMagicalBaubles, 1, 6), baubles.getStackInSlot(1), true)
                         || OreDictionary.itemMatches(
-                                new ItemStack(WGContent.ItemMagicalBaubles, 1, 6), baubles.getStackInSlot(2), true))) {
+                                new ItemStack(WGContent.ItemMagicalBaubles, 1, 6),
+                                baubles.getStackInSlot(2),
+                                true))) {
             if (event.entity.isSneaking()) event.newfov = .25f;
         }
     }

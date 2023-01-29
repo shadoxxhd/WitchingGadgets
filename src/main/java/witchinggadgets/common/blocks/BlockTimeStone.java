@@ -6,9 +6,11 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import witchinggadgets.common.blocks.tiles.TileEntityAgeingStone;
 
 public class BlockTimeStone extends BlockContainer {
+
     public BlockTimeStone() {
         super(Material.rock);
         this.setHardness(0.8F);
@@ -16,8 +18,8 @@ public class BlockTimeStone extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+            float hitY, float hitZ) {
         return false;
     }
 

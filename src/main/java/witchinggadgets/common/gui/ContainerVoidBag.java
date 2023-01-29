@@ -6,10 +6,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import thaumcraft.common.container.ContainerGhostSlots;
 import witchinggadgets.common.items.tools.ItemBag;
 
 public class ContainerVoidBag extends ContainerGhostSlots {
+
     private World worldObj;
     private int blockedSlot;
     public IInventory input = new InventoryBag(this);
@@ -29,12 +31,11 @@ public class ContainerVoidBag extends ContainerGhostSlots {
 
         bindPlayerInventory(iinventory);
 
-        if (!world.isRemote)
-            try {
-                ((InventoryBag) this.input).stackList = ((ItemBag) this.pouch.getItem()).getStoredItems(this.pouch);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (!world.isRemote) try {
+            ((InventoryBag) this.input).stackList = ((ItemBag) this.pouch.getItem()).getStoredItems(this.pouch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.onCraftMatrixChanged(this.input);
     }
 

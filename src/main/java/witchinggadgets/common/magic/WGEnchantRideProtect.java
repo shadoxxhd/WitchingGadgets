@@ -1,13 +1,15 @@
 package witchinggadgets.common.magic;
 
-import baubles.api.IBauble;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+
 import travellersgear.api.TravellersGearAPI;
+import baubles.api.IBauble;
 
 public class WGEnchantRideProtect extends Enchantment {
+
     public WGEnchantRideProtect(int id) {
         super(id, 0, EnumEnchantmentType.armor_head);
         this.setName("wg.rideProtect");
@@ -30,10 +32,8 @@ public class WGEnchantRideProtect extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack != null
-                && (stack.getItem() instanceof ItemArmor
-                        || stack.getItem() instanceof IBauble
-                        || TravellersGearAPI.isTravellersGear(stack));
+        return stack != null && (stack.getItem() instanceof ItemArmor || stack.getItem() instanceof IBauble
+                || TravellersGearAPI.isTravellersGear(stack));
     }
 
     @Override

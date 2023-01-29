@@ -1,8 +1,8 @@
 package witchinggadgets.common.blocks.tiles;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
@@ -24,10 +25,12 @@ import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.util.Utilities;
 import witchinggadgets.common.util.Utilities.OreDictStack;
 import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssentiaTransport {
+
     public byte position = -1;
-    public int[] masterPos = {-1, -1, -1};
+    public int[] masterPos = { -1, -1, -1 };
     int speedupTick = 0;
     int processTick = 0;
     int recipeTime = 0;
@@ -40,27 +43,27 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 
     @Override
     public void updateEntity() {
-        if ((position != 1
-                        && position != 3
-                        && position != 4
-                        && position != 5
-                        && position != 7
-                        && position != 10
-                        && position != 12
-                        && position != 14
-                        && position != 16)
-                || this.worldObj.isRemote) return;
+        if ((position != 1 && position != 3
+                && position != 4
+                && position != 5
+                && position != 7
+                && position != 10
+                && position != 12
+                && position != 14
+                && position != 16) || this.worldObj.isRemote)
+            return;
 
-        /*if(worldObj.getWorldTime()%5==0 && position==1||position==3||position==5||position==7 && masterPos!=null && worldObj.getTileEntity(masterPos[0],masterPos[1],masterPos[2]) instanceof TileEntityBlastfurnace)
-        {
-        	TileEntityBlastfurnace master = (TileEntityBlastfurnace) worldObj.getTileEntity(masterPos[0],masterPos[1],masterPos[2]);
-        	if(drawEssentia())
-        		master.speedupTick += 600;
-        }*/
+        /*
+         * if(worldObj.getWorldTime()%5==0 && position==1||position==3||position==5||position==7 && masterPos!=null &&
+         * worldObj.getTileEntity(masterPos[0],masterPos[1],masterPos[2]) instanceof TileEntityBlastfurnace) {
+         * TileEntityBlastfurnace master = (TileEntityBlastfurnace)
+         * worldObj.getTileEntity(masterPos[0],masterPos[1],masterPos[2]); if(drawEssentia()) master.speedupTick += 600;
+         * }
+         */
 
         if (position == 10 || position == 12 || position == 14 || position == 16) {
-            TileEntityBlastfurnace master =
-                    (TileEntityBlastfurnace) worldObj.getTileEntity(masterPos[0], masterPos[1], masterPos[2]);
+            TileEntityBlastfurnace master = (TileEntityBlastfurnace) worldObj
+                    .getTileEntity(masterPos[0], masterPos[1], masterPos[2]);
             if (master.speedupTick <= 0)
                 master.speedupTick = VisNetHandler.drainVis(worldObj, xCoord, yCoord, zCoord, Aspect.FIRE, 5);
         }
@@ -86,40 +89,38 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
             if (processTick > calc) processTick = calc;
         }
 
-        if (processTick <= 0 && !inputs.isEmpty() && fuel > 0)
-            if (cooking) {
-                ItemStack inputStack = inputs.get(0);
-                InfernalBlastfurnaceRecipe recipe = InfernalBlastfurnaceRecipe.getRecipeForInput(inputStack);
-                ItemStack outputStack = recipe.getOutput();
-                outputItem(outputStack);
+        if (processTick <= 0 && !inputs.isEmpty() && fuel > 0) if (cooking) {
+            ItemStack inputStack = inputs.get(0);
+            InfernalBlastfurnaceRecipe recipe = InfernalBlastfurnaceRecipe.getRecipeForInput(inputStack);
+            ItemStack outputStack = recipe.getOutput();
+            outputItem(outputStack);
 
-                if (recipe.getBonus() != null) {
-                    ItemStack bonus = Utilities.copyStackWithSize(recipe.getBonus(), 0);
-                    if (getBellows() == 0) {
-                        if (this.worldObj.rand.nextInt(4) == 0) bonus.stackSize += 1;
-                    } else
-                        for (int b = 0; b < getBellows(); b++)
-                            if (this.worldObj.rand.nextFloat() < 0.44F) bonus.stackSize += 1;
-                    outputItem(bonus);
-                }
-
-                inputStack.stackSize -= (recipe.getInput() instanceof OreDictStack)
-                        ? ((OreDictStack) recipe.getInput()).amount
-                        : ((ItemStack) recipe.getInput()).stackSize;
-                if (inputStack.stackSize > 0) inputs.set(0, inputStack);
-                else inputs.remove(0);
-                cooking = false;
-                this.specialFuel = false;
-            } else {
-                ItemStack inputStack = inputs.get(0);
-                InfernalBlastfurnaceRecipe recipe = InfernalBlastfurnaceRecipe.getRecipeForInput(inputStack);
-                if (recipe != null) {
-                    this.recipeTime = recipe.getSmeltingTime();
-                    this.processTick = calculateTime();
-                    if (recipe.isSpecial()) this.specialFuel = true;
-                } else inputs.remove(0);
-                cooking = true;
+            if (recipe.getBonus() != null) {
+                ItemStack bonus = Utilities.copyStackWithSize(recipe.getBonus(), 0);
+                if (getBellows() == 0) {
+                    if (this.worldObj.rand.nextInt(4) == 0) bonus.stackSize += 1;
+                } else for (int b = 0; b < getBellows(); b++)
+                    if (this.worldObj.rand.nextFloat() < 0.44F) bonus.stackSize += 1;
+                outputItem(bonus);
             }
+
+            inputStack.stackSize -= (recipe.getInput() instanceof OreDictStack)
+                    ? ((OreDictStack) recipe.getInput()).amount
+                    : ((ItemStack) recipe.getInput()).stackSize;
+            if (inputStack.stackSize > 0) inputs.set(0, inputStack);
+            else inputs.remove(0);
+            cooking = false;
+            this.specialFuel = false;
+        } else {
+            ItemStack inputStack = inputs.get(0);
+            InfernalBlastfurnaceRecipe recipe = InfernalBlastfurnaceRecipe.getRecipeForInput(inputStack);
+            if (recipe != null) {
+                this.recipeTime = recipe.getSmeltingTime();
+                this.processTick = calculateTime();
+                if (recipe.isSpecial()) this.specialFuel = true;
+            } else inputs.remove(0);
+            cooking = true;
+        }
 
         if (cooking != this.active) {
             this.active = cooking;
@@ -163,27 +164,20 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
         return Math.max(1, recipeTime / (speedupTick > 0 ? 2 : 1) - getBellows() * 40);
     }
 
-    /*boolean drawEssentia()
-    {
-    	TileEntity tile = ThaumcraftApiHelper.getConnectableTile(worldObj, xCoord,yCoord,zCoord, this.facing);
-    	if(tile!=null)
-    	{
-    		ForgeDirection fd = position==1?ForgeDirection.NORTH: position==7?ForgeDirection.SOUTH: position==3?ForgeDirection.WEST: ForgeDirection.EAST;
-    		IEssentiaTransport et = (IEssentiaTransport)tile;
-    		if (!et.canOutputTo(fd.getOpposite()))
-    			return false;
-    		if ((et.getSuctionAmount(fd.getOpposite()) < getSuctionAmount(fd)) && (et.takeEssentia(getSuctionType(fd), 1, fd.getOpposite())==1))
-    			return true;
-    	}
-    	return false;
-    }*/
+    /*
+     * boolean drawEssentia() { TileEntity tile = ThaumcraftApiHelper.getConnectableTile(worldObj, xCoord,yCoord,zCoord,
+     * this.facing); if(tile!=null) { ForgeDirection fd = position==1?ForgeDirection.NORTH:
+     * position==7?ForgeDirection.SOUTH: position==3?ForgeDirection.WEST: ForgeDirection.EAST; IEssentiaTransport et =
+     * (IEssentiaTransport)tile; if (!et.canOutputTo(fd.getOpposite())) return false; if
+     * ((et.getSuctionAmount(fd.getOpposite()) < getSuctionAmount(fd)) && (et.takeEssentia(getSuctionType(fd), 1,
+     * fd.getOpposite())==1)) return true; } return false; }
+     */
 
     void outputItem(ItemStack item) {
-        TileEntity inventory = this.worldObj.getTileEntity(
-                this.xCoord + facing.offsetX * 2, this.yCoord + 1, this.zCoord + facing.offsetZ * 2);
-        if ((inventory != null) && ((inventory instanceof IInventory)))
-            item = InventoryUtils.placeItemStackIntoInventory(
-                    item, (IInventory) inventory, this.facing.getOpposite().ordinal(), true);
+        TileEntity inventory = this.worldObj
+                .getTileEntity(this.xCoord + facing.offsetX * 2, this.yCoord + 1, this.zCoord + facing.offsetZ * 2);
+        if ((inventory != null) && ((inventory instanceof IInventory))) item = InventoryUtils
+                .placeItemStackIntoInventory(item, (IInventory) inventory, this.facing.getOpposite().ordinal(), true);
 
         if (item != null) {
             EntityItem ei = new EntityItem(
@@ -210,7 +204,8 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
                 if (worldObj.getTileEntity(bx, by, bz) instanceof TileBellows
                         && (((TileBellows) worldObj.getTileEntity(bx, by, bz)).orientation
                                 == fd.getOpposite().ordinal())
-                        && !worldObj.isBlockIndirectlyGettingPowered(bx, by, bz)) bellows++;
+                        && !worldObj.isBlockIndirectlyGettingPowered(bx, by, bz))
+                    bellows++;
             }
         return bellows;
     }
@@ -253,13 +248,11 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
     }
 
     public boolean addStackToInputs(ItemStack stack) {
-        for (int i = 0; i < inputs.size(); i++)
-            if (this.inputs.get(i) != null
-                    && this.inputs.get(i).isItemEqual(stack)
-                    && (this.inputs.get(i).stackSize + stack.stackSize <= stack.getMaxStackSize())) {
-                this.inputs.get(i).stackSize += stack.stackSize;
-                return true;
-            }
+        for (int i = 0; i < inputs.size(); i++) if (this.inputs.get(i) != null && this.inputs.get(i).isItemEqual(stack)
+                && (this.inputs.get(i).stackSize + stack.stackSize <= stack.getMaxStackSize())) {
+                    this.inputs.get(i).stackSize += stack.stackSize;
+                    return true;
+                }
         this.inputs.add(stack);
         return true;
     }
@@ -280,9 +273,9 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
     public int getSuctionAmount(ForgeDirection fd) {
         if (masterPos != null
                 && worldObj.getTileEntity(masterPos[0], masterPos[1], masterPos[2]) instanceof TileEntityBlastfurnace
-                && ((TileEntityBlastfurnace) worldObj.getTileEntity(masterPos[0], masterPos[1], masterPos[2]))
-                                .speedupTick
-                        < 40) return 128;
+                && ((TileEntityBlastfurnace) worldObj
+                        .getTileEntity(masterPos[0], masterPos[1], masterPos[2])).speedupTick < 40)
+            return 128;
         return 0;
     }
 
@@ -347,18 +340,18 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
         if (eventNum == 3) {
             for (int i = 0; i < 5; i++) {
                 WitchingGadgets.proxy.createFurnaceOutputBlobFx(worldObj, xCoord, yCoord, zCoord, facing);
-                //				float xx = xCoord+.5f+facing.offsetX*1.66f + worldObj.rand.nextFloat()*.3f;
-                //				float zz = zCoord+.5f+facing.offsetZ*1.66f + worldObj.rand.nextFloat()*.3f;
+                // float xx = xCoord+.5f+facing.offsetX*1.66f + worldObj.rand.nextFloat()*.3f;
+                // float zz = zCoord+.5f+facing.offsetZ*1.66f + worldObj.rand.nextFloat()*.3f;
                 //
-                //				EntityLavaFX fb = new EntityLavaFX(worldObj, xx,yCoord+1.3f,zz);
-                //				fb.motionY = .2f*worldObj.rand.nextFloat();
-                //				float mx = facing.offsetX!=0?(worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f :
+                // EntityLavaFX fb = new EntityLavaFX(worldObj, xx,yCoord+1.3f,zz);
+                // fb.motionY = .2f*worldObj.rand.nextFloat();
+                // float mx = facing.offsetX!=0?(worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f :
                 // facing.offsetX*worldObj.rand.nextFloat();
-                //				float mz = facing.offsetZ!=0?(worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f :
+                // float mz = facing.offsetZ!=0?(worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f :
                 // facing.offsetZ*worldObj.rand.nextFloat();
-                //				fb.motionX = (0.15f * mx);
-                //				fb.motionZ = (0.15f * mz);
-                //				FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
+                // fb.motionX = (0.15f * mx);
+                // fb.motionZ = (0.15f * mz);
+                // FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
             }
             worldObj.playSound(
                     xCoord + .5f + facing.offsetX * 1.66f,
@@ -374,14 +367,14 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
             for (int i = 0; i < 3; i++) {
                 worldObj.spawnParticle("lava", xCoord + .5, yCoord + .9, zCoord + .5, 0.0D, 0.0D, 0.0D);
                 // WitchingGadgets.proxy.createFurnaceDestructionBlobFx(worldObj, xCoord, yCoord, zCoord);
-                //				float xx = xCoord+.5f+ worldObj.rand.nextFloat()*.3f;
-                //				float zz = zCoord+.5f+ worldObj.rand.nextFloat()*.3f;
+                // float xx = xCoord+.5f+ worldObj.rand.nextFloat()*.3f;
+                // float zz = zCoord+.5f+ worldObj.rand.nextFloat()*.3f;
                 //
-                //				EntityLavaFX fb = new EntityLavaFX(worldObj, xx,yCoord+1.5f,zz);
-                //				fb.motionY = .2F;
-                //				fb.motionX = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f*.15f;
-                //				fb.motionZ = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f*.15f;
-                //				FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
+                // EntityLavaFX fb = new EntityLavaFX(worldObj, xx,yCoord+1.5f,zz);
+                // fb.motionY = .2F;
+                // fb.motionX = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f*.15f;
+                // fb.motionZ = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat())*.5f*.15f;
+                // FMLClientHandler.instance().getClient().effectRenderer.addEffect(fb);
             }
             worldObj.playSound(
                     xCoord + .5f,
@@ -410,27 +403,23 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
 
     public IIcon getTexture(int side) {
 
-        int i = (masterPos == null || masterPos.length < 3)
-                ? 0
+        int i = (masterPos == null || masterPos.length < 3) ? 0
                 : (worldObj.getTileEntity(masterPos[0], masterPos[1], masterPos[2]) instanceof TileEntityBlastfurnace
-                                && ((TileEntityBlastfurnace)
-                                                worldObj.getTileEntity(masterPos[0], masterPos[1], masterPos[2]))
-                                        .active)
-                        ? (((TileEntityBlastfurnace) worldObj.getTileEntity(masterPos[0], masterPos[1], masterPos[2]))
-                                        .specialFuel
-                                ? 2
-                                : 1)
-                        : 0;
+                        && ((TileEntityBlastfurnace) worldObj
+                                .getTileEntity(masterPos[0], masterPos[1], masterPos[2])).active)
+                                        ? (((TileEntityBlastfurnace) worldObj
+                                                .getTileEntity(masterPos[0], masterPos[1], masterPos[2])).specialFuel
+                                                        ? 2
+                                                        : 1)
+                                        : 0;
         switch (position) {
             case 0:
-                return side == 2
-                        ? icon_cornerBottomR[i]
+                return side == 2 ? icon_cornerBottomR[i]
                         : side == 4 ? icon_cornerBottomL[i] : side == 0 ? icon_cornerTopL[0] : icon_bricks;
             case 1:
                 return side == 2 ? icon_sideBottom[i] : side == 0 ? icon_bottomTBLR[0] : icon_bricks;
             case 2:
-                return side == 2
-                        ? icon_cornerBottomL[i]
+                return side == 2 ? icon_cornerBottomL[i]
                         : side == 5 ? icon_cornerBottomR[i] : side == 0 ? icon_cornerTopR[0] : icon_bricks;
             case 3:
                 return side == 4 ? icon_sideBottom[i] : side == 0 ? icon_bottomTBLR[2] : icon_bricks;
@@ -439,14 +428,12 @@ public class TileEntityBlastfurnace extends TileEntityWGBase implements IEssenti
             case 5:
                 return side == 5 ? icon_sideBottom[i] : side == 0 ? icon_bottomTBLR[3] : icon_bricks;
             case 6:
-                return side == 3
-                        ? icon_cornerBottomL[i]
+                return side == 3 ? icon_cornerBottomL[i]
                         : side == 4 ? icon_cornerBottomR[i] : side == 0 ? icon_cornerBottomL[0] : icon_bricks;
             case 7:
                 return side == 3 ? icon_sideBottom[i] : side == 0 ? icon_bottomTBLR[1] : icon_bricks;
             case 8:
-                return side == 3
-                        ? icon_cornerBottomR[i]
+                return side == 3 ? icon_cornerBottomR[i]
                         : side == 5 ? icon_cornerBottomL[i] : side == 0 ? icon_cornerBottomR[0] : icon_bricks;
 
             case 9:

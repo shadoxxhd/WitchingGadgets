@@ -1,8 +1,7 @@
 package witchinggadgets.common.items.tools;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -29,6 +28,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+
 import thaumcraft.api.IRepairable;
 import thaumcraft.api.aspects.Aspect;
 import travellersgear.api.IActiveAbility;
@@ -36,9 +36,12 @@ import travellersgear.api.IEventGear;
 import witchinggadgets.api.IPrimordialCrafting;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.util.Utilities;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemPrimordialSword extends ItemSword
         implements IPrimordialCrafting, IActiveAbility, IRepairable, IEventGear, IPrimordialGear {
+
     IIcon overlay;
 
     public ItemPrimordialSword(ToolMaterial mat) {
@@ -48,10 +51,10 @@ public class ItemPrimordialSword extends ItemSword
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean equipped) {
         super.onUpdate(stack, world, entity, slot, equipped);
-        if ((stack.isItemDamaged())
-                && (entity != null)
+        if ((stack.isItemDamaged()) && (entity != null)
                 && (entity.ticksExisted % 40 == 0)
-                && ((entity instanceof EntityLivingBase))) stack.damageItem(-1, (EntityLivingBase) entity);
+                && ((entity instanceof EntityLivingBase)))
+            stack.damageItem(-1, (EntityLivingBase) entity);
     }
 
     @Override
@@ -74,8 +77,7 @@ public class ItemPrimordialSword extends ItemSword
                         float f1 = EnchantmentHelper.getEnchantmentModifierLiving(player, (EntityLivingBase) e);
                         if (player.isSprinting()) ++i;
                         if (f > 0 || f1 > 0) {
-                            boolean flag = player.fallDistance > 0.0F
-                                    && !player.onGround
+                            boolean flag = player.fallDistance > 0.0F && !player.onGround
                                     && !player.isOnLadder()
                                     && !player.isInWater()
                                     && !player.isPotionActive(Potion.blindness)
@@ -141,15 +143,11 @@ public class ItemPrimordialSword extends ItemSword
     public void onUserDamaged(LivingHurtEvent event, ItemStack stack) {
         if (getAbility(stack) == 1 && ((EntityPlayer) event.entityLiving).isBlocking()) {
             int time = event.entityLiving.getActivePotionEffect(Potion.resistance) != null
-                    ? event.entityLiving
-                            .getActivePotionEffect(Potion.resistance)
-                            .getDuration()
+                    ? event.entityLiving.getActivePotionEffect(Potion.resistance).getDuration()
                     : 0;
             time = Math.min(time + 30, 80);
             int amp = event.entityLiving.getActivePotionEffect(Potion.resistance) != null
-                    ? event.entityLiving
-                            .getActivePotionEffect(Potion.resistance)
-                            .getAmplifier()
+                    ? event.entityLiving.getActivePotionEffect(Potion.resistance).getAmplifier()
                     : -1;
             amp = Math.min(amp + 1, 2);
             event.entityLiving.addPotionEffect(new PotionEffect(Potion.resistance.id, time, amp));
@@ -172,21 +170,19 @@ public class ItemPrimordialSword extends ItemSword
     }
 
     /*
-    @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-    	int ab = getAbility(stack);
-    	String add = ab>=0&&ab<6? " "+EnumChatFormatting.DARK_GRAY+"- \u00a7"+Aspect.getPrimalAspects().get(ab).getChatcolor()+Aspect.getPrimalAspects().get(ab).getName()+EnumChatFormatting.RESET : "";
-    	return super.getItemStackDisplayName(stack)+add;
-    }*/
+     * @Override public String getItemStackDisplayName(ItemStack stack) { int ab = getAbility(stack); String add =
+     * ab>=0&&ab<6? " "+EnumChatFormatting.DARK_GRAY+"- \u00a7"+Aspect.getPrimalAspects().get(ab).getChatcolor()+Aspect.
+     * getPrimalAspects().get(ab).getName()+EnumChatFormatting.RESET : ""; return
+     * super.getItemStackDisplayName(stack)+add; }
+     */
 
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         int ab = getAbility(stack);
-        String add = ab >= 0 && ab < 6
-                ? " " + EnumChatFormatting.DARK_GRAY + "- \u00a7"
-                        + Aspect.getPrimalAspects().get(ab).getChatcolor()
-                        + Aspect.getPrimalAspects().get(ab).getName() + EnumChatFormatting.RESET
-                : "";
+        String add = ab >= 0 && ab < 6 ? " " + EnumChatFormatting.DARK_GRAY
+                + "- \u00a7"
+                + Aspect.getPrimalAspects().get(ab).getChatcolor()
+                + Aspect.getPrimalAspects().get(ab).getName()
+                + EnumChatFormatting.RESET : "";
 
         list.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wg.desc.primal") + add);
     }
@@ -223,8 +219,7 @@ public class ItemPrimordialSword extends ItemSword
     public int getColorFromItemStack(ItemStack stack, int pass) {
         if (pass == 1) {
             int ab = getAbility(stack);
-            if (ab >= 0 && ab < 6)
-                return Aspect.getPrimalAspects().get(getAbility(stack)).getColor();
+            if (ab >= 0 && ab < 6) return Aspect.getPrimalAspects().get(getAbility(stack)).getColor();
         }
         return 0xffffff;
     }

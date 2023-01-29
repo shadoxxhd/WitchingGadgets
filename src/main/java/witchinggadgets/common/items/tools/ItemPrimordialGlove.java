@@ -1,7 +1,7 @@
 package witchinggadgets.common.items.tools;
 
-import com.google.common.collect.Multimap;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -30,6 +31,8 @@ import witchinggadgets.common.WGContent;
 import witchinggadgets.common.gui.ContainerPrimordialGlove;
 import witchinggadgets.common.gui.InventoryPrimordialGlove;
 import witchinggadgets.common.items.ItemInfusedGem;
+
+import com.google.common.collect.Multimap;
 
 public class ItemPrimordialGlove extends Item implements IPrimordialCrafting {
 
@@ -69,21 +72,20 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting {
     }
 
     public static ItemStack setSetGems(ItemStack bracelet, ItemStack[] gems) {
-        if (bracelet == null
-                || (!(bracelet.getItem() instanceof ItemPrimordialGlove))
+        if (bracelet == null || (!(bracelet.getItem() instanceof ItemPrimordialGlove))
                 || gems == null
-                || gems.length > 5) return bracelet;
+                || gems.length > 5)
+            return bracelet;
 
         if (bracelet.getTagCompound() == null) bracelet.setTagCompound(new NBTTagCompound());
 
         NBTTagList list = new NBTTagList();
-        for (int i = 0; i < gems.length; i++)
-            if (gems[i] != null) {
-                NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
-                gems[i].writeToNBT(tag);
-                list.appendTag(tag);
-            }
+        for (int i = 0; i < gems.length; i++) if (gems[i] != null) {
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setByte("Slot", (byte) i);
+            gems[i].writeToNBT(tag);
+            list.appendTag(tag);
+        }
         bracelet.getTagCompound().setTag("gems", list);
         return bracelet;
     }
@@ -92,24 +94,21 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting {
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
         super.onUpdate(stack, world, entity, par4, par5);
 
-        if (entity.ticksExisted % 10 == 0
-                && stack.hasTagCompound()
-                && stack.getTagCompound().hasKey("storedNode")) {
+        if (entity.ticksExisted % 10 == 0 && stack.hasTagCompound() && stack.getTagCompound().hasKey("storedNode")) {
             NBTTagCompound nodeTag = stack.getTagCompound().getCompoundTag("storedNode");
             AspectList al = new AspectList();
             al.readFromNBT(nodeTag);
 
             ItemStack[] gems = ItemPrimordialGlove.getSetGems(stack);
             if (!world.isRemote && ContainerPrimordialGlove.map.containsKey(entity.getEntityId()))
-                gems = ((InventoryPrimordialGlove) ContainerPrimordialGlove.map.get(entity.getEntityId()).input)
-                        .stackList;
+                gems = ((InventoryPrimordialGlove) ContainerPrimordialGlove.map
+                        .get(entity.getEntityId()).input).stackList;
 
-            for (ItemStack g : gems)
-                if (g != null && g.isItemDamaged()) {
-                    int restored = al.getAmount(ItemInfusedGem.getAspect(g));
-                    int newDmg = Math.max(g.getItemDamage() - restored, 0);
-                    g.setItemDamage(newDmg);
-                }
+            for (ItemStack g : gems) if (g != null && g.isItemDamaged()) {
+                int restored = al.getAmount(ItemInfusedGem.getAspect(g));
+                int newDmg = Math.max(g.getItemDamage() - restored, 0);
+                g.setItemDamage(newDmg);
+            }
             ItemPrimordialGlove.setSetGems(stack, gems);
 
             if (!world.isRemote && ContainerPrimordialGlove.map.containsKey(entity.getEntityId())) {
@@ -128,37 +127,27 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting {
         ItemStack[] gems = getSetGems(stack);
         boolean b = false;
 
-        if (gems != null && sel >= 0 && sel < gems.length && gems[sel] != null /*&& !player.isSneaking()*/) {
+        if (gems != null && sel >= 0 && sel < gems.length && gems[sel] != null /* && !player.isSneaking() */) {
             ItemStack gem = gems[sel];
-            if (gem.getItem() instanceof IInfusedGem
-                    && gem.getItemDamage()
-                                    + ((IInfusedGem) gem.getItem())
-                                            .getConsumedCharge(
-                                                    ItemInfusedGem.getCut(gem).toString(),
-                                                    ItemInfusedGem.getAspect(gem),
-                                                    player)
-                            <= gem.getMaxDamage()) {
+            if (gem.getItem() instanceof IInfusedGem && gem.getItemDamage() + ((IInfusedGem) gem.getItem())
+                    .getConsumedCharge(ItemInfusedGem.getCut(gem).toString(), ItemInfusedGem.getAspect(gem), player)
+                    <= gem.getMaxDamage()) {
                 int brittle = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_gemstoneBrittle.effectId, gem);
                 int potency = EnchantmentHelper.getEnchantmentLevel(WGContent.enc_gemstonePotency.effectId, gem);
-                b = ((IInfusedGem) gem.getItem())
-                        .performEffect(
-                                ItemInfusedGem.getCut(gem).toString(),
-                                ItemInfusedGem.getAspect(gem),
-                                potency,
-                                brittle,
-                                player);
+                b = ((IInfusedGem) gem.getItem()).performEffect(
+                        ItemInfusedGem.getCut(gem).toString(),
+                        ItemInfusedGem.getAspect(gem),
+                        potency,
+                        brittle,
+                        player);
 
                 if (b && !player.capabilities.isCreativeMode) {
-                    gem.getItem()
-                            .setDamage(
-                                    gem,
-                                    gem.getItemDamage()
-                                            + ((IInfusedGem) gem.getItem())
-                                                    .getConsumedCharge(
-                                                            ItemInfusedGem.getCut(gem)
-                                                                    .toString(),
-                                                            ItemInfusedGem.getAspect(gem),
-                                                            player));
+                    gem.getItem().setDamage(
+                            gem,
+                            gem.getItemDamage() + ((IInfusedGem) gem.getItem()).getConsumedCharge(
+                                    ItemInfusedGem.getCut(gem).toString(),
+                                    ItemInfusedGem.getAspect(gem),
+                                    player));
                     gems[sel] = gem;
                     setSetGems(stack, gems);
                 }
@@ -176,22 +165,16 @@ public class ItemPrimordialGlove extends Item implements IPrimordialCrafting {
         multimap.put(
                 SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
                 new AttributeModifier(
-                        field_111210_e, "Weapon modifier", 5 + ThaumcraftApi.toolMatVoid.getDamageVsEntity(), 0));
+                        field_111210_e,
+                        "Weapon modifier",
+                        5 + ThaumcraftApi.toolMatVoid.getDamageVsEntity(),
+                        0));
         return multimap;
     }
 
     @Override
-    public boolean onItemUseFirst(
-            ItemStack stack,
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (!world.isRemote && tile != null && tile instanceof INode) {
             INode node = (INode) tile;

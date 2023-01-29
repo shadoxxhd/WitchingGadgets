@@ -1,8 +1,7 @@
 package witchinggadgets.common.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -18,10 +17,14 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemRelic extends Item {
+
     public IIcon[] icon = new IIcon[64];
 
-    private static final String[] subNames = {"hourglass", "dawnStone", "duskStone", "homewardBone"};
+    private static final String[] subNames = { "hourglass", "dawnStone", "duskStone", "homewardBone" };
 
     public ItemRelic() {
         super();
@@ -37,7 +40,7 @@ public class ItemRelic extends Item {
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int useTime) {
-        double[] itemPos = {player.posX, player.posY, player.posZ};
+        double[] itemPos = { player.posX, player.posY, player.posZ };
         if (useTime > 0) return;
         switch (stack.getItemDamage()) {
             case 0:
@@ -50,9 +53,8 @@ public class ItemRelic extends Item {
                                 player.posX + 4,
                                 player.posY + 3,
                                 player.posZ + 4));
-                for (Entity ent : l)
-                    if (ent instanceof EntityLiving)
-                        ((EntityLiving) ent).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 120, 6));
+                for (Entity ent : l) if (ent instanceof EntityLiving)
+                    ((EntityLiving) ent).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 120, 6));
                 player.worldObj.playSound(
                         player.posX,
                         player.posY,
@@ -71,8 +73,7 @@ public class ItemRelic extends Item {
                         false);
                 break;
             case 1:
-                if (!world.isRemote)
-                    MinecraftServer.getServer().worldServers[player.dimension].setWorldTime(0);
+                if (!world.isRemote) MinecraftServer.getServer().worldServers[player.dimension].setWorldTime(0);
                 player.worldObj.playSound(
                         player.posX,
                         player.posY,
@@ -91,8 +92,7 @@ public class ItemRelic extends Item {
                         false);
                 break;
             case 2:
-                if (!world.isRemote)
-                    MinecraftServer.getServer().worldServers[player.dimension].setWorldTime(12500);
+                if (!world.isRemote) MinecraftServer.getServer().worldServers[player.dimension].setWorldTime(12500);
                 player.worldObj.playSound(
                         player.posX,
                         player.posY,
@@ -129,7 +129,7 @@ public class ItemRelic extends Item {
                         0.05F,
                         1.9F + player.worldObj.rand.nextFloat() * 0.2F,
                         false);
-                itemPos = new double[] {cc.posX, cc.posY, cc.posZ};
+                itemPos = new double[] { cc.posX, cc.posY, cc.posZ };
                 break;
         }
 

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
 public class WGEnchantStealth extends Enchantment {
+
     public WGEnchantStealth(int id) {
         super(id, 0, EnumEnchantmentType.armor);
         this.setName("wg.stealth");
@@ -28,8 +29,7 @@ public class WGEnchantStealth extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        boolean b = stack != null
-                && stack.getItem() instanceof ItemArmor
+        boolean b = stack != null && stack.getItem() instanceof ItemArmor
                 && (((ItemArmor) stack.getItem()).armorType == 2 || ((ItemArmor) stack.getItem()).armorType == 3);
         return b;
     }

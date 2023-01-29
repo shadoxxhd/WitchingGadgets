@@ -5,8 +5,6 @@ import static net.minecraftforge.common.util.ForgeDirection.NORTH;
 import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
 import static net.minecraftforge.common.util.ForgeDirection.WEST;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPane;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -17,11 +15,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.client.renderers.block.BlockRenderer;
 import witchinggadgets.common.blocks.tiles.TileEntityEssentiaPump;
 import witchinggadgets.common.blocks.tiles.TileEntityTerraformFocus;
 import witchinggadgets.common.blocks.tiles.TileEntityTerraformer;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler {
 
@@ -35,8 +37,8 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler {
             BlockRenderer.drawFaces(renderer, block, block.getIcon(0, metadata), true);
         } else if (metadata == 2) {
             GL11.glTranslatef(-.5f, -.5F, -.5f);
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(
-                    new TileEntityTerraformer(), 0.0D, 0.0D, 0.0D, 0.0F);
+            TileEntityRendererDispatcher.instance
+                    .renderTileEntityAt(new TileEntityTerraformer(), 0.0D, 0.0D, 0.0D, 0.0F);
         } else if (metadata > 2) {
             GL11.glTranslatef(-.5f, -.5F, -.5f);
             TileEntityTerraformFocus tetf = new TileEntityTerraformFocus();
@@ -48,8 +50,8 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler {
             try {
                 if (metadata == 0) {
                     GL11.glTranslatef(-.5f, -.5F, -.5f);
-                    TileEntityRendererDispatcher.instance.renderTileEntityAt(
-                            new TileEntityEssentiaPump(), 0.0D, 0.0D, 0.0D, 0.0F);
+                    TileEntityRendererDispatcher.instance
+                            .renderTileEntityAt(new TileEntityEssentiaPump(), 0.0D, 0.0D, 0.0D, 0.0F);
                 }
 
             } catch (Exception e) {
@@ -61,8 +63,8 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public boolean renderWorldBlock(
-            IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
+            RenderBlocks renderer) {
         if (world.getBlockMetadata(x, y, z) == 1) {
             block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             renderer.setRenderBoundsFromBlock(block);
@@ -468,8 +470,7 @@ public class BlockRenderMetalDevice implements ISimpleBlockRenderingHandler {
     }
 
     static boolean canPaneConnectToBlock(Block block, Block target) {
-        return target.func_149730_j()
-                || target == block
+        return target.func_149730_j() || target == block
                 || target == Blocks.glass
                 || target == Blocks.stained_glass
                 || target == Blocks.stained_glass_pane

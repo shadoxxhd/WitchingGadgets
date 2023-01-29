@@ -1,15 +1,18 @@
 package witchinggadgets.common.util.recipe;
 
 import java.util.ArrayList;
+
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
 import witchinggadgets.common.items.armor.ItemAdvancedRobes;
 import witchinggadgets.common.util.Utilities;
 
 public class RobeColourizationRecipe implements IRecipe {
+
     @Override
     public boolean matches(InventoryCrafting par1InventoryCrafting, World par2World) {
         ItemStack itemstack = null;
@@ -74,8 +77,8 @@ public class RobeColourizationRecipe implements IRecipe {
                 } else {
                     if (!Utilities.isDye(itemstack1)) return null;
 
-                    float[] afloat = net.minecraft.entity.passive.EntitySheep.fleeceColorTable[
-                            net.minecraft.block.BlockColored.func_150032_b(Utilities.getDamageForDye(itemstack1))];
+                    float[] afloat = net.minecraft.entity.passive.EntitySheep.fleeceColorTable[net.minecraft.block.BlockColored
+                            .func_150032_b(Utilities.getDamageForDye(itemstack1))];
                     int j1 = (int) (afloat[0] * 255.0F);
                     int k1 = (int) (afloat[1] * 255.0F);
                     int i1 = (int) (afloat[2] * 255.0F);

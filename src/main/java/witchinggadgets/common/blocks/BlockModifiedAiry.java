@@ -1,9 +1,8 @@
 package witchinggadgets.common.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,10 +15,13 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.blocks.BlockAiry;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.blocks.tiles.TileEntityTempLight;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockModifiedAiry extends BlockAiry {
 
@@ -47,15 +49,8 @@ public class BlockModifiedAiry extends BlockAiry {
         return 0;
     }
 
-    public float getExplosionResistance(
-            Entity par1Entity,
-            World world,
-            int x,
-            int y,
-            int z,
-            double explosionX,
-            double explosionY,
-            double explosionZ) {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+            double explosionY, double explosionZ) {
         return 0;
     }
 
@@ -92,12 +87,12 @@ public class BlockModifiedAiry extends BlockAiry {
         return 0;
     }
 
-    public void onBlockHarvested(
-            World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer) {}
+    public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5,
+            EntityPlayer par6EntityPlayer) {}
 
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World w, int i, int j, int k, Random r) {
-        //		int md = w.getBlockMetadata(i, j, k);
+        // int md = w.getBlockMetadata(i, j, k);
         if (r.nextInt(50) == 0) {
             int x1 = i + r.nextInt(2) - r.nextInt(2);
             int y1 = j + r.nextInt(2) - r.nextInt(2);

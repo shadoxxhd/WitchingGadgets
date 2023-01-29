@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class SpinningRecipe {
+
     public static List<SpinningRecipe> recipeList = new ArrayList<SpinningRecipe>();
 
     ItemStack output;

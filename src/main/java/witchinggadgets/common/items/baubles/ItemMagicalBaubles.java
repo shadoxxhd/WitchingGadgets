@@ -1,14 +1,9 @@
 package witchinggadgets.common.items.baubles;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,26 +18,27 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import travellersgear.api.ITravellersGear;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.client.render.ModelMagicalBaubles;
 import witchinggadgets.common.items.ItemInfusedGem;
 import witchinggadgets.common.util.Lib;
 import witchinggadgets.common.util.Utilities;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Optional.Interface(iface = "vazkii.botania.api.item.ICosmeticAttachable", modid = "Botania")
 public class ItemMagicalBaubles extends Item
         implements IBauble, ITravellersGear, vazkii.botania.api.item.ICosmeticAttachable {
+
     // String[] subNames = {"ringSocketed_gold","ringSocketed_thaumium","ringSocketed_silver"};
-    public static String[] subNames = {
-        "shouldersDoublejump",
-        "shouldersKnockback",
-        "vambraceStrength",
-        "vambraceHaste",
-        "ringLuck",
-        "titleCrimsonCult",
-        "ringSniper"
-    };
+    public static String[] subNames = { "shouldersDoublejump", "shouldersKnockback", "vambraceStrength",
+            "vambraceHaste", "ringLuck", "titleCrimsonCult", "ringSniper" };
     IIcon[] icons = new IIcon[subNames.length];
     public static HashSet<String> bowSpeedPlayers = new HashSet<String>();
 
@@ -75,15 +71,13 @@ public class ItemMagicalBaubles extends Item
         list.add(StatCollector.translateToLocalFormatted(Lib.DESCRIPTION + "gearSlot." + type));
 
         if (stack.hasTagCompound() && stack.getTagCompound().hasKey("title"))
-            list.add(StatCollector.translateToLocalFormatted(
-                    stack.getTagCompound().getString("title")));
+            list.add(StatCollector.translateToLocalFormatted(stack.getTagCompound().getString("title")));
 
         if (Loader.isModLoaded("Botania")) {
             ItemStack cosmetic = getCosmeticItem(stack);
-            if (cosmetic != null)
-                list.add(String.format(
-                                StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.getDisplayName())
-                        .replaceAll("&", "\u00a7"));
+            if (cosmetic != null) list.add(
+                    String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.getDisplayName())
+                            .replaceAll("&", "\u00a7"));
         }
     }
 
@@ -135,12 +129,11 @@ public class ItemMagicalBaubles extends Item
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List itemList) {
-        for (int i = 0; i < subNames.length; i++)
-            if (i == 5) {
-                itemList.add(getItemWithTitle(new ItemStack(this, 1, i), Lib.TITLE + "crimsonCultist"));
-                itemList.add(getItemWithTitle(new ItemStack(this, 1, i), Lib.TITLE + "crimsonKnight"));
-                itemList.add(getItemWithTitle(new ItemStack(this, 1, i), Lib.TITLE + "crimsonPraetor"));
-            } else itemList.add(new ItemStack(this, 1, i));
+        for (int i = 0; i < subNames.length; i++) if (i == 5) {
+            itemList.add(getItemWithTitle(new ItemStack(this, 1, i), Lib.TITLE + "crimsonCultist"));
+            itemList.add(getItemWithTitle(new ItemStack(this, 1, i), Lib.TITLE + "crimsonKnight"));
+            itemList.add(getItemWithTitle(new ItemStack(this, 1, i), Lib.TITLE + "crimsonPraetor"));
+        } else itemList.add(new ItemStack(this, 1, i));
     }
 
     public static ItemStack getItemWithTitle(ItemStack stack, String title) {
@@ -161,23 +154,17 @@ public class ItemMagicalBaubles extends Item
 
     @Override
     public BaubleType getBaubleType(ItemStack stack) {
-        return subNames[stack.getItemDamage()].startsWith("ring")
-                ? BaubleType.RING
-                : subNames[stack.getItemDamage()].startsWith("belt")
-                        ? BaubleType.BELT
-                        : ItemMagicalBaubles.subNames[stack.getItemDamage()].startsWith("necklace")
-                                ? BaubleType.AMULET
+        return subNames[stack.getItemDamage()].startsWith("ring") ? BaubleType.RING
+                : subNames[stack.getItemDamage()].startsWith("belt") ? BaubleType.BELT
+                        : ItemMagicalBaubles.subNames[stack.getItemDamage()].startsWith("necklace") ? BaubleType.AMULET
                                 : null;
     }
 
     @Override
     public int getSlot(ItemStack stack) {
-        return subNames[stack.getItemDamage()].startsWith("cloak")
-                ? 0
-                : subNames[stack.getItemDamage()].startsWith("shoulders")
-                        ? 1
-                        : ItemMagicalBaubles.subNames[stack.getItemDamage()].startsWith("vambrace")
-                                ? 2
+        return subNames[stack.getItemDamage()].startsWith("cloak") ? 0
+                : subNames[stack.getItemDamage()].startsWith("shoulders") ? 1
+                        : ItemMagicalBaubles.subNames[stack.getItemDamage()].startsWith("vambrace") ? 2
                                 : ItemMagicalBaubles.subNames[stack.getItemDamage()].startsWith("title") ? 3 : -1;
     }
 
@@ -224,41 +211,37 @@ public class ItemMagicalBaubles extends Item
     }
 
     public void onItemEquipped(EntityLivingBase living, ItemStack stack) {
-        if (stack.getItemDamage() == 1)
-            Utilities.addAttributeModToLiving(
-                    living,
-                    SharedMonsterAttributes.knockbackResistance,
-                    new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
-                    "WGKnockbackResistance",
-                    0.6,
-                    0);
-        if (stack.getItemDamage() == 2)
-            Utilities.addAttributeModToLiving(
-                    living,
-                    SharedMonsterAttributes.attackDamage,
-                    new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
-                    "WGStrengthBonus",
-                    2,
-                    0);
+        if (stack.getItemDamage() == 1) Utilities.addAttributeModToLiving(
+                living,
+                SharedMonsterAttributes.knockbackResistance,
+                new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
+                "WGKnockbackResistance",
+                0.6,
+                0);
+        if (stack.getItemDamage() == 2) Utilities.addAttributeModToLiving(
+                living,
+                SharedMonsterAttributes.attackDamage,
+                new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
+                "WGStrengthBonus",
+                2,
+                0);
     }
 
     public void onItemUnequipped(EntityLivingBase living, ItemStack stack) {
-        if (stack.getItemDamage() == 1)
-            Utilities.removeAttributeModFromLiving(
-                    living,
-                    SharedMonsterAttributes.knockbackResistance,
-                    new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
-                    "WGKnockbackResistance",
-                    0.6,
-                    0);
-        if (stack.getItemDamage() == 2)
-            Utilities.removeAttributeModFromLiving(
-                    living,
-                    SharedMonsterAttributes.attackDamage,
-                    new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
-                    "WGStrengthBonus",
-                    2,
-                    0);
+        if (stack.getItemDamage() == 1) Utilities.removeAttributeModFromLiving(
+                living,
+                SharedMonsterAttributes.knockbackResistance,
+                new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
+                "WGKnockbackResistance",
+                0.6,
+                0);
+        if (stack.getItemDamage() == 2) Utilities.removeAttributeModFromLiving(
+                living,
+                SharedMonsterAttributes.attackDamage,
+                new UUID(Lib.ATTRIBUTE_MOD_UUID, stack.getItemDamage()),
+                "WGStrengthBonus",
+                2,
+                0);
     }
 
     public static ItemStack getInlaidGem(ItemStack ring) {
@@ -267,8 +250,7 @@ public class ItemMagicalBaubles extends Item
 
     public static ItemStack setInlaidGem(ItemStack ring, ItemStack gem) {
         if (!ring.hasTagCompound()) ring.setTagCompound(new NBTTagCompound());
-        ring.getTagCompound()
-                .setByte("GemCut", (byte) ItemInfusedGem.getCut(gem).ordinal());
+        ring.getTagCompound().setByte("GemCut", (byte) ItemInfusedGem.getCut(gem).ordinal());
         ring.getTagCompound().setString("Aspect", ItemInfusedGem.getAspect(gem).getTag());
         return ring;
     }
@@ -276,8 +258,8 @@ public class ItemMagicalBaubles extends Item
     @Optional.Method(modid = "Botania")
     public ItemStack getCosmeticItem(ItemStack stack) {
         if (!stack.hasTagCompound()) return null;
-        ItemStack cosmetic =
-                ItemStack.loadItemStackFromNBT(stack.getTagCompound().getCompoundTag("botaniaCosmeticOverride"));
+        ItemStack cosmetic = ItemStack
+                .loadItemStackFromNBT(stack.getTagCompound().getCompoundTag("botaniaCosmeticOverride"));
         return cosmetic;
     }
 

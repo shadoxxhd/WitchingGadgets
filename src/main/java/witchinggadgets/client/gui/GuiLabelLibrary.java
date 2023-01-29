@@ -3,7 +3,9 @@ package witchinggadgets.client.gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.client.lib.UtilsFX;
@@ -14,6 +16,7 @@ import witchinggadgets.common.gui.ContainerLabelLibrary;
 import witchinggadgets.common.util.network.message.MessageTileUpdate;
 
 public class GuiLabelLibrary extends GuiContainer {
+
     private TileEntityLabelLibrary tile;
     private EntityPlayer player;
 
@@ -47,8 +50,8 @@ public class GuiLabelLibrary extends GuiContainer {
 
         UtilsFX.drawTag(guiLeft + 8, guiTop + 30, tile.aspect, 0.0F, 0, zLevel);
 
-        //		if(this.tile.getOutput()!=null)
-        //			this.drawVirtualItem(tile.getOutput(), guiLeft+118,guiTop+24, false, mX, mY, false);
+        // if(this.tile.getOutput()!=null)
+        // this.drawVirtualItem(tile.getOutput(), guiLeft+118,guiTop+24, false, mX, mY, false);
     }
 
     @Override

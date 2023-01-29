@@ -1,15 +1,9 @@
 package witchinggadgets.common.util.handler;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -52,6 +46,7 @@ import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.oredict.OreDictionary;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.entities.EntitySpecialItem;
@@ -72,15 +67,20 @@ import witchinggadgets.common.items.tools.ItemBag;
 import witchinggadgets.common.magic.WGEnchantSoulbound;
 import witchinggadgets.common.util.Utilities;
 import witchinggadgets.common.util.network.message.MessageClientNotifier;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class EventHandler {
+
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void entityHurt(LivingHurtEvent event) {
         if (event.source.isFireDamage() && event.entityLiving.getActivePotionEffect(WGContent.pot_cinderCoat) != null)
-            event.ammount *= 2
-                    + event.entityLiving
-                            .getActivePotionEffect(WGContent.pot_cinderCoat)
-                            .getAmplifier();
+            event.ammount *= 2 + event.entityLiving.getActivePotionEffect(WGContent.pot_cinderCoat).getAmplifier();
 
         if (event.source.getSourceOfDamage() instanceof EntityPlayer
                 && ((EntityPlayer) event.source.getSourceOfDamage()).getCurrentEquippedItem() != null) {
@@ -103,12 +103,11 @@ public class EventHandler {
                 Vec3 attackVec = player.getLookVec();
                 if (Math.signum(targetVec.xCoord) == Math.signum(attackVec.xCoord)
                         && Math.signum(targetVec.zCoord) == Math.signum(attackVec.zCoord)) {
-                    float mod = 1
-                            + .2f
-                                    * EnchantmentHelper.getEnchantmentLevel(
-                                            WGContent.enc_backstab.effectId, player.getCurrentEquippedItem());
+                    float mod = 1 + .2f * EnchantmentHelper
+                            .getEnchantmentLevel(WGContent.enc_backstab.effectId, player.getCurrentEquippedItem());
                     if (event.entityLiving instanceof EntityCreature
-                            && !player.equals(((EntityCreature) event.entityLiving).getAttackTarget())) mod += .4f;
+                            && !player.equals(((EntityCreature) event.entityLiving).getAttackTarget()))
+                        mod += .4f;
                     event.ammount *= mod;
                 }
             }
@@ -122,61 +121,60 @@ public class EventHandler {
             EntityPlayer player = (EntityPlayer) event.target;
             if (player.isSneaking())
                 if (EnchantmentHelper.getEnchantmentLevel(WGContent.enc_stealth.effectId, player.getCurrentArmor(0)) > 0
-                        || EnchantmentHelper.getEnchantmentLevel(
-                                        WGContent.enc_stealth.effectId, player.getCurrentArmor(1))
-                                > 0) {
-                    float chance = EnchantmentHelper.getEnchantmentLevel(
-                                            WGContent.enc_stealth.effectId, player.getCurrentArmor(0))
-                                    * .1f
-                            + EnchantmentHelper.getEnchantmentLevel(
-                                            WGContent.enc_stealth.effectId, player.getCurrentArmor(1))
-                                    * .1f;
-                    Vec3 targetVec = event.entityLiving.getLookVec();
-                    Vec3 attackVec = player.getLookVec();
-                    if (Math.signum(targetVec.xCoord) != Math.signum(attackVec.xCoord)
-                            || Math.signum(targetVec.zCoord) != Math.signum(attackVec.zCoord)) chance -= .1f;
-                    if (player.getRNG().nextFloat() < chance)
-                        Utilities.setAttackTarget((EntityCreature) event.entityLiving, null);
-                    else {
-                        for (EntityCreature e : (List<EntityCreature>) player.worldObj.getEntitiesWithinAABB(
-                                EntityCreature.class,
-                                AxisAlignedBB.getBoundingBox(
-                                        player.posX - 5,
-                                        player.posY - 5,
-                                        player.posZ - 5,
-                                        player.posX + 5,
-                                        player.posY + 5,
-                                        player.posZ + 5)))
-                            if (e != null && !(e instanceof IBossDisplayData) && player.equals(e.getAttackTarget()))
-                                Utilities.setAttackTarget((EntityCreature) event.entityLiving, null);
-                    }
-                }
+                        || EnchantmentHelper
+                                .getEnchantmentLevel(WGContent.enc_stealth.effectId, player.getCurrentArmor(1)) > 0) {
+                                    float chance = EnchantmentHelper.getEnchantmentLevel(
+                                            WGContent.enc_stealth.effectId,
+                                            player.getCurrentArmor(0)) * .1f
+                                            + EnchantmentHelper.getEnchantmentLevel(
+                                                    WGContent.enc_stealth.effectId,
+                                                    player.getCurrentArmor(1)) * .1f;
+                                    Vec3 targetVec = event.entityLiving.getLookVec();
+                                    Vec3 attackVec = player.getLookVec();
+                                    if (Math.signum(targetVec.xCoord) != Math.signum(attackVec.xCoord)
+                                            || Math.signum(targetVec.zCoord) != Math.signum(attackVec.zCoord))
+                                        chance -= .1f;
+                                    if (player.getRNG().nextFloat() < chance)
+                                        Utilities.setAttackTarget((EntityCreature) event.entityLiving, null);
+                                    else {
+                                        for (EntityCreature e : (List<EntityCreature>) player.worldObj
+                                                .getEntitiesWithinAABB(
+                                                        EntityCreature.class,
+                                                        AxisAlignedBB.getBoundingBox(
+                                                                player.posX - 5,
+                                                                player.posY - 5,
+                                                                player.posZ - 5,
+                                                                player.posX + 5,
+                                                                player.posY + 5,
+                                                                player.posZ + 5)))
+                                            if (e != null && !(e instanceof IBossDisplayData)
+                                                    && player.equals(e.getAttackTarget()))
+                                                Utilities.setAttackTarget((EntityCreature) event.entityLiving, null);
+                                    }
+                                }
         }
     }
 
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent event) {
         for (ItemStack cloak : Utilities.getActiveMagicalCloak(event.entityPlayer))
-            if (cloak != null
-                    && cloak.hasTagCompound()
-                    && cloak.getTagCompound().getBoolean("isSpectral")) event.setCanceled(true);
+            if (cloak != null && cloak.hasTagCompound() && cloak.getTagCompound().getBoolean("isSpectral"))
+                event.setCanceled(true);
         if (Loader.isModLoaded("ForgeMultipart")) WGMultiPartHandler.handleWorldInteraction(event);
     }
 
     @SubscribeEvent
     public void onPlayerInteractWithEntity(EntityInteractEvent event) {
         for (ItemStack cloak : Utilities.getActiveMagicalCloak(event.entityPlayer))
-            if (cloak != null
-                    && cloak.hasTagCompound()
-                    && cloak.getTagCompound().getBoolean("isSpectral")) event.setCanceled(true);
+            if (cloak != null && cloak.hasTagCompound() && cloak.getTagCompound().getBoolean("isSpectral"))
+                event.setCanceled(true);
     }
 
     @SubscribeEvent
     public void onPlayerAttackEntity(AttackEntityEvent event) {
         for (ItemStack cloak : Utilities.getActiveMagicalCloak(event.entityPlayer))
-            if (cloak != null
-                    && cloak.hasTagCompound()
-                    && cloak.getTagCompound().getBoolean("isSpectral")) event.setCanceled(true);
+            if (cloak != null && cloak.hasTagCompound() && cloak.getTagCompound().getBoolean("isSpectral"))
+                event.setCanceled(true);
     }
 
     @SubscribeEvent
@@ -187,7 +185,8 @@ public class EventHandler {
             Block block = event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z);
             if (!event.entityPlayer.onGround) event.newSpeed *= 5.0F;
             if (event.entityPlayer.isInsideOfMaterial(Material.water)
-                    && !EnchantmentHelper.getAquaAffinityModifier(event.entityPlayer)) event.newSpeed *= 5.0F;
+                    && !EnchantmentHelper.getAquaAffinityModifier(event.entityPlayer))
+                event.newSpeed *= 5.0F;
 
             float hardness = block.getBlockHardness(event.entityPlayer.worldObj, event.x, event.y, event.z);
             if (hardness > 20) event.newSpeed = 5 + hardness;
@@ -213,13 +212,20 @@ public class EventHandler {
 
         // here resides the cancer of crimson titles. begone
         /*
-        if(event.entityLiving instanceof EntityCultistCleric && event.entityLiving.worldObj.rand.nextInt(10)<1+event.lootingLevel)
-        	event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonCultist")));
-        if(event.entityLiving instanceof EntityCultistKnight && event.entityLiving.worldObj.rand.nextInt(10)<1+event.lootingLevel)
-        	event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonKnight")));
-        if(event.entityLiving instanceof EntityCultistLeader && event.entityLiving.worldObj.rand.nextInt(2)==0)
-        	event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonPraetor")));
-        */
+         * if(event.entityLiving instanceof EntityCultistCleric &&
+         * event.entityLiving.worldObj.rand.nextInt(10)<1+event.lootingLevel) event.drops.add(new
+         * EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY,
+         * event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new
+         * ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonCultist"))); if(event.entityLiving instanceof
+         * EntityCultistKnight && event.entityLiving.worldObj.rand.nextInt(10)<1+event.lootingLevel) event.drops.add(new
+         * EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY,
+         * event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new
+         * ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonKnight"))); if(event.entityLiving instanceof
+         * EntityCultistLeader && event.entityLiving.worldObj.rand.nextInt(2)==0) event.drops.add(new
+         * EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY,
+         * event.entityLiving.posZ, ItemMagicalBaubles.getItemWithTitle(new
+         * ItemStack(WGContent.ItemMagicalBaubles,1,4),Lib.TITLE+"crimsonPraetor")));
+         */
 
         if (event.recentlyHit && event.source != null && event.source.getSourceOfDamage() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
@@ -256,12 +262,13 @@ public class EventHandler {
                         EntityItem eitem = i.next();
                         if (eitem != null && OreDictionary.itemMatches(eitem.getEntityItem(), head, true)) return;
                     }
-                    event.entityLiving.worldObj.spawnEntityInWorld(new EntityItem(
-                            event.entityLiving.worldObj,
-                            event.entityLiving.posX,
-                            event.entityLiving.posY,
-                            event.entityLiving.posZ,
-                            head));
+                    event.entityLiving.worldObj.spawnEntityInWorld(
+                            new EntityItem(
+                                    event.entityLiving.worldObj,
+                                    event.entityLiving.posX,
+                                    event.entityLiving.posY,
+                                    event.entityLiving.posZ,
+                                    head));
                 }
             }
         }
@@ -269,8 +276,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onLivingDies(LivingDeathEvent event) {
-        if (event.source != null
-                && event.source.getSourceOfDamage() instanceof EntityPlayer
+        if (event.source != null && event.source.getSourceOfDamage() instanceof EntityPlayer
                 && event.entityLiving instanceof EntityLiving
                 && !event.entityLiving.worldObj.isRemote
                 && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("doMobLoot")) {
@@ -279,22 +285,22 @@ public class EventHandler {
             if (player.getCurrentEquippedItem() != null
                     && player.getCurrentEquippedItem().getItem() instanceof IPrimordialGear
                     && ((IPrimordialGear) player.getCurrentEquippedItem().getItem())
-                                    .getAbility(player.getCurrentEquippedItem())
-                            == 5) {
+                            .getAbility(player.getCurrentEquippedItem()) == 5) {
                 boolean deobf = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
                 String name = deobf ? "experienceValue" : "field_70728_aV";
-                int baseValue = ObfuscationReflectionHelper.getPrivateValue(
-                        EntityLiving.class, (EntityLiving) event.entityLiving, name);
+                int baseValue = ObfuscationReflectionHelper
+                        .getPrivateValue(EntityLiving.class, (EntityLiving) event.entityLiving, name);
                 int xp = 4 * baseValue;
                 while (xp > 0) {
                     int i = EntityXPOrb.getXPSplit(xp);
                     xp -= i;
-                    event.entityLiving.worldObj.spawnEntityInWorld(new EntityXPOrb(
-                            event.entityLiving.worldObj,
-                            event.entityLiving.posX,
-                            event.entityLiving.posY,
-                            event.entityLiving.posZ,
-                            i));
+                    event.entityLiving.worldObj.spawnEntityInWorld(
+                            new EntityXPOrb(
+                                    event.entityLiving.worldObj,
+                                    event.entityLiving.posX,
+                                    event.entityLiving.posY,
+                                    event.entityLiving.posZ,
+                                    i));
                 }
             }
         }
@@ -305,72 +311,66 @@ public class EventHandler {
         for (int i = 0; i < event.entityPlayer.inventory.getSizeInventory(); i++)
             if (event.entityPlayer.inventory.getStackInSlot(i) != null
                     && event.entityPlayer.inventory.getStackInSlot(i).getItem() instanceof ItemBag) {
-                if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 1) {
-                    ItemStack[] filter = ((ItemBag) event.entityPlayer
-                                    .inventory
-                                    .getStackInSlot(i)
-                                    .getItem())
-                            .getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
-                    for (ItemStack f : filter)
-                        if (OreDictionary.itemMatches(f, event.item.getEntityItem(), true)) {
-                            AspectList al = ThaumcraftCraftingManager.getObjectTags(event.item.getEntityItem());
-                            al = ThaumcraftCraftingManager.getBonusTags(event.item.getEntityItem(), al);
-                            if (al != null && al.size() >= 0) {
-                                AspectList primals = ResearchManager.reduceToPrimals(al);
-                                Aspect a = primals.getAspects()[
-                                        event.entityPlayer.getRNG().nextInt(primals.getAspects().length)];
-                                if (a != null) {
-                                    int slot = InventoryUtils.isWandInHotbarWithRoom(a, 1, event.entityPlayer);
-                                    if (slot >= 0) {
-                                        ItemWandCasting wand = (ItemWandCasting)
-                                                event.entityPlayer.inventory.mainInventory[slot].getItem();
-                                        wand.addVis(
-                                                event.entityPlayer.inventory.mainInventory[slot],
-                                                a,
-                                                primals.getAmount(a),
-                                                true);
+                        if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 1) {
+                            ItemStack[] filter = ((ItemBag) event.entityPlayer.inventory.getStackInSlot(i).getItem())
+                                    .getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
+                            for (ItemStack f : filter)
+                                if (OreDictionary.itemMatches(f, event.item.getEntityItem(), true)) {
+                                    AspectList al = ThaumcraftCraftingManager.getObjectTags(event.item.getEntityItem());
+                                    al = ThaumcraftCraftingManager.getBonusTags(event.item.getEntityItem(), al);
+                                    if (al != null && al.size() >= 0) {
+                                        AspectList primals = ResearchManager.reduceToPrimals(al);
+                                        Aspect a = primals.getAspects()[event.entityPlayer.getRNG()
+                                                .nextInt(primals.getAspects().length)];
+                                        if (a != null) {
+                                            int slot = InventoryUtils.isWandInHotbarWithRoom(a, 1, event.entityPlayer);
+                                            if (slot >= 0) {
+                                                ItemWandCasting wand = (ItemWandCasting) event.entityPlayer.inventory.mainInventory[slot]
+                                                        .getItem();
+                                                wand.addVis(
+                                                        event.entityPlayer.inventory.mainInventory[slot],
+                                                        a,
+                                                        primals.getAmount(a),
+                                                        true);
+                                            }
+                                        }
+                                    }
+                                    event.item.setDead();
+                                    event.setCanceled(true);
+                                    return;
+                                }
+                        } else if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 3) {
+                            ItemStack[] inv = ((ItemBag) event.entityPlayer.inventory.getStackInSlot(i).getItem())
+                                    .getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
+                            boolean itemWasPickedUp = false;
+                            for (int f = 0; f < inv.length; f++) {
+                                if (inv[f] == null) {
+                                    inv[f] = event.item.getEntityItem().copy();
+                                    event.item.setDead();
+                                    event.setCanceled(true);
+                                    itemWasPickedUp = true;
+                                    break;
+                                } else if (OreDictionary.itemMatches(inv[f], event.item.getEntityItem(), true)) {
+                                    int fit = Math.min(
+                                            Math.min(64, inv[f].getMaxStackSize()) - inv[f].stackSize,
+                                            event.item.getEntityItem().stackSize);
+                                    inv[f].stackSize += fit;
+                                    event.item.getEntityItem().stackSize -= fit;
+                                    if (event.item.getEntityItem().stackSize <= 0) {
+                                        event.item.setDead();
+                                        event.setCanceled(true);
+                                        itemWasPickedUp = true;
+                                        break;
                                     }
                                 }
                             }
-                            event.item.setDead();
-                            event.setCanceled(true);
-                            return;
-                        }
-                } else if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 3) {
-                    ItemStack[] inv = ((ItemBag) event.entityPlayer
-                                    .inventory
-                                    .getStackInSlot(i)
-                                    .getItem())
-                            .getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
-                    boolean itemWasPickedUp = false;
-                    for (int f = 0; f < inv.length; f++) {
-                        if (inv[f] == null) {
-                            inv[f] = event.item.getEntityItem().copy();
-                            event.item.setDead();
-                            event.setCanceled(true);
-                            itemWasPickedUp = true;
-                            break;
-                        } else if (OreDictionary.itemMatches(inv[f], event.item.getEntityItem(), true)) {
-                            int fit = Math.min(
-                                    Math.min(64, inv[f].getMaxStackSize()) - inv[f].stackSize,
-                                    event.item.getEntityItem().stackSize);
-                            inv[f].stackSize += fit;
-                            event.item.getEntityItem().stackSize -= fit;
-                            if (event.item.getEntityItem().stackSize <= 0) {
-                                event.item.setDead();
-                                event.setCanceled(true);
-                                itemWasPickedUp = true;
+                            ((ItemBag) event.entityPlayer.inventory.getStackInSlot(i).getItem())
+                                    .setStoredItems(event.entityPlayer.inventory.getStackInSlot(i), inv);
+                            if (itemWasPickedUp) {
                                 break;
                             }
                         }
                     }
-                    ((ItemBag) event.entityPlayer.inventory.getStackInSlot(i).getItem())
-                            .setStoredItems(event.entityPlayer.inventory.getStackInSlot(i), inv);
-                    if (itemWasPickedUp) {
-                        break;
-                    }
-                }
-            }
     }
 
     @SubscribeEvent
@@ -387,29 +387,24 @@ public class EventHandler {
         if (output.getItem().equals(WGContent.ItemMaterial) && output.getItemDamage() == 10) {
             for (int matrixSlot = 0; matrixSlot < 9; matrixSlot++) {
                 ItemStack stackInMatrix = craftMatrix.getStackInSlot(matrixSlot);
-                if ((stackInMatrix != null)
-                        && (stackInMatrix.getItem() instanceof ItemMaterials)
+                if ((stackInMatrix != null) && (stackInMatrix.getItem() instanceof ItemMaterials)
                         && stackInMatrix.getItemDamage() == 9) {
                     stackInMatrix.stackSize += 1;
                     craftMatrix.setInventorySlotContents(matrixSlot, stackInMatrix);
                 }
             }
         }
-        if (output.getItem() instanceof IPrimordialCrafting
-                && !event.player.worldObj.isRemote
+        if (output.getItem() instanceof IPrimordialCrafting && !event.player.worldObj.isRemote
                 && (!output.hasTagCompound())) {
             if (((IPrimordialCrafting) output.getItem()).getReturnedPearls(output) > 0) {
                 double iX = event.player.posX;
                 double iY = event.player.posY + 1;
                 double iZ = event.player.posZ;
-                for (int yy = -16; yy <= 16; yy++)
-                    for (int zz = -16; zz <= 16; zz++)
-                        for (int xx = -16; xx <= 16; xx++)
-                            if (event.player.worldObj.getTileEntity(
-                                            (int) event.player.posX + xx,
-                                            (int) event.player.posY + yy,
-                                            (int) event.player.posZ + zz)
-                                    instanceof TileInfusionMatrix) {
+                for (int yy = -16; yy <= 16; yy++) for (int zz = -16; zz <= 16; zz++)
+                    for (int xx = -16; xx <= 16; xx++) if (event.player.worldObj.getTileEntity(
+                            (int) event.player.posX + xx,
+                            (int) event.player.posY + yy,
+                            (int) event.player.posZ + zz) instanceof TileInfusionMatrix) {
                                 iX = event.player.posX + xx;
                                 iY = event.player.posY + yy - .5;
                                 iZ = event.player.posZ + zz;
@@ -440,12 +435,9 @@ public class EventHandler {
 
     // TODO SOULBOUND
     /*
-     * This is called the moment the player dies and drops his stuff.
-     *
-     * We go early, so we can get our items before other mods put them into some
-     * grave. Also remove them from the list so they won't get duped. If the
-     * inventory overflows, e.g. because everything there and the armor is
-     * soulbound, let the remainder be dropped/graved.
+     * This is called the moment the player dies and drops his stuff. We go early, so we can get our items before other
+     * mods put them into some grave. Also remove them from the list so they won't get duped. If the inventory
+     * overflows, e.g. because everything there and the armor is soulbound, let the remainder be dropped/graved.
      */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDropsEvent evt) {
@@ -506,14 +498,11 @@ public class EventHandler {
     }
 
     /*
-     * This is called when the user presses the "respawn" button. The original
-     * inventory would be empty, but onPlayerDeath() above placed items in it.
-     *
-     * Note: Without other death-modifying mods, the content of the old inventory
-     * would always fit into the new one (both being empty but for soulbound items
-     * in the old one) and the old one would be discarded just after this method.
-     * But better play it safe and assume that an overflow is possible and that
-     * another mod may move stuff out of the old inventory, too.
+     * This is called when the user presses the "respawn" button. The original inventory would be empty, but
+     * onPlayerDeath() above placed items in it. Note: Without other death-modifying mods, the content of the old
+     * inventory would always fit into the new one (both being empty but for soulbound items in the old one) and the old
+     * one would be discarded just after this method. But better play it safe and assume that an overflow is possible
+     * and that another mod may move stuff out of the old inventory, too.
      */
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone evt) {

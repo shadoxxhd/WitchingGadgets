@@ -1,11 +1,13 @@
 package witchinggadgets.common.util.recipe;
 
 import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.ShapelessArcaneRecipe;
@@ -19,7 +21,7 @@ public class PhotoDevelopingRecipe extends ShapelessArcaneRecipe {
                 "SCANCAMERA",
                 new ItemStack(WGContent.ItemMaterial, 1, 10),
                 new AspectList().add(Aspect.AIR, 5).add(Aspect.WATER, 5).add(Aspect.ORDER, 5),
-                new Object[] {new ItemStack(WGContent.ItemMaterial, 1, 9), "dyeBlack", Items.paper});
+                new Object[] { new ItemStack(WGContent.ItemMaterial, 1, 9), "dyeBlack", Items.paper });
     }
 
     @Override
@@ -33,9 +35,7 @@ public class PhotoDevelopingRecipe extends ShapelessArcaneRecipe {
                 if (stackInSlot.getItem().equals(Items.paper)) paper.add(stackInSlot);
             }
         }
-        return new AspectList()
-                .add(Aspect.AIR, 5 * paper.size())
-                .add(Aspect.WATER, 5 * paper.size())
+        return new AspectList().add(Aspect.AIR, 5 * paper.size()).add(Aspect.WATER, 5 * paper.size())
                 .add(Aspect.ORDER, 5 * paper.size());
     }
 

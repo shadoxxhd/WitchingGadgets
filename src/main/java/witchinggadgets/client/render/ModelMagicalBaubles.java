@@ -2,14 +2,17 @@ package witchinggadgets.client.render;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+
 import travellersgear.api.ITravellersGear;
 import witchinggadgets.common.items.baubles.ItemMagicalBaubles;
 
 public class ModelMagicalBaubles extends ModelBiped {
+
     List<ModelRenderer> parts = new ArrayList();
 
     public ModelMagicalBaubles(EntityLivingBase entity, ItemStack stack) {

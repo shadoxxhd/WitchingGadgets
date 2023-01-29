@@ -1,8 +1,7 @@
 package witchinggadgets.common.items.tools;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -19,11 +18,15 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.util.Lib;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBag extends Item {
-    String[] subNames = {"normal", "void", "ender", "hungry"};
+
+    String[] subNames = { "normal", "void", "ender", "hungry" };
     IIcon[] overlayIcons = new IIcon[subNames.length];
 
     public ItemBag() {
@@ -47,10 +50,8 @@ public class ItemBag extends Item {
         NBTTagCompound tag = stack.getTagCompound();
         if (tag == null) return getDefaultBagColour(stack.getItemDamage());
         NBTTagCompound tagDisplay = tag.getCompoundTag("display");
-        return tagDisplay == null
-                ? getDefaultBagColour(stack.getItemDamage())
-                : (tagDisplay.hasKey("color")
-                        ? tagDisplay.getInteger("color")
+        return tagDisplay == null ? getDefaultBagColour(stack.getItemDamage())
+                : (tagDisplay.hasKey("color") ? tagDisplay.getInteger("color")
                         : getDefaultBagColour(stack.getItemDamage()));
     }
 
@@ -116,42 +117,43 @@ public class ItemBag extends Item {
                 stack.getTagCompound().setString("Owner", player.getCommandSenderName());
 
             if ((stack.getItemDamage() == 0 || stack.getItemDamage() == 3) && stack.hasTagCompound()) {
-                if (!player.capabilities.isCreativeMode
-                        && !stack.getTagCompound().getBoolean("unlocked")
+                if (!player.capabilities.isCreativeMode && !stack.getTagCompound().getBoolean("unlocked")
                         && !stack.getTagCompound().getString("Owner").equalsIgnoreCase(player.getCommandSenderName())) {
                     player.attackEntityFrom(DamageSource.magic, 4f);
                     player.dropOneItem(true);
-                    player.addChatComponentMessage(new ChatComponentTranslation(
-                            Lib.CHAT + "notyourbag", stack.getTagCompound().getString("Owner")));
+                    player.addChatComponentMessage(
+                            new ChatComponentTranslation(
+                                    Lib.CHAT + "notyourbag",
+                                    stack.getTagCompound().getString("Owner")));
                     return stack;
                 }
                 if (stack.getTagCompound().getString("Owner").equalsIgnoreCase(player.getCommandSenderName())
                         && player.isSneaking()) {
-                    stack.getTagCompound()
-                            .setBoolean("unlocked", !stack.getTagCompound().getBoolean("unlocked"));
-                    player.addChatComponentMessage(new ChatComponentTranslation(
-                            Lib.CHAT + "bag" + (stack.getTagCompound().getBoolean("unlocked") ? "un" : "") + "locked",
-                            new Object[0]));
+                    stack.getTagCompound().setBoolean("unlocked", !stack.getTagCompound().getBoolean("unlocked"));
+                    player.addChatComponentMessage(
+                            new ChatComponentTranslation(
+                                    Lib.CHAT + "bag"
+                                            + (stack.getTagCompound().getBoolean("unlocked") ? "un" : "")
+                                            + "locked",
+                                    new Object[0]));
                     return stack;
                 }
             }
 
-            if (stack.getItemDamage() == 0 || stack.getItemDamage() == 3)
-                player.openGui(
-                        WitchingGadgets.instance,
-                        3,
-                        world,
-                        MathHelper.floor_double(player.posX),
-                        MathHelper.floor_double(player.posY),
-                        MathHelper.floor_double(player.posZ));
-            else if (stack.getItemDamage() == 1)
-                player.openGui(
-                        WitchingGadgets.instance,
-                        11,
-                        world,
-                        MathHelper.floor_double(player.posX),
-                        MathHelper.floor_double(player.posY),
-                        MathHelper.floor_double(player.posZ));
+            if (stack.getItemDamage() == 0 || stack.getItemDamage() == 3) player.openGui(
+                    WitchingGadgets.instance,
+                    3,
+                    world,
+                    MathHelper.floor_double(player.posX),
+                    MathHelper.floor_double(player.posY),
+                    MathHelper.floor_double(player.posZ));
+            else if (stack.getItemDamage() == 1) player.openGui(
+                    WitchingGadgets.instance,
+                    11,
+                    world,
+                    MathHelper.floor_double(player.posX),
+                    MathHelper.floor_double(player.posY),
+                    MathHelper.floor_double(player.posZ));
             else if (stack.getItemDamage() == 2) player.displayGUIChest(player.getInventoryEnderChest());
         }
         return super.onItemRightClick(stack, world, player);

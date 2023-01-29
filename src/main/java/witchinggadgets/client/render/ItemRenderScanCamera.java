@@ -20,8 +20,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -38,6 +40,7 @@ import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.util.Utilities;
 
 public class ItemRenderScanCamera implements IItemRenderer {
+
     String goldTexture = ("thaumcraft:textures/models/scanner.png");
     String leatherTexture = ("witchinggadgets:textures/models/cameraLeather.png");
     String scannerTexture = ("thaumcraft:textures/models/scanscreen.png");
@@ -45,8 +48,8 @@ public class ItemRenderScanCamera implements IItemRenderer {
 
     @Override
     public boolean handleRenderType(ItemStack stack, ItemRenderType type) {
-        //		if(type==ItemRenderType.INVENTORY)
-        //			return false;
+        // if(type==ItemRenderType.INVENTORY)
+        // return false;
         return true;
     }
 
@@ -94,13 +97,13 @@ public class ItemRenderScanCamera implements IItemRenderer {
                 return;
             }
 
-            //		RenderHelper.disableStandardItemLighting();
+            // RenderHelper.disableStandardItemLighting();
 
             // TRANSFORMS BEFORE CUSTOM RENDER
-            //		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+            // GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             // GL11.glTranslatef(0.9375F, 0.0625F, 0.0F);
             // GL11.glRotatef(335.0F, 0.0F, 0.0F, -1.0F);
-            //		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+            // GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             //
             GL11.glPushMatrix();
             if (type == ItemRenderType.EQUIPPED) {
@@ -116,15 +119,15 @@ public class ItemRenderScanCamera implements IItemRenderer {
                 GL11.glRotatef(45.0F, 0.0F, -1.0F, 0.0F);
                 GL11.glRotatef(5.0F, 2.0F, 0.0F, 0.0F);
                 GL11.glScalef(2f, 2f, 2f);
-                /**GL11.glTranslatef(-0.35F, 0.875F, 1.0F);*/
+                /** GL11.glTranslatef(-0.35F, 0.875F, 1.0F); */
 
                 // TODO GL11.glTranslatef(-0.35F, 0.5F, 1.0F);
                 GL11.glTranslatef(-0.35F, 0.85F, 1.1F);
                 float timer = UtilsFX.getTimer(mc).renderPartialTicks;
-                //			float f1 = UtilsFX.getPrevEquippedProgress(mc.entityRenderer.itemRenderer) +
+                // float f1 = UtilsFX.getPrevEquippedProgress(mc.entityRenderer.itemRenderer) +
                 // (UtilsFX.getEquippedProgress(mc.entityRenderer.itemRenderer) -
                 // UtilsFX.getPrevEquippedProgress(mc.entityRenderer.itemRenderer)) * timer;
-                //			float f2 = entityclientplayermp.prevRotationPitch + (entityclientplayermp.rotationPitch -
+                // float f2 = entityclientplayermp.prevRotationPitch + (entityclientplayermp.rotationPitch -
                 // entityclientplayermp.prevRotationPitch) * timer;
 
                 float f6;
@@ -154,32 +157,33 @@ public class ItemRenderScanCamera implements IItemRenderer {
                         -f6 * 0.4F,
                         MathHelper.sin(MathHelper.sqrt_float(f7) * (float) Math.PI * 2.0F) * 0.2F,
                         -f8 * 0.2F);
-                //			f7 = 1.0F - f2 / 45.0F + 0.1F;
+                // f7 = 1.0F - f2 / 45.0F + 0.1F;
 
                 GL11.glTranslatef(0.0F, 0.0F * f12 - (1.0F - 1.0f) * 1.2F + 0.04F, -0.9F * f12);
 
                 // GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-                ClientUtilities.bindTexture(player.getLocationSkin().getResourceDomain() + ":"
-                        + player.getLocationSkin().getResourcePath());
+                ClientUtilities.bindTexture(
+                        player.getLocationSkin().getResourceDomain() + ":"
+                                + player.getLocationSkin().getResourcePath());
 
-                //			for (k = 0; k < 2; ++k)
-                //			{
-                //				int l = k * 2 - 1;
-                //				GL11.glPushMatrix();
-                //				GL11.glTranslatef(-0.1F, -0.6F, 1.1F * l);
-                //				GL11.glRotatef(-25 * l, 1.0F, 0.0F, 0.0F);
-                //				GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
-                //				GL11.glRotatef(59.0F, 0.0F, 0.0F, 1.0F);
-                //				GL11.glRotatef(-50 * l, 0.0F, 1.0F, 0.0F);
-                //				render = RenderManager.instance.getEntityRenderObject(mc.thePlayer);
-                //				renderplayer = (RenderPlayer)render;
-                //				f11 = 1.0F;
-                //				GL11.glScalef(f11, f11, f11);
-                //				renderplayer.renderFirstPersonArm(mc.thePlayer);
-                //				GL11.glPopMatrix();
-                //			}
+                // for (k = 0; k < 2; ++k)
+                // {
+                // int l = k * 2 - 1;
+                // GL11.glPushMatrix();
+                // GL11.glTranslatef(-0.1F, -0.6F, 1.1F * l);
+                // GL11.glRotatef(-25 * l, 1.0F, 0.0F, 0.0F);
+                // GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
+                // GL11.glRotatef(59.0F, 0.0F, 0.0F, 1.0F);
+                // GL11.glRotatef(-50 * l, 0.0F, 1.0F, 0.0F);
+                // render = RenderManager.instance.getEntityRenderObject(mc.thePlayer);
+                // renderplayer = (RenderPlayer)render;
+                // f11 = 1.0F;
+                // GL11.glScalef(f11, f11, f11);
+                // renderplayer.renderFirstPersonArm(mc.thePlayer);
+                // GL11.glPopMatrix();
+                // }
 
                 // TODO arms
                 for (k = 0; k < 2; ++k) {
@@ -250,14 +254,13 @@ public class ItemRenderScanCamera implements IItemRenderer {
                 GL11.glTranslated(-0.425, -0.425, -0.5625);
                 GL11.glScalef(0.85f, 0.85f, 0.85f);
                 IIcon ic = ConfigBlocks.blockWoodenDevice.getIcon(6, 0);
-                ClientUtilities.bindTexture(mc.getTextureManager()
+                ClientUtilities.bindTexture(
+                        mc.getTextureManager()
                                 .getResourceLocation(
                                         new ItemStack(ConfigBlocks.blockWoodenDevice).getItemSpriteNumber())
-                                .getResourceDomain()
-                        + ":"
-                        + mc.getTextureManager()
-                                .getResourceLocation(stack.getItemSpriteNumber())
-                                .getResourcePath());
+                                .getResourceDomain() + ":"
+                                + mc.getTextureManager().getResourceLocation(stack.getItemSpriteNumber())
+                                        .getResourcePath());
                 Tessellator tes = Tessellator.instance;
                 tes.startDrawingQuads();
                 tes.addVertexWithUV(0, 1, 0.0D, ic.getMinU(), ic.getMaxV());
@@ -300,8 +303,7 @@ public class ItemRenderScanCamera implements IItemRenderer {
                             aspects = ScanManager.getScanAspects(scan, player.worldObj);
                         }
                     }
-                    if ((scan.type == 3)
-                            && (scan.phenomena.startsWith("NODE"))
+                    if ((scan.type == 3) && (scan.phenomena.startsWith("NODE"))
                             && (ScanManager.hasBeenScanned(player, scan))) {
                         MovingObjectPosition mop = null;
                         if ((scanStack != null) && (scanStack.getItem() != null)) {
@@ -315,15 +317,14 @@ public class ItemRenderScanCamera implements IItemRenderer {
                                 GL11.glPushMatrix();
                                 GL11.glEnable(3042);
                                 GL11.glBlendFunc(770, 1);
-                                String t = StatCollector.translateToLocal(
-                                        "nodetype." + ((INode) tile).getNodeType() + ".name");
+                                String t = StatCollector
+                                        .translateToLocal("nodetype." + ((INode) tile).getNodeType() + ".name");
                                 if (((INode) tile).getNodeModifier() != null) {
                                     t = t + ", "
-                                            + StatCollector.translateToLocal(new StringBuilder()
-                                                    .append("nodemod.")
-                                                    .append(((INode) tile).getNodeModifier())
-                                                    .append(".name")
-                                                    .toString());
+                                            + StatCollector.translateToLocal(
+                                                    new StringBuilder().append("nodemod.")
+                                                            .append(((INode) tile).getNodeModifier()).append(".name")
+                                                            .toString());
                                 }
                                 int sw = mc.fontRenderer.getStringWidth(t);
                                 float scale = 0.006F;
@@ -398,16 +399,16 @@ public class ItemRenderScanCamera implements IItemRenderer {
                     }
                 }
             }
-            //		int timerSteps = entityclientplayermp.ticksExisted % 68;
-            //		double step = 1.0/9.0;
-            //		int frame = timerSteps<60 ? 0 : timerSteps-59;
+            // int timerSteps = entityclientplayermp.ticksExisted % 68;
+            // double step = 1.0/9.0;
+            // int frame = timerSteps<60 ? 0 : timerSteps-59;
 
             GL11.glDisable(3042);
 
             GL11.glPopMatrix();
 
-            //		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-            ////		RenderHelper.enableStandardItemLighting();
+            // GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+            //// RenderHelper.enableStandardItemLighting();
             GL11.glPopMatrix();
         } catch (Exception e) {
             e.printStackTrace();
@@ -429,8 +430,7 @@ public class ItemRenderScanCamera implements IItemRenderer {
 
             TileEntity tile = p.worldObj.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
             if ((tile != null) && ((tile instanceof INode))) {
-                int md = p.worldObj
-                        .getBlock(mop.blockX, mop.blockY, mop.blockZ)
+                int md = p.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ)
                         .getDamageValue(p.worldObj, mop.blockX, mop.blockY, mop.blockZ);
                 ScanResult sr = new ScanResult((byte) 3, bi, md, null, "NODE" + ((INode) tile).getId());
                 return sr;
@@ -444,8 +444,7 @@ public class ItemRenderScanCamera implements IItemRenderer {
                     if (is == null) {
                         is = BlockUtils.createStackedBlock(p.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ), md);
                     }
-                } catch (Exception e) {
-                }
+                } catch (Exception e) {}
                 if (is == null) {
                     sr = new ScanResult((byte) 1, bi, md, null, "");
                 } else {

@@ -2,6 +2,7 @@ package witchinggadgets.client.render;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -10,13 +11,16 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.config.ConfigItems;
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityCuttingTable;
 
 public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
+
     static ModelCuttingTable model = new ModelCuttingTable();
 
     @Override
@@ -49,36 +53,32 @@ public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
                 if (!aspects.aspects.isEmpty())
                     if (tile.getStackInSlot(1 + i).getItem().equals(ConfigItems.itemEssence))
                         model.renderFlask(i, aspects.getAspects()[0].getColor());
-                    else if (tile.getStackInSlot(1 + i).getItem().equals(ConfigItems.itemWispEssence))
-                        model.renderEssence(i, aspects.getAspects()[0].getColor());
+                else if (tile.getStackInSlot(1 + i).getItem().equals(ConfigItems.itemWispEssence))
+                    model.renderEssence(i, aspects.getAspects()[0].getColor());
             }
         ClientUtilities.bindTexture("textures/atlas/items.png");
         GL11.glTranslatef(-.2f, .875f, -.25f);
         GL11.glScaled(.375f, .75f, .375f);
         GL11.glRotatef(90, 1, 0, 0);
-        if (tile.getStackInSlot(0) != null)
-            for (int pass = 0;
-                    pass
-                            < tile.getStackInSlot(0)
-                                    .getItem()
-                                    .getRenderPasses(tile.getStackInSlot(0).getItemDamage());
-                    pass++) {
-                IIcon iicon = tile.getStackInSlot(0).getItem().getIcon(tile.getStackInSlot(0), pass);
-                ItemRenderer.renderItemIn2D(
-                        Tessellator.instance,
-                        iicon.getMaxU(),
-                        iicon.getMinV(),
-                        iicon.getMinU(),
-                        iicon.getMaxV(),
-                        iicon.getIconWidth(),
-                        iicon.getIconHeight(),
-                        0.0625F);
-            }
+        if (tile.getStackInSlot(0) != null) for (int pass = 0; pass
+                < tile.getStackInSlot(0).getItem().getRenderPasses(tile.getStackInSlot(0).getItemDamage()); pass++) {
+                    IIcon iicon = tile.getStackInSlot(0).getItem().getIcon(tile.getStackInSlot(0), pass);
+                    ItemRenderer.renderItemIn2D(
+                            Tessellator.instance,
+                            iicon.getMaxU(),
+                            iicon.getMinV(),
+                            iicon.getMinU(),
+                            iicon.getMaxV(),
+                            iicon.getIconWidth(),
+                            iicon.getIconHeight(),
+                            0.0625F);
+                }
 
         GL11.glPopMatrix();
     }
 
     static class ModelCuttingTable extends ModelBase {
+
         List<ModelRenderer> parts = new ArrayList();
         List<ModelRenderer[]> flasks = new ArrayList();
         List<ModelRenderer[]> bowls = new ArrayList();
@@ -204,7 +204,7 @@ public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
             temp4.setRotationPoint(-7F, 14.5F, 4.5F);
             temp4.setTextureSize(64, 32);
             temp4.mirror = true;
-            flasks.add(new ModelRenderer[] {temp, temp2, temp3, temp4});
+            flasks.add(new ModelRenderer[] { temp, temp2, temp3, temp4 });
             // FLASK 1
             temp = new ModelRenderer(this, 16, 26);
             temp.addBox(0.0F, 0.0F, 0.0F, 3, 3, 3);
@@ -226,7 +226,7 @@ public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
             temp4.setRotationPoint(-2.5F, 14.5F, 4.5F);
             temp4.setTextureSize(64, 32);
             temp4.mirror = true;
-            flasks.add(new ModelRenderer[] {temp, temp2, temp3, temp4});
+            flasks.add(new ModelRenderer[] { temp, temp2, temp3, temp4 });
             // FLASK 2
             temp = new ModelRenderer(this, 16, 26);
             temp.addBox(0.0F, 0.0F, 0.0F, 3, 3, 3);
@@ -248,7 +248,7 @@ public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
             temp4.setRotationPoint(2F, 14.5F, 4.5F);
             temp4.setTextureSize(64, 32);
             temp4.mirror = true;
-            flasks.add(new ModelRenderer[] {temp, temp2, temp3, temp4});
+            flasks.add(new ModelRenderer[] { temp, temp2, temp3, temp4 });
 
             ModelRenderer temp5;
             ModelRenderer temp6;
@@ -283,7 +283,7 @@ public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
             temp6.setRotationPoint(-7F, 14.75F, 4.5F);
             temp6.setTextureSize(64, 32);
             temp6.mirror = true;
-            bowls.add(new ModelRenderer[] {temp, temp2, temp3, temp4, temp5, temp6});
+            bowls.add(new ModelRenderer[] { temp, temp2, temp3, temp4, temp5, temp6 });
             // ESSENCE 1
             temp = new ModelRenderer(this, 36, 24);
             temp.addBox(0.0F, 0.0F, 0.0F, 3, 1, 3);
@@ -315,7 +315,7 @@ public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
             temp6.setRotationPoint(-2.5F, 14.75F, 4.5F);
             temp6.setTextureSize(64, 32);
             temp6.mirror = true;
-            bowls.add(new ModelRenderer[] {temp, temp2, temp3, temp4, temp5, temp6});
+            bowls.add(new ModelRenderer[] { temp, temp2, temp3, temp4, temp5, temp6 });
             // ESSENCE 2
             temp = new ModelRenderer(this, 36, 24);
             temp.addBox(0.0F, 0.0F, 0.0F, 3, 1, 3);
@@ -347,7 +347,7 @@ public class TileRenderCuttingTable extends TileEntitySpecialRenderer {
             temp6.setRotationPoint(2F, 14.75F, 4.5F);
             temp6.setTextureSize(64, 32);
             temp6.mirror = true;
-            bowls.add(new ModelRenderer[] {temp, temp2, temp3, temp4, temp5, temp6});
+            bowls.add(new ModelRenderer[] { temp, temp2, temp3, temp4, temp5, temp6 });
         }
 
         @Override

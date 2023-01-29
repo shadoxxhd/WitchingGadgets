@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -15,6 +16,7 @@ import thaumcraft.common.lib.utils.Utils;
 import witchinggadgets.api.ITerraformFocus;
 
 public class TileEntityTerraformer extends TileEntityWGBase implements IAspectContainer, IEssentiaTransport {
+
     private Aspect currentSuction;
     private AspectList essentia = new AspectList();
     int tick = 0;
@@ -48,18 +50,17 @@ public class TileEntityTerraformer extends TileEntityWGBase implements IAspectCo
                             && VisNetHandler.drainVis(worldObj, xCoord, yCoord, zCoord, Aspect.EARTH, 4) == 4) {
                         Utils.setBiomeAt(worldObj, x, z, transformBiome);
                         this.takeFromContainer(currentSuction, 4);
-                        for (int j = 0; j < 4; j++)
-                            for (int i = 0; i < 4; i++) {
-                                ForgeDirection fd = ForgeDirection.getOrientation(2 + i);
-                                double x1 = xCoord + .5 + (.6875 * fd.offsetX);
-                                double y1 = yCoord + .875;
-                                double z1 = zCoord + .5 + (.6875 * fd.offsetZ);
-                                double x2 = .1875;
-                                double y2 = .25;
-                                double z2 = .1875;
-                                Thaumcraft.proxy.drawVentParticles(
-                                        worldObj, x1, y1, z1, x2, y2, z2, currentSuction.getColor(), 2);
-                            }
+                        for (int j = 0; j < 4; j++) for (int i = 0; i < 4; i++) {
+                            ForgeDirection fd = ForgeDirection.getOrientation(2 + i);
+                            double x1 = xCoord + .5 + (.6875 * fd.offsetX);
+                            double y1 = yCoord + .875;
+                            double z1 = zCoord + .5 + (.6875 * fd.offsetZ);
+                            double x2 = .1875;
+                            double y2 = .25;
+                            double z2 = .1875;
+                            Thaumcraft.proxy
+                                    .drawVentParticles(worldObj, x1, y1, z1, x2, y2, z2, currentSuction.getColor(), 2);
+                        }
                     }
                 }
             }
@@ -71,13 +72,14 @@ public class TileEntityTerraformer extends TileEntityWGBase implements IAspectCo
 
     boolean drawEssentia() {
         if (++this.drawDelay % 5 != 0) return false;
-        TileEntity te = ThaumcraftApiHelper.getConnectableTile(
-                this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.DOWN);
+        TileEntity te = ThaumcraftApiHelper
+                .getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.DOWN);
         if (te != null) {
             IEssentiaTransport ic = (IEssentiaTransport) te;
             if (!ic.canOutputTo(ForgeDirection.UP)) return false;
             if ((ic.getSuctionAmount(ForgeDirection.UP) < getSuctionAmount(ForgeDirection.DOWN))
-                    && (ic.takeEssentia(this.currentSuction, 1, ForgeDirection.UP) == 1)) return true;
+                    && (ic.takeEssentia(this.currentSuction, 1, ForgeDirection.UP) == 1))
+                return true;
         }
         return false;
     }

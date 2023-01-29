@@ -1,9 +1,8 @@
 package witchinggadgets.common.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.HashMap;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,11 +18,15 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
 import thaumcraft.api.aspects.Aspect;
 import witchinggadgets.WitchingGadgets;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemPrimordialGem extends Item {
-    String[] subNames = {"perfodio", "vacuos", "sano", "aer"};
+
+    String[] subNames = { "perfodio", "vacuos", "sano", "aer" };
     HashMap<String, Object[]> subItems = new HashMap<String, Object[]>();
 
     IIcon iconFrame;
@@ -34,10 +37,10 @@ public class ItemPrimordialGem extends Item {
         this.setHasSubtypes(true);
         this.setCreativeTab(WitchingGadgets.tabWG);
 
-        subItems.put(subNames[0], new Object[] {true, false});
-        subItems.put(subNames[1], new Object[] {false, true});
-        subItems.put(subNames[2], new Object[] {true, true});
-        subItems.put(subNames[3], new Object[] {true, false});
+        subItems.put(subNames[0], new Object[] { true, false });
+        subItems.put(subNames[1], new Object[] { false, true });
+        subItems.put(subNames[2], new Object[] { true, true });
+        subItems.put(subNames[3], new Object[] { true, false });
     }
 
     @SideOnly(Side.CLIENT)
@@ -45,18 +48,16 @@ public class ItemPrimordialGem extends Item {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         String sA = null;
         String sP = null;
-        if (isActiveGem(stack))
-            sA = StatCollector.translateToLocal("wg.gui.primordialGem.activeAbility") + " "
-                    + StatCollector.translateToLocal(
-                            "wg.gui.primordialGem." + subNames[stack.getItemDamage()] + ".desc.active");
-        if (isPassiveGem(stack))
-            sP = StatCollector.translateToLocal("wg.gui.primordialGem.passiveAbility") + " "
-                    + StatCollector.translateToLocal(
-                            "wg.gui.primordialGem." + subNames[stack.getItemDamage()] + ".desc.passive");
+        if (isActiveGem(stack)) sA = StatCollector.translateToLocal("wg.gui.primordialGem.activeAbility") + " "
+                + StatCollector
+                        .translateToLocal("wg.gui.primordialGem." + subNames[stack.getItemDamage()] + ".desc.active");
+        if (isPassiveGem(stack)) sP = StatCollector.translateToLocal("wg.gui.primordialGem.passiveAbility") + " "
+                + StatCollector
+                        .translateToLocal("wg.gui.primordialGem." + subNames[stack.getItemDamage()] + ".desc.passive");
         if (sA != null) list.add(sA);
         if (sP != null) list.add(sP);
         // if(stack.hasTagCompound() && stack.getTagCompound().hasKey("BraceletSlot"))
-        //	list.add("Slot: "+stack.getTagCompound().getInteger("BraceletSlot"));
+        // list.add("Slot: "+stack.getTagCompound().getInteger("BraceletSlot"));
     }
 
     @Override
@@ -65,9 +66,9 @@ public class ItemPrimordialGem extends Item {
             String key = subNames[stack.getItemDamage()];
             Aspect a = Aspect.getAspect(key);
             if (a != null) return a.getColor();
-            else if (subItems.get(key).length > 2
-                    && subItems.get(key)[2] != null
-                    && subItems.get(key)[2] instanceof Integer) return (Integer) subItems.get(key)[2];
+            else if (subItems.get(key).length > 2 && subItems.get(key)[2] != null
+                    && subItems.get(key)[2] instanceof Integer)
+                return (Integer) subItems.get(key)[2];
             return 16777215;
         }
         return super.getColorFromItemStack(stack, pass);
@@ -116,17 +117,16 @@ public class ItemPrimordialGem extends Item {
                     player.posZ + 6);
             aabb.expand(6, 6, 6);
             List<Entity> targets = world.getEntitiesWithinAABBExcludingEntity(player, aabb);
-            for (Entity ent : targets)
-                if (player.canEntityBeSeen(ent)) {
-                    double distX = ent.posX - player.posX;
-                    double distZ = ent.posZ - player.posZ;
-                    double dist = Math.sqrt(distX * distX + distZ * distZ);
-                    double force = Math.max(0, 1.0 - dist / 10.0);
-                    Vec3 look = player.getLookVec();
-                    ent.motionX += force * look.xCoord;
-                    ent.motionY = 0.25;
-                    ent.motionZ += force * look.zCoord;
-                }
+            for (Entity ent : targets) if (player.canEntityBeSeen(ent)) {
+                double distX = ent.posX - player.posX;
+                double distZ = ent.posZ - player.posZ;
+                double dist = Math.sqrt(distX * distX + distZ * distZ);
+                double force = Math.max(0, 1.0 - dist / 10.0);
+                Vec3 look = player.getLookVec();
+                ent.motionX += force * look.xCoord;
+                ent.motionY = 0.25;
+                ent.motionZ += force * look.zCoord;
+            }
         }
         return false;
     }
@@ -136,18 +136,8 @@ public class ItemPrimordialGem extends Item {
         return false;
     }
 
-    public boolean useGemOnBlock(
-            World world,
-            ItemStack bracelet,
-            ItemStack gem,
-            EntityPlayer player,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean useGemOnBlock(World world, ItemStack bracelet, ItemStack gem, EntityPlayer player, int x, int y,
+            int z, int side, float hitX, float hitY, float hitZ) {
         String tag = subNames[gem.getItemDamage()];
 
         if (tag.equalsIgnoreCase("perfodio")) {
@@ -158,18 +148,17 @@ public class ItemPrimordialGem extends Item {
             int zMin = side == 0 || side == 1 || side == 4 || side == 5 ? z - 1 : z;
             int zMax = side == 0 || side == 1 || side == 4 || side == 5 ? z + 1 : z;
             for (int xx = xMin; xx <= xMax; xx++)
-                for (int yy = yMin; yy <= yMax; yy++)
-                    for (int zz = zMin; zz <= zMax; zz++) {
-                        Block b = world.getBlock(xx, yy, zz);
-                        int bMeta = world.getBlockMetadata(xx, yy, zz);
-                        if (b != null)
-                            if (!player.capabilities.isCreativeMode && b.canEntityDestroy(world, xx, yy, zz, player)) {
-                                if (b.removedByPlayer(world, player, xx, yy, zz, true))
-                                    b.onBlockDestroyedByPlayer(world, xx, yy, zz, bMeta);
-                                b.harvestBlock(world, player, xx, yy, zz, bMeta);
-                                b.onBlockHarvested(world, xx, yy, zz, bMeta, player);
-                            } else world.setBlockToAir(xx, yy, zz);
-                    }
+                for (int yy = yMin; yy <= yMax; yy++) for (int zz = zMin; zz <= zMax; zz++) {
+                    Block b = world.getBlock(xx, yy, zz);
+                    int bMeta = world.getBlockMetadata(xx, yy, zz);
+                    if (b != null)
+                        if (!player.capabilities.isCreativeMode && b.canEntityDestroy(world, xx, yy, zz, player)) {
+                            if (b.removedByPlayer(world, player, xx, yy, zz, true))
+                                b.onBlockDestroyedByPlayer(world, xx, yy, zz, bMeta);
+                            b.harvestBlock(world, player, xx, yy, zz, bMeta);
+                            b.onBlockHarvested(world, xx, yy, zz, bMeta, player);
+                        } else world.setBlockToAir(xx, yy, zz);
+                }
         }
         return false;
     }

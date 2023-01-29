@@ -1,15 +1,17 @@
 package witchinggadgets.common.util.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+
 import witchinggadgets.WitchingGadgets;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
 public class PacketPrimordialGlove extends AbstractPacket {
+
     int dim;
     int playerid;
     byte type;

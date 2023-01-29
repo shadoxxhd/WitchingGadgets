@@ -1,11 +1,7 @@
 package witchinggadgets.common.items.baubles;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,10 +9,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+
 import witchinggadgets.client.render.ModelKama;
 import witchinggadgets.common.util.Lib;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemKama extends ItemCloak implements IBauble {
+
     IIcon overlay;
 
     public ItemKama() {
@@ -77,10 +80,9 @@ public class ItemKama extends ItemCloak implements IBauble {
 
         if (Loader.isModLoaded("Botania")) {
             ItemStack cosmetic = getCosmeticItem(stack);
-            if (cosmetic != null)
-                list.add(String.format(
-                                StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.getDisplayName())
-                        .replaceAll("&", "\u00a7"));
+            if (cosmetic != null) list.add(
+                    String.format(StatCollector.translateToLocal("botaniamisc.hasCosmetic"), cosmetic.getDisplayName())
+                            .replaceAll("&", "\u00a7"));
         }
     }
 

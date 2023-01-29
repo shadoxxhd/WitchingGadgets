@@ -38,151 +38,151 @@
 // @ChannelHandler.Sharable
 // public class WGPacketPipeline extends MessageToMessageCodec<FMLProxyPacket, AbstractPacket>
 // {
-//	private EnumMap<Side, FMLEmbeddedChannel>           channels;
-//	private LinkedList<Class<? extends AbstractPacket>> packets           = new LinkedList<Class<? extends
+// private EnumMap<Side, FMLEmbeddedChannel> channels;
+// private LinkedList<Class<? extends AbstractPacket>> packets = new LinkedList<Class<? extends
 // AbstractPacket>>();
-//	private boolean                                     isPostInitialised = false;
-//	public static WGPacketPipeline INSTANCE = new WGPacketPipeline();
+// private boolean isPostInitialised = false;
+// public static WGPacketPipeline INSTANCE = new WGPacketPipeline();
 //
-//	public boolean registerPacket(Class<? extends AbstractPacket> clazz)
-//	{
-//		if (this.packets.size() > 256)
-//		{
-//			WitchingGadgets.logger.log(Level.ERROR, "Can't register Packet: Size of PacketList is too big!");
-//			return false;
-//		}
-//		if (this.packets.contains(clazz))
-//		{
-//			WitchingGadgets.logger.log(Level.ERROR, "Can't register Packet: Packet registered already!");
-//			return false;
-//		}
-//		if (this.isPostInitialised)
-//		{
-//			WitchingGadgets.logger.log(Level.ERROR, "Can't register Packet: Pipeline is already post-initialized!");
-//			return false;
-//		}
-//		this.packets.add(clazz);
-//		return true;
-//	}
+// public boolean registerPacket(Class<? extends AbstractPacket> clazz)
+// {
+// if (this.packets.size() > 256)
+// {
+// WitchingGadgets.logger.log(Level.ERROR, "Can't register Packet: Size of PacketList is too big!");
+// return false;
+// }
+// if (this.packets.contains(clazz))
+// {
+// WitchingGadgets.logger.log(Level.ERROR, "Can't register Packet: Packet registered already!");
+// return false;
+// }
+// if (this.isPostInitialised)
+// {
+// WitchingGadgets.logger.log(Level.ERROR, "Can't register Packet: Pipeline is already post-initialized!");
+// return false;
+// }
+// this.packets.add(clazz);
+// return true;
+// }
 //
-//	// In line encoding of the packet, including discriminator setting
-//	@Override
-//	protected void encode(ChannelHandlerContext ctx, AbstractPacket msg, List<Object> out) throws Exception {
-//		ByteBuf buffer = Unpooled.buffer();
-//		Class<? extends AbstractPacket> clazz = msg.getClass();
-//		if (!this.packets.contains(msg.getClass())) {
-//			throw new NullPointerException("No Packet Registered for: " + msg.getClass().getCanonicalName());
-//		}
+// // In line encoding of the packet, including discriminator setting
+// @Override
+// protected void encode(ChannelHandlerContext ctx, AbstractPacket msg, List<Object> out) throws Exception {
+// ByteBuf buffer = Unpooled.buffer();
+// Class<? extends AbstractPacket> clazz = msg.getClass();
+// if (!this.packets.contains(msg.getClass())) {
+// throw new NullPointerException("No Packet Registered for: " + msg.getClass().getCanonicalName());
+// }
 //
-//		byte discriminator = (byte) this.packets.indexOf(clazz);
-//		buffer.writeByte(discriminator);
-//		msg.encodeInto(ctx, buffer);
-//		FMLProxyPacket proxyPacket = new FMLProxyPacket(buffer.copy(),
+// byte discriminator = (byte) this.packets.indexOf(clazz);
+// buffer.writeByte(discriminator);
+// msg.encodeInto(ctx, buffer);
+// FMLProxyPacket proxyPacket = new FMLProxyPacket(buffer.copy(),
 // ctx.channel().attr(NetworkRegistry.FML_CHANNEL).get());
-//		out.add(proxyPacket);
-//	}
+// out.add(proxyPacket);
+// }
 //
-//	// In line decoding and handling of the packet
-//	@Override
-//	protected void decode(ChannelHandlerContext ctx, FMLProxyPacket msg, List<Object> out) throws Exception {
-//		ByteBuf payload = msg.payload();
-//		byte discriminator = payload.readByte();
-//		Class<? extends AbstractPacket> clazz = this.packets.get(discriminator);
-//		if (clazz == null) {
-//			throw new NullPointerException("No packet registered for discriminator: " + discriminator);
-//		}
+// // In line decoding and handling of the packet
+// @Override
+// protected void decode(ChannelHandlerContext ctx, FMLProxyPacket msg, List<Object> out) throws Exception {
+// ByteBuf payload = msg.payload();
+// byte discriminator = payload.readByte();
+// Class<? extends AbstractPacket> clazz = this.packets.get(discriminator);
+// if (clazz == null) {
+// throw new NullPointerException("No packet registered for discriminator: " + discriminator);
+// }
 //
-//		AbstractPacket pkt = clazz.newInstance();
-//		pkt.decodeInto(ctx, payload.slice());
+// AbstractPacket pkt = clazz.newInstance();
+// pkt.decodeInto(ctx, payload.slice());
 //
-//		EntityPlayer player;
-//		switch (FMLCommonHandler.instance().getEffectiveSide()) {
-//		case CLIENT:
-//			player = this.getClientPlayer();
-//			pkt.handleClientSide(player);
-//			break;
+// EntityPlayer player;
+// switch (FMLCommonHandler.instance().getEffectiveSide()) {
+// case CLIENT:
+// player = this.getClientPlayer();
+// pkt.handleClientSide(player);
+// break;
 //
-//		case SERVER:
-//			INetHandler netHandler = ctx.channel().attr(NetworkRegistry.NET_HANDLER).get();
-//			player = ((NetHandlerPlayServer) netHandler).playerEntity;
-//			pkt.handleServerSide(player);
-//			break;
+// case SERVER:
+// INetHandler netHandler = ctx.channel().attr(NetworkRegistry.NET_HANDLER).get();
+// player = ((NetHandlerPlayServer) netHandler).playerEntity;
+// pkt.handleServerSide(player);
+// break;
 //
-//		default:
-//		}
+// default:
+// }
 //
-//		out.add(pkt);
-//	}
+// out.add(pkt);
+// }
 //
-//	// Method to call from FMLInitializationEvent
-//	public void initialise()
-//	{
-//		this.channels = NetworkRegistry.INSTANCE.newChannel(WitchingGadgets.MODID, this);
-//		registerPackets();
-//	}
-//	public void registerPackets()
-//	{
-//		registerPacket(PacketPrimordialGlove.class);
-//		registerPacket(PacketTileUpdate.class);
-//		registerPacket(PacketClientNotifier.class);
-//	}
+// // Method to call from FMLInitializationEvent
+// public void initialise()
+// {
+// this.channels = NetworkRegistry.INSTANCE.newChannel(WitchingGadgets.MODID, this);
+// registerPackets();
+// }
+// public void registerPackets()
+// {
+// registerPacket(PacketPrimordialGlove.class);
+// registerPacket(PacketTileUpdate.class);
+// registerPacket(PacketClientNotifier.class);
+// }
 //
-//	public void postInitialise()
-//	{
-//		if (this.isPostInitialised)
-//			return;
-//		this.isPostInitialised = true;
-//		Collections.sort(this.packets, new Comparator<Class<? extends AbstractPacket>>()
-//				{
-//			@Override
-//			public int compare (Class<? extends AbstractPacket> clazz1, Class<? extends AbstractPacket> clazz2)
-//			{
-//				int com = String.CASE_INSENSITIVE_ORDER.compare(clazz1.getCanonicalName(), clazz2.getCanonicalName());
-//				if (com == 0)
-//				{
-//					com = clazz1.getCanonicalName().compareTo(clazz2.getCanonicalName());
-//				}
-//				return com;
-//			}
-//				});
-//	}
-//	@SideOnly(Side.CLIENT)
-//	private EntityPlayer getClientPlayer()
-//	{
-//		return Minecraft.getMinecraft().thePlayer;
-//	}
+// public void postInitialise()
+// {
+// if (this.isPostInitialised)
+// return;
+// this.isPostInitialised = true;
+// Collections.sort(this.packets, new Comparator<Class<? extends AbstractPacket>>()
+// {
+// @Override
+// public int compare (Class<? extends AbstractPacket> clazz1, Class<? extends AbstractPacket> clazz2)
+// {
+// int com = String.CASE_INSENSITIVE_ORDER.compare(clazz1.getCanonicalName(), clazz2.getCanonicalName());
+// if (com == 0)
+// {
+// com = clazz1.getCanonicalName().compareTo(clazz2.getCanonicalName());
+// }
+// return com;
+// }
+// });
+// }
+// @SideOnly(Side.CLIENT)
+// private EntityPlayer getClientPlayer()
+// {
+// return Minecraft.getMinecraft().thePlayer;
+// }
 //
-//	public void sendToAll(AbstractPacket message)
-//	{
+// public void sendToAll(AbstractPacket message)
+// {
 //
-//	this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALL);
-//		this.channels.get(Side.SERVER).writeAndFlush(message);
-//	}
-//	public void sendTo(AbstractPacket message, EntityPlayerMP player)
-//	{
+// this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALL);
+// this.channels.get(Side.SERVER).writeAndFlush(message);
+// }
+// public void sendTo(AbstractPacket message, EntityPlayerMP player)
+// {
 //
-//	this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
-//		this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
-//		this.channels.get(Side.SERVER).writeAndFlush(message);
-//	}
-//	public void sendToAllAround(AbstractPacket message, NetworkRegistry.TargetPoint point)
-//	{
+// this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
+// this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
+// this.channels.get(Side.SERVER).writeAndFlush(message);
+// }
+// public void sendToAllAround(AbstractPacket message, NetworkRegistry.TargetPoint point)
+// {
 //
-//	this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
-//		this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
-//		this.channels.get(Side.SERVER).writeAndFlush(message);
-//	}
-//	public void sendToDimension(AbstractPacket message, int dimensionId)
-//	{
+// this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
+// this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
+// this.channels.get(Side.SERVER).writeAndFlush(message);
+// }
+// public void sendToDimension(AbstractPacket message, int dimensionId)
+// {
 //
-//	this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.DIMENSION);
-//		this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(dimensionId);
-//		this.channels.get(Side.SERVER).writeAndFlush(message);
-//	}
-//	public void sendToServer(AbstractPacket message)
-//	{
+// this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.DIMENSION);
+// this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(dimensionId);
+// this.channels.get(Side.SERVER).writeAndFlush(message);
+// }
+// public void sendToServer(AbstractPacket message)
+// {
 //
-//	this.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-//		this.channels.get(Side.CLIENT).writeAndFlush(message);
-//	}
+// this.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
+// this.channels.get(Side.CLIENT).writeAndFlush(message);
+// }
 // }

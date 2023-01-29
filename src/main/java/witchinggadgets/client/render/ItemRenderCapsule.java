@@ -1,6 +1,7 @@
 package witchinggadgets.client.render;
 
 import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -12,7 +13,9 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.items.ItemCrystalCapsule;
@@ -53,12 +56,11 @@ public class ItemRenderCapsule implements IItemRenderer {
 
             if (fluid.getBlock() != null) {
                 iicon = fluid.getBlock().getBlockTextureFromSide(0);
-                colour = fluid.getBlock()
-                        .colorMultiplier(
-                                Minecraft.getMinecraft().theWorld,
-                                (int) Minecraft.getMinecraft().thePlayer.posX,
-                                (int) Minecraft.getMinecraft().thePlayer.posY,
-                                (int) Minecraft.getMinecraft().thePlayer.posZ);
+                colour = fluid.getBlock().colorMultiplier(
+                        Minecraft.getMinecraft().theWorld,
+                        (int) Minecraft.getMinecraft().thePlayer.posX,
+                        (int) Minecraft.getMinecraft().thePlayer.posY,
+                        (int) Minecraft.getMinecraft().thePlayer.posZ);
             }
             if (iicon == null) {
                 GL11.glPopMatrix();
@@ -68,12 +70,15 @@ public class ItemRenderCapsule implements IItemRenderer {
             GL11.glScaled(1, 1, .75f);
             GL11.glTranslatef(0, 0, -.01f);
             ClientUtilities.renderIconWithMask(
-                    iicon, ((ItemCrystalCapsule) WGContent.ItemCapsule).fluidMask, new Color(colour), type);
+                    iicon,
+                    ((ItemCrystalCapsule) WGContent.ItemCapsule).fluidMask,
+                    new Color(colour),
+                    type);
             GL11.glTranslatef(0, 0, .01f);
             GL11.glScaled(1, 1, 1 / .75f);
 
-            //			ItemRenderer.renderItemIn2D(p_78439_0_, p_78439_1_, p_78439_2_, p_78439_3_, p_78439_4_, p_78439_5_,
-            // p_78439_6_, p_78439_7_);derItemIn2D(tes,  iicon.getMaxU(), iicon.getMinV(), iicon.getMinU(),
+            // ItemRenderer.renderItemIn2D(p_78439_0_, p_78439_1_, p_78439_2_, p_78439_3_, p_78439_4_, p_78439_5_,
+            // p_78439_6_, p_78439_7_);derItemIn2D(tes, iicon.getMaxU(), iicon.getMinV(), iicon.getMinU(),
             // iicon.getMaxV(), iicon.getIconWidth(), iicon.getIconHeight(), 0.0625F);
         }
 

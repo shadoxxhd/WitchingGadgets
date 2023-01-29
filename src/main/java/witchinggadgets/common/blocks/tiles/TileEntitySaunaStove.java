@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +21,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHandler {
+
     public static HashMap<Integer, TileEntitySaunaStove> targetedPlayers = new HashMap();
 
     public AxisAlignedBB[] boundingBoxes = new AxisAlignedBB[0];
@@ -89,7 +91,12 @@ public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHand
             if (!checked.contains(next)) {
                 boolean overWater = worldObj.isAABBInMaterial(
                         AxisAlignedBB.getBoundingBox(
-                                next.posX, yCoord - 6, next.posZ, next.posX + 1, yCoord + 6, next.posZ + 1),
+                                next.posX,
+                                yCoord - 6,
+                                next.posZ,
+                                next.posX + 1,
+                                yCoord + 6,
+                                next.posZ + 1),
                         Material.water); // waterColumns.contains(new ChunkCoordIntPair(cc.posX,cc.posZ));
                 if (isBlockValidForSteamPassing(next.posX, next.posY, next.posZ)
                         && ((xCoord - next.posX) * (xCoord - next.posX) + (zCoord - next.posZ) * (zCoord - next.posZ))
@@ -106,10 +113,10 @@ public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHand
                     if (next.posZ > outlineMaxZ) outlineMaxZ = next.posZ;
 
                     for (ChunkCoordinates cc2 : getConnected(next.posX, next.posY, next.posZ))
-                        if (!checked.contains(cc2)
-                                && !closedList.contains(cc2)
+                        if (!checked.contains(cc2) && !closedList.contains(cc2)
                                 && !openList.contains(cc2)
-                                && isBlockValidForSteamPassing(cc2.posX, cc2.posY, cc2.posZ)) openList.add(cc2);
+                                && isBlockValidForSteamPassing(cc2.posX, cc2.posY, cc2.posZ))
+                            openList.add(cc2);
                 }
                 checked.add(next);
             }
@@ -141,11 +148,11 @@ public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHand
                     for (int xx = outlineMinX; xx <= outlineMaxX; xx++)
                         if (closedList.contains(new ChunkCoordinates(xx, yy, zz))
                                 && !aabbUsedBlocks.contains(new ChunkCoordinates(xx, yy, zz))) {
-                            start = Vec3.createVectorHelper(xx, yy, zz);
-                            // boxCol = pixels[yy][zz][xx];
-                            flag = true;
-                            break;
-                        }
+                                    start = Vec3.createVectorHelper(xx, yy, zz);
+                                    // boxCol = pixels[yy][zz][xx];
+                                    flag = true;
+                                    break;
+                                }
                     if (flag) break;
                 }
                 if (flag) break;
@@ -159,26 +166,29 @@ public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHand
                 int maxY = (int) start.yCoord;
                 int maxZ = (int) start.zCoord;
                 for (; maxY < minY + 32; maxY++)
-                    //					if(pixels[maxY][minZ][minX]<0 || usedBlocks.contains(new PixelCoords(minX,maxY,minZ)))
+                    // if(pixels[maxY][minZ][minX]<0 || usedBlocks.contains(new PixelCoords(minX,maxY,minZ)))
                     if (!closedList.contains(new ChunkCoordinates(minX, maxY, minZ))
-                            || aabbUsedBlocks.contains(new ChunkCoordinates(minX, maxY, minZ))) break;
-                for (; maxZ < minZ + 32; maxZ++)
-                    if (
-                    /*pixels[minY][maxZ][minX]<0*/ !closedList.contains(new ChunkCoordinates(minX, maxY, minZ))
+                            || aabbUsedBlocks.contains(new ChunkCoordinates(minX, maxY, minZ)))
+                        break;
+                for (; maxZ < minZ + 32; maxZ++) if (
+                /* pixels[minY][maxZ][minX]<0 */ !closedList.contains(new ChunkCoordinates(minX, maxY, minZ))
+                        || aabbUsedBlocks.contains(new ChunkCoordinates(minX, minY, maxZ)))
+                    if (!closedList.contains(new ChunkCoordinates(minX, minY, maxZ))
                             || aabbUsedBlocks.contains(new ChunkCoordinates(minX, minY, maxZ)))
-                        if (!closedList.contains(new ChunkCoordinates(minX, minY, maxZ))
-                                || aabbUsedBlocks.contains(new ChunkCoordinates(minX, minY, maxZ))) break;
+                        break;
                 for (; maxX < minX + 32; maxX++)
-                    //					if(pixels[minY][minZ][maxX]<0 || usedBlocks.contains(new PixelCoords(maxX,minY,minZ)))
+                    // if(pixels[minY][minZ][maxX]<0 || usedBlocks.contains(new PixelCoords(maxX,minY,minZ)))
                     if (!closedList.contains(new ChunkCoordinates(maxX, minY, minZ))
-                            || aabbUsedBlocks.contains(new ChunkCoordinates(maxX, minY, minZ))) break;
+                            || aabbUsedBlocks.contains(new ChunkCoordinates(maxX, minY, minZ)))
+                        break;
 
                 for (int zz = minZ; zz < maxZ; zz++) {
                     boolean row = true;
                     for (int xx = minX; xx < maxX; xx++)
-                        //						if(pixels[minY][zz][xx]<0 || usedBlocks.contains(new PixelCoords(xx,minY,zz)))
+                        // if(pixels[minY][zz][xx]<0 || usedBlocks.contains(new PixelCoords(xx,minY,zz)))
                         if (!closedList.contains(new ChunkCoordinates(xx, minY, zz))
-                                || aabbUsedBlocks.contains(new ChunkCoordinates(xx, minY, zz))) row = false;
+                                || aabbUsedBlocks.contains(new ChunkCoordinates(xx, minY, zz)))
+                            row = false;
                     if (!row) {
                         maxZ = zz;
                         break;
@@ -186,20 +196,19 @@ public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHand
                 }
                 for (int yy = minY; yy < maxY; yy++) {
                     boolean layer = true;
-                    for (int zz = minZ; zz < maxZ; zz++)
-                        for (int xx = minX; xx < maxX; xx++)
-                            //							if(pixels[yy][zz][xx]<0 || usedBlocks.contains(new PixelCoords(xx,yy,zz)))
-                            if (!closedList.contains(new ChunkCoordinates(xx, yy, zz))
-                                    || aabbUsedBlocks.contains(new ChunkCoordinates(xx, yy, zz))) layer = false;
+                    for (int zz = minZ; zz < maxZ; zz++) for (int xx = minX; xx < maxX; xx++)
+                        // if(pixels[yy][zz][xx]<0 || usedBlocks.contains(new PixelCoords(xx,yy,zz)))
+                        if (!closedList.contains(new ChunkCoordinates(xx, yy, zz))
+                                || aabbUsedBlocks.contains(new ChunkCoordinates(xx, yy, zz)))
+                            layer = false;
                     if (!layer) {
                         maxY = yy;
                         break;
                     }
                 }
 
-                for (int yy = minY; yy < maxY; yy++)
-                    for (int zz = minZ; zz < maxZ; zz++)
-                        for (int xx = minX; xx < maxX; xx++) aabbUsedBlocks.add(new ChunkCoordinates(xx, yy, zz));
+                for (int yy = minY; yy < maxY; yy++) for (int zz = minZ; zz < maxZ; zz++)
+                    for (int xx = minX; xx < maxX; xx++) aabbUsedBlocks.add(new ChunkCoordinates(xx, yy, zz));
                 aabbList.add(AxisAlignedBB.getBoundingBox(minX, minY, minZ, maxX, maxY, maxZ));
             }
         }
@@ -215,14 +224,9 @@ public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHand
     }
 
     ChunkCoordinates[] getConnected(int x, int y, int z) {
-        return new ChunkCoordinates[] {
-            new ChunkCoordinates(x - 1, y, z),
-            new ChunkCoordinates(x + 1, y, z),
-            new ChunkCoordinates(x, y, z - 1),
-            new ChunkCoordinates(x, y, z + 1),
-            new ChunkCoordinates(x, y - 1, z),
-            new ChunkCoordinates(x, y + 1, z)
-        };
+        return new ChunkCoordinates[] { new ChunkCoordinates(x - 1, y, z), new ChunkCoordinates(x + 1, y, z),
+                new ChunkCoordinates(x, y, z - 1), new ChunkCoordinates(x, y, z + 1), new ChunkCoordinates(x, y - 1, z),
+                new ChunkCoordinates(x, y + 1, z) };
     }
 
     @Override
@@ -274,6 +278,6 @@ public class TileEntitySaunaStove extends TileEntityWGBase implements IFluidHand
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        return new FluidTankInfo[] {tank.getInfo()};
+        return new FluidTankInfo[] { tank.getInfo() };
     }
 }

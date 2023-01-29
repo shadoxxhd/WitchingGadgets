@@ -1,11 +1,12 @@
 package witchinggadgets.common.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+
 import thaumcraft.api.IScribeTools;
 import thaumcraft.common.items.ItemInkwell;
 import witchinggadgets.WitchingGadgets;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAdvancedScribingTools extends ItemInkwell implements IScribeTools {
 

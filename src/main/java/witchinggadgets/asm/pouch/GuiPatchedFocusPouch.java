@@ -3,13 +3,16 @@ package witchinggadgets.asm.pouch;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.world.World;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.client.lib.UtilsFX;
 
 public class GuiPatchedFocusPouch extends GuiContainer {
+
     public GuiPatchedFocusPouch(InventoryPlayer inventoryPlayer, World world, int x, int y, int z) {
         super(new ContainerPatchedFocusPouch(inventoryPlayer, world, x, y, z));
-        //		this.blockSlot = par1InventoryPlayer.currentItem;
+        // this.blockSlot = par1InventoryPlayer.currentItem;
         this.xSize = 175;
         this.ySize = 232;
     }

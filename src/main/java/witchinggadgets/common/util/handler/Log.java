@@ -2,6 +2,7 @@ package witchinggadgets.common.util.handler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import witchinggadgets.WitchingGadgets;
 
 public final class Log {

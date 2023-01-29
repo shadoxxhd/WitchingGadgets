@@ -1,11 +1,14 @@
 package witchinggadgets.common.util.handler;
 
 import java.util.HashMap;
+
 import net.minecraft.item.ItemStack;
+
 import thaumcraft.api.aspects.Aspect;
 import witchinggadgets.common.util.Utilities;
 
 public class InfusedGemHandler {
+
     public static HashMap<String, Aspect[]> naturalAffinities = new HashMap<String, Aspect[]>(),
             naturalAversions = new HashMap<String, Aspect[]>();
 
@@ -40,9 +43,21 @@ public class InfusedGemHandler {
         registerAversions("gemTanzanite", Aspect.ENTROPY, Aspect.FIRE);
 
         registerAffinities(
-                "gemPrimordial", Aspect.AIR, Aspect.EARTH, Aspect.FIRE, Aspect.WATER, Aspect.ORDER, Aspect.ENTROPY);
+                "gemPrimordial",
+                Aspect.AIR,
+                Aspect.EARTH,
+                Aspect.FIRE,
+                Aspect.WATER,
+                Aspect.ORDER,
+                Aspect.ENTROPY);
         registerAffinities(
-                "gemNetherStar", Aspect.AIR, Aspect.EARTH, Aspect.FIRE, Aspect.WATER, Aspect.ORDER, Aspect.ENTROPY);
+                "gemNetherStar",
+                Aspect.AIR,
+                Aspect.EARTH,
+                Aspect.FIRE,
+                Aspect.WATER,
+                Aspect.ORDER,
+                Aspect.ENTROPY);
 
         registerAffinities("gemApatite", Aspect.WATER, Aspect.EARTH);
         registerAversions("gemApatite", Aspect.AIR, Aspect.ORDER);

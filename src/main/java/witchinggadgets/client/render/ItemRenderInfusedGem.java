@@ -4,7 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.aspects.Aspect;
 import witchinggadgets.client.ClientProxy;
 import witchinggadgets.client.ClientUtilities;
@@ -12,6 +14,7 @@ import witchinggadgets.common.items.ItemInfusedGem;
 import witchinggadgets.common.util.Utilities;
 
 public class ItemRenderInfusedGem implements IItemRenderer {
+
     @Override
     public boolean handleRenderType(ItemStack stack, ItemRenderType type) {
         return true;
@@ -62,7 +65,7 @@ public class ItemRenderInfusedGem implements IItemRenderer {
         ClientUtilities.bindTexture("witchinggadgets:textures/models/white.png");
         Aspect a = ItemInfusedGem.getAspect(stack);
         if (a != null) {
-            //			GL11.glBlendFunc(770, a.getBlend());
+            // GL11.glBlendFunc(770, a.getBlend());
             float r = (a.getColor() >> 16 & 0xff) / 255f;
             float g = (a.getColor() >> 8 & 0xff) / 255f;
             float b = (a.getColor() & 0xff) / 255f;
@@ -81,7 +84,7 @@ public class ItemRenderInfusedGem implements IItemRenderer {
         }
         if (cut != null && stack.hasEffect(0)) {
             GL11.glPushMatrix();
-            //			GL11.glDepthFunc(GL11.GL_EQUAL);
+            // GL11.glDepthFunc(GL11.GL_EQUAL);
             GL11.glDisable(GL11.GL_LIGHTING);
             ClientUtilities.bindTexture("textures/misc/enchanted_item_glint.png");
             GL11.glEnable(GL11.GL_BLEND);

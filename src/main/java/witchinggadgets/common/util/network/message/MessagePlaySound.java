@@ -1,13 +1,15 @@
 package witchinggadgets.common.util.network.message;
 
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 
 public class MessagePlaySound implements IMessage {
+
     int dim;
     double x;
     double y;
@@ -59,6 +61,7 @@ public class MessagePlaySound implements IMessage {
     }
 
     public static class HandlerClient implements IMessageHandler<MessagePlaySound, IMessage> {
+
         @Override
         public IMessage onMessage(MessagePlaySound message, MessageContext ctx) {
             World world = DimensionManager.getWorld(message.dim);

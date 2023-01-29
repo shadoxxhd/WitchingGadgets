@@ -1,12 +1,14 @@
 package witchinggadgets.common.util.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+
 public class PacketPlaySound extends AbstractPacket {
+
     int dim;
     double x;
     double y;
@@ -66,14 +68,14 @@ public class PacketPlaySound extends AbstractPacket {
 
     @Override
     public void handleServerSide(EntityPlayer player2) {
-        //	    Entity ent = world.getEntityByID(this.playerid);
-        //	    if(!(ent instanceof EntityPlayer))
-        //	    	return;
-        //	    EntityPlayer player = (EntityPlayer) ent;
-        //		ItemStack cloakStack = player.getCurrentArmor(2);
-        //		NBTTagCompound tag = cloakStack.getTagCompound();
-        //		tag.setDouble("WG.migratePosX",Math.floor(player.posX)+0.5);
-        //		tag.setDouble("WG.migratePosY",Math.floor(player.posY)+0.5);
-        //		tag.setDouble("WG.migratePosZ",Math.floor(player.posZ)+0.5);
+        // Entity ent = world.getEntityByID(this.playerid);
+        // if(!(ent instanceof EntityPlayer))
+        // return;
+        // EntityPlayer player = (EntityPlayer) ent;
+        // ItemStack cloakStack = player.getCurrentArmor(2);
+        // NBTTagCompound tag = cloakStack.getTagCompound();
+        // tag.setDouble("WG.migratePosX",Math.floor(player.posX)+0.5);
+        // tag.setDouble("WG.migratePosY",Math.floor(player.posY)+0.5);
+        // tag.setDouble("WG.migratePosZ",Math.floor(player.posZ)+0.5);
     }
 }

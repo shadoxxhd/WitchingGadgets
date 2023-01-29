@@ -1,15 +1,17 @@
 package witchinggadgets.common.util.network;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+
 import witchinggadgets.common.blocks.tiles.TileEntityWGBase;
+import cpw.mods.fml.common.network.ByteBufUtils;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
 public class PacketTileUpdate extends AbstractPacket {
+
     int worldId;
     int x;
     int y;

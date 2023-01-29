@@ -1,6 +1,7 @@
 package witchinggadgets.client.render;
 
 import java.util.List;
+
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -8,43 +9,37 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityWallMirror;
 
 public class TileRenderWallMirror extends TileEntitySpecialRenderer {
-    static int[] n = {-1, -1, -1};
-    static int[] g01 = {243, 184, 56};
-    static int[] g02 = {99, 69, 6};
-    static int[] g03 = {220, 155, 14};
-    static int[] g04 = {156, 109, 9};
-    static int[] g05 = {132, 92, 8};
-    static int[] g06 = {241, 170, 14};
-    static int[] g07 = {179, 126, 11};
-    static int[] g08 = {241, 176, 36};
-    static int[] g09 = {135, 94, 7};
-    static int[] g10 = {203, 143, 13};
-    static int[] g11 = {190, 134, 12};
-    static int[] g12 = {242, 181, 48};
-    static int[] w = {208, 224, 248};
-    public static int[][][] shape = {
-        /* 1*/ {n, n, n, n, n, g11, g11, g10},
-        /* 2*/ {n, g04, g09, n, g07, g01, g10, n},
-        /* 3*/ {g10, w, w, g05, g07, n, n, n},
-        /* 4*/ {g06, w, g01, g03, g01, n, n, n},
-        /* 5*/ {n, g04, g04, g11, n, n, n, n},
-        /* 6*/ {n, n, g05, g11, n, n, n, n},
-        /* 7*/ {n, n, g11, g04, n, n, n, n},
-        /* 8*/ {n, n, g04, g11, n, n, n, n},
-        /* 9*/ {n, n, g03, g04, n, n, n, n},
-        /*10*/ {n, n, g03, g01, n, n, n, n},
-        /*11*/ {n, n, g04, g03, n, n, n, n},
-        /*12*/ {n, g03, g04, n, n, n, n, n},
-        /*13*/ {n, g03, g10, n, n, n, n, n},
-        /*14*/ {n, g01, g10, n, n, n, n, n},
-        /*15*/ {n, g08, g12, n, n, n, n, n},
-        /*16*/ {g08, g08, g12, n, n, n, n, n}
-    };
+
+    static int[] n = { -1, -1, -1 };
+    static int[] g01 = { 243, 184, 56 };
+    static int[] g02 = { 99, 69, 6 };
+    static int[] g03 = { 220, 155, 14 };
+    static int[] g04 = { 156, 109, 9 };
+    static int[] g05 = { 132, 92, 8 };
+    static int[] g06 = { 241, 170, 14 };
+    static int[] g07 = { 179, 126, 11 };
+    static int[] g08 = { 241, 176, 36 };
+    static int[] g09 = { 135, 94, 7 };
+    static int[] g10 = { 203, 143, 13 };
+    static int[] g11 = { 190, 134, 12 };
+    static int[] g12 = { 242, 181, 48 };
+    static int[] w = { 208, 224, 248 };
+    public static int[][][] shape = { /* 1 */ { n, n, n, n, n, g11, g11, g10 },
+            /* 2 */ { n, g04, g09, n, g07, g01, g10, n }, /* 3 */ { g10, w, w, g05, g07, n, n, n },
+            /* 4 */ { g06, w, g01, g03, g01, n, n, n }, /* 5 */ { n, g04, g04, g11, n, n, n, n },
+            /* 6 */ { n, n, g05, g11, n, n, n, n }, /* 7 */ { n, n, g11, g04, n, n, n, n },
+            /* 8 */ { n, n, g04, g11, n, n, n, n }, /* 9 */ { n, n, g03, g04, n, n, n, n },
+            /* 10 */ { n, n, g03, g01, n, n, n, n }, /* 11 */ { n, n, g04, g03, n, n, n, n },
+            /* 12 */ { n, g03, g04, n, n, n, n, n }, /* 13 */ { n, g03, g10, n, n, n, n, n },
+            /* 14 */ { n, g01, g10, n, n, n, n, n }, /* 15 */ { n, g08, g12, n, n, n, n, n },
+            /* 16 */ { g08, g08, g12, n, n, n, n, n } };
 
     public void renderTileEntityAt(TileEntityWallMirror tile, double x, double y, double z, float f) {
         if (tile.isDummy) return;
@@ -92,12 +87,12 @@ public class TileRenderWallMirror extends TileEntitySpecialRenderer {
         }
 
         ClientUtilities.bindTexture("witchinggadgets:textures/models/glass.png");
-        //		tes.startDrawingQuads();
-        //		tes.addVertexWithUV(0.03, 0, 0, glassUmax, darknessVmax);
-        //		tes.addVertexWithUV(0.03, 2, 0, glassUmax, darknessVmin);
-        //		tes.addVertexWithUV(0.03, 2, 1, glassUmin, darknessVmin);
-        //		tes.addVertexWithUV(0.03, 0, 1, glassUmin, darknessVmax);
-        //		tes.draw();
+        // tes.startDrawingQuads();
+        // tes.addVertexWithUV(0.03, 0, 0, glassUmax, darknessVmax);
+        // tes.addVertexWithUV(0.03, 2, 0, glassUmax, darknessVmin);
+        // tes.addVertexWithUV(0.03, 2, 1, glassUmin, darknessVmin);
+        // tes.addVertexWithUV(0.03, 0, 1, glassUmin, darknessVmax);
+        // tes.draw();
         if (activating || deactivating || !active) {
             tes.startDrawingQuads();
             tes.addVertexWithUV(0.0005, 0, 0, glassUmax, glassVmax);
@@ -129,13 +124,12 @@ public class TileRenderWallMirror extends TileEntitySpecialRenderer {
         List<EntityPlayer> players = tile.getMirroredPlayers();
         for (EntityPlayer pp : players) {
 
-            double distance = Math.sqrt((tile.xCoord - pp.posX) * (tile.xCoord - pp.posX)
-                    + (tile.zCoord - pp.posZ) * (tile.zCoord - pp.posZ));
+            double distance = Math.sqrt(
+                    (tile.xCoord - pp.posX) * (tile.xCoord - pp.posX)
+                            + (tile.zCoord - pp.posZ) * (tile.zCoord - pp.posZ));
             float distanceScaling = .8125f * (float) (9 - distance) / 9f;
-            float hOffset = (float)
-                    (tile.facing == 2 || tile.facing == 3
-                            ? (pp.posX - (tile.xCoord + .5))
-                            : (pp.posZ - (tile.zCoord + .5)));
+            float hOffset = (float) (tile.facing == 2 || tile.facing == 3 ? (pp.posX - (tile.xCoord + .5))
+                    : (pp.posZ - (tile.zCoord + .5)));
             hOffset /= 4;
             float vOffset = (float) (pp.posY - pp.yOffset - tile.yCoord);
 
@@ -178,26 +172,26 @@ public class TileRenderWallMirror extends TileEntitySpecialRenderer {
         ItemStack cc = player.getHeldItem();
         player.setCurrentItemOrArmor(0, null);
 
-        //		GL11.glDepthMask(false);
-        //		GL11.glDisable(GL11.GL_BLEND);
-        //		GL11.glDepthFunc(0);
-        //		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        //		GL11.glDisable(GL11.GL_TEXTURE_2D);
+        // GL11.glDepthMask(false);
+        // GL11.glDisable(GL11.GL_BLEND);
+        // GL11.glDepthFunc(0);
+        // GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        // GL11.glDisable(GL11.GL_TEXTURE_2D);
 
         RenderManager.instance.renderEntityWithPosYaw(player, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
 
-        //		GL11.glDepthMask(true);
-        //		GL11.glEnable(GL11.GL_BLEND);
-        //		GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE);
-        //		GL11.glEnable(GL11.GL_TEXTURE_2D);
+        // GL11.glDepthMask(true);
+        // GL11.glEnable(GL11.GL_BLEND);
+        // GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE);
+        // GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         player.setCurrentItemOrArmor(0, cc);
 
         GL11.glPopMatrix();
-        //		RenderHelper.disableStandardItemLighting();
-        //		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        //		OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-        //		GL11.glDisable(GL11.GL_TEXTURE_2D);
-        //		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        // RenderHelper.disableStandardItemLighting();
+        // GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        // OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        // GL11.glDisable(GL11.GL_TEXTURE_2D);
+        // OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 }

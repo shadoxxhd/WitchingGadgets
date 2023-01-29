@@ -1,8 +1,7 @@
 package witchinggadgets.common.items.tools;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -34,6 +33,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+
 import thaumcraft.api.IRepairable;
 import thaumcraft.api.aspects.Aspect;
 import travellersgear.api.IActiveAbility;
@@ -41,25 +41,16 @@ import travellersgear.api.IEventGear;
 import witchinggadgets.api.IPrimordialCrafting;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.util.Utilities;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemPrimordialHammer extends ItemPickaxe
         implements IPrimordialCrafting, IActiveAbility, IRepairable, IEventGear, IPrimordialGear {
+
     IIcon overlay;
-    public static Material[] validMats = {
-        Material.anvil,
-        Material.clay,
-        Material.craftedSnow,
-        Material.glass,
-        Material.grass,
-        Material.ground,
-        Material.ice,
-        Material.iron,
-        Material.packedIce,
-        Material.piston,
-        Material.rock,
-        Material.sand,
-        Material.snow
-    };
+    public static Material[] validMats = { Material.anvil, Material.clay, Material.craftedSnow, Material.glass,
+            Material.grass, Material.ground, Material.ice, Material.iron, Material.packedIce, Material.piston,
+            Material.rock, Material.sand, Material.snow };
 
     public ItemPrimordialHammer(ToolMaterial mat) {
         super(mat);
@@ -68,10 +59,10 @@ public class ItemPrimordialHammer extends ItemPickaxe
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean equipped) {
         super.onUpdate(stack, world, entity, slot, equipped);
-        if ((stack.isItemDamaged())
-                && (entity != null)
+        if ((stack.isItemDamaged()) && (entity != null)
                 && (entity.ticksExisted % 40 == 0)
-                && ((entity instanceof EntityLivingBase))) stack.damageItem(-1, (EntityLivingBase) entity);
+                && ((entity instanceof EntityLivingBase)))
+            stack.damageItem(-1, (EntityLivingBase) entity);
     }
 
     @Override
@@ -96,8 +87,7 @@ public class ItemPrimordialHammer extends ItemPickaxe
                         float f1 = EnchantmentHelper.getEnchantmentModifierLiving(player, (EntityLivingBase) e);
                         if (player.isSprinting()) ++i;
                         if (f > 0 || f1 > 0) {
-                            boolean flag = player.fallDistance > 0.0F
-                                    && !player.onGround
+                            boolean flag = player.fallDistance > 0.0F && !player.onGround
                                     && !player.isOnLadder()
                                     && !player.isInWater()
                                     && !player.isPotionActive(Potion.blindness)
@@ -163,15 +153,11 @@ public class ItemPrimordialHammer extends ItemPickaxe
     public void onUserDamaged(LivingHurtEvent event, ItemStack stack) {
         if (getAbility(stack) == 1 && ((EntityPlayer) event.entityLiving).isBlocking()) {
             int time = event.entityLiving.getActivePotionEffect(Potion.resistance) != null
-                    ? event.entityLiving
-                            .getActivePotionEffect(Potion.resistance)
-                            .getDuration()
+                    ? event.entityLiving.getActivePotionEffect(Potion.resistance).getDuration()
                     : 0;
             time = Math.min(time + 30, 80);
             int amp = event.entityLiving.getActivePotionEffect(Potion.resistance) != null
-                    ? event.entityLiving
-                            .getActivePotionEffect(Potion.resistance)
-                            .getAmplifier()
+                    ? event.entityLiving.getActivePotionEffect(Potion.resistance).getAmplifier()
                     : -1;
             amp = Math.min(amp + 1, 2);
             event.entityLiving.addPotionEffect(new PotionEffect(Potion.resistance.id, time, amp));
@@ -194,21 +180,19 @@ public class ItemPrimordialHammer extends ItemPickaxe
     }
 
     /*
-    @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-    	int ab = getAbility(stack);
-    	String add = ab>=0&&ab<6? " "+EnumChatFormatting.DARK_GRAY+"- \u00a7"+Aspect.getPrimalAspects().get(ab).getChatcolor()+Aspect.getPrimalAspects().get(ab).getName()+EnumChatFormatting.RESET : "";
-    	return super.getItemStackDisplayName(stack)+add;
-    }*/
+     * @Override public String getItemStackDisplayName(ItemStack stack) { int ab = getAbility(stack); String add =
+     * ab>=0&&ab<6? " "+EnumChatFormatting.DARK_GRAY+"- \u00a7"+Aspect.getPrimalAspects().get(ab).getChatcolor()+Aspect.
+     * getPrimalAspects().get(ab).getName()+EnumChatFormatting.RESET : ""; return
+     * super.getItemStackDisplayName(stack)+add; }
+     */
 
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         int ab = getAbility(stack);
-        String add = ab >= 0 && ab < 6
-                ? " " + EnumChatFormatting.DARK_GRAY + "- \u00a7"
-                        + Aspect.getPrimalAspects().get(ab).getChatcolor()
-                        + Aspect.getPrimalAspects().get(ab).getName() + EnumChatFormatting.RESET
-                : "";
+        String add = ab >= 0 && ab < 6 ? " " + EnumChatFormatting.DARK_GRAY
+                + "- \u00a7"
+                + Aspect.getPrimalAspects().get(ab).getChatcolor()
+                + Aspect.getPrimalAspects().get(ab).getName()
+                + EnumChatFormatting.RESET : "";
 
         list.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wg.desc.primal") + add);
     }
@@ -245,8 +229,7 @@ public class ItemPrimordialHammer extends ItemPickaxe
     public int getColorFromItemStack(ItemStack stack, int pass) {
         if (pass == 1) {
             int ab = getAbility(stack);
-            if (ab >= 0 && ab < 6)
-                return Aspect.getPrimalAspects().get(getAbility(stack)).getColor();
+            if (ab >= 0 && ab < 6) return Aspect.getPrimalAspects().get(getAbility(stack)).getColor();
         }
         return 0xffffff;
     }
@@ -261,35 +244,30 @@ public class ItemPrimordialHammer extends ItemPickaxe
         range[0] = side == 4 || side == 5 ? 0 : 1;
         range[1] = side == 0 || side == 1 ? 0 : 1;
         range[2] = side == 2 || side == 3 ? 0 : 1;
-        if (!player.isSneaking())
-            for (int yy = -range[1]; yy <= range[1]; yy++)
-                for (int zz = -range[2]; zz <= range[2]; zz++)
-                    for (int xx = -range[0]; xx <= range[0]; xx++) {
-                        int x = ix + xx;
-                        int y = iy + yy;
-                        int z = iz + zz;
-                        if (!world.blockExists(x, y, z)) continue;
-                        Block block = world.getBlock(x, y, z);
-                        int meta = world.getBlockMetadata(x, y, z);
-                        Material mat = world.getBlock(x, y, z).getMaterial();
+        if (!player.isSneaking()) for (int yy = -range[1]; yy <= range[1]; yy++)
+            for (int zz = -range[2]; zz <= range[2]; zz++) for (int xx = -range[0]; xx <= range[0]; xx++) {
+                int x = ix + xx;
+                int y = iy + yy;
+                int z = iz + zz;
+                if (!world.blockExists(x, y, z)) continue;
+                Block block = world.getBlock(x, y, z);
+                int meta = world.getBlockMetadata(x, y, z);
+                Material mat = world.getBlock(x, y, z).getMaterial();
 
-                        if (!world.isRemote
-                                && block != null
-                                && !block.isAir(world, x, y, z)
-                                && block.getPlayerRelativeBlockHardness(player, world, x, y, z) != 0) {
-                            if (!block.canHarvestBlock(player, meta) || !Utilities.isRightMaterial(mat, validMats))
-                                continue;
-                            if (!player.capabilities.isCreativeMode && block != Blocks.bedrock) {
-                                int localMeta = world.getBlockMetadata(x, y, z);
-                                if (block.removedByPlayer(world, player, x, y, z, true))
-                                    block.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
-                                block.onBlockHarvested(world, x, y, z, localMeta, player);
-                                block.harvestBlock(world, player, x, y, z, localMeta);
-                            } else world.setBlockToAir(x, y, z);
-                            if (!world.isRemote)
-                                world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
-                        }
-                    }
+                if (!world.isRemote && block != null
+                        && !block.isAir(world, x, y, z)
+                        && block.getPlayerRelativeBlockHardness(player, world, x, y, z) != 0) {
+                    if (!block.canHarvestBlock(player, meta) || !Utilities.isRightMaterial(mat, validMats)) continue;
+                    if (!player.capabilities.isCreativeMode && block != Blocks.bedrock) {
+                        int localMeta = world.getBlockMetadata(x, y, z);
+                        if (block.removedByPlayer(world, player, x, y, z, true))
+                            block.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
+                        block.onBlockHarvested(world, x, y, z, localMeta, player);
+                        block.harvestBlock(world, player, x, y, z, localMeta);
+                    } else world.setBlockToAir(x, y, z);
+                    if (!world.isRemote) world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
+                }
+            }
         return false;
     }
 

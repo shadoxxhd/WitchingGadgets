@@ -1,13 +1,15 @@
 package witchinggadgets.common.util.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
+
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.research.ResearchCategories;
 import witchinggadgets.common.WGResearch;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
 public class PacketClientNotifier extends AbstractPacket {
+
     int packetid;
 
     public PacketClientNotifier() {}

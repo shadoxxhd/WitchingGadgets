@@ -1,9 +1,7 @@
 package witchinggadgets.common.items.armor;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -30,6 +28,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+
 import taintedmagic.common.items.equipment.ItemShadowFortressArmor;
 import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.aspects.Aspect;
@@ -43,6 +42,9 @@ import witchinggadgets.api.IPrimordialCrafting;
 import witchinggadgets.client.render.ModelPrimordialArmor;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.items.tools.IPrimordialGear;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 enum FlightStatus {
     ON,
@@ -51,6 +53,7 @@ enum FlightStatus {
 
 public class ItemPrimordialArmor extends ItemShadowFortressArmor
         implements IActiveAbility, IPrimordialCrafting, IEventGear, IPrimordialGear, IRunicArmor {
+
     IIcon rune;
     byte tickcounter = 0;
 
@@ -69,25 +72,21 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
 
     @Override
     public boolean showNodes(ItemStack stack, EntityLivingBase living) {
-        return this.armorType == 0
-                && stack.hasTagCompound()
-                && stack.getTagCompound().hasKey("goggles");
+        return this.armorType == 0 && stack.hasTagCompound() && stack.getTagCompound().hasKey("goggles");
     }
 
     @Override
     public boolean showIngamePopups(ItemStack stack, EntityLivingBase living) {
-        return this.armorType == 0
-                && stack.hasTagCompound()
-                && stack.getTagCompound().hasKey("goggles");
+        return this.armorType == 0 && stack.hasTagCompound() && stack.getTagCompound().hasKey("goggles");
     }
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean equipped) {
         super.onUpdate(stack, world, entity, slot, equipped);
-        if ((!world.isRemote)
-                && (stack.isItemDamaged())
+        if ((!world.isRemote) && (stack.isItemDamaged())
                 && (entity.ticksExisted % 40 == 0)
-                && ((entity instanceof EntityLivingBase))) stack.damageItem(-1, (EntityLivingBase) entity);
+                && ((entity instanceof EntityLivingBase)))
+            stack.damageItem(-1, (EntityLivingBase) entity);
     }
 
     @SubscribeEvent
@@ -103,12 +102,10 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
             boolean leggings = player.getCurrentArmor(2) != null ? isThis(player.getCurrentArmor(2)) : false;
             boolean boots = player.getCurrentArmor(3) != null ? isThis(player.getCurrentArmor(3)) : false;
 
-            int[] modes = new int[] {
-                helmet ? getAbility(player.getCurrentArmor(0)) : 0,
-                chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
-                leggings ? getAbility(player.getCurrentArmor(2)) : 0,
-                boots ? getAbility(player.getCurrentArmor(3)) : 0,
-            };
+            int[] modes = new int[] { helmet ? getAbility(player.getCurrentArmor(0)) : 0,
+                    chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
+                    leggings ? getAbility(player.getCurrentArmor(2)) : 0,
+                    boots ? getAbility(player.getCurrentArmor(3)) : 0, };
 
             if (helmet) ++amorcounter;
             if (chestplate) ++amorcounter;
@@ -117,15 +114,11 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
 
             for (int i : modes) if (i == 1) ++modescounter;
 
-            /*if(leggings && getAbility(player.getCurrentArmor(2))==3)
-            	player.capabilities.setPlayerWalkSpeed(0.75F);
-            else
-            	player.capabilities.setPlayerWalkSpeed(0.1F);
-
-            if(boots && player.capabilities.isFlying && getAbility(player.getCurrentArmor(3)) == 6)
-            	player.noClip=true;
-            else
-            	player.noClip=false;*/
+            /*
+             * if(leggings && getAbility(player.getCurrentArmor(2))==3) player.capabilities.setPlayerWalkSpeed(0.75F);
+             * else player.capabilities.setPlayerWalkSpeed(0.1F); if(boots && player.capabilities.isFlying &&
+             * getAbility(player.getCurrentArmor(3)) == 6) player.noClip=true; else player.noClip=false;
+             */
 
         }
     }
@@ -137,19 +130,17 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
         if (tickcounter >= 100) tickcounter = 0;
 
         byte amorcounter = 0;
-        byte[] modescounter = {0, 0, 0, 0, 0, 0};
+        byte[] modescounter = { 0, 0, 0, 0, 0, 0 };
 
         boolean helmet = player.getCurrentArmor(0) != null ? isThis(player.getCurrentArmor(0)) : false;
         boolean chestplate = player.getCurrentArmor(1) != null ? isThis(player.getCurrentArmor(1)) : false;
         boolean leggings = player.getCurrentArmor(2) != null ? isThis(player.getCurrentArmor(2)) : false;
         boolean boots = player.getCurrentArmor(3) != null ? isThis(player.getCurrentArmor(3)) : false;
 
-        int[] modes = new int[] {
-            helmet ? getAbility(player.getCurrentArmor(0)) : 0,
-            chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
-            leggings ? getAbility(player.getCurrentArmor(2)) : 0,
-            boots ? getAbility(player.getCurrentArmor(3)) : 0,
-        };
+        int[] modes = new int[] { helmet ? getAbility(player.getCurrentArmor(0)) : 0,
+                chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
+                leggings ? getAbility(player.getCurrentArmor(2)) : 0,
+                boots ? getAbility(player.getCurrentArmor(3)) : 0, };
 
         if (helmet) ++amorcounter;
         if (chestplate) ++amorcounter;
@@ -170,10 +161,10 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
         if (this.armorType == 3) {
             if (!player.capabilities.isFlying && player.moveForward > 0.0F) {
                 if (player.worldObj.isRemote && !player.isSneaking()) {
-                    if (!Thaumcraft.instance.entityEventHandler.prevStep.containsKey(
-                            Integer.valueOf(player.getEntityId())))
-                        Thaumcraft.instance.entityEventHandler.prevStep.put(
-                                Integer.valueOf(player.getEntityId()), Float.valueOf(player.stepHeight));
+                    if (!Thaumcraft.instance.entityEventHandler.prevStep
+                            .containsKey(Integer.valueOf(player.getEntityId())))
+                        Thaumcraft.instance.entityEventHandler.prevStep
+                                .put(Integer.valueOf(player.getEntityId()), Float.valueOf(player.stepHeight));
                     player.stepHeight = 1.0F;
                 }
                 if (player.onGround) {
@@ -201,16 +192,11 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
             player.capabilities.isFlying = false;
         }
 
-        /*if (modes[2]==3) {
-        	player.capabilities.setPlayerWalkSpeed(0.75F);
-        } else if (modes[2]!=3) {
-        	player.capabilities.setPlayerWalkSpeed(0.1F);
-        }
-
-        if(player.capabilities.isFlying && modes[3]==6)
-        	player.noClip=true;
-        else if(!player.capabilities.isFlying || modes[3]!=6)
-        	player.noClip=false;*/
+        /*
+         * if (modes[2]==3) { player.capabilities.setPlayerWalkSpeed(0.75F); } else if (modes[2]!=3) {
+         * player.capabilities.setPlayerWalkSpeed(0.1F); } if(player.capabilities.isFlying && modes[3]==6)
+         * player.noClip=true; else if(!player.capabilities.isFlying || modes[3]!=6) player.noClip=false;
+         */
 
         switch (getAbility(stack))
         // cur 1 = aer,2=terra,3=ignis, 4=aqua, 5=ordo, 6=perdidito,
@@ -218,17 +204,17 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
             case 1:
                 // Thanks WayOfFlowingTime =P
                 AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(
-                                player.posX - .5,
-                                player.posY - .5,
-                                player.posZ - .5,
-                                player.posX + .5,
-                                player.posY + .5,
-                                player.posZ + .5)
-                        .expand(4, 4, 4);
+                        player.posX - .5,
+                        player.posY - .5,
+                        player.posZ - .5,
+                        player.posX + .5,
+                        player.posY + .5,
+                        player.posZ + .5).expand(4, 4, 4);
                 for (Entity projectile : (List<Entity>) world.getEntitiesWithinAABB(Entity.class, aabb)) {
                     if (projectile == null) continue;
                     if (!(projectile instanceof IProjectile)
-                            || projectile.getClass().getSimpleName().equalsIgnoreCase("IManaBurst")) continue;
+                            || projectile.getClass().getSimpleName().equalsIgnoreCase("IManaBurst"))
+                        continue;
 
                     Entity shooter = null;
                     if (projectile instanceof EntityArrow) shooter = ((EntityArrow) projectile).shootingEntity;
@@ -242,13 +228,12 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
                     double delZ = projectile.posZ - player.posZ;
 
                     double angle = (delX * projectile.motionX + delY * projectile.motionY + delZ * projectile.motionZ)
-                            / (Math.sqrt(delX * delX + delY * delY + delZ * delZ)
-                                    * Math.sqrt(projectile.motionX * projectile.motionX
-                                            + projectile.motionY * projectile.motionY
+                            / (Math.sqrt(delX * delX + delY * delY + delZ * delZ) * Math.sqrt(
+                                    projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY
                                             + projectile.motionZ * projectile.motionZ));
                     angle = Math.acos(angle);
                     if (angle < 3 * (Math.PI / 4)) // angle is < 135 degrees
-                    continue;
+                        continue;
 
                     if (shooter != null) {
                         delX = -projectile.posX + shooter.posX;
@@ -260,9 +245,9 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
                     delX /= curVel;
                     delY /= curVel;
                     delZ /= curVel;
-                    double newVel = Math.sqrt(projectile.motionX * projectile.motionX
-                            + projectile.motionY * projectile.motionY
-                            + projectile.motionZ * projectile.motionZ);
+                    double newVel = Math.sqrt(
+                            projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY
+                                    + projectile.motionZ * projectile.motionZ);
                     projectile.motionX = newVel * delX;
                     projectile.motionY = newVel * delY;
                     projectile.motionZ = newVel * delZ;
@@ -287,19 +272,10 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
                         player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 202, 0, true));
                 }
 
-                int[] curedPotions = {
-                    Potion.blindness.id,
-                    Potion.poison.id,
-                    Potion.wither.id,
-                    Potion.confusion.id,
-                    Config.potionTaintPoisonID,
-                    Potion.digSlowdown.id,
-                    Potion.hunger.id,
-                    Potion.weakness.id
-                };
-                for (int c : curedPotions)
-                    if (world.isRemote) player.removePotionEffectClient(c);
-                    else player.removePotionEffect(c);
+                int[] curedPotions = { Potion.blindness.id, Potion.poison.id, Potion.wither.id, Potion.confusion.id,
+                        Config.potionTaintPoisonID, Potion.digSlowdown.id, Potion.hunger.id, Potion.weakness.id };
+                for (int c : curedPotions) if (world.isRemote) player.removePotionEffectClient(c);
+                else player.removePotionEffect(c);
                 break;
             case 5:
                 player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 202, 0, true));
@@ -317,8 +293,8 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
     }
 
     @Override
-    public ArmorProperties getProperties(
-            EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage,
+            int slot) {
         int priority = 0;
         double ratio = this.damageReduceAmount / 12.0D;
         if (source.isMagicDamage()) {
@@ -352,52 +328,50 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
     @Override
     public boolean canActivate(EntityPlayer player, ItemStack stack, boolean isInHand) {
         return true;
-        //		return getUpgrade(stack)!=null;
+        // return getUpgrade(stack)!=null;
     }
 
     @Override
     public void activate(EntityPlayer player, ItemStack stack) {
         if (!player.worldObj.isRemote) cycleAbilities(stack);
-        //		toggleActive(stack);
+        // toggleActive(stack);
     }
 
-    //	public PrimordialArmorUpgrade getUpgrade(ItemStack stack)
-    //	{
-    //		return PrimordialArmorUpgrade.AIR;
-    //		//		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("primordialUpgrade"))
-    //		//		{
-    //		//			int i = stack.getTagCompound().getByte("primordialUpgrade");
-    //		//			if(i>=0&&i<PrimordialArmorUpgrade.values().length)
-    //		//				return PrimordialArmorUpgrade.values()[i];
-    //		//		}
-    //		//		return null;
-    //	}
-    //	boolean effectActive(ItemStack stack)
-    //	{
-    //		return !stack.hasTagCompound() || !stack.getTagCompound().getBoolean("disabled");
-    //	}
-    //	void toggleActive(ItemStack stack)
-    //	{
-    //		if(!stack.hasTagCompound())
-    //			stack.setTagCompound(new NBTTagCompound());
-    //		stack.getTagCompound().setBoolean("disabled", !stack.getTagCompound().getBoolean("disabled"));
-    //	}
+    // public PrimordialArmorUpgrade getUpgrade(ItemStack stack)
+    // {
+    // return PrimordialArmorUpgrade.AIR;
+    // // if(stack.hasTagCompound() && stack.getTagCompound().hasKey("primordialUpgrade"))
+    // // {
+    // // int i = stack.getTagCompound().getByte("primordialUpgrade");
+    // // if(i>=0&&i<PrimordialArmorUpgrade.values().length)
+    // // return PrimordialArmorUpgrade.values()[i];
+    // // }
+    // // return null;
+    // }
+    // boolean effectActive(ItemStack stack)
+    // {
+    // return !stack.hasTagCompound() || !stack.getTagCompound().getBoolean("disabled");
+    // }
+    // void toggleActive(ItemStack stack)
+    // {
+    // if(!stack.hasTagCompound())
+    // stack.setTagCompound(new NBTTagCompound());
+    // stack.getTagCompound().setBoolean("disabled", !stack.getTagCompound().getBoolean("disabled"));
+    // }
     /*
-    @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-    	int ab = getAbility(stack);
-    	String add = ab>=0&&ab<6? " "+EnumChatFormatting.DARK_GRAY+"- \u00a7"+Aspect.getPrimalAspects().get(ab).getChatcolor()+Aspect.getPrimalAspects().get(ab).getName()+EnumChatFormatting.RESET : "";
-    	return super.getItemStackDisplayName(stack)+add;
-    }*/
+     * @Override public String getItemStackDisplayName(ItemStack stack) { int ab = getAbility(stack); String add =
+     * ab>=0&&ab<6? " "+EnumChatFormatting.DARK_GRAY+"- \u00a7"+Aspect.getPrimalAspects().get(ab).getChatcolor()+Aspect.
+     * getPrimalAspects().get(ab).getName()+EnumChatFormatting.RESET : ""; return
+     * super.getItemStackDisplayName(stack)+add; }
+     */
 
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         int ab = (getAbility(stack) - 1);
-        String add = ab >= 0 && ab < 6
-                ? " " + EnumChatFormatting.DARK_GRAY + "- \u00a7"
-                        + Aspect.getPrimalAspects().get(ab).getChatcolor()
-                        + Aspect.getPrimalAspects().get(ab).getName() + EnumChatFormatting.RESET
-                : "";
+        String add = ab >= 0 && ab < 6 ? " " + EnumChatFormatting.DARK_GRAY
+                + "- \u00a7"
+                + Aspect.getPrimalAspects().get(ab).getChatcolor()
+                + Aspect.getPrimalAspects().get(ab).getName()
+                + EnumChatFormatting.RESET : "";
 
         list.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wg.desc.primal") + add);
         super.addInformation(stack, player, list, par4);
@@ -449,8 +423,7 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
     public int getColorFromItemStack(ItemStack stack, int pass) {
         if (pass == 0) {
             int ab = (getAbility(stack) - 1);
-            if (ab >= 0 && ab < 6)
-                return Aspect.getPrimalAspects().get(getAbility(stack) - 1).getColor();
+            if (ab >= 0 && ab < 6) return Aspect.getPrimalAspects().get(getAbility(stack) - 1).getColor();
         }
         return 0xffffff;
     }
@@ -487,19 +460,17 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
             EntityPlayer player = (EntityPlayer) event.entityLiving;
 
             int amorcounter = 0;
-            int[] modescounter = {0, 0, 0, 0, 0, 0};
+            int[] modescounter = { 0, 0, 0, 0, 0, 0 };
 
             boolean helmet = player.getCurrentArmor(0) != null ? isThis(player.getCurrentArmor(0)) : false;
             boolean chestplate = player.getCurrentArmor(1) != null ? isThis(player.getCurrentArmor(1)) : false;
             boolean leggings = player.getCurrentArmor(2) != null ? isThis(player.getCurrentArmor(2)) : false;
             boolean boots = player.getCurrentArmor(3) != null ? isThis(player.getCurrentArmor(3)) : false;
 
-            int[] modes = new int[] {
-                helmet ? getAbility(player.getCurrentArmor(0)) : 0,
-                chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
-                leggings ? getAbility(player.getCurrentArmor(2)) : 0,
-                boots ? getAbility(player.getCurrentArmor(3)) : 0,
-            };
+            int[] modes = new int[] { helmet ? getAbility(player.getCurrentArmor(0)) : 0,
+                    chestplate ? getAbility(player.getCurrentArmor(1)) : 0,
+                    leggings ? getAbility(player.getCurrentArmor(2)) : 0,
+                    boots ? getAbility(player.getCurrentArmor(3)) : 0, };
 
             if (helmet) ++amorcounter;
             if (chestplate) ++amorcounter;
@@ -569,38 +540,38 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
 
     @Override
     public void onUserTargeted(LivingSetAttackTargetEvent event, ItemStack stack) {}
-    //	public enum PrimordialArmorUpgrade
-    //	{
-    //		AIR(new AspectList().add(Aspect.AIR,32).add(Aspect.MOTION,32).add(Aspect.ARMOR,32), new
+    // public enum PrimordialArmorUpgrade
+    // {
+    // AIR(new AspectList().add(Aspect.AIR,32).add(Aspect.MOTION,32).add(Aspect.ARMOR,32), new
     // ItemStack(ConfigItems.itemShard,1,0),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new ItemStack(ConfigItems.itemWispEssence),new
     // ItemStack(ConfigItems.itemShard,1,0),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new ItemStack(ConfigItems.itemWispEssence)),
-    //		FIRE(new AspectList().add(Aspect.FIRE,32).add(Aspect.LIGHT,32).add(Aspect.ENERGY,32), new
+    // FIRE(new AspectList().add(Aspect.FIRE,32).add(Aspect.LIGHT,32).add(Aspect.ENERGY,32), new
     // ItemStack(ConfigItems.itemShard,1,1),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new ItemStack(ConfigItems.itemWispEssence),new
     // ItemStack(ConfigItems.itemShard,1,1),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new ItemStack(ConfigItems.itemWispEssence)),
-    //		EARTH(new AspectList().add(Aspect.EARTH,32).add(Aspect.ARMOR,32).add(Aspect.METAL,32), new
+    // EARTH(new AspectList().add(Aspect.EARTH,32).add(Aspect.ARMOR,32).add(Aspect.METAL,32), new
     // ItemStack(ConfigItems.itemShard,1,2),new ItemStack(ConfigItems.itemWispEssence),new
     // ItemStack(Blocks.obsidian),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Blocks.obsidian),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(ConfigItems.itemShard,1,2),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Blocks.obsidian),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Blocks.obsidian),new
     // ItemStack(ConfigItems.itemWispEssence)),
-    //		WATER(new AspectList().add(Aspect.WATER,32).add(Aspect.POISON,32).add(Aspect.HEAL,32), new
+    // WATER(new AspectList().add(Aspect.WATER,32).add(Aspect.POISON,32).add(Aspect.HEAL,32), new
     // ItemStack(ConfigItems.itemShard,1,3),new ItemStack(ConfigItems.itemWispEssence),new
     // ItemStack(Items.milk_bucket),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.milk_bucket),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(ConfigItems.itemShard,1,3),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.milk_bucket),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.milk_bucket),new
     // ItemStack(ConfigItems.itemWispEssence)),
-    //		ORDER(new AspectList().add(Aspect.ORDER,32).add(Aspect.HEAL,32).add(Aspect.EXCHANGE,32), new
+    // ORDER(new AspectList().add(Aspect.ORDER,32).add(Aspect.HEAL,32).add(Aspect.EXCHANGE,32), new
     // ItemStack(ConfigItems.itemShard,1,4),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new ItemStack(ConfigItems.itemWispEssence),new
     // ItemStack(ConfigItems.itemShard,1,4),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Items.arrow),new ItemStack(ConfigItems.itemWispEssence)),
-    //		ENTROPY(new AspectList().add(Aspect.ENTROPY,32).add(Aspect.TRAP,32).add(Aspect.DARKNESS,32), new
+    // ENTROPY(new AspectList().add(Aspect.ENTROPY,32).add(Aspect.TRAP,32).add(Aspect.DARKNESS,32), new
     // ItemStack(ConfigItems.itemShard,1,5),new ItemStack(ConfigItems.itemWispEssence),new
     // ItemStack(Blocks.soul_sand),new ItemStack(ConfigItems.itemWispEssence),new ItemStack(Blocks.soul_sand),new
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(ConfigItems.itemShard,1,5),new
@@ -608,21 +579,21 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
     // ItemStack(ConfigItems.itemWispEssence),new ItemStack(Blocks.soul_sand),new
     // ItemStack(ConfigItems.itemWispEssence));
     //
-    //		final ItemStack[] components;
-    //		final AspectList aspects;
-    //		PrimordialArmorUpgrade(AspectList aspects, ItemStack... components)
-    //		{
-    //			this.components = components;
-    //			this.aspects = aspects;
-    //		}
+    // final ItemStack[] components;
+    // final AspectList aspects;
+    // PrimordialArmorUpgrade(AspectList aspects, ItemStack... components)
+    // {
+    // this.components = components;
+    // this.aspects = aspects;
+    // }
     //
-    //		public ItemStack[] getCompenents()
-    //		{
-    //			return components;
-    //		}
-    //		public AspectList getAspects()
-    //		{
-    //			return aspects;
-    //		}
-    //	}
+    // public ItemStack[] getCompenents()
+    // {
+    // return components;
+    // }
+    // public AspectList getAspects()
+    // {
+    // return aspects;
+    // }
+    // }
 }

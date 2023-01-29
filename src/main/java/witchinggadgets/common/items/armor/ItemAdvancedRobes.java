@@ -1,8 +1,7 @@
 package witchinggadgets.common.items.armor;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -15,14 +14,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+
 import thaumcraft.api.IRepairable;
 import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.aspects.Aspect;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.client.render.ModelRobeSkirted;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAdvancedRobes extends ItemArmor implements IRepairable, IVisDiscountGear {
+
     public IIcon iconChest;
     public IIcon iconChestOverlay;
     public IIcon iconLegs;
@@ -75,29 +78,28 @@ public class ItemAdvancedRobes extends ItemArmor implements IRepairable, IVisDis
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
         if (slot == 1) {
-            return type == null
-                    ? "witchinggadgets:textures/models/advancedRobes_1.png"
+            return type == null ? "witchinggadgets:textures/models/advancedRobes_1.png"
                     : "witchinggadgets:textures/models/advancedRobes_1_overlay.png";
         }
         if (slot == 2) {
-            return type == null
-                    ? "witchinggadgets:textures/models/advancedRobes_2.png"
+            return type == null ? "witchinggadgets:textures/models/advancedRobes_2.png"
                     : "witchinggadgets:textures/models/advancedRobes_2_overlay.png";
         }
-        return type == null
-                ? "witchinggadgets:textures/models/advancedRobes_1.png"
+        return type == null ? "witchinggadgets:textures/models/advancedRobes_1.png"
                 : "witchinggadgets:textures/models/advancedRobes_1_overlay.png";
     }
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
-        list.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount") + ": "
-                + getVisDiscount(stack, par2EntityPlayer, null) + "%");
+        list.add(
+                EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tc.visdiscount")
+                        + ": "
+                        + getVisDiscount(stack, par2EntityPlayer, null)
+                        + "%");
     }
 
     public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
-        return par2ItemStack.isItemEqual(ItemApi.getItem("itemResource", 7))
-                ? true
+        return par2ItemStack.isItemEqual(ItemApi.getItem("itemResource", 7)) ? true
                 : super.getIsRepairable(par1ItemStack, par2ItemStack);
     }
 
@@ -114,8 +116,7 @@ public class ItemAdvancedRobes extends ItemArmor implements IRepairable, IVisDis
             return 6961280;
         }
         NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
-        return nbttagcompound1 == null
-                ? 6961280
+        return nbttagcompound1 == null ? 6961280
                 : (nbttagcompound1.hasKey("color") ? nbttagcompound1.getInteger("color") : 6961280);
     }
 

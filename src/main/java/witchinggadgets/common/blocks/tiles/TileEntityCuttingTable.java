@@ -3,11 +3,13 @@ package witchinggadgets.common.blocks.tiles;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import witchinggadgets.common.WGContent;
@@ -16,6 +18,7 @@ import witchinggadgets.common.items.ItemInfusedGem.GemCut;
 import witchinggadgets.common.util.handler.InfusedGemHandler;
 
 public class TileEntityCuttingTable extends TileEntityWGBase implements IInventory {
+
     int tick = 0;
     int tickMax = 20 * 20;
     ItemStack[] inventory = new ItemStack[5];
@@ -67,19 +70,17 @@ public class TileEntityCuttingTable extends TileEntityWGBase implements IInvento
         ItemStack stack = new ItemStack(WGContent.ItemInfusedGem);
         Aspect aspect = getInfusingAspect();
         if (aspect != null) {
-            int amplifier = (this.inventory[1] != null ? 1 : 0)
-                    + (this.inventory[2] != null ? 1 : 0)
+            int amplifier = (this.inventory[1] != null ? 1 : 0) + (this.inventory[2] != null ? 1 : 0)
                     + (this.inventory[3] != null ? 1 : 0);
             int brittle = ItemInfusedGem.GemCut.getValue(targetGemCut) == GemCut.OVAL ? 1 : 0;
             stack = ItemInfusedGem.createGem(aspect, ItemInfusedGem.GemCut.getValue(targetGemCut), false);
             if (amplifier > 0) {
-                if (Arrays.asList(InfusedGemHandler.getNaturalAffinities(inventory[0]))
-                        .contains(aspect)) {
+                if (Arrays.asList(InfusedGemHandler.getNaturalAffinities(inventory[0])).contains(aspect)) {
                     if (amplifier - brittle > 0)
                         stack.addEnchantment(WGContent.enc_gemstonePotency, amplifier - brittle);
                 } else {
-                    if (Arrays.asList(InfusedGemHandler.getNaturalAversions(inventory[0]))
-                            .contains(aspect)) amplifier++;
+                    if (Arrays.asList(InfusedGemHandler.getNaturalAversions(inventory[0])).contains(aspect))
+                        amplifier++;
                     stack.addEnchantment(WGContent.enc_gemstoneBrittle, amplifier);
                 }
             }
@@ -90,12 +91,11 @@ public class TileEntityCuttingTable extends TileEntityWGBase implements IInvento
 
     public Aspect getInfusingAspect() {
         AspectList l = new AspectList();
-        for (int i = 1; i <= 3; i++)
-            if (this.inventory[i] != null) {
-                AspectList as = new AspectList();
-                as.readFromNBT(inventory[i].getTagCompound());
-                for (Aspect a : as.getAspects()) l.add(a, as.getAmount(a));
-            }
+        for (int i = 1; i <= 3; i++) if (this.inventory[i] != null) {
+            AspectList as = new AspectList();
+            as.readFromNBT(inventory[i].getTagCompound());
+            for (Aspect a : as.getAspects()) l.add(a, as.getAmount(a));
+        }
         return l.getAspectsSortedAmount()[0];
     }
 
@@ -111,8 +111,7 @@ public class TileEntityCuttingTable extends TileEntityWGBase implements IInvento
     }
 
     public boolean canAcceptAspect(Aspect a) {
-        return a != null
-                && (getInfusingAspect() == null || a.equals(getInfusingAspect()))
+        return a != null && (getInfusingAspect() == null || a.equals(getInfusingAspect()))
                 && acceptedAspects.contains(a);
     }
 

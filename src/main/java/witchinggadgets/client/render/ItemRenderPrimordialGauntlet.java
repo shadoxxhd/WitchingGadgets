@@ -1,6 +1,7 @@
 package witchinggadgets.client.render;
 
 import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -11,7 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.NodeModifier;
@@ -21,10 +24,11 @@ import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.items.tools.ItemPrimordialGlove;
 
 public class ItemRenderPrimordialGauntlet implements IItemRenderer {
+
     @Override
     public boolean handleRenderType(ItemStack stack, ItemRenderType type) {
-        //		if(type==ItemRenderType.INVENTORY)
-        //			return false;
+        // if(type==ItemRenderType.INVENTORY)
+        // return false;
         return true;
     }
 
@@ -38,25 +42,11 @@ public class ItemRenderPrimordialGauntlet implements IItemRenderer {
         Minecraft mc = Minecraft.getMinecraft();
         Tessellator tessellator = Tessellator.instance;
         int ticksExisted = mc.thePlayer.ticksExisted;
-        String[] fingers = {"Thumb", "Index", "Middle", "Ring", "Pinky"};
-        int[][] fingerOverlayColour = {
-            {93, 25, 79},
-            {103, 39, 90},
-            {113, 52, 100},
-            {123, 67, 111},
-            {132, 80, 122},
-            {141, 94, 132},
-            {152, 108, 142},
-            {161, 122, 153},
-            {171, 135, 164},
-            {161, 122, 153},
-            {152, 108, 142},
-            {141, 94, 132},
-            {132, 80, 122},
-            {123, 67, 111},
-            {113, 52, 100},
-            {103, 39, 90},
-        };
+        String[] fingers = { "Thumb", "Index", "Middle", "Ring", "Pinky" };
+        int[][] fingerOverlayColour = { { 93, 25, 79 }, { 103, 39, 90 }, { 113, 52, 100 }, { 123, 67, 111 },
+                { 132, 80, 122 }, { 141, 94, 132 }, { 152, 108, 142 }, { 161, 122, 153 }, { 171, 135, 164 },
+                { 161, 122, 153 }, { 152, 108, 142 }, { 141, 94, 132 }, { 132, 80, 122 }, { 123, 67, 111 },
+                { 113, 52, 100 }, { 103, 39, 90 }, };
 
         try {
 
@@ -86,13 +76,13 @@ public class ItemRenderPrimordialGauntlet implements IItemRenderer {
                                     + equippingPlayer.getLocationSkin().getResourcePath());
                     GL11.glRotated(-45, 0, 1, 0);
                     GL11.glRotated(160, 0, 0, 1);
-                    //				GL11.glRotated(-2, 1, 0, 0);
-                    // double swayAngle = 4.0 + ( (ticksExisted%40.0 > 20 ? 1 : -1) * ( (ticksExisted%20.0 / 20)  * 2.0)
+                    // GL11.glRotated(-2, 1, 0, 0);
+                    // double swayAngle = 4.0 + ( (ticksExisted%40.0 > 20 ? 1 : -1) * ( (ticksExisted%20.0 / 20) * 2.0)
                     // );
                     GL11.glScaled(scale, scale, scale);
                     GL11.glTranslated(-0.434, -0.887, -0.0014);
                     RenderHelper.enableStandardItemLighting();
-                    //				ClientProxy.gauntletModel.renderOnly("Arm_00");
+                    // ClientProxy.gauntletModel.renderOnly("Arm_00");
 
                     break;
                 case EQUIPPED_FIRST_PERSON:
@@ -158,8 +148,8 @@ public class ItemRenderPrimordialGauntlet implements IItemRenderer {
                 }
 
                 GL11.glTranslated(-xx, -yy, -zz);
-                //				GL11.glTranslated(xx,yy,zz);
-                //				GL11.glTranslated(0,-.5*Math.abs(fingerOffset),-fingerOffset);
+                // GL11.glTranslated(xx,yy,zz);
+                // GL11.glTranslated(0,-.5*Math.abs(fingerOffset),-fingerOffset);
             }
 
             float runeColour = ticksExisted % 32 + 1;
@@ -172,18 +162,15 @@ public class ItemRenderPrimordialGauntlet implements IItemRenderer {
             GL11.glScalef(1 / overlayScale, 1 / overlayScale, 1 / overlayScale);
 
             ClientUtilities.bindTexture("witchinggadgets:textures/models/white.png");
-            ItemStack[] gems = ItemPrimordialGlove.getSetGems(
-                    stack); // {ItemInfusedGem.createGem(Aspect.FIRE,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.WATER,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.EARTH,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.AIR,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.ORDER,GemCut.OVAL,true)};//ItemPrimordialGlove.getSetGems(stack);
-            if (gems != null)
-                for (int g = 0; g < gems.length; g++)
-                    if (gems[g] != null) {
-                        Color col = new Color(gems[g].getItem().getColorFromItemStack(gems[g], 0));
-                        if (gems[g].getItemDamage() == 0)
-                            GL11.glColor3d(col.getRed() / 255.0, col.getGreen() / 255.0, col.getBlue() / 255.0);
-                        else GL11.glColor3d(col.getRed() / 511.0, col.getGreen() / 511.0, col.getBlue() / 511.0);
-                        ClientProxy.gauntletModel.renderPart("Gem0" + g + "_oval0" + g);
-                        GL11.glColor3d(1, 1, 1);
-                    }
+            ItemStack[] gems = ItemPrimordialGlove.getSetGems(stack); // {ItemInfusedGem.createGem(Aspect.FIRE,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.WATER,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.EARTH,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.AIR,GemCut.OVAL,true),ItemInfusedGem.createGem(Aspect.ORDER,GemCut.OVAL,true)};//ItemPrimordialGlove.getSetGems(stack);
+            if (gems != null) for (int g = 0; g < gems.length; g++) if (gems[g] != null) {
+                Color col = new Color(gems[g].getItem().getColorFromItemStack(gems[g], 0));
+                if (gems[g].getItemDamage() == 0)
+                    GL11.glColor3d(col.getRed() / 255.0, col.getGreen() / 255.0, col.getBlue() / 255.0);
+                else GL11.glColor3d(col.getRed() / 511.0, col.getGreen() / 511.0, col.getBlue() / 511.0);
+                ClientProxy.gauntletModel.renderPart("Gem0" + g + "_oval0" + g);
+                GL11.glColor3d(1, 1, 1);
+            }
 
             GL11.glPopMatrix();
             if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) GL11.glTranslated(0.1, 0, 0);
@@ -247,8 +234,7 @@ public class ItemRenderPrimordialGauntlet implements IItemRenderer {
             }
 
             AspectList nodeAspects = new AspectList();
-            if (type != ItemRenderType.INVENTORY
-                    && stack.hasTagCompound()
+            if (type != ItemRenderType.INVENTORY && stack.hasTagCompound()
                     && stack.getTagCompound().hasKey("storedNode")) {
 
                 NBTTagCompound nodeTag = stack.getTagCompound().getCompoundTag("storedNode");
@@ -321,8 +307,7 @@ public class ItemRenderPrimordialGauntlet implements IItemRenderer {
                 if (nodeType != 0) GL11.glBlendFunc(770, nodeType == 3 || nodeType == 4 ? 771 : 1);
 
                 int perm = (int) ((System.currentTimeMillis() / 64) % 32);
-                int overl = nodeType == 2
-                        ? 6
+                int overl = nodeType == 2 ? 6
                         : nodeType == 3 ? 2 : nodeType == 4 ? 5 : nodeType == 5 ? 4 : nodeType == 6 ? 3 : 1;
                 double uMin = perm * .03125;
                 double uMax = (perm + 1) * .03125;

@@ -7,6 +7,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public abstract class TileEntityWGBase extends TileEntity {
+
     @Override
     public void readFromNBT(NBTTagCompound tags) {
         super.readFromNBT(tags);

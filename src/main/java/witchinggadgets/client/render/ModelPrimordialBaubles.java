@@ -3,13 +3,16 @@ package witchinggadgets.client.render;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+
 import travellersgear.api.ITravellersGear;
 
 public class ModelPrimordialBaubles extends ModelBiped {
+
     List<ModelRenderer> parts = new ArrayList();
 
     public ModelPrimordialBaubles(EntityLivingBase entity, ItemStack stack) {
@@ -45,13 +48,13 @@ public class ModelPrimordialBaubles extends ModelBiped {
 
     public static ModelBiped getModel(EntityLivingBase entity, ItemStack stack) {
         return new ModelPrimordialBaubles(entity, stack);
-        //		if(stack==null || !(stack.getItem() instanceof ITravellersGear))
-        //			return null;
-        //		int slot = ((ITravellersGear)stack.getItem()).getSlot(stack);
-        //		if(slot<0 || slot>2)
-        //			return null;
-        //		if(!modelMap.containsKey(stack.getItemDamage()))
-        //			modelMap.put(stack.getItemDamage(), new ModelPrimordialBaubles(entity,stack));
-        //		return modelMap.get(stack.getItemDamage());
+        // if(stack==null || !(stack.getItem() instanceof ITravellersGear))
+        // return null;
+        // int slot = ((ITravellersGear)stack.getItem()).getSlot(stack);
+        // if(slot<0 || slot>2)
+        // return null;
+        // if(!modelMap.containsKey(stack.getItemDamage()))
+        // modelMap.put(stack.getItemDamage(), new ModelPrimordialBaubles(entity,stack));
+        // return modelMap.get(stack.getItemDamage());
     }
 }

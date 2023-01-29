@@ -1,10 +1,13 @@
 package witchinggadgets.common.minetweaker;
 
 import java.util.ArrayList;
+
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
+
 import net.minecraft.item.ItemStack;
+
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thaumcraft.api.aspects.Aspect;
@@ -13,6 +16,7 @@ import witchinggadgets.common.util.handler.InfusedGemHandler;
 
 @ZenClass("mods.witchinggadgets.GemCutting")
 public class GemCutting {
+
     @ZenMethod
     public static void addAffinity(IIngredient gem, String[] aspects) {
         Object oInput = WGMinetweaker.toObject(gem);
@@ -48,6 +52,7 @@ public class GemCutting {
     }
 
     private static class Add implements IUndoableAction {
+
         byte type;
         Object key;
         Aspect[] aspects;
@@ -92,6 +97,7 @@ public class GemCutting {
     }
 
     private static class Remove implements IUndoableAction {
+
         byte type;
         Object key;
         Aspect[] removedAspects;
@@ -105,24 +111,21 @@ public class GemCutting {
         public void apply() {
             if (type == 0) {
                 if (key instanceof String) removedAspects = InfusedGemHandler.naturalAffinities.get((String) key);
-                else if (key instanceof ItemStack)
-                    removedAspects =
-                            InfusedGemHandler.naturalAffinities.get(Utilities.getItemStackString((ItemStack) key));
+                else if (key instanceof ItemStack) removedAspects = InfusedGemHandler.naturalAffinities
+                        .get(Utilities.getItemStackString((ItemStack) key));
                 InfusedGemHandler.removeAffinities(key);
             } else {
                 if (key instanceof String) removedAspects = InfusedGemHandler.naturalAversions.get((String) key);
-                else if (key instanceof ItemStack)
-                    removedAspects =
-                            InfusedGemHandler.naturalAversions.get(Utilities.getItemStackString((ItemStack) key));
+                else if (key instanceof ItemStack) removedAspects = InfusedGemHandler.naturalAversions
+                        .get(Utilities.getItemStackString((ItemStack) key));
                 InfusedGemHandler.removeAversions(key);
             }
         }
 
         @Override
         public void undo() {
-            if (removedAspects != null)
-                if (type == 0) InfusedGemHandler.registerAffinities(key, removedAspects);
-                else InfusedGemHandler.registerAversions(key, removedAspects);
+            if (removedAspects != null) if (type == 0) InfusedGemHandler.registerAffinities(key, removedAspects);
+            else InfusedGemHandler.registerAversions(key, removedAspects);
         }
 
         @Override

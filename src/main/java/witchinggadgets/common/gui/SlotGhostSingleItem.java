@@ -1,6 +1,7 @@
 package witchinggadgets.common.gui;
 
 import net.minecraft.inventory.IInventory;
+
 import thaumcraft.common.container.SlotGhost;
 
 public class SlotGhostSingleItem extends SlotGhost {

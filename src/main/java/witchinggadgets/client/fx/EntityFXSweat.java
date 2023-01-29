@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 
 public class EntityFXSweat extends EntityFX {
+
     public EntityFXSweat(EntityPlayer player) {
         super(
                 player.worldObj,

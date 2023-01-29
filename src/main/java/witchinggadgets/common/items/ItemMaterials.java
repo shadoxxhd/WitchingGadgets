@@ -1,13 +1,12 @@
 package witchinggadgets.common.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,7 +29,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.IInfusionStabiliser;
@@ -56,27 +57,17 @@ import witchinggadgets.common.WGContent;
 import witchinggadgets.common.blocks.tiles.TileEntityCuttingTable;
 import witchinggadgets.common.util.Lib;
 import witchinggadgets.common.util.Utilities;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemMaterials extends Item {
+
     public IIcon iconPlateOverlay;
     public IIcon iconPhotoOverlay;
 
-    private static final String[] subNames = {
-        "threadSimple",
-        "threadGold",
-        "threadThaumium",
-        "clothSpace",
-        "clothGolden",
-        "clothBewitched",
-        "wolfPelt",
-        "calculator",
-        "cuttingTools",
-        "photoPlate",
-        "developedPhoto",
-        "guidingString",
-        "powerlessPearl",
-        "gemstoneDust"
-    };
+    private static final String[] subNames = { "threadSimple", "threadGold", "threadThaumium", "clothSpace",
+            "clothGolden", "clothBewitched", "wolfPelt", "calculator", "cuttingTools", "photoPlate", "developedPhoto",
+            "guidingString", "powerlessPearl", "gemstoneDust" };
     public IIcon[] icon = new IIcon[subNames.length];
 
     public ItemMaterials() {
@@ -88,10 +79,10 @@ public class ItemMaterials extends Item {
 
     @Override
     public int getItemStackLimit(ItemStack stack) {
-        if (stack.getItemDamage() == 7
-                || stack.getItemDamage() == 8
+        if (stack.getItemDamage() == 7 || stack.getItemDamage() == 8
                 || stack.getItemDamage() == 10
-                || stack.getItemDamage() == 11) return 1;
+                || stack.getItemDamage() == 11)
+            return 1;
         return super.getItemStackLimit(stack);
     }
 
@@ -106,7 +97,7 @@ public class ItemMaterials extends Item {
                 for (int i = 1; i < positionList.tagCount(); i++) {
                     NBTTagCompound last = positionList.getCompoundTagAt(i - 1);
                     NBTTagCompound pp = positionList.getCompoundTagAt(i);
-                    double[] pos = {pp.getDouble("x"), pp.getDouble("y"), pp.getDouble("z")};
+                    double[] pos = { pp.getDouble("x"), pp.getDouble("y"), pp.getDouble("z") };
                     String ident = Math.floor(pos[0]) + "," + Math.floor(pos[1]) + "," + Math.floor(pos[2]);
                     guidingLights.put(
                             ident,
@@ -149,8 +140,7 @@ public class ItemMaterials extends Item {
 
             if (positionList.tagCount() > 0 && stack.getTagCompound().getBoolean("active")) {
                 NBTTagCompound last = positionList.getCompoundTagAt(positionList.tagCount() - 1);
-                double dist = Math.abs(last.getDouble("x") - entity.posX)
-                        + Math.abs(last.getDouble("z") - entity.posZ)
+                double dist = Math.abs(last.getDouble("x") - entity.posX) + Math.abs(last.getDouble("z") - entity.posZ)
                         + Math.abs(last.getDouble("z") - entity.posZ);
                 if (last.getInteger("facing") != playerViewEigth && dist > 1) {
                     NBTTagCompound newPos = new NBTTagCompound();
@@ -177,8 +167,7 @@ public class ItemMaterials extends Item {
     @SideOnly(Side.CLIENT)
     @Override
     public boolean hasEffect(ItemStack stack, int pass) {
-        if (stack.getItemDamage() == 11 && stack.hasTagCompound())
-            return stack.getTagCompound().getBoolean("active");
+        if (stack.getItemDamage() == 11 && stack.hasTagCompound()) return stack.getTagCompound().getBoolean("active");
         return super.hasEffect(stack, pass);
     }
 
@@ -186,14 +175,13 @@ public class ItemMaterials extends Item {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
         try {
-            if (stack.getItemDamage() == 11
-                    && stack.hasTagCompound()
-                    && stack.getTagCompound().getBoolean("active")) list.add(Lib.DESCRIPTION + "active");
+            if (stack.getItemDamage() == 11 && stack.hasTagCompound() && stack.getTagCompound().getBoolean("active"))
+                list.add(Lib.DESCRIPTION + "active");
 
             if (stack.getItemDamage() == 9 || stack.getItemDamage() == 10) {
                 if (!stack.hasTagCompound()) return;
-                ScanResult scan = Utilities.readScanResultFromNBT(
-                        stack.getTagCompound().getCompoundTag("scanResult"), player.worldObj);
+                ScanResult scan = Utilities
+                        .readScanResultFromNBT(stack.getTagCompound().getCompoundTag("scanResult"), player.worldObj);
                 if (scan != null) {
                     String name = "";
                     AspectList aspects = new AspectList();
@@ -202,24 +190,21 @@ public class ItemMaterials extends Item {
                             ItemStack scanStack = new ItemStack(Item.getItemById(scan.id), 1, scan.meta);
                             name = "\u00a7" + scanStack.getRarity().rarityColor.getFormattingCode()
                                     + scanStack.getDisplayName();
-                            aspects = ThaumcraftCraftingManager.getObjectTags(
-                                    new ItemStack(Item.getItemById(scan.id), 1, scan.meta));
-                            aspects = ThaumcraftCraftingManager.getBonusTags(
-                                    new ItemStack(Item.getItemById(scan.id), 1, scan.meta), aspects);
+                            aspects = ThaumcraftCraftingManager
+                                    .getObjectTags(new ItemStack(Item.getItemById(scan.id), 1, scan.meta));
+                            aspects = ThaumcraftCraftingManager
+                                    .getBonusTags(new ItemStack(Item.getItemById(scan.id), 1, scan.meta), aspects);
                             break;
                         case 2:
                             if ((scan.entity instanceof EntityItem)) {
                                 EntityItem item = (EntityItem) scan.entity;
-                                name = "\u00a7"
-                                        + item.getEntityItem()
-                                                .getRarity()
-                                                .rarityColor
-                                                .getFormattingCode()
+                                name = "\u00a7" + item.getEntityItem().getRarity().rarityColor.getFormattingCode()
                                         + item.getEntityItem().getDisplayName();
-                                aspects = ThaumcraftCraftingManager.getObjectTags(new ItemStack(
-                                        item.getEntityItem().getItem(),
-                                        1,
-                                        item.getEntityItem().getItemDamage()));
+                                aspects = ThaumcraftCraftingManager.getObjectTags(
+                                        new ItemStack(
+                                                item.getEntityItem().getItem(),
+                                                1,
+                                                item.getEntityItem().getItemDamage()));
                                 aspects = ThaumcraftCraftingManager.getBonusTags(
                                         new ItemStack(
                                                 item.getEntityItem().getItem(),
@@ -234,19 +219,20 @@ public class ItemMaterials extends Item {
                         case 3:
                             if (scan.phenomena.startsWith("NODE")) {
                                 name = StatCollector.translateToLocal("tile.blockAiry.0.name");
-                                aspects = Utilities.generateNodeAspects(
-                                        player.worldObj, scan.phenomena.replace("NODE", ""));
+                                aspects = Utilities
+                                        .generateNodeAspects(player.worldObj, scan.phenomena.replace("NODE", ""));
                             }
                             break;
                     }
                     list.add(" " + name);
                     if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
-                        for (Aspect a : aspects.getAspectsSorted())
-                            if (a != null && aspects.getAmount(a) > 0)
-                                list.add("  \u00a77" + a.getName() + ": " + aspects.getAmount(a));
+                        for (Aspect a : aspects.getAspectsSorted()) if (a != null && aspects.getAmount(a) > 0)
+                            list.add("  \u00a77" + a.getName() + ": " + aspects.getAmount(a));
                     } else list.add("  " + StatCollector.translateToLocal(Lib.DESCRIPTION + "ctrlForAspectList"));
-                    list.add(" " + StatCollector.translateToLocal(Lib.DESCRIPTION + "scanCompleted") + ": "
-                            + ScanManager.hasBeenScanned(player, scan));
+                    list.add(
+                            " " + StatCollector.translateToLocal(Lib.DESCRIPTION + "scanCompleted")
+                                    + ": "
+                                    + ScanManager.hasBeenScanned(player, scan));
                 }
             }
         } catch (Exception e) {
@@ -306,29 +292,21 @@ public class ItemMaterials extends Item {
     }
 
     @Override
-    public boolean onItemUseFirst(
-            ItemStack stack,
-            EntityPlayer player,
-            World world,
-            int targetX,
-            int targetY,
-            int targetZ,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int targetX, int targetY,
+            int targetZ, int side, float hitX, float hitY, float hitZ) {
         if (subNames[stack.getItemDamage()] == "calculator" && !world.isRemote) {
             if (world.getTileEntity(targetX, targetY, targetZ) instanceof INode) {
-                AspectList al = ResearchManager.reduceToPrimals(
-                        ((INode) world.getTileEntity(targetX, targetY, targetZ)).getAspects());
-                player.addChatMessage(new ChatComponentTranslation(
-                        Lib.CHAT + "nodeContents.primal",
-                        al.getAmount(Aspect.AIR),
-                        al.getAmount(Aspect.EARTH),
-                        al.getAmount(Aspect.FIRE),
-                        al.getAmount(Aspect.WATER),
-                        al.getAmount(Aspect.ORDER),
-                        al.getAmount(Aspect.ENTROPY)));
+                AspectList al = ResearchManager
+                        .reduceToPrimals(((INode) world.getTileEntity(targetX, targetY, targetZ)).getAspects());
+                player.addChatMessage(
+                        new ChatComponentTranslation(
+                                Lib.CHAT + "nodeContents.primal",
+                                al.getAmount(Aspect.AIR),
+                                al.getAmount(Aspect.EARTH),
+                                al.getAmount(Aspect.FIRE),
+                                al.getAmount(Aspect.WATER),
+                                al.getAmount(Aspect.ORDER),
+                                al.getAmount(Aspect.ENTROPY)));
                 return true;
             }
             if (world.getTileEntity(targetX, targetY, targetZ) instanceof TileInfusionMatrix) {
@@ -337,33 +315,30 @@ public class ItemMaterials extends Item {
                 ArrayList<Object[]> warnings = new ArrayList();
                 ArrayList<ItemStack> components = new ArrayList();
 
-                for (int xx = -12; xx <= 12; xx++)
-                    for (int zz = -12; zz <= 12; zz++) {
-                        boolean skip = false;
-                        for (int yy = -10; yy <= 5; yy++)
-                            if (xx != 0 || zz != 0) {
-                                int x = targetX + xx;
-                                int y = targetY + yy;
-                                int z = targetZ + zz;
+                for (int xx = -12; xx <= 12; xx++) for (int zz = -12; zz <= 12; zz++) {
+                    boolean skip = false;
+                    for (int yy = -10; yy <= 5; yy++) if (xx != 0 || zz != 0) {
+                        int x = targetX + xx;
+                        int y = targetY + yy;
+                        int z = targetZ + zz;
 
-                                TileEntity te = world.getTileEntity(x, y, z);
-                                if (!skip && te != null && te instanceof TilePedestal) {
-                                    if (yy >= 0) warnings.add(new Object[] {"pedestalHeight", x, y, z});
-                                    else if (Math.abs(xx) > 8 || Math.abs(zz) > 8)
-                                        warnings.add(new Object[] {"pedestalPos", x, y, z});
-                                    else {
-                                        pedestals.add(new ChunkCoordinates(x, y, z));
-                                        skip = true;
-                                    }
-                                } else {
-                                    Block bi = world.getBlock(x, y, z);
-                                    if (bi == Blocks.skull
-                                            || (bi instanceof IInfusionStabiliser
-                                                    && ((IInfusionStabiliser) bi).canStabaliseInfusion(world, x, y, z)))
-                                        stabilizers.add(new ChunkCoordinates(x, y, z));
-                                }
+                        TileEntity te = world.getTileEntity(x, y, z);
+                        if (!skip && te != null && te instanceof TilePedestal) {
+                            if (yy >= 0) warnings.add(new Object[] { "pedestalHeight", x, y, z });
+                            else if (Math.abs(xx) > 8 || Math.abs(zz) > 8)
+                                warnings.add(new Object[] { "pedestalPos", x, y, z });
+                            else {
+                                pedestals.add(new ChunkCoordinates(x, y, z));
+                                skip = true;
                             }
+                        } else {
+                            Block bi = world.getBlock(x, y, z);
+                            if (bi == Blocks.skull || (bi instanceof IInfusionStabiliser
+                                    && ((IInfusionStabiliser) bi).canStabaliseInfusion(world, x, y, z)))
+                                stabilizers.add(new ChunkCoordinates(x, y, z));
+                        }
                     }
+                }
                 int symmetry = 0;
                 for (ChunkCoordinates cc : pedestals) {
                     boolean items = false;
@@ -386,27 +361,25 @@ public class ItemMaterials extends Item {
                         symmetry -= 2;
                         if (((TilePedestal) te).getStackInSlot(0) != null) {
                             if (items) symmetry -= 1;
-                            else warnings.add(new Object[] {"noPartnerItem", xx, cc.posY, zz});
+                            else warnings.add(new Object[] { "noPartnerItem", xx, cc.posY, zz });
                         }
-                    } else warnings.add(new Object[] {"noPartnerPedestal", cc.posX, cc.posY, cc.posZ});
+                    } else warnings.add(new Object[] { "noPartnerPedestal", cc.posX, cc.posY, cc.posZ });
                 }
                 float sym = 0.0F;
                 for (ChunkCoordinates cc : stabilizers) {
                     int dx = targetX - cc.posX;
                     int dz = targetZ - cc.posZ;
                     Block bi = world.getBlock(cc.posX, cc.posY, cc.posZ);
-                    if (bi == Blocks.skull
-                            || (bi instanceof IInfusionStabiliser
-                                    && ((IInfusionStabiliser) bi)
-                                            .canStabaliseInfusion(world, cc.posX, cc.posY, cc.posZ))) sym += 0.1F;
+                    if (bi == Blocks.skull || (bi instanceof IInfusionStabiliser
+                            && ((IInfusionStabiliser) bi).canStabaliseInfusion(world, cc.posX, cc.posY, cc.posZ)))
+                        sym += 0.1F;
                     int xx = targetX + dx;
                     int zz = targetZ + dz;
                     bi = world.getBlock(xx, cc.posY, zz);
-                    if (bi == Blocks.skull
-                            || (bi instanceof IInfusionStabiliser
-                                    && ((IInfusionStabiliser) bi).canStabaliseInfusion(world, xx, cc.posY, zz)))
+                    if (bi == Blocks.skull || (bi instanceof IInfusionStabiliser
+                            && ((IInfusionStabiliser) bi).canStabaliseInfusion(world, xx, cc.posY, zz)))
                         sym -= 0.2F;
-                    else warnings.add(new Object[] {"noPartnerStabilizer", cc.posX, cc.posY, cc.posZ});
+                    else warnings.add(new Object[] { "noPartnerStabilizer", cc.posX, cc.posY, cc.posZ });
                 }
                 symmetry = ((int) (symmetry + sym));
                 player.addChatMessage(
@@ -415,60 +388,73 @@ public class ItemMaterials extends Item {
 
                 ItemStack central = null;
                 TileEntity te = world.getTileEntity(targetX, targetY - 2, targetZ);
-                if (te instanceof TilePedestal)
-                    if (((TilePedestal) te).getStackInSlot(0) != null)
-                        central = ((TilePedestal) te).getStackInSlot(0).copy();
+                if (te instanceof TilePedestal) if (((TilePedestal) te).getStackInSlot(0) != null)
+                    central = ((TilePedestal) te).getStackInSlot(0).copy();
                 if (central != null) {
-                    InfusionRecipe infRecipe =
-                            ThaumcraftCraftingManager.findMatchingInfusionRecipe(components, central, player);
-                    InfusionEnchantmentRecipe enchRecipe =
-                            ThaumcraftCraftingManager.findMatchingInfusionEnchantmentRecipe(
-                                    components, central, player);
+                    InfusionRecipe infRecipe = ThaumcraftCraftingManager
+                            .findMatchingInfusionRecipe(components, central, player);
+                    InfusionEnchantmentRecipe enchRecipe = ThaumcraftCraftingManager
+                            .findMatchingInfusionEnchantmentRecipe(components, central, player);
                     if (enchRecipe != null) {
-                        player.addChatMessage(new ChatComponentTranslation(
-                                        Lib.CHAT + "infusionInfo.instability", enchRecipe.calcInstability(central))
-                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)));
+                        player.addChatMessage(
+                                new ChatComponentTranslation(
+                                        Lib.CHAT + "infusionInfo.instability",
+                                        enchRecipe.calcInstability(central)).setChatStyle(
+                                                new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)));
                         float essmod = 1 + enchRecipe.getEssentiaMod(central);
                         if (essmod > 1) {
                             String plaintext = "";
-                            Iterator<Entry<Aspect, Integer>> it =
-                                    enchRecipe.aspects.aspects.entrySet().iterator();
+                            Iterator<Entry<Aspect, Integer>> it = enchRecipe.aspects.aspects.entrySet().iterator();
                             while (it.hasNext()) {
                                 Entry<Aspect, Integer> e = it.next();
                                 plaintext += (int) (e.getValue() * essmod) + " "
-                                        + e.getKey().getName() + (it.hasNext() ? ", " : "");
+                                        + e.getKey().getName()
+                                        + (it.hasNext() ? ", " : "");
                             }
                             player.addChatMessage(
                                     new ChatComponentTranslation(Lib.CHAT + "infusionInfo.essentiaMod", essmod)
                                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
-                            player.addChatMessage(new ChatComponentText(plaintext)
-                                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
+                            player.addChatMessage(
+                                    new ChatComponentText(plaintext)
+                                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
                         }
                     }
                     if (infRecipe != null) {
-                        player.addChatMessage(new ChatComponentTranslation(
-                                        Lib.CHAT + "infusionInfo.instability", infRecipe.getInstability(central))
-                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)));
+                        player.addChatMessage(
+                                new ChatComponentTranslation(
+                                        Lib.CHAT + "infusionInfo.instability",
+                                        infRecipe.getInstability(central)).setChatStyle(
+                                                new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)));
                         if (infRecipe instanceof InfusionRunicAugmentRecipe) {
                             int vis = (int) (32.0D * Math.pow(2.0D, EventHandlerRunic.getFinalCharge(central)));
                             String plaintext = "";
-                            if (vis > 0)
-                                plaintext += vis + " " + Aspect.ENERGY.getName() + ", " + (vis / 2) + " "
-                                        + Aspect.MAGIC.getName() + ", " + (vis / 2) + " " + Aspect.ARMOR.getName();
-                            player.addChatMessage(new ChatComponentTranslation(
+                            if (vis > 0) plaintext += vis + " "
+                                    + Aspect.ENERGY.getName()
+                                    + ", "
+                                    + (vis / 2)
+                                    + " "
+                                    + Aspect.MAGIC.getName()
+                                    + ", "
+                                    + (vis / 2)
+                                    + " "
+                                    + Aspect.ARMOR.getName();
+                            player.addChatMessage(
+                                    new ChatComponentTranslation(
                                             Lib.CHAT + "infusionInfo.essentiaRunicMod",
                                             EventHandlerRunic.getFinalCharge(central))
-                                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
-                            player.addChatMessage(new ChatComponentText(plaintext)
-                                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
+                                                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
+                            player.addChatMessage(
+                                    new ChatComponentText(plaintext)
+                                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
                         }
                     }
                 }
 
                 for (Object[] warning : warnings) {
                     String w = Lib.CHAT + "infusionWarning." + warning[0];
-                    player.addChatMessage(new ChatComponentTranslation(w, warning[1], warning[2], warning[3])
-                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_GRAY)));
+                    player.addChatMessage(
+                            new ChatComponentTranslation(w, warning[1], warning[2], warning[3])
+                                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_GRAY)));
                 }
                 return true;
             }
@@ -477,17 +463,8 @@ public class ItemMaterials extends Item {
     }
 
     @Override
-    public boolean onItemUse(
-            ItemStack stack,
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ) {
         if (subNames[stack.getItemDamage()] == "cuttingTools" && world.getTileEntity(x, y, z) instanceof TileTable) {
             world.setBlock(x, y, z, WGContent.BlockWoodenDevice, 3, 0x3);
             if (world.getTileEntity(x, y, z) instanceof TileEntityCuttingTable) {
@@ -504,8 +481,8 @@ public class ItemMaterials extends Item {
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (stack.getItemDamage() == 10) {
             if (stack.hasTagCompound()) {
-                ScanResult scan =
-                        Utilities.readScanResultFromNBT(stack.getTagCompound().getCompoundTag("scanResult"), world);
+                ScanResult scan = Utilities
+                        .readScanResultFromNBT(stack.getTagCompound().getCompoundTag("scanResult"), world);
                 if (scan != null && !ScanManager.hasBeenScanned(player, scan)) {
                     if (world.isRemote && ScanManager.completeScan(player, scan, "@"))
                         PacketHandler.INSTANCE.sendToServer(new PacketScannedToServer(scan, player, "@"));
@@ -523,8 +500,7 @@ public class ItemMaterials extends Item {
                 stack.getTagCompound().removeTag("pos");
                 stack.getTagCompound().setBoolean("active", false);
             } else {
-                stack.getTagCompound()
-                        .setBoolean("active", !stack.getTagCompound().getBoolean("active"));
+                stack.getTagCompound().setBoolean("active", !stack.getTagCompound().getBoolean("active"));
                 NBTTagCompound newPos = new NBTTagCompound();
                 newPos.setDouble("x", player.posX);
                 newPos.setDouble("y", player.posY);

@@ -1,6 +1,7 @@
 package witchinggadgets.common.gui;
 
 import java.util.HashMap;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -8,9 +9,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import witchinggadgets.common.items.tools.ItemPrimordialGlove;
 
 public class ContainerPrimordialGlove extends Container {
+
     private World worldObj;
     private int blockedSlot;
     public IInventory input = new InventoryPrimordialGlove(this);
@@ -35,13 +38,12 @@ public class ContainerPrimordialGlove extends Container {
 
         bindPlayerInventory(iinventory);
 
-        if (!world.isRemote)
-            try {
-                map.put(player.getEntityId(), this);
-                ((InventoryPrimordialGlove) this.input).stackList = ItemPrimordialGlove.getSetGems(this.bracelet);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (!world.isRemote) try {
+            map.put(player.getEntityId(), this);
+            ((InventoryPrimordialGlove) this.input).stackList = ItemPrimordialGlove.getSetGems(this.bracelet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.onCraftMatrixChanged(this.input);
     }
 

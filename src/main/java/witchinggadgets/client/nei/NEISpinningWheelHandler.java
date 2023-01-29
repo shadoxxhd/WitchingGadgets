@@ -3,19 +3,24 @@ package witchinggadgets.client.nei;
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
 
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.common.util.recipe.SpinningRecipe;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.TemplateRecipeHandler;
 
 public class NEISpinningWheelHandler extends TemplateRecipeHandler {
+
     public class CachedSpinningWheelRecipe extends CachedRecipe {
+
         List<PositionedStack> inputs;
         PositionedStack output;
 
@@ -81,16 +86,15 @@ public class NEISpinningWheelHandler extends TemplateRecipeHandler {
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
         for (SpinningRecipe recipe : SpinningRecipe.recipeList)
-            if (recipe != null && recipe.getOutput() != null)
-                for (Object ss : recipe.getInput()) {
-                    if (ss instanceof List && ((List) ss).contains(ingredient)) {
-                        this.arecipes.add(new CachedSpinningWheelRecipe(recipe));
-                        break;
-                    } else if (ss instanceof ItemStack && OreDictionary.itemMatches((ItemStack) ss, ingredient, true)) {
-                        this.arecipes.add(new CachedSpinningWheelRecipe(recipe));
-                        break;
-                    }
+            if (recipe != null && recipe.getOutput() != null) for (Object ss : recipe.getInput()) {
+                if (ss instanceof List && ((List) ss).contains(ingredient)) {
+                    this.arecipes.add(new CachedSpinningWheelRecipe(recipe));
+                    break;
+                } else if (ss instanceof ItemStack && OreDictionary.itemMatches((ItemStack) ss, ingredient, true)) {
+                    this.arecipes.add(new CachedSpinningWheelRecipe(recipe));
+                    break;
                 }
+            }
     }
 
     @Override

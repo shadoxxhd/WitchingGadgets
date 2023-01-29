@@ -1,12 +1,14 @@
 package witchinggadgets.client.nei;
 
-import codechicken.nei.api.API;
-import codechicken.nei.api.IConfigureNEI;
 import net.minecraft.item.ItemStack;
+
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.WGContent;
+import codechicken.nei.api.API;
+import codechicken.nei.api.IConfigureNEI;
 
 public class NEIWGConfig implements IConfigureNEI {
+
     @Override
     public void loadConfig() {
         API.registerRecipeHandler(new NEISpinningWheelHandler());

@@ -4,11 +4,14 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntityCobbleGen;
 
 public class TileRenderCobbleGen extends TileEntitySpecialRenderer {
+
     public void renderTileEntityAt(TileEntityCobbleGen tile, double x, double y, double z, float f) {
         GL11.glPushMatrix();
 
@@ -122,18 +125,8 @@ public class TileRenderCobbleGen extends TileEntitySpecialRenderer {
         GL11.glPopMatrix();
     }
 
-    public static void renderPixelBlock(
-            Tessellator tes,
-            double x,
-            double y,
-            double z,
-            double pixelLengthX,
-            double pixelLengthY,
-            double pixelLengthZ,
-            double uMin,
-            double vMin,
-            double uMax,
-            double vMax) {
+    public static void renderPixelBlock(Tessellator tes, double x, double y, double z, double pixelLengthX,
+            double pixelLengthY, double pixelLengthZ, double uMin, double vMin, double uMax, double vMax) {
         double dXMin = x;
         double dXMax = pixelLengthX;
         double dYMin = y;

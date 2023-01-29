@@ -2,10 +2,13 @@ package witchinggadgets.common.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.tileentity.TileEntity;
+
 import witchinggadgets.common.blocks.tiles.TileEntityEtherealWall;
 
 public class EtherealWallMaster {
+
     public List<TileEntityEtherealWall> tileMap;
 
     public EtherealWallMaster() {
@@ -32,9 +35,8 @@ public class EtherealWallMaster {
     }
 
     /**
-     * Disbands Net and sets every Tile's master to null.
-     * Allows Tiles to form new nets.
-     * Used to allow an Net to be split.
+     * Disbands Net and sets every Tile's master to null. Allows Tiles to form new nets. Used to allow an Net to be
+     * split.
      */
     public void freeSlaves() {
         for (TileEntityEtherealWall tile : tileMap) {
@@ -44,30 +46,30 @@ public class EtherealWallMaster {
     }
 
     public void checkNetIntegrity(TileEntityEtherealWall tile) {
-        //		//Get adjacent tiles
-        //		TileEntityEtherealWall adjYneg = null;
-        //		TileEntityEtherealWall adjYpos = null;
-        //		TileEntityEtherealWall adjZneg = null;
-        //		TileEntityEtherealWall adjZpos = null;
-        //		TileEntityEtherealWall adjXneg = null;
-        //		TileEntityEtherealWall adjXpos = null;
+        // //Get adjacent tiles
+        // TileEntityEtherealWall adjYneg = null;
+        // TileEntityEtherealWall adjYpos = null;
+        // TileEntityEtherealWall adjZneg = null;
+        // TileEntityEtherealWall adjZpos = null;
+        // TileEntityEtherealWall adjXneg = null;
+        // TileEntityEtherealWall adjXpos = null;
         //
-        //		if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord-1,tile.zCoord) instanceof
+        // if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord-1,tile.zCoord) instanceof
         // TileEntityEtherealWall)adjYneg =
         // (TileEntityEtherealWall)tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord-1,tile.zCoord);
-        //		if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord+1,tile.zCoord) instanceof
+        // if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord+1,tile.zCoord) instanceof
         // TileEntityEtherealWall)adjYpos =
         // (TileEntityEtherealWall)tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord+1,tile.zCoord);
-        //		if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord,tile.zCoord-1) instanceof
+        // if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord,tile.zCoord-1) instanceof
         // TileEntityEtherealWall)adjZneg =
         // (TileEntityEtherealWall)tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord,tile.zCoord-1);
-        //		if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord,tile.zCoord+1) instanceof
+        // if(tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord,tile.zCoord+1) instanceof
         // TileEntityEtherealWall)adjZpos =
         // (TileEntityEtherealWall)tile.getWorldObj().getTileEntity(tile.xCoord,tile.yCoord,tile.zCoord+1);
-        //		if(tile.getWorldObj().getTileEntity(tile.xCoord-1,tile.yCoord,tile.zCoord) instanceof
+        // if(tile.getWorldObj().getTileEntity(tile.xCoord-1,tile.yCoord,tile.zCoord) instanceof
         // TileEntityEtherealWall)adjXneg =
         // (TileEntityEtherealWall)tile.getWorldObj().getTileEntity(tile.xCoord-1,tile.yCoord,tile.zCoord);
-        //		if(tile.getWorldObj().getTileEntity(tile.xCoord+1,tile.yCoord,tile.zCoord) instanceof
+        // if(tile.getWorldObj().getTileEntity(tile.xCoord+1,tile.yCoord,tile.zCoord) instanceof
         // TileEntityEtherealWall)adjXpos =
         // (TileEntityEtherealWall)tile.getWorldObj().getTileEntity(tile.xCoord+1,tile.yCoord,tile.zCoord);
     }

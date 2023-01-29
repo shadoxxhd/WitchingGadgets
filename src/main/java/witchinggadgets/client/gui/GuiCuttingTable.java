@@ -3,7 +3,9 @@ package witchinggadgets.client.gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
+
 import org.lwjgl.opengl.GL11;
+
 import thaumcraft.client.lib.UtilsFX;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.client.ClientUtilities;
@@ -13,6 +15,7 @@ import witchinggadgets.common.items.ItemInfusedGem;
 import witchinggadgets.common.util.network.message.MessageTileUpdate;
 
 public class GuiCuttingTable extends GuiContainer {
+
     private TileEntityCuttingTable tile;
 
     public GuiCuttingTable(InventoryPlayer inventoryPlayer, TileEntityCuttingTable tileEntity) {
@@ -51,10 +54,10 @@ public class GuiCuttingTable extends GuiContainer {
         if (mY > 12 && mY < 24) {
             int old = this.tile.targetGemCut;
             if (mX > 106 && mX < 117)
-                //				this.tile.targetGemCut = (byte) (old==0?1:0);
+                // this.tile.targetGemCut = (byte) (old==0?1:0);
                 this.tile.targetGemCut++;
             if (mX > 59 && mX < 70)
-                //				this.tile.targetGemCut = (byte) (old==0?1:0);
+                // this.tile.targetGemCut = (byte) (old==0?1:0);
                 this.tile.targetGemCut--;
             if (this.tile.targetGemCut < 0) this.tile.targetGemCut = (byte) (ItemInfusedGem.GemCut.values().length - 1);
             else if (this.tile.targetGemCut >= ItemInfusedGem.GemCut.values().length) this.tile.targetGemCut = 0;

@@ -1,9 +1,8 @@
 package witchinggadgets.common.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockDirectional;
@@ -26,15 +25,19 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.client.render.BlockRenderStoneDevice;
 import witchinggadgets.common.blocks.tiles.TileEntityAgeingStone;
 import witchinggadgets.common.blocks.tiles.TileEntityBlastfurnace;
 import witchinggadgets.common.blocks.tiles.TileEntityEtherealWall;
 import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockWGStoneDevice extends BlockContainer {
-    public static String[] subNames = {"etherealWall", "timeStone", "blastFurnace"};
+
+    public static String[] subNames = { "etherealWall", "timeStone", "blastFurnace" };
     IIcon[] icons = new IIcon[subNames.length];
 
     public BlockWGStoneDevice() {
@@ -54,42 +57,35 @@ public class BlockWGStoneDevice extends BlockContainer {
         for (int i = 0; i < icons.length; i++) icons[i] = iconRegister.registerIcon("witchinggadgets:" + subNames[i]);
         TileEntityBlastfurnace.icon_bricks = iconRegister.registerIcon("witchinggadgets:blastFurnace");
         TileEntityBlastfurnace.icon_cornerBottomL = new IIcon[] {
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomL_off"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomL_on"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomL_special")
-        };
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomL_off"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomL_on"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomL_special") };
         TileEntityBlastfurnace.icon_cornerBottomR = new IIcon[] {
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomR_off"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomR_on"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomR_special")
-        };
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomR_off"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomR_on"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerBottomR_special") };
         TileEntityBlastfurnace.icon_cornerTopL = new IIcon[] {
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopL_off"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopL_on"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopL_special")
-        };
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopL_off"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopL_on"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopL_special") };
         TileEntityBlastfurnace.icon_cornerTopR = new IIcon[] {
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopR_off"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopR_on"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopR_special")
-        };
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopR_off"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopR_on"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_cornerTopR_special") };
         TileEntityBlastfurnace.icon_sideBottom = new IIcon[] {
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_sideBottom_off"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_sideBottom_on"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_sideBottom_special")
-        };
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_sideBottom_off"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_sideBottom_on"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_sideBottom_special") };
         TileEntityBlastfurnace.icon_sideTop = new IIcon[] {
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_sideTop_off"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_sideTop_on"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_sideTop_special")
-        };
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_sideTop_off"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_sideTop_on"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_sideTop_special") };
         TileEntityBlastfurnace.icon_bottom = iconRegister.registerIcon("witchinggadgets:blastFurnace_bottom");
         TileEntityBlastfurnace.icon_bottomTBLR = new IIcon[] {
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomT"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomB"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomL"),
-            iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomR")
-        };
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomT"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomB"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomL"),
+                iconRegister.registerIcon("witchinggadgets:blastFurnace_bottomR") };
         TileEntityBlastfurnace.icon_internal = iconRegister.registerIcon("witchinggadgets:blastFurnace_internal");
         TileEntityBlastfurnace.icon_lava = iconRegister.registerIcon("witchinggadgets:blastFurnace_lava");
     }
@@ -176,8 +172,8 @@ public class BlockWGStoneDevice extends BlockContainer {
     }
 
     @Override
-    public void addCollisionBoxesToList(
-            World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity) {
+    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list,
+            Entity entity) {
         if (world.getTileEntity(x, y, z) instanceof TileEntityEtherealWall) {
             TileEntityEtherealWall tile = (TileEntityEtherealWall) world.getTileEntity(x, y, z);
 
@@ -228,14 +224,14 @@ public class BlockWGStoneDevice extends BlockContainer {
     @Override
     public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
         if (world.getTileEntity(x, y, z) instanceof TileEntityBlastfurnace
-                && ((TileEntityBlastfurnace) world.getTileEntity(x, y, z)).position == 22) return false;
+                && ((TileEntityBlastfurnace) world.getTileEntity(x, y, z)).position == 22)
+            return false;
         return true;
     }
 
     @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-        if (!world.isRemote
-                && world.getTileEntity(x, y, z) instanceof TileEntityBlastfurnace
+        if (!world.isRemote && world.getTileEntity(x, y, z) instanceof TileEntityBlastfurnace
                 && ((TileEntityBlastfurnace) world.getTileEntity(x, y, z)).position == 22)
             if (entity instanceof EntityItem) {
                 ItemStack input = ((EntityItem) entity).getEntityItem();
@@ -273,9 +269,9 @@ public class BlockWGStoneDevice extends BlockContainer {
         int playerViewQuarter = MathHelper.floor_double(entityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         int meta = world.getBlockMetadata(x, y, z);
         int f = playerViewQuarter == 0 ? 2 : playerViewQuarter == 1 ? 5 : playerViewQuarter == 2 ? 3 : 4;
-        /*if(meta == 0)
-        	((TileEntityEtherealWall)world.getTileEntity(x,y,z)).facing = f;
-        else*/
+        /*
+         * if(meta == 0) ((TileEntityEtherealWall)world.getTileEntity(x,y,z)).facing = f; else
+         */
 
     }
 
@@ -285,9 +281,7 @@ public class BlockWGStoneDevice extends BlockContainer {
         if (world.getTileEntity(x, y, z) instanceof TileEntityBlastfurnace) {
 
             int[] mPos = ((TileEntityBlastfurnace) world.getTileEntity(x, y, z)).masterPos;
-            if (mPos != null
-                    && mPos.length > 2
-                    && world.getBlock(mPos[0], mPos[1], mPos[2]).equals(this)) {
+            if (mPos != null && mPos.length > 2 && world.getBlock(mPos[0], mPos[1], mPos[2]).equals(this)) {
                 byte pos = ((TileEntityBlastfurnace) world.getTileEntity(x, y, z)).position;
                 removeBlastfurnace(world, mPos[0], mPos[1], mPos[2], x, y, z);
                 if (pos != 22) {
@@ -296,8 +290,7 @@ public class BlockWGStoneDevice extends BlockContainer {
                             x + .5,
                             y + .5,
                             z + .5,
-                            pos < 18
-                                    ? new ItemStack(TileEntityBlastfurnace.brickBlock[pos], 1, 0)
+                            pos < 18 ? new ItemStack(TileEntityBlastfurnace.brickBlock[pos], 1, 0)
                                     : new ItemStack(
                                             TileEntityBlastfurnace.stairBlock,
                                             1,
@@ -319,8 +312,8 @@ public class BlockWGStoneDevice extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+            float hitY, float hitZ) {
         if (world.getTileEntity(x, y, z) instanceof TileEntityEtherealWall) {
             TileEntityEtherealWall tile = (TileEntityEtherealWall) world.getTileEntity(x, y, z);
             ItemStack currentStack = player.getCurrentEquippedItem();
@@ -331,41 +324,38 @@ public class BlockWGStoneDevice extends BlockContainer {
                 Block block = Block.getBlockFromItem(currentStack.getItem());
                 int blockMeta = currentStack.getItemDamage();
                 if (player.isSneaking() || (block instanceof BlockWGStoneDevice && blockMeta == 0)) return false;
-                if (block != null
-                        && tile.isRenderTypeValid(block.getRenderType(), blockMeta)
+                if (block != null && tile.isRenderTypeValid(block.getRenderType(), blockMeta)
                         && block.getMaterial() != Material.air) {
-                    if (block instanceof BlockDirectional)
-                        switch (side) {
-                            case 0:
-                            case 1:
-                                break;
-                            case 2:
-                                blockMeta = blockMeta & 12 | 2;
-                                break;
-                            case 3:
-                                blockMeta = blockMeta & 12 | 0;
-                                break;
-                            case 4:
-                                blockMeta = blockMeta & 12 | 1;
-                                break;
-                            case 5:
-                                blockMeta = blockMeta & 12 | 3;
-                                break;
-                        }
-                    if (block.getRenderType() == 39 && blockMeta == 2)
-                        switch (side) {
-                            case 0:
-                            case 1:
-                                blockMeta = 2;
-                                break;
-                            case 2:
-                            case 3:
-                                blockMeta = 4;
-                                break;
-                            case 4:
-                            case 5:
-                                blockMeta = 3;
-                        }
+                    if (block instanceof BlockDirectional) switch (side) {
+                        case 0:
+                        case 1:
+                            break;
+                        case 2:
+                            blockMeta = blockMeta & 12 | 2;
+                            break;
+                        case 3:
+                            blockMeta = blockMeta & 12 | 0;
+                            break;
+                        case 4:
+                            blockMeta = blockMeta & 12 | 1;
+                            break;
+                        case 5:
+                            blockMeta = blockMeta & 12 | 3;
+                            break;
+                    }
+                    if (block.getRenderType() == 39 && blockMeta == 2) switch (side) {
+                        case 0:
+                        case 1:
+                            blockMeta = 2;
+                            break;
+                        case 2:
+                        case 3:
+                            blockMeta = 4;
+                            break;
+                        case 4:
+                        case 5:
+                            blockMeta = 3;
+                    }
                     if (block.getRenderType() == 31) {
                         int j1 = blockMeta & 3;
                         byte b0 = 0;
@@ -394,7 +384,7 @@ public class BlockWGStoneDevice extends BlockContainer {
                 tile.camoID = camoID;
                 tile.camoMeta = camoMeta;
                 world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
-                //				PacketDispatcher.sendPacketToAllInDimension(tile.getDescriptionPacket(),
+                // PacketDispatcher.sendPacketToAllInDimension(tile.getDescriptionPacket(),
                 // world.provider.dimensionId);
             }
             return changeTexture;
@@ -415,33 +405,30 @@ public class BlockWGStoneDevice extends BlockContainer {
         world.setBlock(x, y, z, TileEntityBlastfurnace.brickBlock[4], 0, 3);
         world.markBlockForUpdate(x, y, z);
 
-        for (int yy = 0; yy <= 2; yy++)
-            for (int xx = -1; xx <= 1; xx++)
-                for (int zz = -1; zz <= 1; zz++)
-                    if ((yy != 0 || xx != 0 || zz != 0) && (x + xx != hitX || y + yy != hitY || z + zz != hitZ))
-                        if (world.getTileEntity(x + xx, y + yy, z + zz) instanceof TileEntityBlastfurnace) {
-                            if (yy != 2)
-                                world.setBlock(
-                                        x + xx,
-                                        y + yy,
-                                        z + zz,
-                                        TileEntityBlastfurnace.brickBlock[yy * 9 + (zz + 1) * 3 + (xx + 1)],
-                                        0,
-                                        3);
-                            else if (xx == 0 && zz == 0) world.setBlock(x + xx, y + yy, z + zz, Blocks.lava, 0, 3);
-                            else {
-                                int md = xx == -1 ? 0 : xx == 1 ? 1 : zz == -1 ? 2 : 3;
-                                world.setBlock(x + xx, y + yy, z + zz, TileEntityBlastfurnace.stairBlock, md, 3);
-                                if (world.getTileEntity(x + xx, y + yy, z + zz) != null) {
-                                    TileEntity tile = world.getTileEntity(x + xx, y + yy, z + zz);
-                                    NBTTagCompound tag = new NBTTagCompound();
-                                    tile.writeToNBT(tag);
-                                    tag.setString("stair", "INFERNAL_BRICK");
-                                    tile.readFromNBT(tag);
-                                }
-                            }
-                            world.markBlockForUpdate(x + xx, y + yy, z + zz);
+        for (int yy = 0; yy <= 2; yy++) for (int xx = -1; xx <= 1; xx++) for (int zz = -1; zz <= 1; zz++)
+            if ((yy != 0 || xx != 0 || zz != 0) && (x + xx != hitX || y + yy != hitY || z + zz != hitZ))
+                if (world.getTileEntity(x + xx, y + yy, z + zz) instanceof TileEntityBlastfurnace) {
+                    if (yy != 2) world.setBlock(
+                            x + xx,
+                            y + yy,
+                            z + zz,
+                            TileEntityBlastfurnace.brickBlock[yy * 9 + (zz + 1) * 3 + (xx + 1)],
+                            0,
+                            3);
+                    else if (xx == 0 && zz == 0) world.setBlock(x + xx, y + yy, z + zz, Blocks.lava, 0, 3);
+                    else {
+                        int md = xx == -1 ? 0 : xx == 1 ? 1 : zz == -1 ? 2 : 3;
+                        world.setBlock(x + xx, y + yy, z + zz, TileEntityBlastfurnace.stairBlock, md, 3);
+                        if (world.getTileEntity(x + xx, y + yy, z + zz) != null) {
+                            TileEntity tile = world.getTileEntity(x + xx, y + yy, z + zz);
+                            NBTTagCompound tag = new NBTTagCompound();
+                            tile.writeToNBT(tag);
+                            tag.setString("stair", "INFERNAL_BRICK");
+                            tile.readFromNBT(tag);
                         }
+                    }
+                    world.markBlockForUpdate(x + xx, y + yy, z + zz);
+                }
     }
 
     @Override
@@ -459,10 +446,8 @@ public class BlockWGStoneDevice extends BlockContainer {
     public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
         if (world.getTileEntity(x, y, z) instanceof TileEntityEtherealWall) {
             TileEntityEtherealWall tile = (TileEntityEtherealWall) world.getTileEntity(x, y, z);
-            if (tile.camoID != null)
-                return tile.camoID instanceof BlockWGStoneDevice
-                        ? 0xFFFFFF
-                        : tile.camoID.colorMultiplier(world, x, y, z);
+            if (tile.camoID != null) return tile.camoID instanceof BlockWGStoneDevice ? 0xFFFFFF
+                    : tile.camoID.colorMultiplier(world, x, y, z);
         }
         return 0xFFFFFF;
     }

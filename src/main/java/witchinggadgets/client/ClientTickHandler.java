@@ -1,19 +1,22 @@
 package witchinggadgets.client;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChunkCoordinates;
+
+import thaumcraft.client.fx.ParticleEngine;
+import thaumcraft.client.fx.particles.FXWisp;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChunkCoordinates;
-import thaumcraft.client.fx.ParticleEngine;
-import thaumcraft.client.fx.particles.FXWisp;
 
 public class ClientTickHandler {
+
     public static HashMap<ChunkCoordinates, Integer> oreHighlightMap = new HashMap();
     public static HashMap<ChunkCoordinates, Object> oreHighlightBeamMap = new HashMap();
     static int highlight;
@@ -32,7 +35,7 @@ public class ClientTickHandler {
 
         Map.Entry<ChunkCoordinates, Integer> e = oreHighlightMap.entrySet().toArray(new Map.Entry[0])[highlight];
         if (player.worldObj.getTotalWorldTime() % 30 == 0)
-        //			for(Map.Entry<ChunkCoordinates, Integer> e : oreHighlightMap.entrySet())
+        // for(Map.Entry<ChunkCoordinates, Integer> e : oreHighlightMap.entrySet())
         {
             float x = e.getKey().posX + .5f;
             float y = e.getKey().posY + .75f;
@@ -60,8 +63,7 @@ public class ClientTickHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent event) {
-        Iterator<Map.Entry<ChunkCoordinates, Integer>> it =
-                oreHighlightMap.entrySet().iterator();
+        Iterator<Map.Entry<ChunkCoordinates, Integer>> it = oreHighlightMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<ChunkCoordinates, Integer> e = it.next();
             oreHighlightMap.put(e.getKey(), e.getValue() - 1);

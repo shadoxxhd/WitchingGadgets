@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.research.IScanEventHandler;
@@ -86,8 +87,8 @@ public class ItemScanCamera extends Item {
         Entity pointedEntity = EntityUtils.getPointedEntity(p.worldObj, p, 0.5D, 10.0D, 0.0F, true);
         if (pointedEntity != null) {
             ScanResult sr = new ScanResult((byte) 2, 0, 0, pointedEntity, "");
-            //			if (ScanManager.isValidScanTarget(p, sr, "@"))
-            //			{
+            // if (ScanManager.isValidScanTarget(p, sr, "@"))
+            // {
             Thaumcraft.proxy.blockRunes(
                     world,
                     pointedEntity.posX - 0.5D,
@@ -99,16 +100,16 @@ public class ItemScanCamera extends Item {
                     (int) (pointedEntity.height * 15.0F),
                     0.03F);
             return sr;
-            //			}
-            //			return null;
+            // }
+            // return null;
         }
         MovingObjectPosition mop = getMovingObjectPositionFromPlayer(p.worldObj, p, true);
         if ((mop != null) && (mop.typeOfHit == MovingObjectType.BLOCK)) {
             TileEntity tile = world.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
             if ((tile instanceof INode)) {
                 ScanResult sr = new ScanResult((byte) 3, 0, 0, null, "NODE" + ((INode) tile).getId());
-                //				if (ScanManager.isValidScanTarget(p, sr, "@"))
-                //				{
+                // if (ScanManager.isValidScanTarget(p, sr, "@"))
+                // {
                 Thaumcraft.proxy.blockRunes(
                         world,
                         mop.blockX,
@@ -120,8 +121,8 @@ public class ItemScanCamera extends Item {
                         15,
                         0.03F);
                 return sr;
-                //				}
-                //				return null;
+                // }
+                // return null;
             }
             Block b = world.getBlock(mop.blockX, mop.blockY, mop.blockZ);
             if (b != null) {
@@ -134,15 +135,14 @@ public class ItemScanCamera extends Item {
                     if (is == null) {
                         is = BlockUtils.createStackedBlock(b, md);
                     }
-                } catch (Exception e) {
-                }
+                } catch (Exception e) {}
                 if (is == null) {
                     sr = new ScanResult((byte) 1, bi, md, null, "");
                 } else {
                     sr = new ScanResult((byte) 1, Item.getIdFromItem(is.getItem()), is.getItemDamage(), null, "");
                 }
-                //				if (ScanManager.isValidScanTarget(p, sr, "@"))
-                //				{
+                // if (ScanManager.isValidScanTarget(p, sr, "@"))
+                // {
                 Thaumcraft.proxy.blockRunes(
                         world,
                         mop.blockX,
@@ -154,8 +154,8 @@ public class ItemScanCamera extends Item {
                         15,
                         0.03F);
                 return sr;
-                //				}
-                //				return null;
+                // }
+                // return null;
             }
         }
         for (IScanEventHandler seh : ThaumcraftApi.scanEventhandlers) {

@@ -4,9 +4,11 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
 import thaumcraft.common.Thaumcraft;
 
 public class EntityItemReforming extends EntityItem {
+
     public int renderDelay = 120;
 
     public EntityItemReforming(World world, double x, double y, double z, ItemStack stack) {
@@ -23,18 +25,16 @@ public class EntityItemReforming extends EntityItem {
         super.onUpdate();
         if (renderDelay > 0) {
             renderDelay--;
-            if (renderDelay <= 20)
-                for (int i = 0; i < 6; i++)
-                    Thaumcraft.proxy.drawInfusionParticles1(
-                            worldObj,
-                            posX + rand.nextInt(3) - 1.5,
-                            posY + rand.nextFloat(),
-                            posZ + rand.nextInt(3) - 1.5,
-                            (int) Math.floor(posX),
-                            (int) Math.floor(posY),
-                            (int) Math.floor(posZ),
-                            getEntityItem().getItem(),
-                            getEntityItem().getItemDamage());
+            if (renderDelay <= 20) for (int i = 0; i < 6; i++) Thaumcraft.proxy.drawInfusionParticles1(
+                    worldObj,
+                    posX + rand.nextInt(3) - 1.5,
+                    posY + rand.nextFloat(),
+                    posZ + rand.nextInt(3) - 1.5,
+                    (int) Math.floor(posX),
+                    (int) Math.floor(posY),
+                    (int) Math.floor(posZ),
+                    getEntityItem().getItem(),
+                    getEntityItem().getItemDamage());
         }
     }
 

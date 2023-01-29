@@ -4,10 +4,12 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.nodes.IRevealer;
 
 public class WGEnchantUnveiling extends Enchantment {
+
     public WGEnchantUnveiling(int id) {
         super(id, 0, EnumEnchantmentType.all);
         this.setName("wg.unveiling");
@@ -30,8 +32,7 @@ public class WGEnchantUnveiling extends Enchantment {
 
     @Override
     public boolean canApply(ItemStack stack) {
-        return stack != null
-                && stack.getItem() instanceof ItemArmor
+        return stack != null && stack.getItem() instanceof ItemArmor
                 && ((ItemArmor) stack.getItem()).armorType == 0
                 && (stack.getItem() instanceof IRevealer || stack.getItem() instanceof IGoggles);
     }

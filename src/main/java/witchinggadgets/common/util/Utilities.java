@@ -1,13 +1,11 @@
 package witchinggadgets.common.util;
 
-import baubles.api.BaublesApi;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -30,7 +28,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
 import org.apache.logging.log4j.Level;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
@@ -46,16 +46,21 @@ import travellersgear.api.TravellersGearAPI;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.items.baubles.ItemCloak;
+import baubles.api.BaublesApi;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class Utilities {
-    /**========================== THAUMIC UTILITY METHODS ========================== */
+
+    /** ========================== THAUMIC UTILITY METHODS ========================== */
 
     /**
      * Tries to access the ItemWandCasting Class from Thaumcraft in order to perform the vis reduction on a wand
-     * @param is The ItemStack representing the wand the player is holding
-     * @param player The respective player
+     * 
+     * @param is      The ItemStack representing the wand the player is holding
+     * @param player  The respective player
      * @param aspects The list of!PRIMAL! aspects to consume
-     * @param doit if this is false it will not subtract the vis but merely check if it's possible
+     * @param doit    if this is false it will not subtract the vis but merely check if it's possible
      * @return
      */
     public static boolean consumeVisFromWand(ItemStack is, EntityPlayer player, AspectList aspects, boolean doit) {
@@ -64,6 +69,7 @@ public class Utilities {
 
     /**
      * A method taken from Thaumcraft's ScanManager, since Azanor made it private .~.
+     * 
      * @param world
      * @param node
      * @return
@@ -125,8 +131,10 @@ public class Utilities {
         tag.setString("phenomena", scan.phenomena);
         return tag;
     }
+
     /**
-     * Returns a ScanResult from a given NBTTagCompound. Make sure you're passing a valid NBT, otherwise, who knows what will happen! D=
+     * Returns a ScanResult from a given NBTTagCompound. Make sure you're passing a valid NBT, otherwise, who knows what
+     * will happen! D=
      */
     public static ScanResult readScanResultFromNBT(NBTTagCompound tag, World world) {
         byte type = tag.getByte("type");
@@ -155,17 +163,14 @@ public class Utilities {
     public static String findCloseNode(World world, ChunkCoordinates cc) {
         Map.Entry<String, ArrayList<Integer>> closest = null;
 
-        for (Map.Entry<String, ArrayList<Integer>> e : TileNode.locations.entrySet())
-            if (e.getValue().get(0) == world.provider.dimensionId)
-                if (closest == null
-                        || cc.getDistanceSquared(
-                                        e.getValue().get(1),
-                                        e.getValue().get(2),
-                                        e.getValue().get(3))
-                                < cc.getDistanceSquared(
-                                        closest.getValue().get(1),
-                                        closest.getValue().get(2),
-                                        closest.getValue().get(3))) closest = e;
+        for (Map.Entry<String, ArrayList<Integer>> e : TileNode.locations.entrySet()) if (e.getValue().get(0)
+                == world.provider.dimensionId)
+            if (closest == null || cc.getDistanceSquared(e.getValue().get(1), e.getValue().get(2), e.getValue().get(3))
+                    < cc.getDistanceSquared(
+                            closest.getValue().get(1),
+                            closest.getValue().get(2),
+                            closest.getValue().get(3)))
+                closest = e;
 
         if (closest != null) return closest.getKey();
         return null;
@@ -200,19 +205,18 @@ public class Utilities {
         return false;
     }
 
-    /**========================== COMMON UTILITY METHODS ========================== */
+    /** ========================== COMMON UTILITY METHODS ========================== */
     public static boolean isBlockPlaceable(World world, int x, int y, int z) {
         boolean flag = false;
         Block b = world.getBlock(x, y, z);
         if (world.isAirBlock(x, y, z)) {
             flag = true;
-        } else if (b.equals(Blocks.snow)
-                || b.equals(Blocks.vine)
+        } else if (b.equals(Blocks.snow) || b.equals(Blocks.vine)
                 || b.equals(Blocks.tallgrass)
                 || b.equals(Blocks.deadbush)
                 || (b.isReplaceable(world, x, y, z))) {
-            flag = true;
-        }
+                    flag = true;
+                }
         return flag;
     }
 
@@ -236,24 +240,9 @@ public class Utilities {
         return result.toString();
     }
 
-    static String[] dyes = new String[] {
-        "dyeBlack",
-        "dyeRed",
-        "dyeGreen",
-        "dyeBrown",
-        "dyeBlue",
-        "dyePurple",
-        "dyeCyan",
-        "dyeLightGray",
-        "dyeGray",
-        "dyePink",
-        "dyeLime",
-        "dyeYellow",
-        "dyeLightBlue",
-        "dyeMagenta",
-        "dyeOrange",
-        "dyeWhite"
-    };
+    static String[] dyes = new String[] { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple",
+            "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta",
+            "dyeOrange", "dyeWhite" };
 
     public static boolean isDye(ItemStack item) {
         if (compareToOreName(item, "dye")) return true;
@@ -267,8 +256,7 @@ public class Utilities {
     }
 
     public static boolean isOre(ItemStack item) {
-        for (int oid : OreDictionary.getOreIDs(item))
-            if (OreDictionary.getOreName(oid).startsWith("ore")) return true;
+        for (int oid : OreDictionary.getOreIDs(item)) if (OreDictionary.getOreName(oid).startsWith("ore")) return true;
         return false;
     }
 
@@ -287,11 +275,10 @@ public class Utilities {
         try {
             Field field = null;
             Field[] fields = Potion.class.getDeclaredFields();
-            for (Field f : fields)
-                if (f.getType().toString().equals("class [Lnet.minecraft.potion.Potion;")) {
-                    field = f;
-                    break;
-                }
+            for (Field f : fields) if (f.getType().toString().equals("class [Lnet.minecraft.potion.Potion;")) {
+                field = f;
+                break;
+            }
 
             field.setAccessible(true);
 
@@ -302,8 +289,8 @@ public class Utilities {
             field.set(null, potions);
 
             WitchingGadgets.logger.log(Level.INFO, "Variable " + Potion.potionTypes.length);
-            WitchingGadgets.logger.log(
-                    Level.INFO, "Reflection " + ((Potion[]) Potion.class.getFields()[0].get(null)).length);
+            WitchingGadgets.logger
+                    .log(Level.INFO, "Reflection " + ((Potion[]) Potion.class.getFields()[0].get(null)).length);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -311,10 +298,10 @@ public class Utilities {
     }
 
     public static int getNextPotionId(int start) {
-        if ((Potion.potionTypes != null)
-                && (start > 0)
+        if ((Potion.potionTypes != null) && (start > 0)
                 && (start < Potion.potionTypes.length)
-                && (Potion.potionTypes[start] == null)) return start;
+                && (Potion.potionTypes[start] == null))
+            return start;
 
         start++;
         if (start < 256) start = getNextPotionId(start);
@@ -323,10 +310,10 @@ public class Utilities {
     }
 
     public static int getNextEnchantmentId(int start) {
-        if ((Enchantment.enchantmentsList != null)
-                && (start > 0)
+        if ((Enchantment.enchantmentsList != null) && (start > 0)
                 && (start < Enchantment.enchantmentsList.length)
-                && (Enchantment.enchantmentsList[start] == null)) return start;
+                && (Enchantment.enchantmentsList[start] == null))
+            return start;
 
         start++;
         if (start < 256) start = getNextEnchantmentId(start);
@@ -342,10 +329,8 @@ public class Utilities {
 
     public static ItemStack getShard(Aspect a) {
         if (!Aspect.getPrimalAspects().contains(a)) return null;
-        int meta = a.equals(Aspect.AIR)
-                ? 0
-                : a.equals(Aspect.FIRE)
-                        ? 1
+        int meta = a.equals(Aspect.AIR) ? 0
+                : a.equals(Aspect.FIRE) ? 1
                         : a.equals(Aspect.WATER) ? 2 : a.equals(Aspect.EARTH) ? 3 : a.equals(Aspect.ORDER) ? 4 : 5;
         ItemStack shard = new ItemStack(ConfigItems.itemShard, 1, meta);
         return shard;
@@ -372,41 +357,39 @@ public class Utilities {
             }
         } else if (TravellersGearAPI.getExtendedInventory(player)[0] != null
                 && TravellersGearAPI.getExtendedInventory(player)[0].getItem() instanceof ItemCloak) {
-            ItemStack[] tgInv = TravellersGearAPI.getExtendedInventory(player);
-            if (tgInv[0].getItemDamage() == cloak.getItemDamage()) tgInv[0] = cloak;
-            TravellersGearAPI.setExtendedInventory(player, tgInv);
-        }
+                    ItemStack[] tgInv = TravellersGearAPI.getExtendedInventory(player);
+                    if (tgInv[0].getItemDamage() == cloak.getItemDamage()) tgInv[0] = cloak;
+                    TravellersGearAPI.setExtendedInventory(player, tgInv);
+                }
     }
 
     static Class c_tconProjectileWeapon;
 
     public static boolean isPlayerUsingBow(EntityPlayer player) {
-        if (!player.isUsingItem()
-                || player.inventory.getCurrentItem() == null
-                || player.inventory.getCurrentItem().getItem() == null) return false;
+        if (!player.isUsingItem() || player.inventory.getCurrentItem() == null
+                || player.inventory.getCurrentItem().getItem() == null)
+            return false;
         if (player.inventory.getCurrentItem().getItem() instanceof ItemBow) return true;
         if (Loader.isModLoaded("TConstruct")) {
-            if (c_tconProjectileWeapon == null)
-                try {
-                    c_tconProjectileWeapon = Class.forName("tconstruct.library.weaponry.ProjectileWeapon");
-                } catch (Exception e) {
-                }
+            if (c_tconProjectileWeapon == null) try {
+                c_tconProjectileWeapon = Class.forName("tconstruct.library.weaponry.ProjectileWeapon");
+            } catch (Exception e) {}
             if (c_tconProjectileWeapon != null
-                    && c_tconProjectileWeapon.isAssignableFrom(
-                            player.inventory.getCurrentItem().getItem().getClass())) return true;
+                    && c_tconProjectileWeapon.isAssignableFrom(player.inventory.getCurrentItem().getItem().getClass()))
+                return true;
         }
         return false;
     }
 
-    public static void addAttributeModToLivingUnsaved(
-            EntityLivingBase living, IAttribute attr, UUID uuid, String tag, double val, int type) {
+    public static void addAttributeModToLivingUnsaved(EntityLivingBase living, IAttribute attr, UUID uuid, String tag,
+            double val, int type) {
         IAttributeInstance attrIns = living.getAttributeMap().getAttributeInstance(attr);
         if (attrIns == null || attrIns.getModifier(uuid) != null) return;
         attrIns.applyModifier(new AttributeModifier(uuid, tag, val, type).setSaved(false));
     }
 
-    public static void addAttributeModToLiving(
-            EntityLivingBase living, IAttribute attr, UUID uuid, String tag, double val, int type) {
+    public static void addAttributeModToLiving(EntityLivingBase living, IAttribute attr, UUID uuid, String tag,
+            double val, int type) {
         IAttributeInstance attrIns = living.getAttributeMap().getAttributeInstance(attr);
         if (attrIns == null || attrIns.getModifier(uuid) != null) return;
         attrIns.applyModifier(new AttributeModifier(uuid, tag, val, type));
@@ -417,8 +400,8 @@ public class Utilities {
         return attrIns != null && attrIns.getModifier(uuid) != null;
     }
 
-    public static void removeAttributeModFromLiving(
-            EntityLivingBase living, IAttribute attr, UUID uuid, String tag, double val, int type) {
+    public static void removeAttributeModFromLiving(EntityLivingBase living, IAttribute attr, UUID uuid, String tag,
+            double val, int type) {
         IAttributeInstance attrIns = living.getAttributeMap().getAttributeInstance(attr);
         if (attrIns != null) attrIns.removeModifier(new AttributeModifier(uuid, tag, val, type));
     }
@@ -448,6 +431,7 @@ public class Utilities {
     }
 
     public static class OreDictStack {
+
         public final String key;
         public final int amount;
 

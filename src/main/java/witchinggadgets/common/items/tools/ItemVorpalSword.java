@@ -1,15 +1,17 @@
 package witchinggadgets.common.items.tools;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
+
 import witchinggadgets.WitchingGadgets;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemVorpalSword extends ItemSword { // TODO: Extend Avarita Sword
 
@@ -26,14 +28,8 @@ public class ItemVorpalSword extends ItemSword { // TODO: Extend Avarita Sword
         return true;
     }
 
-    public boolean onBlockDestroyed(
-            ItemStack p_150894_1_,
-            World p_150894_2_,
-            Block p_150894_3_,
-            int p_150894_4_,
-            int p_150894_5_,
-            int p_150894_6_,
-            EntityLivingBase p_150894_7_) {
+    public boolean onBlockDestroyed(ItemStack p_150894_1_, World p_150894_2_, Block p_150894_3_, int p_150894_4_,
+            int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_) {
         return true;
     }
 

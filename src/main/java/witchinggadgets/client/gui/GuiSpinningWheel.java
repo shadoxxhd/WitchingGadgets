@@ -2,12 +2,15 @@ package witchinggadgets.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
+
 import org.lwjgl.opengl.GL11;
+
 import witchinggadgets.client.ClientUtilities;
 import witchinggadgets.common.blocks.tiles.TileEntitySpinningWheel;
 import witchinggadgets.common.gui.ContainerSpinningWheel;
 
 public class GuiSpinningWheel extends GuiContainer {
+
     private TileEntitySpinningWheel tile;
 
     public GuiSpinningWheel(InventoryPlayer inventoryPlayer, TileEntitySpinningWheel tileEntity) {

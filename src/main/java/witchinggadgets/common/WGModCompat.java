@@ -1,9 +1,8 @@
 package witchinggadgets.common;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,12 +12,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
+
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import witchinggadgets.common.minetweaker.WGMinetweaker;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class WGModCompat {
+
     public static Item tConResource;
 
     public static Item tfRavensFeather;
@@ -57,8 +60,7 @@ public class WGModCompat {
 
     public static void addTags() {
         registerOreDictAspects("nuggetAluminum", new AspectList().add(Aspect.METAL, 1));
-        registerOreDictAspects(
-                "ingotAluminum", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 1));
+        registerOreDictAspects("ingotAluminum", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 1));
         registerOreDictAspects(
                 "dustAluminum",
                 new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE, 1));
@@ -67,8 +69,7 @@ public class WGModCompat {
                 new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 1));
 
         registerOreDictAspects("nuggetAluminium", new AspectList().add(Aspect.METAL, 1));
-        registerOreDictAspects(
-                "ingotAluminium", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 1));
+        registerOreDictAspects("ingotAluminium", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 1));
         registerOreDictAspects(
                 "dustAluminium",
                 new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE, 1));
@@ -77,8 +78,7 @@ public class WGModCompat {
                 new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 1));
 
         registerOreDictAspects("nuggetAluminumBrass", new AspectList().add(Aspect.METAL, 1));
-        registerOreDictAspects(
-                "ingotAluminumBrass", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 2));
+        registerOreDictAspects("ingotAluminumBrass", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 2));
         registerOreDictAspects(
                 "dustAluminumBrass",
                 new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE, 2));
@@ -87,8 +87,7 @@ public class WGModCompat {
                 new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.EXCHANGE, 2));
 
         registerOreDictAspects("nuggetAluminiumBrass", new AspectList().add(Aspect.METAL, 1));
-        registerOreDictAspects(
-                "ingotAluminiumBrass", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 2));
+        registerOreDictAspects("ingotAluminiumBrass", new AspectList().add(Aspect.METAL, 3).add(Aspect.EXCHANGE, 2));
         registerOreDictAspects(
                 "dustAluminiumBrass",
                 new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.EXCHANGE, 2));
@@ -102,18 +101,10 @@ public class WGModCompat {
                 new AspectList().add(Aspect.METAL, 3).add(Aspect.FIRE, 1).add(Aspect.MOTION, 1));
         registerOreDictAspects(
                 "dustCobalt",
-                new AspectList()
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.ENTROPY, 1)
-                        .add(Aspect.FIRE, 1)
-                        .add(Aspect.MOTION, 1));
+                new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.FIRE, 1).add(Aspect.MOTION, 1));
         registerOreDictAspects(
                 "oreCobalt",
-                new AspectList()
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.EARTH, 1)
-                        .add(Aspect.FIRE, 1)
-                        .add(Aspect.MOTION, 1));
+                new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.FIRE, 1).add(Aspect.MOTION, 1));
 
         registerOreDictAspects("nuggetArdite", new AspectList().add(Aspect.METAL, 1));
         registerOreDictAspects(
@@ -121,18 +112,10 @@ public class WGModCompat {
                 new AspectList().add(Aspect.METAL, 3).add(Aspect.FIRE, 1).add(Aspect.EARTH, 1));
         registerOreDictAspects(
                 "dustArdite",
-                new AspectList()
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.ENTROPY, 1)
-                        .add(Aspect.FIRE, 1)
-                        .add(Aspect.EARTH, 1));
+                new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.FIRE, 1).add(Aspect.EARTH, 1));
         registerOreDictAspects(
                 "oreArdite",
-                new AspectList()
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.EARTH, 1)
-                        .add(Aspect.FIRE, 1)
-                        .add(Aspect.EARTH, 1));
+                new AspectList().add(Aspect.METAL, 2).add(Aspect.EARTH, 1).add(Aspect.FIRE, 1).add(Aspect.EARTH, 1));
 
         registerOreDictAspects("nuggetManyullyn", new AspectList().add(Aspect.METAL, 1));
         registerOreDictAspects(
@@ -140,15 +123,10 @@ public class WGModCompat {
                 new AspectList().add(Aspect.METAL, 3).add(Aspect.FIRE, 2).add(Aspect.MAGIC, 2));
         registerOreDictAspects(
                 "dustManyullyn",
-                new AspectList()
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.ENTROPY, 1)
-                        .add(Aspect.FIRE, 1)
-                        .add(Aspect.MAGIC, 1));
+                new AspectList().add(Aspect.METAL, 2).add(Aspect.ENTROPY, 1).add(Aspect.FIRE, 1).add(Aspect.MAGIC, 1));
 
         registerOreDictAspects("nuggetPigIron", new AspectList().add(Aspect.METAL, 1));
-        registerOreDictAspects(
-                "ingotPigIron", new AspectList().add(Aspect.METAL, 3).add(Aspect.FLESH, 1));
+        registerOreDictAspects("ingotPigIron", new AspectList().add(Aspect.METAL, 3).add(Aspect.FLESH, 1));
 
         if (tConResource != null) {
             ThaumcraftApi.registerObjectTag(
@@ -164,8 +142,8 @@ public class WGModCompat {
         if (!OreDictionary.getOres(oreName).isEmpty()) ThaumcraftApi.registerObjectTag(oreName, aspects);
     }
 
-    public static void addTConSmelteryRecipe(
-            String oreName, String blockName, int temperature, String fluidName, int fluidAmount) {
+    public static void addTConSmelteryRecipe(String oreName, String blockName, int temperature, String fluidName,
+            int fluidAmount) {
         if (!OreDictionary.getOres(blockName).isEmpty()) {
             ItemStack blockStack = OreDictionary.getOres(blockName).get(0);
             if (blockStack == null || Block.getBlockFromItem(blockStack.getItem()) == null)
@@ -173,27 +151,29 @@ public class WGModCompat {
             Block b = Block.getBlockFromItem(blockStack.getItem());
 
             if (!OreDictionary.getOres(oreName).isEmpty())
-                for (ItemStack oreStack : OreDictionary.getOres(oreName))
-                    if (oreStack != null)
-                        addTConSmelteryRecipe(
-                                oreStack, b, blockStack.getItemDamage(), temperature, fluidName, fluidAmount);
+                for (ItemStack oreStack : OreDictionary.getOres(oreName)) if (oreStack != null)
+                    addTConSmelteryRecipe(oreStack, b, blockStack.getItemDamage(), temperature, fluidName, fluidAmount);
         }
     }
 
     static Class smeltery = null;
     static Method addMelting = null;
 
-    public static void addTConSmelteryRecipe(
-            ItemStack ore, Block block, int blockMeta, int temperature, String fluidName, int fluidAmount) {
+    public static void addTConSmelteryRecipe(ItemStack ore, Block block, int blockMeta, int temperature,
+            String fluidName, int fluidAmount) {
         if (!loaded_TCon || FluidRegistry.getFluid(fluidName) == null) return;
 
         try {
             FluidStack fluid = new FluidStack(FluidRegistry.getFluid(fluidName), fluidAmount);
 
             if (smeltery == null) smeltery = Class.forName("tconstruct.library.crafting.Smeltery");
-            if (addMelting == null)
-                addMelting = smeltery.getDeclaredMethod(
-                        "addMelting", ItemStack.class, Block.class, int.class, int.class, FluidStack.class);
+            if (addMelting == null) addMelting = smeltery.getDeclaredMethod(
+                    "addMelting",
+                    ItemStack.class,
+                    Block.class,
+                    int.class,
+                    int.class,
+                    FluidStack.class);
             addMelting.invoke(null, ore, block, blockMeta, temperature, fluid);
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,9 +188,8 @@ public class WGModCompat {
 
         try {
             if (dryingRack == null) dryingRack = Class.forName("tconstruct.library.crafting.DryingRackRecipes");
-            if (addDryingRecipe == null)
-                addDryingRecipe =
-                        dryingRack.getDeclaredMethod("addDryingRecipe", Object.class, int.class, Object.class);
+            if (addDryingRecipe == null) addDryingRecipe = dryingRack
+                    .getDeclaredMethod("addDryingRecipe", Object.class, int.class, Object.class);
             addDryingRecipe.invoke(null, input, time, output);
         } catch (Exception e) {
             e.printStackTrace();
@@ -273,13 +252,13 @@ public class WGModCompat {
 
     static Method thaumtink_registerExponentialCostData = null;
 
-    public static void thaumicTinkererRegisterEnchantment(
-            Enchantment enchantment, String texture, AspectList aspects, String research) {
+    public static void thaumicTinkererRegisterEnchantment(Enchantment enchantment, String texture, AspectList aspects,
+            String research) {
         if (!loaded_TT) return;
         try {
             if (thaumtink_registerExponentialCostData == null) {
-                Class c_EnchantmentManager =
-                        Class.forName("thaumic.tinkerer.common.enchantment.core.EnchantmentManager");
+                Class c_EnchantmentManager = Class
+                        .forName("thaumic.tinkerer.common.enchantment.core.EnchantmentManager");
                 thaumtink_registerExponentialCostData = c_EnchantmentManager.getMethod(
                         "registerExponentialCostData",
                         Enchantment.class,

@@ -1,12 +1,10 @@
 package witchinggadgets.common.items;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -31,6 +29,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.Thaumcraft;
@@ -48,8 +47,12 @@ import witchinggadgets.common.WGContent;
 import witchinggadgets.common.blocks.tiles.TileEntityTempLight;
 import witchinggadgets.common.util.Lib;
 import witchinggadgets.common.util.Utilities;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemInfusedGem extends Item implements IInfusedGem {
+
     IIcon[] icons = new IIcon[GemCut.values().length];
 
     public ItemInfusedGem() {
@@ -78,14 +81,13 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                     player.dropPlayerItemWithRandomChoice(new ItemStack(WGContent.ItemMaterial, 1, 13), false);
             stack.stackSize--;
         }
-        if (getCut(stack) == GemCut.OVAL
-                && getAspect(stack) != null
+        if (getCut(stack) == GemCut.OVAL && getAspect(stack) != null
                 && this.getDamage(stack) + getConsumedCharge(GemCut.OVAL.toString(), getAspect(stack), player)
                         <= getMaxDamage(stack)) {
             boolean dmg = this.performEffect(GemCut.OVAL.toString(), getAspect(stack), potency, brittle, player);
-            if (dmg && !player.capabilities.isCreativeMode)
-                this.setDamage(
-                        stack, getDamage(stack) + getConsumedCharge(GemCut.OVAL.toString(), getAspect(stack), player));
+            if (dmg && !player.capabilities.isCreativeMode) this.setDamage(
+                    stack,
+                    getDamage(stack) + getConsumedCharge(GemCut.OVAL.toString(), getAspect(stack), player));
         }
         return stack;
     }
@@ -103,17 +105,11 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                 player.addPotionEffect(new PotionEffect(Potion.jump.id, 300 + 20 * potency, 4 + (potency > 1 ? 1 : 0)));
             if (aspect.equals(Aspect.FIRE)) {
                 TileEntity te;
-                int[] dist = potency > 2
-                        ? new int[] {-8, -6, -4, 4, 6, 8}
-                        : potency > 1
-                                ? new int[] {
-                                    -6, -4, 4, 6,
-                                }
-                                : potency > 0 ? new int[] {-4, 4} : new int[] {-2, 2};
-                for (int xoff : dist)
-                    for (int zoff : dist)
-                        if (world.isAirBlock(x + xoff, y, z + zoff)
-                                && world.getBlockLightValue(x + xoff, y, z + zoff) < 10) {
+                int[] dist = potency > 2 ? new int[] { -8, -6, -4, 4, 6, 8 }
+                        : potency > 1 ? new int[] { -6, -4, 4, 6, }
+                                : potency > 0 ? new int[] { -4, 4 } : new int[] { -2, 2 };
+                for (int xoff : dist) for (int zoff : dist) if (world.isAirBlock(x + xoff, y, z + zoff)
+                        && world.getBlockLightValue(x + xoff, y, z + zoff) < 10) {
                             if (!world.isRemote) world.setBlock(x + xoff, y, z + zoff, WGContent.BlockCustomAiry);
                             world.scheduleBlockUpdate(x + xoff, y, z + zoff, WGContent.BlockCustomAiry, 10);
                             te = world.getTileEntity(x + xoff, y, z + zoff);
@@ -131,20 +127,18 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
             if (aspect.equals(Aspect.WATER)) {
                 int dist = 2 + potency;
                 for (int yOff = -3; yOff <= 0; yOff++)
-                    for (int xOff = -dist; xOff <= dist; xOff++)
-                        for (int zOff = -dist; zOff <= dist; zOff++)
-                            if (world.getBlock(x + xOff, y + yOff, z + zOff) != null) {
-                                if (world.getBlock(x + xOff, y + yOff, z + zOff).equals(Blocks.water))
-                                    world.setBlock(x + xOff, y + yOff, z + zOff, Blocks.ice);
-                                if (world.getBlock(x + xOff, y + yOff, z + zOff).equals(Blocks.lava))
-                                    world.setBlock(x + xOff, y + yOff, z + zOff, Blocks.obsidian);
-                                if (world.getBlock(x + xOff, y + yOff, z + zOff).equals(Blocks.flowing_lava))
-                                    world.setBlock(x + xOff, y + yOff, z + zOff, Blocks.cobblestone);
-                            }
+                    for (int xOff = -dist; xOff <= dist; xOff++) for (int zOff = -dist; zOff <= dist; zOff++)
+                        if (world.getBlock(x + xOff, y + yOff, z + zOff) != null) {
+                            if (world.getBlock(x + xOff, y + yOff, z + zOff).equals(Blocks.water))
+                                world.setBlock(x + xOff, y + yOff, z + zOff, Blocks.ice);
+                            if (world.getBlock(x + xOff, y + yOff, z + zOff).equals(Blocks.lava))
+                                world.setBlock(x + xOff, y + yOff, z + zOff, Blocks.obsidian);
+                            if (world.getBlock(x + xOff, y + yOff, z + zOff).equals(Blocks.flowing_lava))
+                                world.setBlock(x + xOff, y + yOff, z + zOff, Blocks.cobblestone);
+                        }
             }
-            if (aspect.equals(Aspect.EARTH) && !world.isRemote)
-                player.addPotionEffect(new PotionEffect(
-                        WGContent.pot_knockbackRes.id, 100 + potency * 100, 1 + (potency > 0 ? 1 : 0)));
+            if (aspect.equals(Aspect.EARTH) && !world.isRemote) player.addPotionEffect(
+                    new PotionEffect(WGContent.pot_knockbackRes.id, 100 + potency * 100, 1 + (potency > 0 ? 1 : 0)));
             if (aspect.equals(Aspect.ORDER)) player.heal(6 + potency * 6);
             if (aspect.equals(Aspect.ENTROPY)) Thaumcraft.addWarpToPlayer(player, 3 + (potency * 3), true);
 
@@ -172,42 +166,36 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
             }
             if (aspect.equals(Aspect.WATER)) {
                 if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-                    if (world.isAirBlock(targetX, targetY, targetZ)
-                            || world.getBlock(targetX, targetY, targetZ)
-                                    .isReplaceable(world, targetX, targetY, targetZ)) {
-                        if (world.provider.isHellWorld) {
-                            world.playSoundEffect(
-                                    targetX + 5f,
-                                    targetY + 5f,
-                                    targetZ + .5f,
-                                    "random.fizz",
-                                    1.0F,
-                                    itemRand.nextFloat() * 0.4F + 0.8F);
-                            for (int l = 0; l < 8; ++l)
-                                world.spawnParticle(
-                                        "largesmoke",
-                                        (double) targetX + Math.random(),
-                                        (double) targetY + Math.random(),
-                                        (double) targetZ + Math.random(),
-                                        0.0D,
-                                        0.0D,
-                                        0.0D);
-                        } else {
-                            if (!world.isRemote
-                                    && !world.getBlock(targetX, targetY, targetZ)
-                                            .getMaterial()
-                                            .isSolid()
-                                    && !!world.getBlock(targetX, targetY, targetZ)
-                                            .getMaterial()
-                                            .isLiquid()) world.func_147480_a(targetX, targetY, targetZ, true);
-                            world.setBlock(targetX, targetY, targetZ, Blocks.water, 0, 3);
-                        }
-                        dmg = true;
-                    }
+                    if (world.isAirBlock(targetX, targetY, targetZ) || world.getBlock(targetX, targetY, targetZ)
+                            .isReplaceable(world, targetX, targetY, targetZ)) {
+                                if (world.provider.isHellWorld) {
+                                    world.playSoundEffect(
+                                            targetX + 5f,
+                                            targetY + 5f,
+                                            targetZ + .5f,
+                                            "random.fizz",
+                                            1.0F,
+                                            itemRand.nextFloat() * 0.4F + 0.8F);
+                                    for (int l = 0; l < 8; ++l) world.spawnParticle(
+                                            "largesmoke",
+                                            (double) targetX + Math.random(),
+                                            (double) targetY + Math.random(),
+                                            (double) targetZ + Math.random(),
+                                            0.0D,
+                                            0.0D,
+                                            0.0D);
+                                } else {
+                                    if (!world.isRemote
+                                            && !world.getBlock(targetX, targetY, targetZ).getMaterial().isSolid()
+                                            && !!world.getBlock(targetX, targetY, targetZ).getMaterial().isLiquid())
+                                        world.func_147480_a(targetX, targetY, targetZ, true);
+                                    world.setBlock(targetX, targetY, targetZ, Blocks.water, 0, 3);
+                                }
+                                dmg = true;
+                            }
             }
             if (aspect.equals(Aspect.EARTH)) {
-                if (!Loader.isModLoaded("gregtech")
-                        && mop != null
+                if (!Loader.isModLoaded("gregtech") && mop != null
                         && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                     List<ChunkCoordinates> ores = this.getOres(world, mop.blockX, mop.blockY, mop.blockZ);
                     if (world.isRemote)
@@ -223,59 +211,98 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                             if (world.getBlock((int) player.posX, (int) player.posY + 2, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY + 2, (int) player.posZ, Blocks.dirt);
+                                        (int) player.posX,
+                                        (int) player.posY + 2,
+                                        (int) player.posZ,
+                                        Blocks.dirt);
 
                             if (world.getBlock((int) player.posX + 1, (int) player.posY, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX + 1, (int) player.posY, (int) player.posZ, Blocks.dirt);
+                                        (int) player.posX + 1,
+                                        (int) player.posY,
+                                        (int) player.posZ,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX + 1, (int) player.posY + 1, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX + 1, (int) player.posY + 1, (int) player.posZ, Blocks.dirt);
+                                        (int) player.posX + 1,
+                                        (int) player.posY + 1,
+                                        (int) player.posZ,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX + 1, (int) player.posY + 2, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX + 1, (int) player.posY + 2, (int) player.posZ, Blocks.dirt);
+                                        (int) player.posX + 1,
+                                        (int) player.posY + 2,
+                                        (int) player.posZ,
+                                        Blocks.dirt);
 
                             if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ + 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY, (int) player.posZ + 1, Blocks.dirt);
+                                        (int) player.posX,
+                                        (int) player.posY,
+                                        (int) player.posZ + 1,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX, (int) player.posY + 1, (int) player.posZ + 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY + 1, (int) player.posZ + 1, Blocks.dirt);
+                                        (int) player.posX,
+                                        (int) player.posY + 1,
+                                        (int) player.posZ + 1,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX, (int) player.posY + 2, (int) player.posZ + 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY + 2, (int) player.posZ + 1, Blocks.dirt);
+                                        (int) player.posX,
+                                        (int) player.posY + 2,
+                                        (int) player.posZ + 1,
+                                        Blocks.dirt);
 
                             if (world.getBlock((int) player.posX - 1, (int) player.posY, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX - 1, (int) player.posY, (int) player.posZ, Blocks.dirt);
+                                        (int) player.posX - 1,
+                                        (int) player.posY,
+                                        (int) player.posZ,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX - 1, (int) player.posY + 1, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX - 1, (int) player.posY + 1, (int) player.posZ, Blocks.dirt);
+                                        (int) player.posX - 1,
+                                        (int) player.posY + 1,
+                                        (int) player.posZ,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX - 1, (int) player.posY + 2, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX - 1, (int) player.posY + 2, (int) player.posZ, Blocks.dirt);
+                                        (int) player.posX - 1,
+                                        (int) player.posY + 2,
+                                        (int) player.posZ,
+                                        Blocks.dirt);
 
                             if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ - 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY, (int) player.posZ - 1, Blocks.dirt);
+                                        (int) player.posX,
+                                        (int) player.posY,
+                                        (int) player.posZ - 1,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX, (int) player.posY + 1, (int) player.posZ - 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY + 1, (int) player.posZ - 1, Blocks.dirt);
+                                        (int) player.posX,
+                                        (int) player.posY + 1,
+                                        (int) player.posZ - 1,
+                                        Blocks.dirt);
                             if (world.getBlock((int) player.posX, (int) player.posY + 2, (int) player.posZ - 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY + 2, (int) player.posZ - 1, Blocks.dirt);
+                                        (int) player.posX,
+                                        (int) player.posY + 2,
+                                        (int) player.posZ - 1,
+                                        Blocks.dirt);
 
                         } else if (potency == 1) {
                             if (world.getBlock((int) player.posX, (int) player.posY + 2, (int) player.posZ)
@@ -378,12 +405,18 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                             if (world.getBlock((int) player.posX, (int) player.posY + 2, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY + 2, (int) player.posZ, Blocks.obsidian);
+                                        (int) player.posX,
+                                        (int) player.posY + 2,
+                                        (int) player.posZ,
+                                        Blocks.obsidian);
 
                             if (world.getBlock((int) player.posX + 1, (int) player.posY, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX + 1, (int) player.posY, (int) player.posZ, Blocks.obsidian);
+                                        (int) player.posX + 1,
+                                        (int) player.posY,
+                                        (int) player.posZ,
+                                        Blocks.obsidian);
                             if (world.getBlock((int) player.posX + 1, (int) player.posY + 1, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
@@ -402,7 +435,10 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                             if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ + 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY, (int) player.posZ + 1, Blocks.obsidian);
+                                        (int) player.posX,
+                                        (int) player.posY,
+                                        (int) player.posZ + 1,
+                                        Blocks.obsidian);
                             if (world.getBlock((int) player.posX, (int) player.posY + 1, (int) player.posZ + 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
@@ -421,7 +457,10 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                             if (world.getBlock((int) player.posX - 1, (int) player.posY, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX - 1, (int) player.posY, (int) player.posZ, Blocks.obsidian);
+                                        (int) player.posX - 1,
+                                        (int) player.posY,
+                                        (int) player.posZ,
+                                        Blocks.obsidian);
                             if (world.getBlock((int) player.posX - 1, (int) player.posY + 1, (int) player.posZ)
                                     .equals(Blocks.air))
                                 world.setBlock(
@@ -440,7 +479,10 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                             if (world.getBlock((int) player.posX, (int) player.posY, (int) player.posZ - 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
-                                        (int) player.posX, (int) player.posY, (int) player.posZ - 1, Blocks.obsidian);
+                                        (int) player.posX,
+                                        (int) player.posY,
+                                        (int) player.posZ - 1,
+                                        Blocks.obsidian);
                             if (world.getBlock((int) player.posX, (int) player.posY + 1, (int) player.posZ - 1)
                                     .equals(Blocks.air))
                                 world.setBlock(
@@ -503,7 +545,18 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                             if (a != null) col = ClientUtilities.blendColoursToInt(col, a.getColor());
                         double[] hand = ClientUtilities.getPlayerHandPos(player, true);
                         WitchingGadgets.proxy.createTargetedWispFx(
-                                player.worldObj, hand[0], hand[1], hand[2], fnX, fnY, fnZ, col, .5f, 0, true, true);
+                                player.worldObj,
+                                hand[0],
+                                hand[1],
+                                hand[2],
+                                fnX,
+                                fnY,
+                                fnZ,
+                                col,
+                                .5f,
+                                0,
+                                true,
+                                true);
                     }
                     dmg = true;
                 }
@@ -529,10 +582,10 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                                 int tz = tile instanceof TileMirror
                                         ? ((TileMirror) world.getTileEntity(targetX, targetY, targetZ)).linkZ
                                         : ((TileMirrorEssentia) world.getTileEntity(targetX, targetY, targetZ)).linkZ;
-                                ForgeDirection fd =
-                                        ForgeDirection.getOrientation(world.getBlockMetadata(tx, ty, tz) % 6);
-                                float rot =
-                                        fd.ordinal() == 2 ? 180 : fd.ordinal() == 4 ? 90 : fd.ordinal() == 5 ? 270 : 0;
+                                ForgeDirection fd = ForgeDirection
+                                        .getOrientation(world.getBlockMetadata(tx, ty, tz) % 6);
+                                float rot = fd.ordinal() == 2 ? 180
+                                        : fd.ordinal() == 4 ? 90 : fd.ordinal() == 5 ? 270 : 0;
                                 if (player.dimension != dim) player.travelToDimension(dim);
                                 player.setLocationAndAngles(
                                         tx + .5 + fd.offsetX * .5,
@@ -552,8 +605,8 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                             player.posX + 4,
                             player.posY + 2,
                             player.posZ + 4);
-                    for (EntityLivingBase entT :
-                            (List<EntityLivingBase>) world.getEntitiesWithinAABB(EntityLivingBase.class, aabb))
+                    for (EntityLivingBase entT : (List<EntityLivingBase>) world
+                            .getEntitiesWithinAABB(EntityLivingBase.class, aabb))
                         if (entT != null && !entT.equals(player)) {
                             entT.addVelocity((entT.posX - player.posX) * .4, .4, (entT.posZ - player.posZ) * .4);
                             entT.addPotionEffect(new PotionEffect(Potion.blindness.id, 15, 0));
@@ -584,10 +637,8 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
     @Override
     public int getConsumedCharge(String cut, Aspect aspect, EntityPlayer player) {
         if (cut == GemCut.OVAL.toString())
-            return aspect == Aspect.FIRE || aspect == Aspect.AIR || aspect == Aspect.EARTH
-                    ? 1
-                    : aspect == Aspect.WATER || aspect == Aspect.ORDER
-                            ? 2
+            return aspect == Aspect.FIRE || aspect == Aspect.AIR || aspect == Aspect.EARTH ? 1
+                    : aspect == Aspect.WATER || aspect == Aspect.ORDER ? 2
                             : aspect == Aspect.ENTROPY ? (Config.allowMirrors ? 16 : 2) : 0;
         return 32;
     }
@@ -603,8 +654,8 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
         if (entity instanceof EntityPlayer)
             if (world.rand.nextInt(1000) < brittle || (getCut(stack) == GemCut.POINT && stack.getItemDamage() != 0)) {
                 if (!world.isRemote) {
-                    if (!((EntityPlayer) entity)
-                            .inventory.addItemStackToInventory(new ItemStack(WGContent.ItemMaterial, 1, 13)))
+                    if (!((EntityPlayer) entity).inventory
+                            .addItemStackToInventory(new ItemStack(WGContent.ItemMaterial, 1, 13)))
                         ((EntityPlayer) entity)
                                 .dropPlayerItemWithRandomChoice(new ItemStack(WGContent.ItemMaterial, 1, 13), false);
                     ((EntityPlayer) entity).addChatMessage(new ChatComponentTranslation(Lib.CHAT + "gem.shatter"));
@@ -615,77 +666,63 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                 return;
             }
         if (world.rand.nextInt(20) < brittle) return;
-        if (getCut(stack) == GemCut.OVAL
-                && getAspect(stack) != null
+        if (getCut(stack) == GemCut.OVAL && getAspect(stack) != null
                 && entity instanceof EntityPlayer
                 && selected
                 && entity.ticksExisted % 4 == 0
                 && this.getDamage(stack) > 0) {
             if (TileVisRelay.nearbyPlayers.containsKey(Integer.valueOf(entity.getEntityId())))
                 if ((((WeakReference) TileVisRelay.nearbyPlayers.get(Integer.valueOf(entity.getEntityId()))).get()
-                                != null)
-                        && (((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers.get(
-                                                        Integer.valueOf(entity.getEntityId())))
-                                                .get())
+                        != null)
+                        && (((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers
+                                .get(Integer.valueOf(entity.getEntityId()))).get())
                                         .getDistanceFrom(entity.posX, entity.posY, entity.posZ)
                                 < 26.0D)) {
-                    Aspect aspect = getAspect(stack);
-                    int amt = ((TileVisRelay) ((WeakReference)
-                                            TileVisRelay.nearbyPlayers.get(Integer.valueOf(entity.getEntityId())))
-                                    .get())
-                            .consumeVis(aspect, 1);
-                    if (amt > 0) {
-                        this.setDamage(stack, getDamage(stack) - amt);
-                        ((TileVisRelay) ((WeakReference)
-                                                TileVisRelay.nearbyPlayers.get(Integer.valueOf(entity.getEntityId())))
-                                        .get())
-                                .triggerConsumeEffect(aspect);
-                        if (world.isRemote) {
-                            ForgeDirection d2 = ForgeDirection.getOrientation(
-                                    ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers.get(
-                                                            Integer.valueOf(entity.getEntityId())))
-                                                    .get())
-                                            .orientation);
-                            double x = ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers.get(
-                                                            Integer.valueOf(entity.getEntityId())))
-                                                    .get())
-                                            .xCoord
-                                    + .5
-                                    + d2.offsetX * .05;
-                            double y = ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers.get(
-                                                            Integer.valueOf(entity.getEntityId())))
-                                                    .get())
-                                            .yCoord
-                                    + .5
-                                    + d2.offsetY * .05;
-                            double z = ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers.get(
-                                                            Integer.valueOf(entity.getEntityId())))
-                                                    .get())
-                                            .zCoord
-                                    + .5
-                                    + d2.offsetZ * .05;
-                            double[] playerPos = ClientUtilities.getPlayerHandPos((EntityPlayer) entity, true);
-                            powerBeams.put(
-                                    entity.getEntityId(),
-                                    Thaumcraft.proxy.beamPower(
-                                            world,
-                                            x,
-                                            y,
-                                            z,
-                                            playerPos[0],
-                                            playerPos[1],
-                                            playerPos[2],
-                                            ((aspect.getColor() >> 16) & 0xff) / 255f,
-                                            ((aspect.getColor() >> 8) & 0xff) / 255f,
-                                            (aspect.getColor() & 0xff) / 255f,
-                                            false,
-                                            powerBeams.get(entity.getEntityId())));
-                        }
-                    }
-                } else {
-                    powerBeams.remove(entity.getEntityId());
-                    TileVisRelay.nearbyPlayers.remove(Integer.valueOf(entity.getEntityId()));
-                }
+                                    Aspect aspect = getAspect(stack);
+                                    int amt = ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers
+                                            .get(Integer.valueOf(entity.getEntityId()))).get()).consumeVis(aspect, 1);
+                                    if (amt > 0) {
+                                        this.setDamage(stack, getDamage(stack) - amt);
+                                        ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers
+                                                .get(Integer.valueOf(entity.getEntityId()))).get())
+                                                        .triggerConsumeEffect(aspect);
+                                        if (world.isRemote) {
+                                            ForgeDirection d2 = ForgeDirection.getOrientation(
+                                                    ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers
+                                                            .get(Integer.valueOf(entity.getEntityId())))
+                                                                    .get()).orientation);
+                                            double x = ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers
+                                                    .get(Integer.valueOf(entity.getEntityId()))).get()).xCoord + .5
+                                                    + d2.offsetX * .05;
+                                            double y = ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers
+                                                    .get(Integer.valueOf(entity.getEntityId()))).get()).yCoord + .5
+                                                    + d2.offsetY * .05;
+                                            double z = ((TileVisRelay) ((WeakReference) TileVisRelay.nearbyPlayers
+                                                    .get(Integer.valueOf(entity.getEntityId()))).get()).zCoord + .5
+                                                    + d2.offsetZ * .05;
+                                            double[] playerPos = ClientUtilities
+                                                    .getPlayerHandPos((EntityPlayer) entity, true);
+                                            powerBeams.put(
+                                                    entity.getEntityId(),
+                                                    Thaumcraft.proxy.beamPower(
+                                                            world,
+                                                            x,
+                                                            y,
+                                                            z,
+                                                            playerPos[0],
+                                                            playerPos[1],
+                                                            playerPos[2],
+                                                            ((aspect.getColor() >> 16) & 0xff) / 255f,
+                                                            ((aspect.getColor() >> 8) & 0xff) / 255f,
+                                                            (aspect.getColor() & 0xff) / 255f,
+                                                            false,
+                                                            powerBeams.get(entity.getEntityId())));
+                                        }
+                                    }
+                                } else {
+                                    powerBeams.remove(entity.getEntityId());
+                                    TileVisRelay.nearbyPlayers.remove(Integer.valueOf(entity.getEntityId()));
+                                }
         }
     }
 
@@ -749,9 +786,8 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IIconRegister ir) {
-        for (int i = 0; i < icons.length; i++)
-            this.icons[i] = ir.registerIcon("witchinggadgets:infusedGem_"
-                    + GemCut.values()[i].toString().toLowerCase());
+        for (int i = 0; i < icons.length; i++) this.icons[i] = ir
+                .registerIcon("witchinggadgets:infusedGem_" + GemCut.values()[i].toString().toLowerCase());
     }
 
     @Override
@@ -783,12 +819,10 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
                 ores.add(next);
             }
             for (ChunkCoordinates cc2 : getConnected(next.posX, next.posY, next.posZ))
-                if (!checked.contains(cc2)
-                        && !closedList.contains(cc2)
+                if (!checked.contains(cc2) && !closedList.contains(cc2)
                         && !openList.contains(cc2)
-                        && (world.getBlock(cc2.posX, cc2.posY, cc2.posZ).equals(search)
-                                || Utilities.isOre(
-                                        world, cc2.posX, cc2.posY, cc2.posZ)) /*.getMaterial()==Material.rock*/)
+                        && (world.getBlock(cc2.posX, cc2.posY, cc2.posZ).equals(search) || Utilities
+                                .isOre(world, cc2.posX, cc2.posY, cc2.posZ)) /* .getMaterial()==Material.rock */)
                     if (cc2.getDistanceSquared(x, y, z) < 32) openList.add(cc2);
             openList.remove(0);
         }
@@ -796,14 +830,9 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
     }
 
     ChunkCoordinates[] getConnected(int x, int y, int z) {
-        return new ChunkCoordinates[] {
-            new ChunkCoordinates(x - 1, y, z),
-            new ChunkCoordinates(x + 1, y, z),
-            new ChunkCoordinates(x, y, z - 1),
-            new ChunkCoordinates(x, y, z + 1),
-            new ChunkCoordinates(x, y - 1, z),
-            new ChunkCoordinates(x, y + 1, z)
-        };
+        return new ChunkCoordinates[] { new ChunkCoordinates(x - 1, y, z), new ChunkCoordinates(x + 1, y, z),
+                new ChunkCoordinates(x, y, z - 1), new ChunkCoordinates(x, y, z + 1), new ChunkCoordinates(x, y - 1, z),
+                new ChunkCoordinates(x, y + 1, z) };
     }
 
     public static ItemStack createGem(Aspect asp, ItemInfusedGem.GemCut cut, boolean forceCreate) {
@@ -826,10 +855,11 @@ public class ItemInfusedGem extends Item implements IInfusedGem {
     }
 
     public enum GemCut {
+
         POINT,
-        //		TABLE,
-        //		STEP,
-        //		ROSE,
+        // TABLE,
+        // STEP,
+        // ROSE,
         OVAL;
 
         public static GemCut getValue(byte b) {

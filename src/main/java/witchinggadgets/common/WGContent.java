@@ -1,11 +1,5 @@
 package witchinggadgets.common;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import gregtech.GT_Mod;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.SubTag;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.enchantment.Enchantment;
@@ -31,6 +26,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
+
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -88,8 +84,15 @@ import witchinggadgets.common.util.recipe.BagColourizationRecipe;
 import witchinggadgets.common.util.recipe.CloakColourizationRecipe;
 import witchinggadgets.common.util.recipe.InfernalBlastfurnaceRecipe;
 import witchinggadgets.common.util.recipe.RobeColourizationRecipe;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import gregtech.GT_Mod;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.SubTag;
 
 public class WGContent {
+
     public static final boolean devbuild = false;
     public static Block BlockWallMirror;
     public static Block BlockVoidWalkway;
@@ -115,10 +118,10 @@ public class WGContent {
 
     public static Item ItemVorpalSword;
     public static Item ItemAdvancedScribingTools;
-    //	public static Item ItemEliteArmorHelm;
-    //	public static Item ItemEliteArmorChest;
-    //	public static Item ItemEliteArmorLegs;
-    //	public static Item ItemEliteArmorBoots;
+    // public static Item ItemEliteArmorHelm;
+    // public static Item ItemEliteArmorChest;
+    // public static Item ItemEliteArmorLegs;
+    // public static Item ItemEliteArmorBoots;
     public static Item ItemPrimordialGlove;
     public static Item ItemPrimordialHammer;
     public static Item ItemPrimordialAxe;
@@ -147,19 +150,19 @@ public class WGContent {
     public static Enchantment enc_rideProtect;
     public static Enchantment enc_soulbound;
 
-    public static ArmorMaterial armorMatSpecialRobe =
-            EnumHelper.addArmorMaterial("WG:ADVANCEDCLOTH", 25, new int[] {2, 4, 3, 2}, 25);
-    public static ToolMaterial primordialTool =
-            EnumHelper.addToolMaterial("WG:PRIMORDIALTOOL", 10, 1500, 18.0F, 16.5F, 30);
-    public static ArmorMaterial primordialArmor =
-            EnumHelper.addArmorMaterial("WG:PRIMORDIALARMOR", 3000, new int[] {6, 12, 8, 6}, 30);
-    //	public static HashMap<String,Cloak> cloakRegistry = new HashMap<String, Cloak>();
+    public static ArmorMaterial armorMatSpecialRobe = EnumHelper
+            .addArmorMaterial("WG:ADVANCEDCLOTH", 25, new int[] { 2, 4, 3, 2 }, 25);
+    public static ToolMaterial primordialTool = EnumHelper
+            .addToolMaterial("WG:PRIMORDIALTOOL", 10, 1500, 18.0F, 16.5F, 30);
+    public static ArmorMaterial primordialArmor = EnumHelper
+            .addArmorMaterial("WG:PRIMORDIALARMOR", 3000, new int[] { 6, 12, 8, 6 }, 30);
+    // public static HashMap<String,Cloak> cloakRegistry = new HashMap<String, Cloak>();
     public static HashMap<String, Object> recipeList = new HashMap<String, Object>();
     public static String[] GT_Cluster;
     public static HashMap<String, Integer[]> GT_Cluster_Color = new HashMap<String, Integer[]>();
     public static HashMap<String, Boolean> ClusterEBF = new HashMap<String, Boolean>();
     public static HashMap<String, Fluid> ClusterSmeltable = new HashMap<String, Fluid>();
-    public static String[] bannedMaterials = {"AnyIron", "AnyCopper"};
+    public static String[] bannedMaterials = { "AnyIron", "AnyCopper" };
 
     public static ArrayList b = new ArrayList<String>();
 
@@ -175,44 +178,37 @@ public class WGContent {
     private static void initClusters() {
         HashSet L = new HashSet<String>();
         Map<String, Materials> map = Materials.getMaterialsMap();
-        Iterator<Entry<String, Materials>> entries =
-                Materials.getMaterialsMap().entrySet().iterator();
+        Iterator<Entry<String, Materials>> entries = Materials.getMaterialsMap().entrySet().iterator();
 
         while (entries.hasNext()) {
             Map.Entry<String, Materials> entry = entries.next();
-            if (!b.contains(entry.getValue().mDefaultLocalName)
-                    && !OreDictionary.getOres(
-                                    "ore" + entry.getValue().mDefaultLocalName.replaceAll(" ", ""))
-                            .isEmpty()) {
+            if (!b.contains(entry.getValue().mDefaultLocalName) && !OreDictionary
+                    .getOres("ore" + entry.getValue().mDefaultLocalName.replaceAll(" ", "")).isEmpty()) {
                 Integer rgb = ((entry.getValue().getRGBA()[0] & 0x0ff) << 16)
                         | ((entry.getValue().getRGBA()[1] & 0x0ff) << 8)
                         | (entry.getValue().getRGBA()[2] & 0x0ff);
                 L.add(entry.getValue().mDefaultLocalName.replaceAll(" ", ""));
-                GT_Cluster_Color.put(entry.getValue().mDefaultLocalName.replaceAll(" ", ""), new Integer[] {
-                    ClientUtilities.getVibrantColourToInt(rgb),
-                    entry.getValue().getRGBA()[0] > entry.getValue().getRGBA()[2]
-                                    && entry.getValue().getRGBA()[1]
-                                            > entry.getValue().getRGBA()[2]
-                            ? 2
-                            : entry.getValue().getRGBA()[0] > entry.getValue().getRGBA()[1]
-                                            && entry.getValue().getRGBA()[0]
-                                                    > entry.getValue().getRGBA()[2]
-                                    ? 1
-                                    : 0
-                });
+                GT_Cluster_Color.put(
+                        entry.getValue().mDefaultLocalName.replaceAll(" ", ""),
+                        new Integer[] { ClientUtilities.getVibrantColourToInt(rgb),
+                                entry.getValue().getRGBA()[0] > entry.getValue().getRGBA()[2]
+                                        && entry.getValue().getRGBA()[1] > entry.getValue().getRGBA()[2]
+                                                ? 2
+                                                : entry.getValue().getRGBA()[0] > entry.getValue().getRGBA()[1]
+                                                        && entry.getValue().getRGBA()[0] > entry.getValue().getRGBA()[2]
+                                                                ? 1
+                                                                : 0 });
                 ClusterEBF.put(
-                        entry.getValue().mDefaultLocalName.replaceAll(" ", ""), entry.getValue().mBlastFurnaceRequired);
+                        entry.getValue().mDefaultLocalName.replaceAll(" ", ""),
+                        entry.getValue().mBlastFurnaceRequired);
                 if (!entry.getValue().mBlastFurnaceRequired
-                        && (entry.getValue().getMolten(144) != null
-                                || entry.getValue().getFluid(144) != null))
-                    if (entry.getValue().getMolten(144) != null)
-                        ClusterSmeltable.put(
-                                entry.getValue().mLocalizedName.replaceAll(" ", ""),
-                                entry.getValue().getMolten(288).getFluid());
-                    else if (entry.getValue().getMolten(144) == null)
-                        ClusterSmeltable.put(
-                                entry.getValue().mLocalizedName.replaceAll(" ", ""),
-                                entry.getValue().getFluid(288).getFluid());
+                        && (entry.getValue().getMolten(144) != null || entry.getValue().getFluid(144) != null))
+                    if (entry.getValue().getMolten(144) != null) ClusterSmeltable.put(
+                            entry.getValue().mLocalizedName.replaceAll(" ", ""),
+                            entry.getValue().getMolten(288).getFluid());
+                    else if (entry.getValue().getMolten(144) == null) ClusterSmeltable.put(
+                            entry.getValue().mLocalizedName.replaceAll(" ", ""),
+                            entry.getValue().getFluid(288).getFluid());
             }
         }
         GT_Cluster = new String[L.size()];
@@ -229,10 +225,9 @@ public class WGContent {
         if (k < 128 - l) Utilities.extendPotionArray(l);
         String s = new UUID(109406002307L, 01L).toString();
         int potionId = WGConfig.getPotionID(32, "Knockback Resistance");
-        if (potionId > 0)
-            pot_knockbackRes = new WGPotion(potionId, false, 0x6e6e6e, 0, false, 1)
-                    .setPotionName("wg.potionKnockbackRes")
-                    .func_111184_a(SharedMonsterAttributes.knockbackResistance, s, 0.34D, 0);
+        if (potionId > 0) pot_knockbackRes = new WGPotion(potionId, false, 0x6e6e6e, 0, false, 1)
+                .setPotionName("wg.potionKnockbackRes")
+                .func_111184_a(SharedMonsterAttributes.knockbackResistance, s, 0.34D, 0);
         potionId = WGConfig.getPotionID(potionId, "Dissolve");
         if (potionId > 0)
             pot_dissolve = new WGPotion(potionId, true, 0x450b45, 40, true, 2).setPotionName("wg.potionDissolve");
@@ -278,72 +273,66 @@ public class WGContent {
     }
 
     private static void add_infernal_recipes() {
-        if (!devbuild)
-            for (Materials aMaterial :
-                    gregtech.api.enums.Materials.getMaterialsMap().values()) {
-                if (!aMaterial.contains(SubTag.NO_SMELTING)) {
-                    if ((aMaterial.mBlastFurnaceRequired) || (aMaterial.mDirectSmelting.mBlastFurnaceRequired)) {
-                        if (aMaterial.mBlastFurnaceTemp <= 1000
-                                && aMaterial.mDirectSmelting.mBlastFurnaceTemp <= 1000) {
-                            if (aMaterial.getDust(1) != null) {
-                                InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(
-                                        aMaterial.getIngots(1), aMaterial.getDust(1), 240, false);
-                                InfernalBlastfurnaceRecipe.addRecipe(temp);
-                                if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
-                                    WitchingGadgets.logger.warn(
-                                            "Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
-                            }
+        if (!devbuild) for (Materials aMaterial : gregtech.api.enums.Materials.getMaterialsMap().values()) {
+            if (!aMaterial.contains(SubTag.NO_SMELTING)) {
+                if ((aMaterial.mBlastFurnaceRequired) || (aMaterial.mDirectSmelting.mBlastFurnaceRequired)) {
+                    if (aMaterial.mBlastFurnaceTemp <= 1000 && aMaterial.mDirectSmelting.mBlastFurnaceTemp <= 1000) {
+                        if (aMaterial.getDust(1) != null) {
+                            InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(
+                                    aMaterial.getIngots(1),
+                                    aMaterial.getDust(1),
+                                    240,
+                                    false);
+                            InfernalBlastfurnaceRecipe.addRecipe(temp);
+                            if (!InfernalBlastfurnaceRecipe.recipes.contains(temp)) WitchingGadgets.logger.warn(
+                                    "Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
                         }
-                    } else {
-                        int outputAmount = GT_Mod.gregtechproxy.mMixedOreOnlyYieldsTwoThirdsOfPureOre ? 2 : 3;
-                        if (aMaterial.mDirectSmelting != aMaterial) {
-                            if (!aMaterial.contains(SubTag.DONT_ADD_DEFAULT_BBF_RECIPE)) {
-                                InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(
-                                        aMaterial.mDirectSmelting.getIngots(outputAmount),
-                                        aMaterial.getDust(2),
-                                        240,
-                                        false);
-                                InfernalBlastfurnaceRecipe.addRecipe(temp);
-                                if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
-                                    WitchingGadgets.logger.warn(
-                                            "Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
-                            } else if (aMaterial == Materials.Tetrahedrite) {
-                                InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(
-                                        aMaterial.mDirectSmelting.getIngots(outputAmount),
-                                        aMaterial.getDust(2),
-                                        240,
-                                        false);
-                                temp.addBonus(Materials.Antimony.getNuggets(3 * outputAmount));
-                                InfernalBlastfurnaceRecipe.addRecipe(temp);
-                                if (!InfernalBlastfurnaceRecipe.recipes.contains(temp))
-                                    WitchingGadgets.logger.warn(
-                                            "Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
-                            }
+                    }
+                } else {
+                    int outputAmount = GT_Mod.gregtechproxy.mMixedOreOnlyYieldsTwoThirdsOfPureOre ? 2 : 3;
+                    if (aMaterial.mDirectSmelting != aMaterial) {
+                        if (!aMaterial.contains(SubTag.DONT_ADD_DEFAULT_BBF_RECIPE)) {
+                            InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(
+                                    aMaterial.mDirectSmelting.getIngots(outputAmount),
+                                    aMaterial.getDust(2),
+                                    240,
+                                    false);
+                            InfernalBlastfurnaceRecipe.addRecipe(temp);
+                            if (!InfernalBlastfurnaceRecipe.recipes.contains(temp)) WitchingGadgets.logger.warn(
+                                    "Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
+                        } else if (aMaterial == Materials.Tetrahedrite) {
+                            InfernalBlastfurnaceRecipe temp = new InfernalBlastfurnaceRecipe(
+                                    aMaterial.mDirectSmelting.getIngots(outputAmount),
+                                    aMaterial.getDust(2),
+                                    240,
+                                    false);
+                            temp.addBonus(Materials.Antimony.getNuggets(3 * outputAmount));
+                            InfernalBlastfurnaceRecipe.addRecipe(temp);
+                            if (!InfernalBlastfurnaceRecipe.recipes.contains(temp)) WitchingGadgets.logger.warn(
+                                    "Error at performing GT-Primitive-Blast Recipe -> InfernalBlastfurnaceRecipe");
                         }
                     }
                 }
             }
+        }
         remove_broken_recipes();
     }
 
     private static void remove_broken_recipes() {
         ArrayList<InfernalBlastfurnaceRecipe> rem = new ArrayList<InfernalBlastfurnaceRecipe>();
         // remove defective InfernalBlastfurnaceRecipes
-        if (!devbuild)
-            for (InfernalBlastfurnaceRecipe r : InfernalBlastfurnaceRecipe.recipes)
-                if (r.getInput() == null || r.getOutput() == null) rem.add(r);
+        if (!devbuild) for (InfernalBlastfurnaceRecipe r : InfernalBlastfurnaceRecipe.recipes)
+            if (r.getInput() == null || r.getOutput() == null) rem.add(r);
         InfernalBlastfurnaceRecipe.recipes.removeAll(rem);
         rem = null;
     }
 
     private static void preInitBlocks() {
         BlockWallMirror = new BlockWallMirror().setBlockName("WG_WallMirror");
-        GameRegistry.registerBlock(
-                BlockWallMirror, BlockWallMirror.getUnlocalizedName().substring("tile.".length()));
+        GameRegistry.registerBlock(BlockWallMirror, BlockWallMirror.getUnlocalizedName().substring("tile.".length()));
 
         BlockVoidWalkway = new BlockVoidWalkway().setBlockName("WG_VoidWalkway");
-        GameRegistry.registerBlock(
-                BlockVoidWalkway, BlockVoidWalkway.getUnlocalizedName().substring("tile.".length()));
+        GameRegistry.registerBlock(BlockVoidWalkway, BlockVoidWalkway.getUnlocalizedName().substring("tile.".length()));
 
         BlockStoneDevice = new BlockWGStoneDevice().setBlockName("WG_StoneDevice");
         GameRegistry.registerBlock(
@@ -364,12 +353,10 @@ public class WGContent {
                 BlockMetalDevice.getUnlocalizedName().substring("tile.".length()));
 
         BlockRoseVine = new BlockRoseVines().setBlockName("WG_RoseVine");
-        GameRegistry.registerBlock(
-                BlockRoseVine, BlockRoseVine.getUnlocalizedName().substring("tile.".length()));
+        GameRegistry.registerBlock(BlockRoseVine, BlockRoseVine.getUnlocalizedName().substring("tile.".length()));
 
         BlockCustomAiry = new BlockModifiedAiry().setBlockName("WG_CustomAir");
-        GameRegistry.registerBlock(
-                BlockCustomAiry, BlockCustomAiry.getUnlocalizedName().substring("tile.".length()));
+        GameRegistry.registerBlock(BlockCustomAiry, BlockCustomAiry.getUnlocalizedName().substring("tile.".length()));
     }
 
     private static void initializeBlocks() {
@@ -403,33 +390,29 @@ public class WGContent {
     private static void registerTile(Class<? extends TileEntity> c) {
         GameRegistry.registerTileEntity(
                 c,
-                "WitchingGadgets_"
-                        + c.getCanonicalName().substring(c.getCanonicalName().lastIndexOf(".")));
+                "WitchingGadgets_" + c.getCanonicalName().substring(c.getCanonicalName().lastIndexOf(".")));
     }
 
     private static void postInitBlocks() {
-        for (int yy = 0; yy <= 1; yy++)
-            for (int zz = 0; zz <= 2; zz++)
-                for (int xx = 0; xx <= 2; xx++) {
-                    int pos = yy * 9 + zz * 3 + xx;
-                    TileEntityBlastfurnace.brickBlock[pos] = GameRegistry.findBlock(
-                            WGConfig.blocksforWGBF[0].split(":")[0],
-                            WGConfig.blocksforWGBF[0].split(":")[1]);
-                }
+        for (int yy = 0; yy <= 1; yy++) for (int zz = 0; zz <= 2; zz++) for (int xx = 0; xx <= 2; xx++) {
+            int pos = yy * 9 + zz * 3 + xx;
+            TileEntityBlastfurnace.brickBlock[pos] = GameRegistry
+                    .findBlock(WGConfig.blocksforWGBF[0].split(":")[0], WGConfig.blocksforWGBF[0].split(":")[1]);
+        }
 
-        TileEntityBlastfurnace.stairBlock = GameRegistry.findBlock(
-                WGConfig.blocksforWGBF[1].split(":")[0],
-                WGConfig.blocksforWGBF[1].split(":")[1]);
+        TileEntityBlastfurnace.stairBlock = GameRegistry
+                .findBlock(WGConfig.blocksforWGBF[1].split(":")[0], WGConfig.blocksforWGBF[1].split(":")[1]);
 
         OreDictionary.registerOre("blockVoid", new ItemStack(BlockMetalDevice, 1, 1));
         OreDictionary.registerOre("blockVoidmetal", new ItemStack(BlockMetalDevice, 1, 1));
         OreDictionary.registerOre("blockVoidMetal", new ItemStack(BlockMetalDevice, 1, 1));
         OreDictionary.registerOre("voidblock", new ItemStack(BlockMetalDevice, 1, 1));
         OreDictionary.registerOre("crystalNetherQuartz", new ItemStack(Items.quartz));
+        OreDictionary
+                .registerOre("scribingTools", new ItemStack(ConfigItems.itemInkwell, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre(
-                "scribingTools", new ItemStack(ConfigItems.itemInkwell, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre(
-                "scribingTools", new ItemStack(ItemAdvancedScribingTools, 1, OreDictionary.WILDCARD_VALUE));
+                "scribingTools",
+                new ItemStack(ItemAdvancedScribingTools, 1, OreDictionary.WILDCARD_VALUE));
     }
 
     private static void preInitItems() {
@@ -442,11 +425,11 @@ public class WGContent {
         ItemThaumiumShears = new ItemThaumiumShears().setUnlocalizedName("WG_ThaumiumShears");
         GameRegistry.registerItem(ItemThaumiumShears, ItemThaumiumShears.getUnlocalizedName());
 
-        ItemAdvancedRobeChest =
-                new ItemAdvancedRobes(armorMatSpecialRobe, 2, 1).setUnlocalizedName("WG_AdvancedRobeChest");
+        ItemAdvancedRobeChest = new ItemAdvancedRobes(armorMatSpecialRobe, 2, 1)
+                .setUnlocalizedName("WG_AdvancedRobeChest");
         GameRegistry.registerItem(ItemAdvancedRobeChest, ItemAdvancedRobeChest.getUnlocalizedName());
-        ItemAdvancedRobeLegs =
-                new ItemAdvancedRobes(armorMatSpecialRobe, 2, 2).setUnlocalizedName("WG_AdvancedRobeLegs");
+        ItemAdvancedRobeLegs = new ItemAdvancedRobes(armorMatSpecialRobe, 2, 2)
+                .setUnlocalizedName("WG_AdvancedRobeLegs");
         GameRegistry.registerItem(ItemAdvancedRobeLegs, ItemAdvancedRobeLegs.getUnlocalizedName());
 
         ItemMagicFoodstuffs = new ItemMagicFood().setUnlocalizedName("WG_MagicFood");
@@ -491,13 +474,13 @@ public class WGContent {
 
             ItemPrimordialHelm = new ItemPrimordialArmor(primordialArmor, 4, 0).setUnlocalizedName("WG_PrimordialHelm");
             GameRegistry.registerItem(ItemPrimordialHelm, ItemPrimordialHelm.getUnlocalizedName());
-            ItemPrimordialChest =
-                    new ItemPrimordialArmor(primordialArmor, 4, 1).setUnlocalizedName("WG_PrimordialChest");
+            ItemPrimordialChest = new ItemPrimordialArmor(primordialArmor, 4, 1)
+                    .setUnlocalizedName("WG_PrimordialChest");
             GameRegistry.registerItem(ItemPrimordialChest, ItemPrimordialChest.getUnlocalizedName());
             ItemPrimordialLegs = new ItemPrimordialArmor(primordialArmor, 4, 2).setUnlocalizedName("WG_PrimordialLegs");
             GameRegistry.registerItem(ItemPrimordialLegs, ItemPrimordialLegs.getUnlocalizedName());
-            ItemPrimordialBoots =
-                    new ItemPrimordialArmor(primordialArmor, 4, 3).setUnlocalizedName("WG_PrimordialBoots");
+            ItemPrimordialBoots = new ItemPrimordialArmor(primordialArmor, 4, 3)
+                    .setUnlocalizedName("WG_PrimordialBoots");
             GameRegistry.registerItem(ItemPrimordialBoots, ItemPrimordialBoots.getUnlocalizedName());
         }
 
@@ -523,10 +506,14 @@ public class WGContent {
         recipeList.put(
                 "THAUMIUMSHEARS",
                 GameRegistry.addShapedRecipe(
-                        new ItemStack(ItemThaumiumShears), " t", "t ", 't', ItemApi.getItem("itemResource", 2)));
+                        new ItemStack(ItemThaumiumShears),
+                        " t",
+                        "t ",
+                        't',
+                        ItemApi.getItem("itemResource", 2)));
 
-        BlockDispenser.dispenseBehaviorRegistry.putObject(
-                ItemCapsule, new ItemCrystalCapsule.CapsuleDispenserBehaviour());
+        BlockDispenser.dispenseBehaviorRegistry
+                .putObject(ItemCapsule, new ItemCrystalCapsule.CapsuleDispenserBehaviour());
 
         GameRegistry.addRecipe(new RobeColourizationRecipe());
         GameRegistry.addRecipe(new CloakColourizationRecipe());
@@ -564,7 +551,13 @@ public class WGContent {
                 Items.wheat);
 
         EntityRegistry.registerModEntity(
-                EntityItemReforming.class, "reformingItem", 0, WitchingGadgets.instance, 64, 1, true);
+                EntityItemReforming.class,
+                "reformingItem",
+                0,
+                WitchingGadgets.instance,
+                64,
+                1,
+                true);
 
         if (WGConfig.allowClusters) {
             for (int iOre = 0; iOre < GT_Cluster.length; iOre++)
@@ -583,10 +576,7 @@ public class WGContent {
 
     private static void postInitThaumcraft() {
         // Add aspects where needed
-        AspectList addAspects = new AspectList()
-                .add(Aspect.TREE, 4)
-                .add(Aspect.CLOTH, 2)
-                .add(Aspect.MECHANISM, 2)
+        AspectList addAspects = new AspectList().add(Aspect.TREE, 4).add(Aspect.CLOTH, 2).add(Aspect.MECHANISM, 2)
                 .add(Aspect.AIR, 2);
         ThaumcraftApi.registerObjectTag(new ItemStack(BlockWoodenDevice, 1, 1), addAspects);
         addAspects = new AspectList().add(Aspect.TREE, 2).add(Aspect.CRYSTAL, 2).add(Aspect.CRAFT, 2);
@@ -595,10 +585,7 @@ public class WGContent {
         addAspects = new AspectList().add(Aspect.MECHANISM, 1).add(Aspect.EARTH, 2);
         ThaumcraftApi.registerObjectTag(new ItemStack(BlockStoneDevice, 1, 0), addAspects);
 
-        addAspects = new AspectList()
-                .add(Aspect.PLANT, 6)
-                .add(Aspect.ENTROPY, 4)
-                .add(Aspect.MAGIC, 4)
+        addAspects = new AspectList().add(Aspect.PLANT, 6).add(Aspect.ENTROPY, 4).add(Aspect.MAGIC, 4)
                 .add(Aspect.LIFE, 2);
         ThaumcraftApi.registerObjectTag(new ItemStack(BlockRoseVine, 1, 32767), addAspects);
 
@@ -619,17 +606,10 @@ public class WGContent {
         addAspects = new AspectList().add(Aspect.CLOTH, 2).add(Aspect.BEAST, 3);
         ThaumcraftApi.registerObjectTag(new ItemStack(ItemMaterial, 1, 6), addAspects);
 
-        addAspects = new AspectList()
-                .add(Aspect.CRYSTAL, 5)
-                .add(Aspect.SENSES, 3)
-                .add(Aspect.EXCHANGE, 2)
+        addAspects = new AspectList().add(Aspect.CRYSTAL, 5).add(Aspect.SENSES, 3).add(Aspect.EXCHANGE, 2)
                 .add(Aspect.POISON, 1);
         ThaumcraftApi.registerObjectTag(new ItemStack(ItemMaterial, 1, 9), addAspects);
-        addAspects = new AspectList()
-                .add(Aspect.AIR, 2)
-                .add(Aspect.WATER, 2)
-                .add(Aspect.ORDER, 2)
-                .add(Aspect.SENSES, 2)
+        addAspects = new AspectList().add(Aspect.AIR, 2).add(Aspect.WATER, 2).add(Aspect.ORDER, 2).add(Aspect.SENSES, 2)
                 .add(Aspect.MIND, 2);
         ThaumcraftApi.registerObjectTag(new ItemStack(ItemMaterial, 1, 10), addAspects);
 
@@ -642,25 +622,18 @@ public class WGContent {
         ThaumcraftApi.registerObjectTag(new ItemStack(ItemMagicFoodstuffs, 1, 2), addAspects);
 
         // Biomes o' Plenty
-        ThaumcraftApi.registerObjectTag(
-                "gemAmber", new AspectList().add(Aspect.TRAP, 2).add(Aspect.CRYSTAL, 2));
-        ThaumcraftApi.registerObjectTag(
-                "gemPeridot", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
-        ThaumcraftApi.registerObjectTag(
-                "gemTopaz", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
-        ThaumcraftApi.registerObjectTag(
-                "gemTanzanite", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
-        ThaumcraftApi.registerObjectTag(
-                "gemMalachite", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
+        ThaumcraftApi.registerObjectTag("gemAmber", new AspectList().add(Aspect.TRAP, 2).add(Aspect.CRYSTAL, 2));
+        ThaumcraftApi.registerObjectTag("gemPeridot", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
+        ThaumcraftApi.registerObjectTag("gemTopaz", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
+        ThaumcraftApi.registerObjectTag("gemTanzanite", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
+        ThaumcraftApi.registerObjectTag("gemMalachite", new AspectList().add(Aspect.CRYSTAL, 2).add(Aspect.GREED, 2));
 
         // Botania
         addOreAspects("Manasteel", new AspectList().add(Aspect.MAGIC, 1), false);
         addOreAspects("Terrasteel", new AspectList().add(Aspect.EARTH, 1).add(Aspect.MAGIC, 1), false);
         addOreAspects("ElvenElementium", new AspectList().add(Aspect.AURA, 1).add(Aspect.MAGIC, 2), true);
-        ThaumcraftApi.registerObjectTag(
-                "livingstone", new AspectList().add(Aspect.EARTH, 4).add(Aspect.LIFE, 2));
-        ThaumcraftApi.registerObjectTag(
-                "livingwood", new AspectList().add(Aspect.TREE, 4).add(Aspect.LIFE, 2));
+        ThaumcraftApi.registerObjectTag("livingstone", new AspectList().add(Aspect.EARTH, 4).add(Aspect.LIFE, 2));
+        ThaumcraftApi.registerObjectTag("livingwood", new AspectList().add(Aspect.TREE, 4).add(Aspect.LIFE, 2));
         ThaumcraftApi.registerObjectTag(
                 "dreamwood",
                 new AspectList().add(Aspect.MAGIC, 1).add(Aspect.TREE, 4).add(Aspect.AURA, 2));
@@ -670,8 +643,8 @@ public class WGContent {
         ThaumcraftApi.registerObjectTag(
                 "manaDiamond",
                 new AspectList().add(Aspect.MAGIC, 4).add(Aspect.CRYSTAL, 4).add(Aspect.GREED, 4));
-        ThaumcraftApi.registerObjectTag(
-                "eternalLifeEssence", new AspectList().add(Aspect.MAGIC, 4).add(Aspect.AURA, 4));
+        ThaumcraftApi
+                .registerObjectTag("eternalLifeEssence", new AspectList().add(Aspect.MAGIC, 4).add(Aspect.AURA, 4));
         ThaumcraftApi.registerObjectTag(
                 "eternalLifeEssence",
                 new AspectList().add(Aspect.MAGIC, 8).add(Aspect.AURA, 8).add(Aspect.LIFE, 8));
@@ -684,29 +657,12 @@ public class WGContent {
         ThaumcraftApi.registerObjectTag(
                 "shardPrismarine",
                 new AspectList().add(Aspect.MAGIC, 2).add(Aspect.WATER, 4).add(Aspect.CRYSTAL, 2));
-        String[] colours = {
-            "White",
-            "Orange",
-            "Magenta",
-            "LightBlue",
-            "Yellow",
-            "Lime",
-            "Pink",
-            "Gray",
-            "LightGray",
-            "Cyan",
-            "Purple",
-            "Blue",
-            "Brown",
-            "Green",
-            "Red",
-            "Black"
-        };
+        String[] colours = { "White", "Orange", "Magenta", "LightBlue", "Yellow", "Lime", "Pink", "Gray", "LightGray",
+                "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black" };
         for (String c : colours) {
-            ThaumcraftApi.registerObjectTag(
-                    "mysticFlower" + c, new AspectList().add(Aspect.SENSES, 2).add(Aspect.PLANT, 2));
-            ThaumcraftApi.registerObjectTag(
-                    "petal" + c, new AspectList().add(Aspect.SENSES, 1).add(Aspect.PLANT, 1));
+            ThaumcraftApi
+                    .registerObjectTag("mysticFlower" + c, new AspectList().add(Aspect.SENSES, 2).add(Aspect.PLANT, 2));
+            ThaumcraftApi.registerObjectTag("petal" + c, new AspectList().add(Aspect.SENSES, 1).add(Aspect.PLANT, 1));
             ThaumcraftApi.registerObjectTag(
                     "manaPetal" + c,
                     new AspectList().add(Aspect.MAGIC, 1).add(Aspect.SENSES, 1).add(Aspect.PLANT, 1));
@@ -717,42 +673,26 @@ public class WGContent {
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Fire" + "B",
                 new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.FIRE, 6));
-        ThaumcraftApi.registerObjectTag(
-                "rune" + "Earth" + "B", new AspectList().add(Aspect.EARTH, 8).add(Aspect.METAL, 2));
+        ThaumcraftApi
+                .registerObjectTag("rune" + "Earth" + "B", new AspectList().add(Aspect.EARTH, 8).add(Aspect.METAL, 2));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Air" + "B",
                 new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.AIR, 6));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Spring" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.WATER, 3)
-                        .add(Aspect.FIRE, 3)
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.WATER, 3).add(Aspect.FIRE, 3)
                         .add(Aspect.PLANT, 3));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Summer" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.EARTH, 3)
-                        .add(Aspect.AIR, 3)
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.EARTH, 3).add(Aspect.AIR, 3)
                         .add(Aspect.ENTROPY, 3));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Autumn" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.FIRE, 3)
-                        .add(Aspect.AIR, 3)
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.FIRE, 3).add(Aspect.AIR, 3)
                         .add(Aspect.PLANT, 3));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Winter" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.WATER, 3)
-                        .add(Aspect.EARTH, 3)
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.WATER, 3).add(Aspect.EARTH, 3)
                         .add(Aspect.COLD, 3));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Mana" + "B",
@@ -760,69 +700,32 @@ public class WGContent {
 
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Lust" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.CRYSTAL, 4)
-                        .add(Aspect.AIR, 6)
-                        .add(Aspect.EARTH, 3)
-                        .add(Aspect.getAspect("luxuria"), 4));
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.CRYSTAL, 4).add(Aspect.AIR, 6)
+                        .add(Aspect.EARTH, 3).add(Aspect.getAspect("luxuria"), 4));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Gluttony" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.CRYSTAL, 4)
-                        .add(Aspect.FIRE, 3)
-                        .add(Aspect.EARTH, 3)
-                        .add(Aspect.WATER, 3)
-                        .add(Aspect.getAspect("gula"), 4));
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.CRYSTAL, 4).add(Aspect.FIRE, 3)
+                        .add(Aspect.EARTH, 3).add(Aspect.WATER, 3).add(Aspect.getAspect("gula"), 4));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Greed" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.CRYSTAL, 4)
-                        .add(Aspect.WATER, 6)
-                        .add(Aspect.FIRE, 3)
-                        .add(Aspect.GREED, 4));
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.CRYSTAL, 4).add(Aspect.WATER, 6)
+                        .add(Aspect.FIRE, 3).add(Aspect.GREED, 4));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Sloth" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.CRYSTAL, 4)
-                        .add(Aspect.AIR, 6)
-                        .add(Aspect.FIRE, 3)
-                        .add(Aspect.getAspect("desidia"), 4));
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.CRYSTAL, 4).add(Aspect.AIR, 6)
+                        .add(Aspect.FIRE, 3).add(Aspect.getAspect("desidia"), 4));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Wrath" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.CRYSTAL, 4)
-                        .add(Aspect.EARTH, 6)
-                        .add(Aspect.WATER, 3)
-                        .add(Aspect.getAspect("ira"), 4));
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.CRYSTAL, 4).add(Aspect.EARTH, 6)
+                        .add(Aspect.WATER, 3).add(Aspect.getAspect("ira"), 4));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Envy" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.CRYSTAL, 4)
-                        .add(Aspect.WATER, 6)
-                        .add(Aspect.EARTH, 3)
-                        .add(Aspect.getAspect("invidia"), 4));
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.CRYSTAL, 4).add(Aspect.WATER, 6)
+                        .add(Aspect.EARTH, 3).add(Aspect.getAspect("invidia"), 4));
         ThaumcraftApi.registerObjectTag(
                 "rune" + "Pride" + "B",
-                new AspectList()
-                        .add(Aspect.EARTH, 2)
-                        .add(Aspect.METAL, 2)
-                        .add(Aspect.CRYSTAL, 4)
-                        .add(Aspect.EARTH, 3)
-                        .add(Aspect.AIR, 3)
-                        .add(Aspect.FIRE, 3)
-                        .add(Aspect.getAspect("superbia"), 4));
+                new AspectList().add(Aspect.EARTH, 2).add(Aspect.METAL, 2).add(Aspect.CRYSTAL, 4).add(Aspect.EARTH, 3)
+                        .add(Aspect.AIR, 3).add(Aspect.FIRE, 3).add(Aspect.getAspect("superbia"), 4));
 
         // Tcon
         addOreAspects("Aluminum", new AspectList().add(Aspect.AIR, 1), false);
@@ -859,10 +762,7 @@ public class WGContent {
         addOreAspects("Alduorite", new AspectList().add(Aspect.ORDER, 1).add(Aspect.FIRE, 1), false);
         addOreAspects("Inolashite", new AspectList().add(Aspect.COLD, 2).add(Aspect.FIRE, 1), true);
         addOreAspects("Kalendrite", new AspectList().add(Aspect.SOUL, 1).add(Aspect.FIRE, 1), false);
-        addOreAspects(
-                "Amordrine",
-                new AspectList().add(Aspect.SOUL, 1).add(Aspect.GREED, 1).add(Aspect.FIRE, 1),
-                true);
+        addOreAspects("Amordrine", new AspectList().add(Aspect.SOUL, 1).add(Aspect.GREED, 1).add(Aspect.FIRE, 1), true);
         addOreAspects("Vulcanite", new AspectList().add(Aspect.FIRE, 2), false);
         addOreAspects("Sanguinite", new AspectList().add(Aspect.HUNGER, 1).add(Aspect.FIRE, 1), false);
 
@@ -932,11 +832,8 @@ public class WGContent {
     }
 
     static boolean oreHasAspects(String ore) {
-        for (ItemStack stack : OreDictionary.getOres(ore))
-            if (stack != null)
-                return ThaumcraftApi.objectTags.get(
-                                Arrays.asList(new Object[] {stack.getItem(), Integer.valueOf(stack.getItemDamage())}))
-                        != null;
+        for (ItemStack stack : OreDictionary.getOres(ore)) if (stack != null) return ThaumcraftApi.objectTags
+                .get(Arrays.asList(new Object[] { stack.getItem(), Integer.valueOf(stack.getItemDamage()) })) != null;
         return false;
     }
 }

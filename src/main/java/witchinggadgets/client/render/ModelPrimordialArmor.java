@@ -1,6 +1,7 @@
 package witchinggadgets.client.render;
 
 import java.util.HashMap;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -12,12 +13,14 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created using Tabula 4.1.0
  */
 public class ModelPrimordialArmor extends ModelBiped {
+
     public ModelRenderer ll_plate_o0;
     public ModelRenderer ll_plate_o1;
     public ModelRenderer ll_plate_b0;
@@ -574,8 +577,7 @@ public class ModelPrimordialArmor extends ModelBiped {
                 int mask = stack.hasTagCompound() && stack.getTagCompound().hasKey("mask")
                         ? stack.getTagCompound().getInteger("mask")
                         : -1;
-                boolean goggles =
-                        stack.hasTagCompound() && stack.getTagCompound().hasKey("goggles");
+                boolean goggles = stack.hasTagCompound() && stack.getTagCompound().hasKey("goggles");
                 armor.bipedBody.isHidden = true;
                 armor.bipedLeftArm.isHidden = true;
                 armor.bipedRightArm.isHidden = true;

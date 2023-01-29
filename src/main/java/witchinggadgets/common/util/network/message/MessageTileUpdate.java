@@ -1,16 +1,18 @@
 package witchinggadgets.common.util.network.message;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
+
+import witchinggadgets.common.blocks.tiles.TileEntityWGBase;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import witchinggadgets.common.blocks.tiles.TileEntityWGBase;
 
 public class MessageTileUpdate implements IMessage {
+
     int worldId;
     int x;
     int y;
@@ -47,11 +49,11 @@ public class MessageTileUpdate implements IMessage {
     }
 
     public static class HandlerClient implements IMessageHandler<MessageTileUpdate, IMessage> {
+
         @Override
         public IMessage onMessage(MessageTileUpdate message, MessageContext ctx) {
             World world = DimensionManager.getWorld(message.worldId);
-            if (world != null
-                    && world.getTileEntity(message.x, message.y, message.z) != null
+            if (world != null && world.getTileEntity(message.x, message.y, message.z) != null
                     && world.getTileEntity(message.x, message.y, message.z) instanceof TileEntityWGBase)
                 ((TileEntityWGBase) world.getTileEntity(message.x, message.y, message.z)).readCustomNBT(message.tag);
             return null;
@@ -59,11 +61,11 @@ public class MessageTileUpdate implements IMessage {
     }
 
     public static class HandlerServer implements IMessageHandler<MessageTileUpdate, IMessage> {
+
         @Override
         public IMessage onMessage(MessageTileUpdate message, MessageContext ctx) {
             World world = DimensionManager.getWorld(message.worldId);
-            if (world != null
-                    && world.getTileEntity(message.x, message.y, message.z) != null
+            if (world != null && world.getTileEntity(message.x, message.y, message.z) != null
                     && world.getTileEntity(message.x, message.y, message.z) instanceof TileEntityWGBase)
                 ((TileEntityWGBase) world.getTileEntity(message.x, message.y, message.z)).readCustomNBT(message.tag);
             return null;
