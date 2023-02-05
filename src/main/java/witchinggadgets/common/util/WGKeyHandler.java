@@ -29,17 +29,20 @@ public class WGKeyHandler {
     private boolean isJumping = false;
     private int multiJumps = 0;
 
-    public WGKeyHandler() {}
-
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent event) {
-        if (event.side == Side.SERVER) return;
+        if (event.side == Side.SERVER) {
+            return;
+        }
         if (event.phase == TickEvent.Phase.START) {
             if (thaumcraftFKey == null) {
-                for (KeyBinding kb : Minecraft.getMinecraft().gameSettings.keyBindings)
-                    if (kb.getKeyCategory() == "key.categories.misc" && kb.getKeyDescription() == "Change Wand Focus")
+                for (KeyBinding kb : Minecraft.getMinecraft().gameSettings.keyBindings) {
+                    if ("Thaumcraft".equals(kb.getKeyCategory())
+                            && "Change Wand Focus".equals(kb.getKeyDescription())) {
                         thaumcraftFKey = kb;
+                    }
+                }
             }
             if (jumpKey == null) jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
 
@@ -50,9 +53,8 @@ public class WGKeyHandler {
                         event.player.motionY = 0.42D;
                         event.player.fallDistance = 0;
 
-                        if (event.player.isPotionActive(Potion.jump))
-                            event.player.motionY += (double) ((float) (event.player.getActivePotionEffect(Potion.jump)
-                                    .getAmplifier() + 1) * 0.1F);
+                        if (event.player.isPotionActive(Potion.jump)) event.player.motionY += (float) (event.player
+                                .getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F;
                         ForgeHooks.onLivingJump(event.player);
                         multiJumps--;
                     }
@@ -88,7 +90,7 @@ public class WGKeyHandler {
                             }
                         }
             } else {
-                if (keyDown[1] && !thaumcraftFKey.getIsKeyPressed()) keyDown[1] = false;
+                if (keyDown[1] && thaumcraftFKey != null && !thaumcraftFKey.getIsKeyPressed()) keyDown[1] = false;
                 if (!gemLock) {
                     if (gemRadial > 0) gemRadial -= step;
                     if (gemRadial < 0) gemRadial = 0f;
