@@ -1,6 +1,5 @@
 package witchinggadgets.common.util.handler;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -14,13 +13,7 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -30,7 +23,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
@@ -39,12 +31,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerDropsEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.oredict.OreDictionary;
 
 import thaumcraft.api.aspects.Aspect;
@@ -67,8 +54,8 @@ import witchinggadgets.common.items.tools.ItemBag;
 import witchinggadgets.common.magic.WGEnchantSoulbound;
 import witchinggadgets.common.util.Utilities;
 import witchinggadgets.common.util.network.message.MessageClientNotifier;
+import witchinggadgets.mixins.early.minecraft.EntityLivingAccessor;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -79,17 +66,19 @@ public class EventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void entityHurt(LivingHurtEvent event) {
-        if (event.source.isFireDamage() && event.entityLiving.getActivePotionEffect(WGContent.pot_cinderCoat) != null)
+        if (event.source.isFireDamage() && event.entityLiving.getActivePotionEffect(WGContent.pot_cinderCoat) != null) {
             event.ammount *= 2 + event.entityLiving.getActivePotionEffect(WGContent.pot_cinderCoat).getAmplifier();
+        }
 
         if (event.source.getSourceOfDamage() instanceof EntityPlayer
                 && ((EntityPlayer) event.source.getSourceOfDamage()).getCurrentEquippedItem() != null) {
             EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
-            if (player.getCurrentEquippedItem().getItem().equals(WGContent.ItemPrimordialHammer)
+            if (WGContent.ItemPrimordialHammer.equals(player.getCurrentEquippedItem().getItem())
                     && (event.entityLiving instanceof EntitySlime
                             || event.entityLiving.getClass().getName().endsWith("BlueSlime")
-                            || event.entityLiving.getCreatureAttribute() == EnumCreatureAttribute.ARTHROPOD))
+                            || event.entityLiving.getCreatureAttribute() == EnumCreatureAttribute.ARTHROPOD)) {
                 event.ammount *= 2;
+            }
             if (player.getCurrentEquippedItem().getItem().equals(WGContent.ItemPrimordialAxe)
                     && !event.source.isUnblockable()) {
                 float mod = 1;
@@ -106,8 +95,9 @@ public class EventHandler {
                     float mod = 1 + .2f * EnchantmentHelper
                             .getEnchantmentLevel(WGContent.enc_backstab.effectId, player.getCurrentEquippedItem());
                     if (event.entityLiving instanceof EntityCreature
-                            && !player.equals(((EntityCreature) event.entityLiving).getAttackTarget()))
+                            && !player.equals(((EntityCreature) event.entityLiving).getAttackTarget())) {
                         mod += .4f;
+                    }
                     event.ammount *= mod;
                 }
             }
@@ -230,7 +220,7 @@ public class EventHandler {
         if (event.recentlyHit && event.source != null && event.source.getSourceOfDamage() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.source.getSourceOfDamage();
             if (player.getCurrentEquippedItem() != null
-                    && player.getCurrentEquippedItem().getItem().equals(WGContent.ItemPrimordialSword)
+                    && WGContent.ItemPrimordialSword.equals(player.getCurrentEquippedItem().getItem())
                     && player.getRNG().nextInt(6) < EnchantmentHelper.getLootingModifier(player)) {
                 ItemStack head = null;
                 if (event.entityLiving instanceof EntitySkeleton)
@@ -257,9 +247,7 @@ public class EventHandler {
                 }
 
                 if (head != null) {
-                    Iterator<EntityItem> i = event.drops.iterator();
-                    while (i.hasNext()) {
-                        EntityItem eitem = i.next();
+                    for (EntityItem eitem : event.drops) {
                         if (eitem != null && OreDictionary.itemMatches(eitem.getEntityItem(), head, true)) return;
                     }
                     event.entityLiving.worldObj.spawnEntityInWorld(
@@ -286,10 +274,7 @@ public class EventHandler {
                     && player.getCurrentEquippedItem().getItem() instanceof IPrimordialGear
                     && ((IPrimordialGear) player.getCurrentEquippedItem().getItem())
                             .getAbility(player.getCurrentEquippedItem()) == 5) {
-                boolean deobf = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-                String name = deobf ? "experienceValue" : "field_70728_aV";
-                int baseValue = ObfuscationReflectionHelper
-                        .getPrivateValue(EntityLiving.class, (EntityLiving) event.entityLiving, name);
+                int baseValue = ((EntityLivingAccessor) event.entityLiving).getExperienceValue();
                 int xp = 4 * baseValue;
                 while (xp > 0) {
                     int i = EntityXPOrb.getXPSplit(xp);
@@ -308,83 +293,80 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onItemPickup(EntityItemPickupEvent event) {
-        for (int i = 0; i < event.entityPlayer.inventory.getSizeInventory(); i++)
+        for (int i = 0; i < event.entityPlayer.inventory.getSizeInventory(); i++) {
             if (event.entityPlayer.inventory.getStackInSlot(i) != null
                     && event.entityPlayer.inventory.getStackInSlot(i).getItem() instanceof ItemBag) {
-                        if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 1) {
-                            ItemStack[] filter = ((ItemBag) event.entityPlayer.inventory.getStackInSlot(i).getItem())
-                                    .getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
-                            for (ItemStack f : filter)
-                                if (OreDictionary.itemMatches(f, event.item.getEntityItem(), true)) {
-                                    AspectList al = ThaumcraftCraftingManager.getObjectTags(event.item.getEntityItem());
-                                    al = ThaumcraftCraftingManager.getBonusTags(event.item.getEntityItem(), al);
-                                    if (al != null && al.size() >= 0) {
-                                        AspectList primals = ResearchManager.reduceToPrimals(al);
-                                        Aspect a = primals.getAspects()[event.entityPlayer.getRNG()
-                                                .nextInt(primals.getAspects().length)];
-                                        if (a != null) {
-                                            int slot = InventoryUtils.isWandInHotbarWithRoom(a, 1, event.entityPlayer);
-                                            if (slot >= 0) {
-                                                ItemWandCasting wand = (ItemWandCasting) event.entityPlayer.inventory.mainInventory[slot]
-                                                        .getItem();
-                                                wand.addVis(
-                                                        event.entityPlayer.inventory.mainInventory[slot],
-                                                        a,
-                                                        primals.getAmount(a),
-                                                        true);
-                                            }
-                                        }
-                                    }
-                                    event.item.setDead();
-                                    event.setCanceled(true);
-                                    return;
-                                }
-                        } else if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 3) {
-                            ItemStack[] inv = ((ItemBag) event.entityPlayer.inventory.getStackInSlot(i).getItem())
-                                    .getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
-                            boolean itemWasPickedUp = false;
-                            for (int f = 0; f < inv.length; f++) {
-                                if (inv[f] == null) {
-                                    inv[f] = event.item.getEntityItem().copy();
-                                    event.item.setDead();
-                                    event.setCanceled(true);
-                                    itemWasPickedUp = true;
-                                    break;
-                                } else if (OreDictionary.itemMatches(inv[f], event.item.getEntityItem(), true)) {
-                                    int fit = Math.min(
-                                            Math.min(64, inv[f].getMaxStackSize()) - inv[f].stackSize,
-                                            event.item.getEntityItem().stackSize);
-                                    inv[f].stackSize += fit;
-                                    event.item.getEntityItem().stackSize -= fit;
-                                    if (event.item.getEntityItem().stackSize <= 0) {
-                                        event.item.setDead();
-                                        event.setCanceled(true);
-                                        itemWasPickedUp = true;
-                                        break;
-                                    }
+                if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 1) {
+                    ItemStack[] filter = ItemBag.getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
+                    for (ItemStack f : filter) if (OreDictionary.itemMatches(f, event.item.getEntityItem(), true)) {
+                        AspectList al = ThaumcraftCraftingManager.getObjectTags(event.item.getEntityItem());
+                        al = ThaumcraftCraftingManager.getBonusTags(event.item.getEntityItem(), al);
+                        if (al != null && al.size() >= 0) {
+                            AspectList primals = ResearchManager.reduceToPrimals(al);
+                            Aspect a = primals.getAspects()[event.entityPlayer.getRNG()
+                                    .nextInt(primals.getAspects().length)];
+                            if (a != null) {
+                                int slot = InventoryUtils.isWandInHotbarWithRoom(a, 1, event.entityPlayer);
+                                if (slot >= 0) {
+                                    ItemWandCasting wand = (ItemWandCasting) event.entityPlayer.inventory.mainInventory[slot]
+                                            .getItem();
+                                    wand.addVis(
+                                            event.entityPlayer.inventory.mainInventory[slot],
+                                            a,
+                                            primals.getAmount(a),
+                                            true);
                                 }
                             }
-                            ((ItemBag) event.entityPlayer.inventory.getStackInSlot(i).getItem())
-                                    .setStoredItems(event.entityPlayer.inventory.getStackInSlot(i), inv);
-                            if (itemWasPickedUp) {
+                        }
+                        event.item.setDead();
+                        event.setCanceled(true);
+                        return;
+                    }
+                } else if (event.entityPlayer.inventory.getStackInSlot(i).getItemDamage() == 3) {
+                    ItemStack[] inv = ItemBag.getStoredItems(event.entityPlayer.inventory.getStackInSlot(i));
+                    boolean itemWasPickedUp = false;
+                    for (int f = 0; f < inv.length; f++) {
+                        if (inv[f] == null) {
+                            inv[f] = event.item.getEntityItem().copy();
+                            event.item.setDead();
+                            event.setCanceled(true);
+                            itemWasPickedUp = true;
+                            break;
+                        } else if (OreDictionary.itemMatches(inv[f], event.item.getEntityItem(), true)) {
+                            int fit = Math.min(
+                                    Math.min(64, inv[f].getMaxStackSize()) - inv[f].stackSize,
+                                    event.item.getEntityItem().stackSize);
+                            inv[f].stackSize += fit;
+                            event.item.getEntityItem().stackSize -= fit;
+                            if (event.item.getEntityItem().stackSize <= 0) {
+                                event.item.setDead();
+                                event.setCanceled(true);
+                                itemWasPickedUp = true;
                                 break;
                             }
                         }
                     }
+                    ItemBag.setStoredItems(event.entityPlayer.inventory.getStackInSlot(i), inv);
+                    if (itemWasPickedUp) {
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @SubscribeEvent
     public void onCrafted(ItemCraftedEvent event) {
         ItemStack output = event.crafting;
         IInventory craftMatrix = event.craftMatrix;
-        if (output.getItem().equals(WGContent.ItemKama)) {
+        if (WGContent.ItemKama.equals(output.getItem())) {
             for (int matrixSlot = 0; matrixSlot < 9; matrixSlot++) {
                 ItemStack stackInMatrix = craftMatrix.getStackInSlot(matrixSlot);
-                if (stackInMatrix != null && stackInMatrix.getItem().equals(WGContent.ItemCloak))
+                if (stackInMatrix != null && WGContent.ItemCloak.equals(stackInMatrix.getItem()))
                     output.setTagCompound(stackInMatrix.getTagCompound());
             }
         }
-        if (output.getItem().equals(WGContent.ItemMaterial) && output.getItemDamage() == 10) {
+        if (WGContent.ItemMaterial.equals(output.getItem()) && output.getItemDamage() == 10) {
             for (int matrixSlot = 0; matrixSlot < 9; matrixSlot++) {
                 ItemStack stackInMatrix = craftMatrix.getStackInSlot(matrixSlot);
                 if ((stackInMatrix != null) && (stackInMatrix.getItem() instanceof ItemMaterials)

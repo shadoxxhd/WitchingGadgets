@@ -35,7 +35,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.research.ResearchCategories;
-import thaumcraft.api.research.ResearchCategoryList;
 import thaumcraft.api.research.ScanResult;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.ItemManaBean;
@@ -46,9 +45,9 @@ import travellersgear.api.TravellersGearAPI;
 import witchinggadgets.WitchingGadgets;
 import witchinggadgets.common.WGContent;
 import witchinggadgets.common.items.baubles.ItemCloak;
+import witchinggadgets.mixins.early.minecraft.EntityLivingAccessor;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class Utilities {
 
@@ -79,10 +78,10 @@ public class Utilities {
 
         ArrayList<Integer> loc = TileNode.locations.get(node);
         if ((loc != null) && (loc.size() > 0)) {
-            int dim = loc.get(0).intValue();
-            int x = loc.get(1).intValue();
-            int y = loc.get(2).intValue();
-            int z = loc.get(3).intValue();
+            int dim = loc.get(0);
+            int x = loc.get(1);
+            int y = loc.get(2);
+            int z = loc.get(3);
             if (dim == world.provider.dimensionId) {
                 TileEntity tnb = world.getTileEntity(x, y, z);
                 if ((tnb != null) && ((tnb instanceof INode))) {
@@ -153,8 +152,7 @@ public class Utilities {
             }
         }
         String phenomena = tag.getString("phenomena");
-        ScanResult scan = new ScanResult(type, blockId, blockMeta, entity, phenomena);
-        return scan;
+        return new ScanResult(type, blockId, blockMeta, entity, phenomena);
     }
 
     /**
@@ -180,7 +178,7 @@ public class Utilities {
      * Checks if a research of the given key exists within the given category
      */
     public static boolean researchExists(String category, String key) {
-        return ((ResearchCategoryList) ResearchCategories.researchCategories.get(category)).research.containsKey(key);
+        return ResearchCategories.researchCategories.get(category).research.containsKey(key);
     }
 
     /**
@@ -332,12 +330,11 @@ public class Utilities {
         int meta = a.equals(Aspect.AIR) ? 0
                 : a.equals(Aspect.FIRE) ? 1
                         : a.equals(Aspect.WATER) ? 2 : a.equals(Aspect.EARTH) ? 3 : a.equals(Aspect.ORDER) ? 4 : 5;
-        ItemStack shard = new ItemStack(ConfigItems.itemShard, 1, meta);
-        return shard;
+        return new ItemStack(ConfigItems.itemShard, 1, meta);
     }
 
     public static ItemStack[] getActiveMagicalCloak(EntityPlayer player) {
-        ArrayList<ItemStack> list = new ArrayList();
+        ArrayList<ItemStack> list = new ArrayList<>();
         if (TravellersGearAPI.getExtendedInventory(player)[0] != null
                 && TravellersGearAPI.getExtendedInventory(player)[0].getItem() instanceof ItemCloak)
             list.add(TravellersGearAPI.getExtendedInventory(player)[0]);
@@ -363,7 +360,7 @@ public class Utilities {
                 }
     }
 
-    static Class c_tconProjectileWeapon;
+    static Class<?> c_tconProjectileWeapon;
 
     public static boolean isPlayerUsingBow(EntityPlayer player) {
         if (!player.isUsingItem() || player.inventory.getCurrentItem() == null
@@ -373,10 +370,9 @@ public class Utilities {
         if (Loader.isModLoaded("TConstruct")) {
             if (c_tconProjectileWeapon == null) try {
                 c_tconProjectileWeapon = Class.forName("tconstruct.library.weaponry.ProjectileWeapon");
-            } catch (Exception e) {}
-            if (c_tconProjectileWeapon != null
-                    && c_tconProjectileWeapon.isAssignableFrom(player.inventory.getCurrentItem().getItem().getClass()))
-                return true;
+            } catch (Exception ignored) {}
+            return c_tconProjectileWeapon != null
+                    && c_tconProjectileWeapon.isAssignableFrom(player.inventory.getCurrentItem().getItem().getClass());
         }
         return false;
     }
@@ -413,7 +409,7 @@ public class Utilities {
     }
 
     public static void setAttackTarget(EntityLiving living, EntityLivingBase target) {
-        ReflectionHelper.setPrivateValue(EntityLiving.class, living, target, "attackTarget", "field_70696_bz");
+        ((EntityLivingAccessor) living).setAttackTarget(target);
     }
 
     public static boolean isRightMaterial(Material mat, Material[] materials) {
