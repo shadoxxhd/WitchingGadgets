@@ -487,7 +487,7 @@ public class ItemPrimordialArmor extends ItemShadowFortressArmor
                     break;
                 }
                 case 2:
-                    player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 202, 1 + modescounter[1], true));
+                    player.addPotionEffect(new PotionEffect(Potion.heal.id, 202, modescounter[1], true));
                     break;
                 case 3: {
                     if (event.source.getSourceOfDamage() instanceof EntityLivingBase) {
